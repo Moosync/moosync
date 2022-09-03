@@ -10,7 +10,7 @@ $packageArgs = @{
 
   softwareName   = 'Moosync*'
 
-  checksum64     = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+  checksum64     = '25770c6eaf8569492e86fb54cab23c682f389dec4e83ac3cbb5504f524e9de0b'
   checksumType64 = 'sha256'
 
   validExitCodes = @(0, 3010, 1641)
