@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Hrajte {title}",
     "addToQueue": "Přidat {title} do fronty",
-    "addToLibrary": "Přidat {title} do knihovny"
+    "addToLibrary": "Přidat {title} do knihovny",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Načítám...",
   "contextMenu": {
