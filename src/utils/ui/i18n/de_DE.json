@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Spiele {title}",
     "addToQueue": "{title} zur Warteschlange hinzufügen",
-    "addToLibrary": "{title} zur Bibliothek hinzufügen"
+    "addToLibrary": "{title} zur Bibliothek hinzufügen",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Wird geladen...",
   "contextMenu": {
