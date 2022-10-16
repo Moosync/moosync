@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Spil {title}",
     "addToQueue": "Tilføj {title} til kø",
-    "addToLibrary": "Tilføj {title} til bibliotek"
+    "addToLibrary": "Tilføj {title} til bibliotek",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Indlæser...",
   "contextMenu": {
