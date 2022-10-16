@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Παίξε {title}",
     "addToQueue": "Προσθήκη {title} στην ουρά",
-    "addToLibrary": "Προσθήκη {title} στη βιβλιοθήκη"
+    "addToLibrary": "Προσθήκη {title} στη βιβλιοθήκη",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Φόρτωση...",
   "contextMenu": {
