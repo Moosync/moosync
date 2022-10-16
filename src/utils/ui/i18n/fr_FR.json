@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Jouer {title}",
     "addToQueue": "Ajouter {title} à la file d'attente",
-    "addToLibrary": "Ajouter {title} à la bibliothèque"
+    "addToLibrary": "Ajouter {title} à la bibliothèque",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Chargement en cours...",
   "contextMenu": {
