@@ -34,7 +34,8 @@
   "buttons": {
     "playSingle": "Joacă {title}",
     "addToQueue": "Adaugă {title} la coadă",
-    "addToLibrary": "Adaugă {title} la bibliotecă"
+    "addToLibrary": "Adaugă {title} la bibliotecă",
+    "playRandom": "Play 100 random songs"
   },
   "loading": "Încărcare...",
   "contextMenu": {
