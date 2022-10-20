@@ -50,7 +50,8 @@
       "remove": "प्‍लेलिस्‍ट से हटाएं",
       "export": "प्लेलिस्ट निर्यात करें",
       "add": "प्लेलिस्ट में जोड़ें",
-      "addFromURL": "यूआरएल से प्लेलिस्ट में जोड़ें"
+      "addFromURL": "यूआरएल से प्लेलिस्ट में जोड़ें",
+      "save": "Add To Library"
     },
     "song": {
       "addFromURL": "यूआरएल से जोड़ें",
@@ -160,6 +161,7 @@
       },
       "youtubeAlternative": {
         "title": "Youtube Alternative services",
+        "tooltip": "Get data from Youtube through a 3rd party provider",
         "useYoutube": "Use default Youtube services",
         "useInvidious": "Use Invidious services",
         "usePiped": "Use Piped services",
@@ -184,8 +186,18 @@
       "language_tooltip": "Change the language of the interface",
       "clearPreferences": "Reset to default",
       "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default?",
-      "clear_preferences_button": "Confirm"
+      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
+      "clear_preferences_button": "Confirm",
+      "jukebox": {
+        "pin": "Jukebox mode pin",
+        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+      },
+      "lyrics": {
+        "title": "Lyrics providers",
+        "tooltip": "Select which lyrics providers to use to search for lyrics",
+        "az_lyrics": "Use AZLyrics",
+        "google_lyrics": "Use Google search lyrics"
+      }
     },
     "logs": {
       "logSettings": "Log Settings",
