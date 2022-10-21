@@ -63,7 +63,12 @@
       "moveManually": "मैन्युअल रूप से ले जाएँ",
       "manualIndex": "गाने का नंबर सेट करे",
       "remove": "लाइब्रेरी से निकालें",
-      "add": "गीत को लाईब्रेरी में जोड़ें"
+      "add": "गीत को लाईब्रेरी में जोड़ें",
+      "removeFromPlaylist": "Remove from playlist",
+      "hideFromLibrary": "Hide from library",
+      "showInLibrary": "Show in library",
+      "showHidden": "Show hidden songs",
+      "hideHidden": "Hide hidden songs"
     },
     "moreInfo": "अन्य जानकारी"
   },
