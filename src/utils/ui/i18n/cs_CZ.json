@@ -63,7 +63,12 @@
       "moveManually": "Přesunout ručně",
       "manualIndex": "Nastavit index skladby",
       "remove": "Odstranit z knihovny",
-      "add": "Přidat skladbu do knihovny | Přidat skladby do knihovny"
+      "add": "Přidat skladbu do knihovny | Přidat skladby do knihovny",
+      "removeFromPlaylist": "Remove from playlist",
+      "hideFromLibrary": "Hide from library",
+      "showInLibrary": "Show in library",
+      "showHidden": "Show hidden songs",
+      "hideHidden": "Hide hidden songs"
     },
     "moreInfo": "Další informace"
   },
