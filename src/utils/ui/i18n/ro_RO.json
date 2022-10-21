@@ -63,7 +63,12 @@
       "moveManually": "Mută manual",
       "manualIndex": "Setează indexul melodiei",
       "remove": "Elimină din bibliotecă",
-      "add": "Adaugă melodie la bibliotecă <unk> Adaugă melodii la bibliotecă"
+      "add": "Adaugă melodie la bibliotecă <unk> Adaugă melodii la bibliotecă",
+      "removeFromPlaylist": "Remove from playlist",
+      "hideFromLibrary": "Hide from library",
+      "showInLibrary": "Show in library",
+      "showHidden": "Show hidden songs",
+      "hideHidden": "Hide hidden songs"
     },
     "moreInfo": "Mai multe informații"
   },
