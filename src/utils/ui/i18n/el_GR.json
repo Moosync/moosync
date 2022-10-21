@@ -63,7 +63,12 @@
       "moveManually": "Χειροκίνητη κίνηση",
       "manualIndex": "Ορισμός ευρετηρίου τραγουδιού",
       "remove": "Αφαίρεση από τη βιβλιοθήκη",
-      "add": "Προσθήκη τραγουδιού στη βιβλιοθήκη \"Προσθήκη τραγουδιών στη βιβλιοθήκη"
+      "add": "Προσθήκη τραγουδιού στη βιβλιοθήκη \"Προσθήκη τραγουδιών στη βιβλιοθήκη",
+      "removeFromPlaylist": "Remove from playlist",
+      "hideFromLibrary": "Hide from library",
+      "showInLibrary": "Show in library",
+      "showHidden": "Show hidden songs",
+      "hideHidden": "Hide hidden songs"
     },
     "moreInfo": "Περισσότερες Πληροφορίες"
   },
