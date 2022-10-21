@@ -63,7 +63,12 @@
       "moveManually": "Manuell verschieben",
       "manualIndex": "Index des Liedes festlegen",
       "remove": "Aus der Bibliothek entfernen",
-      "add": "Füge Song zur Bibliothek hinzu | Füge Titel zur Bibliothek hinzu"
+      "add": "Füge Song zur Bibliothek hinzu | Füge Titel zur Bibliothek hinzu",
+      "removeFromPlaylist": "Remove from playlist",
+      "hideFromLibrary": "Hide from library",
+      "showInLibrary": "Show in library",
+      "showHidden": "Show hidden songs",
+      "hideHidden": "Hide hidden songs"
     },
     "moreInfo": "Mehr Info"
   },
