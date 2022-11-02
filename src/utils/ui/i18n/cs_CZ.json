@@ -32,10 +32,10 @@
     }
   },
   "buttons": {
-    "playSingle": "Hrajte {title}",
+    "playSingle": "Přehrát {title}",
     "addToQueue": "Přidat {title} do fronty",
     "addToLibrary": "Přidat {title} do knihovny",
-    "playRandom": "Přehrát 100 náhodných skladeb"
+    "playRandom": "Přehrát skladby náhodně"
   },
   "loading": "Načítám...",
   "contextMenu": {
@@ -89,7 +89,7 @@
       "artworkPath": "Cesta k obrázku alba",
       "artworkPath_tooltip": "Adresář, kde jsou ukládány stažené obrázky alba",
       "thumbnailPath": "Cesta ke stažení miniatur",
-      "thumbnailPath_tooltip": "Adresář, kde jsou uloženy generované náhledy"
+      "thumbnailPath_tooltip": "Adresář, kde jsou uloženy generované miniatury"
     },
     "themes": {
       "songView": "Zobrazení skladeb",
