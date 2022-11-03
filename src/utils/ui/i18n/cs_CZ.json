@@ -6,7 +6,7 @@
       "playlists": "Seznamy stop",
       "albums": "Alba",
       "artists": "Umělci",
-      "genre": "Genres",
+      "genre": "Žánry",
       "explore": "Prozkoumat"
     }
   },
@@ -18,7 +18,7 @@
     "playlists": "Seznamy stop",
     "albums": "Alba",
     "artists": "Umělci",
-    "genres": "Genres",
+    "genres": "Žánry",
     "explore": "Prozkoumat"
   },
   "songView": {
@@ -32,10 +32,10 @@
     }
   },
   "buttons": {
-    "playSingle": "Hrajte {title}",
+    "playSingle": "Přehrát {title}",
     "addToQueue": "Přidat {title} do fronty",
     "addToLibrary": "Přidat {title} do knihovny",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "Přehrát skladby náhodně"
   },
   "loading": "Načítám...",
   "contextMenu": {
@@ -43,7 +43,7 @@
       "name": "Název",
       "dateAdded": "Datum přidání",
       "provider": "Poskytovatel",
-      "playCount": "Play count"
+      "playCount": "Počet přehrání"
     },
     "playlist": {
       "new": "Vytvořit playlist",
@@ -51,12 +51,12 @@
       "export": "Exportovat seznam skladeb",
       "add": "Přidat do seznamu skladeb",
       "addFromURL": "Přidat playlist z URL",
-      "save": "Add To Library"
+      "save": "Přidat do knihovny"
     },
     "song": {
       "addFromURL": "Přidat z URL",
       "playNow": "Přehrát nyní",
-      "playNext": "Play Next",
+      "playNext": "Přehrát jako další",
       "addToQueue": "Přidat do fronty",
       "moveToTop": "Přesunout nahoru",
       "moveToBottom": "Přesunout dolů",
@@ -64,18 +64,18 @@
       "manualIndex": "Nastavit index skladby",
       "remove": "Odstranit z knihovny",
       "add": "Přidat skladbu do knihovny | Přidat skladby do knihovny",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "removeFromPlaylist": "Odstranit se seznamu",
+      "hideFromLibrary": "Skrýt z knihovny",
+      "showInLibrary": "Zobrazit v knihovně",
+      "showHidden": "Zobrazit skryté skladby",
+      "hideHidden": "Skrýt skryté skladby"
     },
     "moreInfo": "Další informace"
   },
   "providers": {
     "youtube": "YouTube",
     "spotify": "Spotify",
-    "invidious": "Neviditelné",
+    "invidious": "Invidious",
     "lastfm": "LastFM"
   },
   "save": "Uložit",
@@ -83,13 +83,13 @@
   "settings": {
     "paths": {
       "songDirectories": "Adresáře skladeb",
-      "songDirectories_tooltip": "Adresáře, kde jsou uloženy všechny místní hudby",
+      "songDirectories_tooltip": "Adresáře, kde jsou uloženy všechny místní skladby",
       "addFolder": "Přidat složku...",
       "remove": "Odebrat",
-      "artworkPath": "Stáhnutá cesta k interpretu",
-      "artworkPath_tooltip": "Adresář, kde jsou ukládány stažené interprety",
+      "artworkPath": "Cesta k obrázku alba",
+      "artworkPath_tooltip": "Adresář, kde jsou ukládány stažené obrázky alba",
       "thumbnailPath": "Cesta ke stažení miniatur",
-      "thumbnailPath_tooltip": "Adresář, kde jsou uloženy generované náhledy"
+      "thumbnailPath_tooltip": "Adresář, kde jsou uloženy generované miniatury"
     },
     "themes": {
       "songView": "Zobrazení skladeb",
@@ -111,9 +111,9 @@
       "tertiary": "Terciární",
       "textPrimary": "Primární text",
       "textSecondary": "Sekundární text",
-      "textInverse": "Převrácený text",
-      "accent": "zvýraznění",
-      "divider": "Dělič"
+      "textInverse": "Inverzní text",
+      "accent": "Barva detailů",
+      "divider": "Oddělovač"
     },
     "extensions": {
       "extensions": "Rozšíření",
@@ -129,7 +129,7 @@
         "minimizeTray": "Minimalizovat do lišty při zavření",
         "hardwareAcceleration": "Použít hardwarovou akceleraci GPU",
         "watchFileChanges": "Sledujte hudební adresáře pro změny",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "Zobrazit tlačítko pro Jukebox mód"
       },
       "systemSettings_tooltip": "Nastavení vztahující se k vašemu systému",
       "audioSettings": {
@@ -139,10 +139,10 @@
       },
       "audioSettings_tooltip": "Nastavení související přehrávání zvuku",
       "invidiousUrlUnsupported": "Tato url nepodporuje Invidious API",
-      "invidious_tooltip": "Neviditelná instance k použití namísto youtube",
+      "invidious_tooltip": "Invidious instance k použití místo youtube",
       "restartApp": "Restartovat Moosync",
       "zoom": "Faktor přiblížení (Beta)",
-      "zoom_tooltip": "Přiblížení oken v procentech. To může poškodit UI.",
+      "zoom_tooltip": "Přiblížení oken v procentech. Toto nastavení může rozbít UI.",
       "spotify": {
         "client_id": "Spotify ID klienta",
         "client_id_tooltip": "Pro přihlášení do Spotify je vyžadováno ID klienta. Klikněte pro více informací",
@@ -157,51 +157,51 @@
       "youtube": {
         "client_id": "ID klienta YouTube",
         "client_secret": "Tajný klíč klienta YouTube",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "Klientské ID YouTUbe které je vyžadováno pro přihlášení do služby YouTube. Klikněte pro více informací.",
+        "client_secret_tooltip": "tajný klíč YouTube vyžadován pro přihlášení do služby YouTube. Klikněte pro více informací."
       },
       "lastfm": {
-        "client_id": "LastFM Api Key",
-        "client_secret": "LastFM Client Secret"
+        "client_id": "LastFM API Klíč",
+        "client_secret": "LastFM Tajný klíč"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Alternativy ke službě YouTube",
+        "tooltip": "Přehrávajte hudbu z YouTube pomocí alternatívních služeb",
+        "useYoutube": "Použít YouTube",
+        "useInvidious": "Použít Invidious",
+        "usePiped": "Použít Piped",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use"
+          "url": "Instance Piped",
+          "url_tooltip": "URL adresa Piped instance"
         },
         "invidious": {
           "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url_tooltip": "URL adresa Invidious instance",
+          "options": "Pokročilé nastavení Invidious",
+          "options_tooltip": "Pokročilé ovládání přehrávaní pomocí Invidious",
+          "always_proxy": "Vždy přehrávat audio z Invidious proxy místo Google videa"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Pokročilé nastavení YouTube",
+          "options_tooltip": "Pokročilé ovládání přehrávání pomocí YouTube",
+          "useEmbeds": "Použít YouTube embedded pro přehrávání z YouTube"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Jazyk",
+      "language_tooltip": "Změnit jazyk rozhraní",
+      "clearPreferences": "Obnovit výchozí nastavení",
+      "clear_preferences_title": "Obnovit výchozí nastavení?",
+      "clear_preferences": "Opravdu chcete obnovit výchozí nastavení? Aplikace se po změně jazyka restartuje. ",
+      "clear_preferences_button": "Potvrdit",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "PIN kód pro Jukebox mód",
+        "pin_tooltip": "Tento PIN kód bude nutno zadat pro vypnutí Jukebox módu. Měl by obsahovat jen číselné hodnoty."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Poskytovatel textů písní",
+        "tooltip": "Vyberte, kteří poskytovatelé textů písní budou aktivní",
+        "az_lyrics": "Použít AZLyrics",
+        "google_lyrics": "Použít Google Search texty"
       }
     },
     "logs": {
