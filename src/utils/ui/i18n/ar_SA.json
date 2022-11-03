@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "أدلة الأغنية",
       "songDirectories_tooltip": "الدلائل حيث يتم تخزين جميع الموسيقى المحلية الخاصة بك",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "إضافة مجلد...",
       "remove": "إزالة",
       "artworkPath": "مسار الأعمال الفنية المحمّلة",
