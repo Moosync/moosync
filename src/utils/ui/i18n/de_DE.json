@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "Songverzeichnisse",
       "songDirectories_tooltip": "Verzeichnisse, in denen Ihre lokale Musik gespeichert ist",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "Ordner hinzufügen...",
       "remove": "Entfernen",
       "artworkPath": "Heruntergeladener Kunstwerkpfad",
