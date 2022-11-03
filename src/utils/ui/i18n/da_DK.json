@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "Sang Mapper",
       "songDirectories_tooltip": "Mapper hvor al din lokale musik er gemt",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "Tilføj Mappe...",
       "remove": "Fjern",
       "artworkPath": "Downloadet Artwork Sti",
