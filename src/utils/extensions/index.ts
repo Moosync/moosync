@@ -328,7 +328,12 @@ class ExtensionRequestHandler {
         message.data
       const secure = await getStoreChannel().getSecure(this.getPreferenceKey(packageName, key))
       if (secure) {
-        resp.data = JSON.parse(secure)
+        try {
+          resp.data = JSON.parse(secure)
+        } catch {
+          console.error('Failed to parse secure token as json')
+          resp.data = secure
+        }
       } else {
         resp.data = defaultValue
       }

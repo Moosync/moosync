@@ -11,12 +11,13 @@ import path from 'path'
 import { Sharp, SharpOptions } from 'sharp'
 import { promises as fsP } from 'fs'
 import { v4 } from 'uuid'
+import { access } from 'fs/promises'
 
 let sharpInstance: (input?: Buffer | string, options?: SharpOptions) => Sharp
 
 let importFailed = false
 
-export async function writeBuffer(bufferDesc: Buffer, basePath: string, onlyHigh = false) {
+export async function writeBuffer(bufferDesc: Buffer, basePath: string, hash?: string, onlyHigh = false) {
   if (!sharpInstance && !importFailed) {
     try {
       sharpInstance = (await import('sharp')).default
@@ -28,24 +29,33 @@ export async function writeBuffer(bufferDesc: Buffer, basePath: string, onlyHigh
     }
   }
 
-  const id = v4()
+  const id = hash ?? v4()
 
   const highPath = path.join(basePath, id + '-high.jpg')
 
-  if (sharpInstance) {
-    await sharpInstance(Buffer.from(bufferDesc)).resize(800, 800).toFile(highPath)
-  } else {
-    await writeNoResize(bufferDesc, highPath)
+  // Write new file only if it doesn't exist
+  try {
+    await access(highPath)
+  } catch {
+    if (sharpInstance) {
+      await sharpInstance(Buffer.from(bufferDesc)).resize(800, 800).toFile(highPath)
+    } else {
+      await writeNoResize(bufferDesc, highPath)
+    }
   }
 
   let lowPath
   if (!onlyHigh) {
     lowPath = path.join(basePath, id + '-low.jpg')
 
-    if (sharpInstance) {
-      await sharpInstance(Buffer.from(bufferDesc)).resize(80, 80).toFile(lowPath)
-    } else {
-      lowPath = highPath
+    try {
+      await access(lowPath)
+    } catch {
+      if (sharpInstance) {
+        await sharpInstance(Buffer.from(bufferDesc)).resize(80, 80).toFile(lowPath)
+      } else {
+        lowPath = highPath
+      }
     }
   }
 

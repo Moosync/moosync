@@ -11,14 +11,19 @@
   <b-container fluid class="path-container w-100">
     <b-row no-gutters align-v="center">
       <PreferenceHeader v-if="title" :title="title" :tooltip="tooltip" />
-      <b-col cols="auto" align-self="start" class="new-directories ml-auto justify-content-center">
+      <b-col
+        cols="auto"
+        align-self="start"
+        class="new-directories ml-auto justify-content-center"
+        v-if="showRefreshIcon"
+      >
         <RefreshIcon
           title="Rescan directories for music"
           @click.native="emitRefresh"
           class="refresh-icon button-grow"
         />
       </b-col>
-      <b-col cols="auto" class="new-directories ml-4">
+      <b-col cols="auto" :class="`new-directories ${showRefreshIcon ? 'ml-4' : 'ml-auto'}`">
         <div class="add-directories-button" v-if="!bottomButton" @click="openFileBrowser">
           {{ $t('settings.paths.addFolder') }}
         </div>
@@ -91,6 +96,9 @@ export default class DirectoryGroup extends Mixins<ExtensionPreferenceMixin<Dire
 
   @Prop({ default: false })
   private isMainWindow!: boolean
+
+  @Prop({ default: false })
+  private showRefreshIcon!: boolean
 
   @Prop()
   private title!: string

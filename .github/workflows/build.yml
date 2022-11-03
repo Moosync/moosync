@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-20.04, windows-latest]
+        os: [macos-latest, windows-latest, ubuntu-18.04]
 
     steps:
       - name: Check out Git repository
@@ -24,18 +24,8 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "16"
           cache: "yarn"
-
-      - name: Install Snapcraft
-        if: ${{ runner.os == 'Linux' }}
-        uses: samuelmeuli/action-snapcraft@v1
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
-
-      - name: Install multipass
-        if: ${{ runner.os == 'Linux' }}
-        run: sudo snap install multipass
 
       - uses: maxim-lobanov/setup-xcode@v1
         if: ${{ runner.os == 'macOS' }}
@@ -44,11 +34,6 @@ jobs:
 
       - if: ${{ runner.os == 'Linux' }}
         run: sudo apt-get update -y && sudo apt-get install -y libarchive-tools rpm
-
-      - name: Remove abstract socket in non-linux
-        if: ${{ runner.os != 'Linux' }}
-        run: rm -f patches/abstract-socket*
-        shell: bash
 
       - name: yarn install
         run: yarn install --immutable
@@ -62,7 +47,6 @@ jobs:
           if [[ $BRANCH == 'dev' ]]; then
               echo "DEBUG_LOGGING=true" >> "$GITHUB_ENV"
           fi
-
       - name: setup env
         env:
           YOUTUBECLIENTID: "${{ secrets.YOUTUBECLIENTID }}"
@@ -101,7 +85,6 @@ jobs:
           CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SNAPCRAFT_BUILD_ENVIRONMENT: host
           CI: true
 
       - uses: actions/upload-artifact@v3
@@ -111,40 +94,6 @@ jobs:
           path: |
             dist_electron/*.exe
             dist_electron/latest*.yml
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          name: Linux Snap
-          path: dist_electron/*.snap
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          name: Linux AppImage
-          path: |
-            dist_electron/*.AppImage
-            dist_electron/latest*.yml
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          name: Arch linux Pacman
-          path: |
-            dist_electron/*.pacman
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          name: Linux tar.gz
-          path: dist_electron/*.tar.gz
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ runner.os == 'Linux' }}
-        with:
-          name: Linux Deb
-          path: dist_electron/*.deb
-
       - uses: actions/upload-artifact@v3
         if: ${{ runner.os == 'macOS' }}
         with:
@@ -152,3 +101,26 @@ jobs:
           path: |
             dist_electron/*.dmg
             dist_electron/latest*.yml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Linux AppImage
+          path: |
+            dist_electron/*.AppImage
+            dist_electron/latest*.yml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Arch linux Pacman
+          path: |
+            dist_electron/*.pacman
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Linux tar.gz
+          path: dist_electron/*.tar.gz
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Linux Deb
+          path: dist_electron/*.deb

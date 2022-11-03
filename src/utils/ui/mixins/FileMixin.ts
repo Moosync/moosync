@@ -13,6 +13,6 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class FileMixin extends Vue {
   private dragFile(event: DragEvent) {
     event.preventDefault()
-    window.WindowUtils.dragFile((event.target as HTMLImageElement).src)
+    window.WindowUtils.dragFile((event.target as HTMLImageElement)?.src)
   }
 }

@@ -42,6 +42,13 @@ expose({
     })
   },
 
+  scanSingleSong(path: string, loggerPath: string) {
+    return new Observable((observer) => {
+      prefixLogger(loggerPath, logger)
+      scan([path], observer).finally(() => observer.complete())
+    })
+  },
+
   scanSinglePlaylist(path: string, loggerPath: string) {
     return new Observable((observer) => {
       prefixLogger(loggerPath, logger)

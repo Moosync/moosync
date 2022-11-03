@@ -37,7 +37,19 @@
             :defaultValue="[]"
             key="musicPaths"
             @refresh="forceRescan"
+            :showRefreshIcon="true"
           />
+
+          <DirectoryGroup
+            :title="$t('settings.paths.songDirectories_exclude')"
+            :tooltip="$t('settings.paths.songDirectories_exclude_tooltip')"
+            :defaultValue="[]"
+            key="exclude_musicPaths"
+            class="mt-2"
+            :enableCheckbox="false"
+            :showRefreshIcon="false"
+          />
+
           <FilePicker
             :title="$t('settings.paths.artworkPath')"
             :tooltip="$t('settings.paths.artworkPath_tooltip')"

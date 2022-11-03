@@ -75,7 +75,7 @@
   "providers": {
     "youtube": "YouTube",
     "spotify": "Spotify",
-    "invidious": "Neviditelné",
+    "invidious": "Invidious",
     "lastfm": "LastFM"
   },
   "save": "Uložit",

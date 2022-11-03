@@ -193,6 +193,18 @@ contextBridge.exposeInMainWorld('FileUtils', {
       params: { playlistPath }
     }),
 
+  scanSingleSong: (songPath: string) =>
+    ipcRendererHolder.send<ScannerRequests.ScanSingleSong>(IpcEvents.SCANNER, {
+      type: ScannerEvents.SCAN_SINGLE_SONG,
+      params: { songPath }
+    }),
+
+  getCoverByHash: (hash: string) =>
+    ipcRendererHolder.send<ScannerRequests.GetCoverByHash>(IpcEvents.SCANNER, {
+      type: ScannerEvents.GET_COVER_BY_HASH,
+      params: { hash }
+    }),
+
   saveAudioToFile: (path: string, blob: Buffer) =>
     ipcRendererHolder.send<SongRequests.SaveBuffer>(IpcEvents.SONG, {
       type: SongEvents.SAVE_AUDIO_TO_FILE,

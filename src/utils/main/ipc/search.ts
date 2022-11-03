@@ -8,7 +8,7 @@
  */
 
 import { IpcEvents, SearchEvents } from './constants'
-import { getDisabledPaths, loadPreferences } from '@/utils/main/db/preferences'
+import { getDisabledPaths } from '@/utils/main/db/preferences'
 
 import { SongDB } from '@/utils/main/db'
 import { YTScraper } from '../fetchers/searchYT'
@@ -66,12 +66,8 @@ export class SearchChannel implements IpcChannelInterface {
   }
 
   private async searchAll(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.Search>) {
-    const preferences = loadPreferences()
     if (request.params && request.params.searchTerm) {
-      event.reply(
-        request.responseChannel,
-        SongDB.searchAll(request.params.searchTerm, getDisabledPaths(preferences.musicPaths))
-      )
+      event.reply(request.responseChannel, SongDB.searchAll(request.params.searchTerm, getDisabledPaths()))
     }
     event.reply(request.responseChannel)
   }
@@ -128,8 +124,7 @@ export class SearchChannel implements IpcChannelInterface {
   }
 
   private searchSongByOptions(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.SongOptions>) {
-    const preferences = loadPreferences()
-    const data = SongDB.getSongByOptions(request.params.options, getDisabledPaths(preferences.musicPaths))
+    const data = SongDB.getSongByOptions(request.params.options, getDisabledPaths())
     event.reply(request.responseChannel, data)
   }
 

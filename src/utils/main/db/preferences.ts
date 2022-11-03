@@ -24,6 +24,7 @@ type MusicPaths = { path: string; enabled: boolean }
 const defaultPreferences: Preferences = {
   isFirstLaunch: true,
   musicPaths: [{ path: getDefaultMusicPaths(), enabled: true }],
+  exclude_musicPaths: [],
   thumbnailPath: path.join(app.getPath('appData'), app.getName(), '.thumbnails'),
   artworkPath: path.join(app.getPath('appData'), app.getName(), '.thumbnails'),
   youtubeAlt: [],
@@ -265,17 +266,26 @@ export function loadPreferences(): Preferences {
   return defaultPreferences
 }
 
+export function getCombinedMusicPaths() {
+  const paths = loadSelectivePreference<togglePaths>('musicPaths', false, [])
+  const excludePaths = loadSelectivePreference<togglePaths>('exclude_musicPaths', false, [])
+  paths.push(...excludePaths.map((val) => ({ ...val, enabled: false })))
+  return paths
+}
+
 // TODO: Make a generic utils file for methods like these
 /**
  * Gets disabled paths from a list of paths
  * @param paths
  * @returns disabled paths
  */
-export function getDisabledPaths(paths: togglePaths): string[] {
-  const disablePaths = []
+export function getDisabledPaths(): string[] {
+  const paths = getCombinedMusicPaths()
+  const disablePaths: string[] = []
   for (const p of paths) {
     if (!p.enabled) disablePaths.push(p.path)
   }
+
   return disablePaths
 }
 

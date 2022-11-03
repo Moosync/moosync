@@ -13,7 +13,7 @@ import { Thread, TransferDescriptor, Worker, spawn } from 'threads'
 import { IpcMainEvent, app } from 'electron'
 import { SongDB } from '@/utils/main/db/index'
 import fs from 'fs'
-import { loadPreferences } from '@/utils/main/db/preferences'
+import { getCombinedMusicPaths, loadPreferences } from '@/utils/main/db/preferences'
 import { writeBuffer } from '@/utils/main/workers/covers'
 import { access, mkdir } from 'fs/promises'
 
@@ -21,10 +21,10 @@ import { access, mkdir } from 'fs/promises'
 import scannerWorker from 'threads-plugin/dist/loader?name=0!/src/utils/main/workers/scanner.ts'
 // @ts-expect-error it don't want .ts
 import scraperWorker from 'threads-plugin/dist/loader?name=1!/src/utils/main/workers/scraper.ts'
-import { Observable } from 'observable-fns'
 import { WindowHandler } from '../windowManager'
 import { v4 } from 'uuid'
 import path from 'path'
+import { isEmpty } from '@/utils/common'
 
 const loggerPath = app.getPath('logs')
 
@@ -37,17 +37,27 @@ enum scanning {
 type ScannedSong = { song: Song; cover: undefined | TransferDescriptor<Buffer> }
 type ScannedPlaylist = { filePath: string; title: string; songHashes: string[] }
 
+type ScanWorkerWorkerType = {
+  start: (
+    togglePaths: togglePaths,
+    excludePaths: string[],
+    loggerPath: string
+  ) => ScannedSong | ScannedPlaylist | Progress
+
+  scanSinglePlaylist: (path: string, loggerPath: string) => ScannedSong | ScannedPlaylist | Progress
+
+  scanSingleSong: (path: string, loggerPath: string) => ScannedSong | ScannedPlaylist | Progress
+}
+
+type ScanWorker = Awaited<ReturnType<typeof spawn<ScanWorkerWorkerType>>>
+
 export class ScannerChannel implements IpcChannelInterface {
   name = IpcEvents.SCANNER
   private scanStatus: scanning = scanning.UNDEFINED
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private scannerWorker: any
+  private scannerWorker: ScanWorker | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private scraperWorker: any
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private singleScannerWorker: any
 
   private totalScanFiles = 0
   private currentScanFile = 0
@@ -56,6 +66,12 @@ export class ScannerChannel implements IpcChannelInterface {
     switch (request.type) {
       case ScannerEvents.SCAN_MUSIC:
         this.scanAll(event, request as IpcRequest<ScannerRequests.ScanSongs>)
+        break
+      case ScannerEvents.SCAN_SINGLE_SONG:
+        this.scanSingleSong(event, request as IpcRequest<ScannerRequests.ScanSingleSong>)
+        break
+      case ScannerEvents.GET_COVER_BY_HASH:
+        this.getCoverByHash(event, request as IpcRequest<ScannerRequests.GetCoverByHash>)
         break
       case ScannerEvents.GET_PROGRESS:
         this.getScanProgress(event, request)
@@ -92,7 +108,7 @@ export class ScannerChannel implements IpcChannelInterface {
     if (song.hash) {
       const existing = SongDB.getByHash(song.hash)
       if (existing.length === 0) {
-        const res = cover && (await this.storeCover(cover))
+        const res = cover && (await this.storeCover(cover, song.hash))
         if (res) {
           song.album = {
             ...song.album,
@@ -110,7 +126,7 @@ export class ScannerChannel implements IpcChannelInterface {
         const songCoverExists = await this.checkSongCovers(s)
 
         if (!albumCoverExists || !songCoverExists) {
-          const res = cover && (await this.storeCover(cover))
+          const res = cover && (await this.storeCover(cover, song.hash))
           if (res) {
             if (!songCoverExists) SongDB.updateSongCover(s._id, res.high, res.low)
             if (!albumCoverExists) SongDB.updateAlbumCovers(s._id, res.high, res.low)
@@ -120,7 +136,9 @@ export class ScannerChannel implements IpcChannelInterface {
     }
   }
 
-  private async storeCover(cover: TransferDescriptor<Buffer> | undefined) {
+  private isWritingCover: Record<string, Promise<{ high: string; low?: string }>> = {}
+
+  private async storeCover(cover: TransferDescriptor<Buffer> | undefined, hash: string) {
     if (cover) {
       const thumbPath = loadPreferences().thumbnailPath
       try {
@@ -130,7 +148,9 @@ export class ScannerChannel implements IpcChannelInterface {
       }
 
       try {
-        return writeBuffer(cover.send, thumbPath)
+        const ret = writeBuffer(cover.send, thumbPath, hash)
+        this.isWritingCover[hash] = ret
+        return await ret
       } catch (e) {
         console.error('Error writing cover', e)
       }
@@ -172,29 +192,23 @@ export class ScannerChannel implements IpcChannelInterface {
     } as Progress)
   }
 
-  private scanSongs(preferences: Preferences, forceScan = false) {
+  private scanSongs(paths: togglePaths, forceScan = false) {
     return new Promise<void>((resolve, reject) => {
-      ;(
-        this.scannerWorker.start(
-          preferences.musicPaths,
-          forceScan ? [] : SongDB.getAllPaths(),
-          loggerPath
-        ) as Observable<ScannedSong | ScannedPlaylist | Progress>
-      ).subscribe(
+      this.scannerWorker?.start(paths, forceScan ? [] : SongDB.getAllPaths(), loggerPath).subscribe(
         (result) => {
-          if ((result as Progress).total) {
-            this.totalScanFiles = (result as Progress).total
-            this.currentScanFile = (result as Progress).current
+          if (this.isProgress(result)) {
+            this.totalScanFiles = result.total
+            this.currentScanFile = result.current
 
             this.updateProgress()
           }
 
-          if ((result as ScannedSong).song) {
-            this.checkDuplicateAndStore((result as ScannedSong).song, (result as ScannedSong).cover)
+          if (this.isScannedSong(result)) {
+            this.checkDuplicateAndStore(result.song, result.cover)
           }
 
-          if ((result as ScannedPlaylist).filePath && (result as ScannedPlaylist).songHashes) {
-            this.storePlaylist(result as ScannedPlaylist)
+          if (this.isScannedPlaylist(result)) {
+            this.storePlaylist(result)
           }
         },
         reject,
@@ -332,25 +346,25 @@ export class ScannerChannel implements IpcChannelInterface {
     }
     this.setScanning()
 
-    const preferences = loadPreferences()
-
     if (this.scannerWorker) {
       await Thread.terminate(this.scannerWorker)
       this.scannerWorker = undefined
     }
 
     try {
-      this.scannerWorker = await spawn(new Worker(`./${scannerWorker}`), { timeout: 5000 })
+      this.scannerWorker = await spawn<ScanWorkerWorkerType>(new Worker(`./${scannerWorker}`), { timeout: 5000 })
     } catch (e) {
       console.error('Error Spawning', scannerWorker, e)
-      event?.reply(request?.responseChannel, e)
+      event?.reply(request?.responseChannel)
       return
     }
 
-    await this.destructiveScan(preferences.musicPaths)
+    const scanPaths = getCombinedMusicPaths()
+
+    await this.destructiveScan(scanPaths)
 
     try {
-      await this.scanSongs(preferences, request?.params.forceScan)
+      await this.scanSongs(scanPaths, request?.params.forceScan)
     } catch (e) {
       console.error(e)
     }
@@ -359,8 +373,10 @@ export class ScannerChannel implements IpcChannelInterface {
 
     this.setIdle()
 
-    Thread.terminate(this.scannerWorker)
-    this.scannerWorker = undefined
+    if (this.scannerWorker) {
+      Thread.terminate(this.scannerWorker)
+      this.scannerWorker = undefined
+    }
 
     if (this.isScanQueued()) {
       await this.scanAll(event, request)
@@ -375,46 +391,110 @@ export class ScannerChannel implements IpcChannelInterface {
     if (event && request) event.reply(request.responseChannel)
   }
 
+  private isScannedSong(item: ScannedSong | ScannedPlaylist | Progress): item is ScannedSong {
+    return !isEmpty((item as ScannedSong).song)
+  }
+
+  private isScannedPlaylist(item: ScannedSong | ScannedPlaylist | Progress): item is ScannedPlaylist {
+    return !(isEmpty((item as ScannedPlaylist).filePath) || isEmpty((item as ScannedPlaylist).songHashes))
+  }
+
+  private isProgress(item: ScannedSong | ScannedPlaylist | Progress): item is Progress {
+    return !isEmpty((item as Progress).total)
+  }
+
   private async scanSinglePlaylist(event: IpcMainEvent, request: IpcRequest<ScannerRequests.ScanSinglePlaylist>) {
     if (request.params.playlistPath) {
-      if (this.singleScannerWorker) {
-        await Thread.terminate(this.singleScannerWorker)
-        this.singleScannerWorker = undefined
+      try {
+        // Don't use global scan worker since this method should not wait for full scan to complete
+        const scanWorker = await spawn<ScanWorkerWorkerType>(new Worker(`./${scannerWorker}`), { timeout: 5000 })
+
+        const songs: Song[] = []
+        let playlist: Partial<Playlist> | null = null
+
+        scanWorker.scanSinglePlaylist(request.params.playlistPath, loggerPath).subscribe(
+          (result) => {
+            if (this.isScannedSong(result)) {
+              songs.push(result.song)
+            }
+
+            if (this.isScannedPlaylist(result)) {
+              playlist = {
+                playlist_id: v4(),
+                playlist_name: result.title,
+                playlist_path: result.filePath
+              }
+
+              console.debug('Got playlist', playlist.playlist_name)
+            }
+          },
+          console.error,
+          () => event.reply(request.responseChannel, { playlist, songs })
+        )
+
+        await Thread.terminate(scanWorker)
+      } catch (e) {
+        console.error('Error Spawning', scannerWorker, e)
+        event.reply(request.responseChannel)
+        return
+      }
+    }
+  }
+
+  private async getCoverByHash(event: IpcMainEvent, request: IpcRequest<ScannerRequests.GetCoverByHash>) {
+    if (request.params.hash) {
+      if (Object.keys(this.isWritingCover).includes(request.params.hash)) {
+        event.reply(request.responseChannel, await this.isWritingCover[request.params.hash])
+      }
+
+      const thumbPath = loadPreferences().thumbnailPath
+      const coverPathHigh = path.join(thumbPath, `${request.params.hash}-high.jpg`)
+      const coverPathLow = path.join(thumbPath, `${request.params.hash}-high.jpg`)
+      const ret: { high?: string; low?: string } = {}
+      try {
+        await access(coverPathHigh)
+        ret.high = coverPathHigh
+      } catch (e) {
+        console.warn('High res coverpath not found for', request.params.hash)
       }
 
       try {
-        this.singleScannerWorker = await spawn(new Worker(`./${scannerWorker}`), { timeout: 5000 })
+        await access(coverPathLow)
+        ret.low = coverPathLow
       } catch (e) {
-        console.error('Error Spawning', scannerWorker, e)
-        event.reply(request.responseChannel, e)
-        return
+        console.warn('Low res coverpath not found for', request.params.hash)
       }
 
-      const songs: Song[] = []
-      let playlist: Partial<Playlist> | null = null
-      ;(
-        this.singleScannerWorker.scanSinglePlaylist(request.params.playlistPath, loggerPath) as Observable<
-          ScannedSong | ScannedPlaylist | Progress
-        >
-      ).subscribe(
-        (result) => {
-          if ((result as ScannedSong).song) {
-            songs.push((result as ScannedSong).song)
-          }
+      event.reply(request.responseChannel, ret)
+    }
+  }
 
-          if ((result as ScannedPlaylist).filePath && (result as ScannedPlaylist).songHashes) {
-            playlist = {
-              playlist_id: v4(),
-              playlist_name: (result as ScannedPlaylist).title,
-              playlist_path: (result as ScannedPlaylist).filePath
+  private async scanSingleSong(event: IpcMainEvent, request: IpcRequest<ScannerRequests.ScanSingleSong>) {
+    if (request.params.songPath) {
+      try {
+        let song: Song | undefined = undefined
+        // Don't use global scan worker since this method should not wait for full scan to complete
+        const singleScanWorker = await spawn<ScanWorkerWorkerType>(new Worker(`./${scannerWorker}`), { timeout: 5000 })
+
+        singleScanWorker.scanSingleSong(request.params.songPath, loggerPath).subscribe(
+          (result) => {
+            if (this.isScannedSong(result)) {
+              song = result.song
+              if (result.cover && song.hash) {
+                this.storeCover(result.cover, song.hash)
+              }
             }
-
-            console.debug('Got playlist', playlist.playlist_name)
+          },
+          console.error,
+          () => {
+            event.reply(request.responseChannel, { song })
           }
-        },
-        console.error,
-        () => event.reply(request.responseChannel, { playlist, songs })
-      )
+        )
+      } catch (e) {
+        console.error('Error Spawning', scannerWorker, e)
+        event.reply(request?.responseChannel)
+        return
+      }
     }
   }
 }

@@ -16,6 +16,7 @@ type SystemSettings = Checkbox
 interface Preferences {
   isFirstLaunch: boolean
   musicPaths: togglePaths
+  exclude_musicPaths: togglePaths
   thumbnailPath: string
   artworkPath: string
   youtubeAlt: Checkbox[]

@@ -145,6 +145,8 @@ interface fileUtils {
    */
   scan: (forceScan?: boolean) => Promise<void>
   scanSinglePlaylist: (playlistPath: string) => Promise<{ songs: Song[]; playlist: Partial<Playlist> | null }>
+  scanSingleSong: (songPath: string) => Promise<{ song: Song | null }>
+  getCoverByHash: (hash: string) => Promise<{ high: string; low?: string } | undefined>
 
   getScanProgress: () => Promise<Progress>
 
