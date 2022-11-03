@@ -75,7 +75,7 @@
   "providers": {
     "youtube": "YouTube",
     "spotify": "Spotify",
-    "invidious": "Invidious",
+    "invidious": "Neviditelné",
     "lastfm": "LastFM"
   },
   "save": "Uložit",
@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "Adresáře skladeb",
       "songDirectories_tooltip": "Adresáře, kde jsou uloženy všechny místní skladby",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "Přidat složku...",
       "remove": "Odebrat",
       "artworkPath": "Cesta k obrázku alba",
