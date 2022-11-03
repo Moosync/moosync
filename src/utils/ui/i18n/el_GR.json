@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "Κατάλογοι Τραγουδιών",
       "songDirectories_tooltip": "Κατάλογοι όπου αποθηκεύονται όλες οι τοπικές μουσικές σας",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "Προσθήκη Φακέλου...",
       "remove": "Αφαίρεση",
       "artworkPath": "Ληφθείσες Διαδρομές Έργων",
