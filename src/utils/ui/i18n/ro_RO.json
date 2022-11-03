@@ -84,6 +84,8 @@
     "paths": {
       "songDirectories": "Directoare melodii",
       "songDirectories_tooltip": "Directoare unde toată muzica ta locală este stocată",
+      "songDirectories_exclude": "Blacklisted Directories",
+      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
       "addFolder": "Adaugă Dosar...",
       "remove": "Elimină",
       "artworkPath": "Calea Artwork descărcată",
