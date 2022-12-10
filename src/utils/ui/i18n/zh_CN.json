@@ -1,216 +1,216 @@
 {
   "sidebar": {
     "tabs": {
-      "queue": "Queue",
-      "allSongs": "All Songs",
-      "playlists": "Playlists",
-      "albums": "Albums",
-      "artists": "Artists",
-      "genre": "Genres",
-      "explore": "Explore"
+      "queue": "加入播放队列",
+      "allSongs": "所有歌曲",
+      "playlists": "播放列表",
+      "albums": "专辑",
+      "artists": "歌手",
+      "genre": "风格",
+      "explore": "探索"
     }
   },
   "topbar": {
-    "searchPlaceholder": "Search...",
-    "noResultsFound": "No results found"
+    "searchPlaceholder": "搜索中...",
+    "noResultsFound": "什么都没有找到"
   },
   "pages": {
-    "playlists": "Playlists",
-    "albums": "Albums",
-    "artists": "Artists",
-    "genres": "Genres",
-    "explore": "Explore"
+    "playlists": "播放列表",
+    "albums": "专辑",
+    "artists": "歌手",
+    "genres": "风格",
+    "explore": "探索"
   },
   "songView": {
     "details": {
-      "songCount": "{count} song | {count} songs"
+      "songCount": "{count} 首歌曲 | {count} 首歌曲"
     },
     "songList": {
       "topbar": {
-        "searchPlaceholder": "Search..."
+        "searchPlaceholder": "搜索中..."
       }
     }
   },
   "buttons": {
-    "playSingle": "Play {title}",
-    "addToQueue": "Add {title} to queue",
-    "addToLibrary": "Add {title} to library",
-    "playRandom": "Play 100 random songs"
+    "playSingle": "播放 {title}",
+    "addToQueue": "将 {title} 添加到队列",
+    "addToLibrary": "添加 {title} 到库",
+    "playRandom": "随机播放100首歌曲"
   },
-  "loading": "Loading...",
+  "loading": "加载中...",
   "contextMenu": {
     "sort": {
-      "name": "Name",
-      "dateAdded": "Date added",
-      "provider": "Provider",
-      "playCount": "Play count"
+      "name": "名称",
+      "dateAdded": "添加日期",
+      "provider": "提供方",
+      "playCount": "播放次数"
     },
     "playlist": {
-      "new": "Create Playlist",
-      "remove": "Remove playlist",
-      "export": "Export playlist",
-      "add": "Add To Playlist",
-      "addFromURL": "Add Playlist from URL",
-      "save": "Add To Library"
+      "new": "创建播放列表",
+      "remove": "从播放列表中移除",
+      "export": "导出播放列表",
+      "add": "添加到播放列表",
+      "addFromURL": "从 URL 添加播放列表",
+      "save": "添加到库"
     },
     "song": {
-      "addFromURL": "Add from URL",
-      "playNow": "Play Now",
-      "playNext": "Play Next",
-      "addToQueue": "Add To Queue",
-      "moveToTop": "Move to top",
-      "moveToBottom": "Move to bottom",
-      "moveManually": "Move manually",
-      "manualIndex": "Set index of song",
-      "remove": "Remove from Library",
-      "add": "Add Song to Library | Add Songs to Library",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "addFromURL": "从 URL 添加",
+      "playNow": "立即播放",
+      "playNext": "下一首",
+      "addToQueue": "添加到队列",
+      "moveToTop": "移动到顶部",
+      "moveToBottom": "移动到底部",
+      "moveManually": "手动移动",
+      "manualIndex": "设置歌曲索引",
+      "remove": "从媒体库中移除",
+      "add": "将歌曲添加到库 | 将歌曲添加到库",
+      "removeFromPlaylist": "从播放列表中移除",
+      "hideFromLibrary": "从库中隐藏",
+      "showInLibrary": "显示媒体库",
+      "showHidden": "显示隐藏歌曲",
+      "hideHidden": "不显示隐藏的歌曲"
     },
-    "moreInfo": "More Info"
+    "moreInfo": "更多信息"
   },
   "providers": {
     "youtube": "Youtube",
     "spotify": "Spotify",
-    "invidious": "Invidious",
+    "invidious": "偏好",
     "lastfm": "LastFM"
   },
-  "save": "Save",
-  "cancel": "Cancel",
+  "save": "保存",
+  "cancel": "取消",
   "settings": {
     "paths": {
-      "songDirectories": "Song Directories",
-      "songDirectories_tooltip": "Directories where all your local music is stored",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
-      "addFolder": "Add Folder...",
-      "remove": "Remove",
-      "artworkPath": "Downloaded Artwork Path",
-      "artworkPath_tooltip": "Directory where downloaded artworks are stored",
-      "thumbnailPath": "Downloaded Thumbnail Path",
-      "thumbnailPath_tooltip": "Directory where generated thumbnails are stored"
+      "songDirectories": "歌曲目录",
+      "songDirectories_tooltip": "存储您所有本地音乐的目录",
+      "songDirectories_exclude": "黑名单目录",
+      "songDirectories_exclude_tooltip": "这些目录中的歌曲不会被扫描",
+      "addFolder": "添加文件夹...",
+      "remove": "移除",
+      "artworkPath": "下载路径",
+      "artworkPath_tooltip": "储存下载的目录",
+      "thumbnailPath": "已下载缩略图路径",
+      "thumbnailPath_tooltip": "存储生成的缩略图的目录"
     },
     "themes": {
-      "songView": "Songs View",
-      "songView_tooltip": "Customize song list appearance",
-      "songView_classic": "Classic",
-      "songView_compact": "Compact",
-      "themes": "Themes",
-      "themes_tooltip": "Customize colors",
+      "songView": "歌曲视图",
+      "songView_tooltip": "自定义歌曲列表外观",
+      "songView_classic": "经典",
+      "songView_compact": "简洁",
+      "themes": "主题",
+      "themes_tooltip": "自定义颜色",
       "themes_default": "默认",
-      "createTheme": "Create new theme",
+      "createTheme": "创建新主题",
       "newTheme": {
-        "name": "Theme Name",
-        "author": "Author",
-        "colors": "Colors",
-        "colors_tooltip": "Change the colors to customise UI"
+        "name": "主题名称",
+        "author": "作者",
+        "colors": "颜色",
+        "colors_tooltip": "更改颜色以自定义界面"
       },
       "primary": "主要",
-      "secondary": "Secondary",
-      "tertiary": "Tertiary",
-      "textPrimary": "Text Primary",
-      "textSecondary": "Text Secondary",
-      "textInverse": "Text Inverse",
+      "secondary": "背景色",
+      "tertiary": "第三方功能",
+      "textPrimary": "主标题",
+      "textSecondary": "次标题",
+      "textInverse": "文本反转",
       "accent": "强调色",
-      "divider": "Divider"
+      "divider": "分隔符"
     },
     "extensions": {
-      "extensions": "Extensions",
-      "extensions_tooltip": "List of all installed extensions",
-      "discover": "Discover",
-      "install": "Install from file",
-      "remove": "Remove"
+      "extensions": "扩展程序",
+      "extensions_tooltip": "所有已安装的扩展列表",
+      "discover": "发现",
+      "install": "从文件安装",
+      "remove": "移除"
     },
     "system": {
       "systemSettings": {
-        "title": "System Settings",
-        "systemStartup": "Start app on system startup",
-        "minimizeTray": "Minimize to tray on close",
-        "hardwareAcceleration": "Use GPU hardware acceleration",
-        "watchFileChanges": "Watch music directories for changes",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "title": "系统设置",
+        "systemStartup": "系统启动时启动应用",
+        "minimizeTray": "关闭时最小化到托盘",
+        "hardwareAcceleration": "使用 GPU 硬件加速",
+        "watchFileChanges": "监视音乐目录的更改",
+        "enableJukeboxMode": "启用唱片机模式开关"
       },
-      "systemSettings_tooltip": "Settings which are related to your system",
+      "systemSettings_tooltip": "与您的系统相关的设置",
       "audioSettings": {
-        "title": "Audio Settings",
-        "gaplessPlayback": "Use gapless playback for wherever possible",
-        "sponsorBlock": "Use SponsorBlock to automatically skip to highlighted part of Youtube song"
+        "title": "音频设置",
+        "gaplessPlayback": "在可能的情况下尽可能使用无缝播放",
+        "sponsorBlock": "使用 SpongorBlock 自动跳过高亮显示YouTube 歌曲的部分"
       },
-      "audioSettings_tooltip": "Settings which are related audio playback",
-      "invidiousUrlUnsupported": "This url does not support Invidious API",
-      "invidious_tooltip": "Invidious instance to use instead of youtube",
-      "restartApp": "Restart Moosync",
-      "zoom": "Zoom Factor (Beta)",
-      "zoom_tooltip": "Zoom of windows in percentage. This may break the UI.",
+      "audioSettings_tooltip": "相关的音频回放设置",
+      "invidiousUrlUnsupported": "此URL不支持邀请API。",
+      "invidious_tooltip": "要使用Invidious的实例而不是 YouTube",
+      "restartApp": "重启Moosync",
+      "zoom": "缩放倍数(测试版)",
+      "zoom_tooltip": "窗口缩放百分比。这可能会破坏UI界面。",
       "spotify": {
-        "client_id": "Spotify Client ID",
-        "client_id_tooltip": "Spotify client ID required to login to Spotify. Click to know more",
-        "client_secret": "Spotify Client Secret",
-        "client_secret_tooltip": "Spotify client Secret required to login to Spotify. Click to know more",
-        "autoFetchButton": "Get Spotify details automatically",
-        "autoFetchPreTitle": "Get",
-        "autoFetchTitle": "ClientID and Secret",
-        "autoFetchDisclaimer": "A window will now open where you will be asked to login to your Spotify account. After logging in please do not click anywhere as the whole process will be automated",
-        "openWindow": "Open Window"
+        "client_id": "Spotify 客户端 ID",
+        "client_id_tooltip": "Spotify 客户端需要ID登录Spotify。点击了解更多",
+        "client_secret": "Spotify 客户端密钥",
+        "client_secret_tooltip": "登录Spotify 客户端密码。点击了解更多",
+        "autoFetchButton": "自动获取 Spotify 详细信息",
+        "autoFetchPreTitle": "获取",
+        "autoFetchTitle": "客户端ID和密钥",
+        "autoFetchDisclaimer": "现在一个窗口将打开，您将被要求登录您的 Spotify 帐户。 登录后请不要单击任何地方，因为整个过程将被自动化",
+        "openWindow": "打开窗口"
       },
       "youtube": {
-        "client_id": "Youtube Client ID",
-        "client_secret": "Youtube Client Secret",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id": "Youtube 客户端 ID",
+        "client_secret": "Youtube客户端密钥",
+        "client_id_tooltip": "Youtube 客户端 需要ID登录到 Youtube。点击了解更多",
+        "client_secret_tooltip": "登录YouTube 客户端密码。点击了解更多"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
-        "client_secret": "LastFM Client Secret"
+        "client_secret": "LastFM 客户端 密钥"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Youtube 替代服务",
+        "tooltip": "通过第三方提供商从 Youtube 获取数据",
+        "useYoutube": "使用默认的 Youtube 服务",
+        "useInvidious": "使用邀请服务",
+        "usePiped": "使用管道服务",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use"
+          "url": "Piped实例",
+          "url_tooltip": "要使用 Piped 实例的 URL"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "Invidious实例",
+          "url_tooltip": "要使用Invidious实例的 URL",
+          "options": "高级Invidious选项",
+          "options_tooltip": "优化邀请控制播放的选项",
+          "always_proxy": "总是从Invidious的代理而不是谷歌视频播放音频"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "高级Youtube选项",
+          "options_tooltip": "优化控制 Youtube 回放的选项",
+          "useEmbeds": "使用 Youtube 嵌入方式播放来自 Youtube 的音频"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "语言",
+      "language_tooltip": "设置用户界面的语言。",
+      "clearPreferences": "恢复默认设置",
+      "clear_preferences_title": "恢复默认设置?",
+      "clear_preferences": "您确定要重置所有设置为默认设置吗？重置后将重启应用程序。",
+      "clear_preferences_button": "确认",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "唱片机模式 Pin",
+        "pin_tooltip": "提示：退出光盘机模式需要使用 Pin。\n应该是数字。"
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "歌词提供商",
+        "tooltip": "选择用于搜索歌词的歌词提供商",
+        "az_lyrics": "使用 AZLyrics",
+        "google_lyrics": "使用谷歌搜索歌词"
       }
     },
     "logs": {
-      "logSettings": "Log Settings",
-      "level": "Level",
-      "process": "Process",
-      "filterMessage": "Filter Message"
+      "logSettings": "日志设置",
+      "level": "等级",
+      "process": "进程",
+      "filterMessage": "过滤消息"
     }
   }
 }
