@@ -141,7 +141,7 @@
       },
       "audioSettings_tooltip": "相关的音频回放设置",
       "invidiousUrlUnsupported": "此URL不支持邀请API。",
-      "invidious_tooltip": "要使用Invidious的实例而不是 YouTube",
+      "invidious_tooltip": "提示：要使用 Invidious 的服务而不是 YouTube",
       "restartApp": "重启Moosync",
       "zoom": "缩放倍数(测试版)",
       "zoom_tooltip": "窗口缩放百分比。这可能会破坏UI界面。",
@@ -173,12 +173,12 @@
         "useInvidious": "使用邀请服务",
         "usePiped": "使用管道服务",
         "piped": {
-          "url": "Piped实例",
-          "url_tooltip": "要使用 Piped 实例的 URL"
+          "url": "Piped 服务",
+          "url_tooltip": "提示：要使用 Piped 服务的 URL"
         },
         "invidious": {
-          "url": "Invidious实例",
-          "url_tooltip": "要使用Invidious实例的 URL",
+          "url": "Invidious 服务",
+          "url_tooltip": "提示：要使用Invidious 服务的 URL",
           "options": "高级Invidious选项",
           "options_tooltip": "优化邀请控制播放的选项",
           "always_proxy": "总是从Invidious的代理而不是谷歌视频播放音频"
