@@ -57,6 +57,7 @@
       "addFromURL": "Von URL hinzufügen",
       "playNow": "Jetzt spielen",
       "playNext": "Play Next",
+      "clearAndPlay": "Clear queue and play",
       "addToQueue": "Zur Warteschlange hinzufügen",
       "moveToTop": "Nach oben",
       "moveToBottom": "Nach unten",
@@ -154,7 +155,14 @@
         "autoFetchPreTitle": "Erhalten",
         "autoFetchTitle": "ClientID und Geheimnis",
         "autoFetchDisclaimer": "Es öffnet sich nun ein Fenster, in dem Sie aufgefordert werden, sich bei Ihrem Spotify-Konto anzumelden. Nach dem Anmelden klicken Sie bitte nirgends an, da der gesamte Prozess automatisch wird",
-        "openWindow": "Fenster öffnen"
+        "openWindow": "Fenster öffnen",
+        "title": "Spotify Settings",
+        "tooltip": "Options to change the behavior of spotify playback",
+        "librespotEnable": "Use librespot to play songs from Spotify (Premium only)",
+        "username": "Spotify username",
+        "username_tooltip": "Your spotify username. Usually your email",
+        "password": "Spotify password",
+        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify"
       },
       "youtube": {
         "client_id": "Youtube Client ID",
@@ -204,6 +212,11 @@
         "tooltip": "Select which lyrics providers to use to search for lyrics",
         "az_lyrics": "Use AZLyrics",
         "google_lyrics": "Use Google search lyrics"
+      },
+      "queueSettings": {
+        "title": "Queue Settings",
+        "tooltip": "Options to tweak the behavior of song queue",
+        "clearQueue": "Clear queue before adding playing a playlist"
       }
     },
     "logs": {
