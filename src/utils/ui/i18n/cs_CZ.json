@@ -57,6 +57,7 @@
       "addFromURL": "Přidat z URL",
       "playNow": "Přehrát nyní",
       "playNext": "Přehrát jako další",
+      "clearAndPlay": "Clear queue and play",
       "addToQueue": "Přidat do fronty",
       "moveToTop": "Přesunout nahoru",
       "moveToBottom": "Přesunout dolů",
@@ -154,7 +155,14 @@
         "autoFetchPreTitle": "Získat",
         "autoFetchTitle": "KlientID a tajný klíč",
         "autoFetchDisclaimer": "Okno se nyní otevře, kde budete požádáni o přihlášení ke svému účtu Spotify. Po přihlášení prosím neklikejte nikde a celý proces bude automatizován",
-        "openWindow": "Otevřít okno"
+        "openWindow": "Otevřít okno",
+        "title": "Spotify Settings",
+        "tooltip": "Options to change the behavior of spotify playback",
+        "librespotEnable": "Use librespot to play songs from Spotify (Premium only)",
+        "username": "Spotify username",
+        "username_tooltip": "Your spotify username. Usually your email",
+        "password": "Spotify password",
+        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify"
       },
       "youtube": {
         "client_id": "ID klienta YouTube",
@@ -204,6 +212,11 @@
         "tooltip": "Vyberte, kteří poskytovatelé textů písní budou aktivní",
         "az_lyrics": "Použít AZLyrics",
         "google_lyrics": "Použít Google Search texty"
+      },
+      "queueSettings": {
+        "title": "Queue Settings",
+        "tooltip": "Options to tweak the behavior of song queue",
+        "clearQueue": "Clear queue before adding playing a playlist"
       }
     },
     "logs": {
