@@ -158,11 +158,17 @@
         "openWindow": "打开窗口",
         "title": "Spotify 设置",
         "tooltip": "改变spotify播放行为的选项",
-        "librespotEnable": "使用 librespot 来播放Spotify 的歌曲 (仅高级版)",
+        "librespotEnable": "Use librespot (Spotify Premium required)",
         "username": "Spotify用户",
         "username_tooltip": "您的spotify用户名。通常是您的电子邮件",
         "password": "Spotify密码",
-        "password_tooltip": "您的spotify密码。您可能需要在 Spotify 上设置一个"
+        "password_tooltip": "您的spotify密码。您可能需要在 Spotify 上设置一个",
+        "librespot": {
+          "title": "Librespot options",
+          "tooltip": "Options to change the behavior of librespot",
+          "useSpotifyCanvas": "Show spotify canvas video in background",
+          "useLibrespotPlayback": "Use librespot for song playback"
+        }
       },
       "youtube": {
         "client_id": "Youtube 客户端 ID",
