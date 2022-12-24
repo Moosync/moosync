@@ -188,7 +188,11 @@
         "usePiped": "使用管道服务",
         "piped": {
           "url": "Piped 服务",
-          "url_tooltip": "提示：要使用 Piped 服务的 URL"
+          "url_tooltip": "提示：要使用 Piped 服务的 URL",
+          "username": "Username",
+          "username_tooltip": "Your piped username at the selected instance",
+          "password": "Password",
+          "password_tooltip": "Your piped password at the selected instance"
         },
         "invidious": {
           "url": "Invidious 服务",
