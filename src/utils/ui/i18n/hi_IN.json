@@ -188,7 +188,11 @@
         "usePiped": "Use Piped services",
         "piped": {
           "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use"
+          "url_tooltip": "URL of Piped instance to use",
+          "username": "Username",
+          "username_tooltip": "Your piped username at the selected instance",
+          "password": "Password",
+          "password_tooltip": "Your piped password at the selected instance"
         },
         "invidious": {
           "url": "Invidious Instance",
