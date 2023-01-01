@@ -1,80 +1,80 @@
 {
   "sidebar": {
     "tabs": {
-      "queue": "Queue",
-      "allSongs": "All Songs",
-      "playlists": "Playlists",
-      "albums": "Albums",
-      "artists": "Artists",
-      "genre": "Genres",
-      "explore": "Explore"
+      "queue": "Очередь",
+      "allSongs": "Все треки",
+      "playlists": "Плейлисты",
+      "albums": "Альбомы",
+      "artists": "Исполнители",
+      "genre": "Жанры",
+      "explore": "Обзор"
     }
   },
   "topbar": {
-    "searchPlaceholder": "Search...",
-    "noResultsFound": "No results found"
+    "searchPlaceholder": "Поиск...",
+    "noResultsFound": "Ничего не найдено"
   },
   "pages": {
-    "playlists": "Playlists",
-    "albums": "Albums",
-    "artists": "Artists",
-    "genres": "Genres",
-    "explore": "Explore"
+    "playlists": "Плейлисты",
+    "albums": "Альбомы",
+    "artists": "Исполнители",
+    "genres": "Жанры",
+    "explore": "Обзор"
   },
   "songView": {
     "details": {
-      "songCount": "{count} song | {count} songs"
+      "songCount": "{count} трека | {count} треков"
     },
     "songList": {
       "topbar": {
-        "searchPlaceholder": "Search..."
+        "searchPlaceholder": "Поиск..."
       }
     }
   },
   "buttons": {
-    "playSingle": "Play {title}",
-    "addToQueue": "Add {title} to queue",
-    "addToLibrary": "Add {title} to library",
-    "playRandom": "Play 100 random songs"
+    "playSingle": "Воспроизвести {title}",
+    "addToQueue": "Добавить {title} в очередь",
+    "addToLibrary": "Добавить {title} в библиотеку",
+    "playRandom": "Воспроизвести 100 случайных песен"
   },
-  "loading": "Loading...",
+  "loading": "Загрузка...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
-      "album": "Album",
-      "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
-      "provider": "Provider",
-      "playCount": "Play count"
+      "title": "По названию",
+      "album": "По альбому",
+      "artist": "По исполнителю",
+      "genre": "По жанру",
+      "date_added": "По дате добавления",
+      "provider": "По поставщику",
+      "playCount": "По числу прослушивания"
     },
     "playlist": {
-      "new": "Create Playlist",
-      "remove": "Remove playlist",
-      "export": "Export playlist",
-      "add": "Add To Playlist",
-      "addFromURL": "Add Playlist from URL",
-      "save": "Add To Library"
+      "new": "Создать плейлист",
+      "remove": "Удалить список воспроизведения",
+      "export": "Экспортировать список воспроизведения",
+      "add": "Добавить в список воспроизведения",
+      "addFromURL": "Добавить список воспроизведения по ссылке",
+      "save": "Добавить в библиотеку"
     },
     "song": {
-      "addFromURL": "Add from URL",
-      "playNow": "Play Now",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
-      "addToQueue": "Add To Queue",
-      "moveToTop": "Move to top",
-      "moveToBottom": "Move to bottom",
-      "moveManually": "Move manually",
-      "manualIndex": "Set index of song",
-      "remove": "Remove from Library",
-      "add": "Add Song to Library | Add Songs to Library",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "addFromURL": "Добавить по ссылке",
+      "playNow": "Воспроизвести",
+      "playNext": "Воспроизвести следующий",
+      "clearAndPlay": "Очистить очередь и воспроизведение",
+      "addToQueue": "Добавить в очередь",
+      "moveToTop": "Переместить в начало",
+      "moveToBottom": "Переместить в конец",
+      "moveManually": "Переместить вручную",
+      "manualIndex": "Установить индекс трека",
+      "remove": "Убрать из библиотеки",
+      "add": "Добавить трек в библиотеку | Добавить треки в библиотеку",
+      "removeFromPlaylist": "Убрать из списка воспроизведения",
+      "hideFromLibrary": "Скрыть из библиотеки",
+      "showInLibrary": "Показать в библиотеке",
+      "showHidden": "Показать скрытые треки",
+      "hideHidden": "Скрыть скрытые треки"
     },
-    "moreInfo": "More Info"
+    "moreInfo": "Доп. сведения"
   },
   "providers": {
     "youtube": "Youtube",
@@ -82,132 +82,132 @@
     "invidious": "Invidious",
     "lastfm": "LastFM"
   },
-  "save": "Save",
-  "cancel": "Cancel",
+  "save": "Сохранить",
+  "cancel": "Отмена",
   "settings": {
     "paths": {
-      "songDirectories": "Song Directories",
-      "songDirectories_tooltip": "Directories where all your local music is stored",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
-      "addFolder": "Add Folder...",
-      "remove": "Remove",
-      "artworkPath": "Downloaded Artwork Path",
-      "artworkPath_tooltip": "Directory where downloaded artworks are stored",
-      "thumbnailPath": "Downloaded Thumbnail Path",
-      "thumbnailPath_tooltip": "Directory where generated thumbnails are stored",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "songDirectories": "Расположения треков",
+      "songDirectories_tooltip": "Папки с вашей локальной музыкой",
+      "songDirectories_exclude": "Папки в чёрный список",
+      "songDirectories_exclude_tooltip": "Треки в этих папках не будут просканированы",
+      "addFolder": "Добавить папку...",
+      "remove": "Убрать",
+      "artworkPath": "Путь скачанной иллюстрации",
+      "artworkPath_tooltip": "Папка хранения скачанных файлов с иллюстрациями",
+      "thumbnailPath": "Путь скачанных эскизов",
+      "thumbnailPath_tooltip": "Папка хранения сгенерированных миниатюр",
+      "splitter": "Шаблон разделения имени исполнителя",
+      "splitter_tooltip": "Регулярное выражение для разделения имён исполнителей. Оставьте пустым, чтобы отключить разделение."
     },
     "themes": {
-      "songView": "Songs View",
-      "songView_tooltip": "Customize song list appearance",
-      "songView_classic": "Classic",
-      "songView_compact": "Compact",
-      "themes": "Themes",
-      "themes_tooltip": "Customize colors",
+      "songView": "Вид треков",
+      "songView_tooltip": "Настроить внешний вид списка треков",
+      "songView_classic": "Классический",
+      "songView_compact": "Компактный",
+      "themes": "Темы",
+      "themes_tooltip": "Настройка цвета",
       "themes_default": "По умолчанию",
-      "createTheme": "Create new theme",
+      "createTheme": "Создать новую тему",
       "newTheme": {
-        "name": "Theme Name",
-        "author": "Author",
-        "colors": "Colors",
-        "colors_tooltip": "Change the colors to customise UI"
+        "name": "Название темы",
+        "author": "Автор",
+        "colors": "Цвета",
+        "colors_tooltip": "Изменить цвета для настройки интерфейса"
       },
       "primary": "Основной",
-      "secondary": "Secondary",
-      "tertiary": "Tertiary",
-      "textPrimary": "Text Primary",
-      "textSecondary": "Text Secondary",
-      "textInverse": "Text Inverse",
+      "secondary": "Вторичный",
+      "tertiary": "Третичный",
+      "textPrimary": "Основной текст",
+      "textSecondary": "Вторичный текст",
+      "textInverse": "Инвертировать текст",
       "accent": "Оттенок",
-      "divider": "Divider"
+      "divider": "Разделитель"
     },
     "extensions": {
-      "extensions": "Extensions",
-      "extensions_tooltip": "List of all installed extensions",
-      "discover": "Discover",
-      "install": "Install from file",
-      "remove": "Remove"
+      "extensions": "Расширения",
+      "extensions_tooltip": "Список всех установленных расширений",
+      "discover": "Подборка",
+      "install": "Установить из файла",
+      "remove": "Убрать"
     },
     "system": {
       "systemSettings": {
-        "title": "System Settings",
-        "systemStartup": "Start app on system startup",
-        "minimizeTray": "Minimize to tray on close",
-        "hardwareAcceleration": "Use GPU hardware acceleration",
-        "watchFileChanges": "Watch music directories for changes",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "title": "Системные настройки",
+        "systemStartup": "Запускать приложение с включением системы",
+        "minimizeTray": "Сворачивать в область уведомлений при закрытии",
+        "hardwareAcceleration": "Использовать аппаратное ускорение GPU",
+        "watchFileChanges": "Смотреть папки с музыкой для изменения",
+        "enableJukeboxMode": "Включить переключение для режима Jukebox"
       },
-      "systemSettings_tooltip": "Settings which are related to your system",
+      "systemSettings_tooltip": "Настройки, связанные с вашей системой",
       "audioSettings": {
-        "title": "Audio Settings",
-        "gaplessPlayback": "Use gapless playback for wherever possible",
-        "sponsorBlock": "Use SponsorBlock to automatically skip to highlighted part of Youtube song"
+        "title": "Настройки аудио",
+        "gaplessPlayback": "Использовать непрерывное воспроизведение когда это возможно",
+        "sponsorBlock": "Использовать SponsorBlock для автоперехода к выделенной части трека на Youtube"
       },
-      "audioSettings_tooltip": "Settings which are related audio playback",
-      "invidiousUrlUnsupported": "This url does not support Invidious API",
-      "invidious_tooltip": "Invidious instance to use instead of youtube",
-      "restartApp": "Restart Moosync",
-      "zoom": "Zoom Factor (Beta)",
-      "zoom_tooltip": "Zoom of windows in percentage. This may break the UI.",
+      "audioSettings_tooltip": "Настройки, связанные с воспроизведением аудио",
+      "invidiousUrlUnsupported": "Эта ссылка не поддерживает Invidious API",
+      "invidious_tooltip": "Invidious экземпляр для использования вместо youtube",
+      "restartApp": "Перезапустить Moosync",
+      "zoom": "Масштаб (Бета)",
+      "zoom_tooltip": "Масштаб окон в процентах. Это может сломать пользовательский интерфейс.",
       "spotify": {
         "client_id": "Spotify Client ID",
-        "client_id_tooltip": "Spotify client ID required to login to Spotify. Click to know more",
+        "client_id_tooltip": "Требуется Spotify Client ID для входа в Spotify. Нажмите, чтобы узнать больше",
         "client_secret": "Spotify Client Secret",
-        "client_secret_tooltip": "Spotify client Secret required to login to Spotify. Click to know more",
-        "autoFetchButton": "Get Spotify details automatically",
-        "autoFetchPreTitle": "Get",
-        "autoFetchTitle": "ClientID and Secret",
-        "autoFetchDisclaimer": "A window will now open where you will be asked to login to your Spotify account. After logging in please do not click anywhere as the whole process will be automated",
-        "openWindow": "Open Window",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "client_secret_tooltip": "Требуется Spotify Client Secret для входа в Spotify. Нажмите, чтобы узнать больше",
+        "autoFetchButton": "Получить информацию Spotify автоматически",
+        "autoFetchPreTitle": "Получить",
+        "autoFetchTitle": "ClientID и Secret",
+        "autoFetchDisclaimer": "Теперь откроется окно, в котором вам будет предложено войти в свою учетную запись Spotify. После входа не нажимайте нигде, так как весь процесс будет автоматизирован",
+        "openWindow": "Открыть окно",
+        "title": "Настройки Spotify",
+        "tooltip": "Параметры для изменения поведения воспроизведения Spotify",
+        "librespotEnable": "Использовать librespot (требуется Spotify Premium)",
+        "username": "Имя пользователя Spotify",
+        "username_tooltip": "Ваше имя пользователя Spotify. Обычно это электронная почта",
+        "password": "Пароль Spotify",
+        "password_tooltip": "Ваш пароль от Spotify. Возможно, придётся установить его в настройках Spotify",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Параметры Librespot",
+          "tooltip": "Параметры для изменения поведения librespot",
+          "useSpotifyCanvas": "Показывать видео Spotify Canvas на фоне",
+          "useLibrespotPlayback": "Использовать librespot для воспроизведения треков"
         }
       },
       "youtube": {
         "client_id": "Youtube Client ID",
         "client_secret": "Youtube Client Secret",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "Требуется Youtube Client ID для входа в Youtube. Нажмите, чтобы узнать больше",
+        "client_secret_tooltip": "Требуется Youtube Client Secret для входа в Youtube. Нажмите, чтобы узнать больше"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Альтернативные сервисы YouTube",
+        "tooltip": "Получать данные с Youtube через стороннего провайдера",
+        "useYoutube": "Использовать стандартные сервисы YouTube",
+        "useInvidious": "Использовать сервисы Invidious",
+        "usePiped": "Использовать сервисы Piped",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Экземпляр Piped",
+          "url_tooltip": "Ссылка на экземпляр Piped для использования",
+          "username": "Имя пользователя",
+          "username_tooltip": "Ваше имя пользователя piped в выбранном экземпляре",
+          "password": "Пароль",
+          "password_tooltip": "Ваш пароль piped в выбранном экземпляре"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "Экземпляр Invidious",
+          "url_tooltip": "Ссылка на экземпляр Invidious для использования",
+          "options": "Доп. настройки Invidious",
+          "options_tooltip": "Параметры для тонкого управления воспроизведением Invidious",
+          "always_proxy": "Всегда воспроизводить аудио с прокси Invidious вместо Google видео"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
+          "options": "Доп. настройки Youtube",
           "options_tooltip": "Options to fine control Youtube playback",
           "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
         }
