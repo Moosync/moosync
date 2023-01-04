@@ -40,8 +40,8 @@
   "loading": "加载中...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
-      "album": "Album",
+      "title": "标题",
+      "album": "专辑",
       "artist": "Artist",
       "genre": "Genre",
       "date_added": "Date added",
