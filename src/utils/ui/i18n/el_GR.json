@@ -6,7 +6,7 @@
       "playlists": "Λίστες",
       "albums": "Άλμπουμ",
       "artists": "Καλλιτέχνες",
-      "genre": "Genres",
+      "genre": "Είδος",
       "explore": "Εξερεύνηση"
     }
   },
@@ -18,7 +18,7 @@
     "playlists": "Λίστες",
     "albums": "Άλμπουμ",
     "artists": "Καλλιτέχνες",
-    "genres": "Genres",
+    "genres": "Είδος",
     "explore": "Εξερεύνηση"
   },
   "songView": {
@@ -35,16 +35,16 @@
     "playSingle": "Παίξε {title}",
     "addToQueue": "Προσθήκη {title} στην ουρά",
     "addToLibrary": "Προσθήκη {title} στη βιβλιοθήκη",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "Αναπαραγωγή 100 τυχαίων τραγουδιών"
   },
   "loading": "Φόρτωση...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
-      "album": "Album",
-      "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
+      "title": "Τίτλος",
+      "album": "Άλμπουμ",
+      "artist": "Καλλιτέχνης",
+      "genre": "Είδος",
+      "date_added": "Ημερομηνία προσθήκης",
       "provider": "Πάροχος",
       "playCount": "Play count"
     },
@@ -54,12 +54,12 @@
       "export": "Εξαγωγή λίστας αναπαραγωγής",
       "add": "Προσθήκη Στη Λίστα Αναπαραγωγής",
       "addFromURL": "Προσθήκη λίστας αναπαραγωγής από URL",
-      "save": "Add To Library"
+      "save": "Προσθήκη στη Βιβλιοθήκη"
     },
     "song": {
       "addFromURL": "Προσθήκη από URL",
       "playNow": "Αναπαραγωγή Τώρα",
-      "playNext": "Play Next",
+      "playNext": "Αναπαραγωγή Επόμενου",
       "clearAndPlay": "Clear queue and play",
       "addToQueue": "Προσθήκη Στην Ουρά",
       "moveToTop": "Μετακίνηση στην κορυφή",
