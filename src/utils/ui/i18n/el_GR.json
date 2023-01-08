@@ -232,6 +232,12 @@
         "title": "Ρυθμίσεις Ουράς",
         "tooltip": "Επιλογές για τη ρύθμιση της συμπεριφοράς της ουράς τραγουδιών",
         "clearQueue": "Εκκαθάριση ουράς πριν από την προσθήκη λίστας αναπαραγωγής"
+      },
+      "scrobble": {
+        "provider_toggle": {
+          "title": "Scrobble whitelist",
+          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+        }
       }
     },
     "logs": {
