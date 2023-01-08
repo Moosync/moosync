@@ -232,6 +232,12 @@
         "title": "Queue Settings",
         "tooltip": "Options to tweak the behavior of song queue",
         "clearQueue": "Clear queue before adding playing a playlist"
+      },
+      "scrobble": {
+        "provider_toggle": {
+          "title": "Scrobble whitelist",
+          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+        }
       }
     },
     "logs": {
