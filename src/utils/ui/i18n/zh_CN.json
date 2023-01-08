@@ -232,6 +232,12 @@
         "title": "队列设置",
         "tooltip": "调整歌曲队列行为的选项",
         "clearQueue": "添加播放列表前清除队列"
+      },
+      "scrobble": {
+        "provider_toggle": {
+          "title": "Scrobble whitelist",
+          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+        }
       }
     },
     "logs": {
