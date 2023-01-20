@@ -121,7 +121,8 @@
       "textSecondary": "Δευτερεύον Κείμενο",
       "textInverse": "Αντίστροφο Κείμενο",
       "accent": "Απόχρωση",
-      "divider": "Διαχωριστικό"
+      "divider": "Διαχωριστικό",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "Επεκτάσεις",
