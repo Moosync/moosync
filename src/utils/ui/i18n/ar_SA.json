@@ -121,7 +121,8 @@
       "textSecondary": "ثانوية نصية",
       "textInverse": "عكس النص",
       "accent": "اللكنة",
-      "divider": "الفاصل"
+      "divider": "الفاصل",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "ملحقات",
