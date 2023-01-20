@@ -121,7 +121,8 @@
       "textSecondary": "Вторичный текст",
       "textInverse": "Инвертировать текст",
       "accent": "Оттенок",
-      "divider": "Разделитель"
+      "divider": "Разделитель",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "Расширения",
