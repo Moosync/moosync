@@ -121,7 +121,8 @@
       "textSecondary": "Text Secondary",
       "textInverse": "Text Inverse",
       "accent": "Accent",
-      "divider": "Divider"
+      "divider": "Divider",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "Extensions",
