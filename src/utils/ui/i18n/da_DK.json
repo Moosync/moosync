@@ -121,7 +121,8 @@
       "textSecondary": "Sekundær Tekst",
       "textInverse": "Tekst Omvendt",
       "accent": "Accent",
-      "divider": "Opdeler"
+      "divider": "Opdeler",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "Udvidelser",
