@@ -121,7 +121,8 @@
       "textSecondary": "次标题",
       "textInverse": "文本反转",
       "accent": "强调色",
-      "divider": "分隔符"
+      "divider": "分隔符",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "扩展程序",
