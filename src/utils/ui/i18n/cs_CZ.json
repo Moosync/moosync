@@ -121,7 +121,8 @@
       "textSecondary": "Sekundární text",
       "textInverse": "Inverzní text",
       "accent": "Barva detailů",
-      "divider": "Oddělovač"
+      "divider": "Oddělovač",
+      "import_button": "Import"
     },
     "extensions": {
       "extensions": "Rozšíření",
