@@ -122,7 +122,7 @@
       "textInverse": "Αντίστροφο Κείμενο",
       "accent": "Απόχρωση",
       "divider": "Διαχωριστικό",
-      "import_button": "Import"
+      "import_button": "Εισαγωγή"
     },
     "extensions": {
       "extensions": "Επεκτάσεις",
@@ -236,8 +236,8 @@
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Λίστα επιτρεπόμενων Scrobble",
+          "tooltip": "Ενεργοποίηση παρόχων των οποίων τα τραγούδια θέλετε να είναι scrobble'd"
         }
       }
     },
