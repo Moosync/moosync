@@ -49,11 +49,11 @@
       "playCount": "Počet přehrání"
     },
     "playlist": {
-      "new": "Vytvořit playlist",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "Odstranit seznam skladeb",
       "export": "Exportovat seznam skladeb",
       "add": "Přidat do seznamu skladeb",
-      "addFromURL": "Přidat playlist z URL",
       "save": "Přidat do knihovny"
     },
     "song": {
