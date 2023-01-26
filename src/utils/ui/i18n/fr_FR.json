@@ -49,11 +49,11 @@
       "playCount": "Play count"
     },
     "playlist": {
-      "new": "Créer une playlist",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "Supprimer la playlist",
       "export": "Exporter la liste de lecture",
       "add": "Ajouter à la playlist",
-      "addFromURL": "Ajouter une playlist à partir de l'URL",
       "save": "Add To Library"
     },
     "song": {
