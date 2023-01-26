@@ -49,11 +49,11 @@
       "playCount": "播放次数"
     },
     "playlist": {
-      "new": "创建播放列表",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "从播放列表中移除",
       "export": "导出播放列表",
       "add": "添加到播放列表",
-      "addFromURL": "从 URL 添加播放列表",
       "save": "添加到库"
     },
     "song": {
