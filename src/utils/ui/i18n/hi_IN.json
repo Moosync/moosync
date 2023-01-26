@@ -49,11 +49,11 @@
       "playCount": "Play count"
     },
     "playlist": {
-      "new": "प्लेलिस्ट बनाएँ",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "प्‍लेलिस्‍ट से हटाएं",
       "export": "प्लेलिस्ट निर्यात करें",
       "add": "प्लेलिस्ट में जोड़ें",
-      "addFromURL": "यूआरएल से प्लेलिस्ट में जोड़ें",
       "save": "Add To Library"
     },
     "song": {
