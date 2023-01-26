@@ -49,11 +49,11 @@
       "playCount": "Play count"
     },
     "playlist": {
-      "new": "Creează Playlist",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "Elimină playlist",
       "export": "Exportă playlist",
       "add": "Adaugă la Playlist",
-      "addFromURL": "Adaugă Playlist din URL",
       "save": "Add To Library"
     },
     "song": {
