@@ -49,11 +49,11 @@
       "playCount": "Play count"
     },
     "playlist": {
-      "new": "إنشاء قائمة تشغيل",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "إزالة قائمة التشغيل",
       "export": "تصدير قائمة التشغيل",
       "add": "إضافة إلى قائمة التشغيل",
-      "addFromURL": "إضافة قائمة تشغيل من URL",
       "save": "Add To Library"
     },
     "song": {
