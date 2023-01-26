@@ -49,11 +49,11 @@
       "playCount": "Play count"
     },
     "playlist": {
-      "new": "Opret Spilleliste",
+      "new": "New Playlist",
+      "addFromURL": "Import from URL",
       "remove": "Fjern afspilningsliste",
       "export": "Eksporter afspilningsliste",
       "add": "Føj Til Spilleliste",
-      "addFromURL": "Tilføj afspilningsliste fra URL",
       "save": "Add To Library"
     },
     "song": {
