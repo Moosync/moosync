@@ -107,7 +107,8 @@
       "themes": "Θέματα",
       "themes_tooltip": "Προσαρμογή χρωμάτων",
       "themes_default": "Προεπιλογή",
-      "createTheme": "Δημιουργία νέου θέματος",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Όνομα Θέματος",
         "author": "Συγγραφέας",
