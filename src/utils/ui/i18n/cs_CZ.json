@@ -107,7 +107,8 @@
       "themes": "Motivy",
       "themes_tooltip": "Přizpůsobit barvy",
       "themes_default": "Výchozí",
-      "createTheme": "Vytvořit nový motiv",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Název šablony",
         "author": "Autor",
