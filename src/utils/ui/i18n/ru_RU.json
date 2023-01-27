@@ -107,7 +107,8 @@
       "themes": "Темы",
       "themes_tooltip": "Настройка цвета",
       "themes_default": "По умолчанию",
-      "createTheme": "Создать новую тему",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Название темы",
         "author": "Автор",
