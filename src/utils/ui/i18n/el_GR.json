@@ -49,8 +49,8 @@
       "playCount": "Αριθμός αναπαραγωγών"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "Νέα Λίστα Αναπαραγωγής",
+      "addFromURL": "Εισαγωγή από URL",
       "remove": "Αφαίρεση λίστας αναπαραγωγής",
       "export": "Εξαγωγή λίστας αναπαραγωγής",
       "add": "Προσθήκη Στη Λίστα Αναπαραγωγής",
@@ -107,8 +107,8 @@
       "themes": "Θέματα",
       "themes_tooltip": "Προσαρμογή χρωμάτων",
       "themes_default": "Προεπιλογή",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "Νέο θέμα",
+      "importTheme": "Εισαγωγή θέματος",
       "newTheme": {
         "name": "Όνομα Θέματος",
         "author": "Συγγραφέας",
