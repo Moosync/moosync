@@ -107,7 +107,8 @@
       "themes": "Temaer",
       "themes_tooltip": "Tilpas farver",
       "themes_default": "Standard",
-      "createTheme": "Opret nyt tema",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Tema Navn",
         "author": "Forfatter",
