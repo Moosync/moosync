@@ -107,7 +107,8 @@
       "themes": "Thèmes",
       "themes_tooltip": "Personnaliser les couleurs",
       "themes_default": "Par défaut",
-      "createTheme": "Créer un nouveau thème",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Nom du thème",
         "author": "Auteur",
