@@ -107,7 +107,8 @@
       "themes": "السمات",
       "themes_tooltip": "تخصيص الألوان",
       "themes_default": "الافتراضي",
-      "createTheme": "إنشاء سمة جديدة",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "اسم السمة",
         "author": "المؤلف",
