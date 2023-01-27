@@ -107,7 +107,8 @@
       "themes": "主题",
       "themes_tooltip": "自定义颜色",
       "themes_default": "默认",
-      "createTheme": "创建新主题",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "主题名称",
         "author": "作者",
