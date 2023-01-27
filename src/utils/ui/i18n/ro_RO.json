@@ -107,7 +107,8 @@
       "themes": "Teme",
       "themes_tooltip": "Personalizare culori",
       "themes_default": "Implicit",
-      "createTheme": "Creează o temă nouă",
+      "createTheme": "New theme",
+      "importTheme": "Import theme",
       "newTheme": {
         "name": "Nume Temă",
         "author": "Autor",
