@@ -49,8 +49,8 @@
       "playCount": "播放次数"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "新播放列表",
+      "addFromURL": "从 URL 导入",
       "remove": "从播放列表中移除",
       "export": "导出播放列表",
       "add": "添加到播放列表",
@@ -96,8 +96,8 @@
       "artworkPath_tooltip": "储存下载的目录",
       "thumbnailPath": "已下载缩略图路径",
       "thumbnailPath_tooltip": "存储生成的缩略图的目录",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter": "小艺术家名称分割图案",
+      "splitter_tooltip": "正则表示分割艺术家的名字。留空则禁用分割。"
     },
     "themes": {
       "songView": "歌曲视图",
@@ -107,8 +107,8 @@
       "themes": "主题",
       "themes_tooltip": "自定义颜色",
       "themes_default": "默认",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "新主题",
+      "importTheme": "导入主题",
       "newTheme": {
         "name": "主题名称",
         "author": "作者",
@@ -123,7 +123,7 @@
       "textInverse": "文本反转",
       "accent": "强调色",
       "divider": "分隔符",
-      "import_button": "Import"
+      "import_button": "导入"
     },
     "extensions": {
       "extensions": "扩展程序",
@@ -172,8 +172,8 @@
         "password_tooltip": "您的spotify密码。您可能需要在 Spotify 上设置一个",
         "librespot": {
           "title": "Librespot 选项",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
+          "tooltip": "更改 librespot 行为的选项",
+          "useSpotifyCanvas": "在背景中显示损坏画布视频",
           "useLibrespotPlayback": "使用 librespot 播放歌曲"
         }
       },
@@ -197,9 +197,9 @@
           "url": "Piped 服务",
           "url_tooltip": "提示：要使用 Piped 服务的 URL",
           "username": "用户",
-          "username_tooltip": "Your piped username at the selected instance",
+          "username_tooltip": "您所选实例的管道用户名",
           "password": "密码",
-          "password_tooltip": "Your piped password at the selected instance"
+          "password_tooltip": "您在所选实例中的管道密码"
         },
         "invidious": {
           "url": "Invidious 服务",
@@ -237,8 +237,8 @@
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "滚动白名单",
+          "tooltip": "启用您想要抓取的歌曲的提供商"
         }
       }
     },
