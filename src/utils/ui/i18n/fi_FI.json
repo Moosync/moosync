@@ -1,252 +1,252 @@
 {
   "sidebar": {
     "tabs": {
-      "queue": "Queue",
-      "allSongs": "All Songs",
-      "playlists": "Playlists",
-      "albums": "Albums",
-      "artists": "Artists",
+      "queue": "Jono",
+      "allSongs": "Kaikki Kappaleet",
+      "playlists": "Soittolistat",
+      "albums": "Albumit",
+      "artists": "Esittäjät",
       "genre": "Genres",
-      "explore": "Explore"
+      "explore": "Tutki"
     }
   },
   "topbar": {
-    "searchPlaceholder": "Search...",
-    "noResultsFound": "No results found"
+    "searchPlaceholder": "Etsi...",
+    "noResultsFound": "Tuloksia ei löytynyt"
   },
   "pages": {
-    "playlists": "Playlists",
-    "albums": "Albums",
-    "artists": "Artists",
+    "playlists": "Soittolistat",
+    "albums": "Albumit",
+    "artists": "Esittäjät",
     "genres": "Genres",
-    "explore": "Explore"
+    "explore": "Tutki"
   },
   "songView": {
     "details": {
-      "songCount": "{count} song | {count} songs"
+      "songCount": "{count} kappaletta ¶ {count} kappaletta"
     },
     "songList": {
       "topbar": {
-        "searchPlaceholder": "Search..."
+        "searchPlaceholder": "Etsi..."
       }
     }
   },
   "buttons": {
-    "playSingle": "Play {title}",
-    "addToQueue": "Add {title} to queue",
-    "addToLibrary": "Add {title} to library",
-    "playRandom": "Play 100 random songs"
+    "playSingle": "Pelaa {title}",
+    "addToQueue": "Lisää {title} jonoon",
+    "addToLibrary": "Lisää {title} kirjastoon",
+    "playRandom": "Soita 100 satunnaista kappaletta"
   },
-  "loading": "Loading...",
+  "loading": "Ladataan...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
-      "album": "Album",
-      "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
-      "provider": "Provider",
-      "playCount": "Play count"
+      "title": "Otsikko",
+      "album": "Albumi",
+      "artist": "Esittäjä",
+      "genre": "Lajityyppi",
+      "date_added": "Päivämäärä lisätty",
+      "provider": "Tarjoaja",
+      "playCount": "Toiston määrä"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
-      "remove": "Remove playlist",
-      "export": "Export playlist",
-      "add": "Add To Playlist",
-      "save": "Add To Library"
+      "new": "Uusi Soittolista",
+      "addFromURL": "Tuo URL:sta",
+      "remove": "Poista soittolista",
+      "export": "Vie soittolista",
+      "add": "Lisää Soittolistaan",
+      "save": "Lisää Kirjastoon"
     },
     "song": {
-      "addFromURL": "Add from URL",
-      "playNow": "Play Now",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
-      "addToQueue": "Add To Queue",
-      "moveToTop": "Move to top",
-      "moveToBottom": "Move to bottom",
-      "moveManually": "Move manually",
-      "manualIndex": "Set index of song",
-      "remove": "Remove from Library",
-      "add": "Add Song to Library | Add Songs to Library",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "addFromURL": "Lisää URLista",
+      "playNow": "Toista Nyt",
+      "playNext": "Soita Seuraava",
+      "clearAndPlay": "Tyhjennä jono ja toisto",
+      "addToQueue": "Lisää Jonoon",
+      "moveToTop": "Siirrä ylimmäksi",
+      "moveToBottom": "Siirrä alimmaksi",
+      "moveManually": "Siirrä manuaalisesti",
+      "manualIndex": "Aseta kappaleen indeksi",
+      "remove": "Poista kirjastosta",
+      "add": "Lisää kappale kirjastoon - Lisää kappaleet kirjastoon",
+      "removeFromPlaylist": "Poista soittolistalta",
+      "hideFromLibrary": "Piilota kirjastosta",
+      "showInLibrary": "Näytä kirjastossa",
+      "showHidden": "Näytä piilotetut kappaleet",
+      "hideHidden": "Piilota piilotetut kappaleet"
     },
-    "moreInfo": "More Info"
+    "moreInfo": "Lisää Tietoja"
   },
   "providers": {
     "youtube": "Youtube",
     "spotify": "Spotify",
-    "invidious": "Invidious",
+    "invidious": "Loukkaava",
     "lastfm": "LastFM"
   },
-  "save": "Save",
-  "cancel": "Cancel",
+  "save": "Tallenna",
+  "cancel": "Peruuta",
   "settings": {
     "paths": {
-      "songDirectories": "Song Directories",
-      "songDirectories_tooltip": "Directories where all your local music is stored",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
-      "addFolder": "Add Folder...",
-      "remove": "Remove",
-      "artworkPath": "Downloaded Artwork Path",
-      "artworkPath_tooltip": "Directory where downloaded artworks are stored",
-      "thumbnailPath": "Downloaded Thumbnail Path",
-      "thumbnailPath_tooltip": "Directory where generated thumbnails are stored",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "songDirectories": "Kappaleen Hakemistot",
+      "songDirectories_tooltip": "Hakemisto, johon kaikki paikallinen musiikkisi on tallennettu",
+      "songDirectories_exclude": "Mustalistatut Hakemistot",
+      "songDirectories_exclude_tooltip": "Kappaleita näissä hakemistoissa ei skannattaisi",
+      "addFolder": "Lisää Kansio...",
+      "remove": "Poista",
+      "artworkPath": "Ladattu Kuvauspolku",
+      "artworkPath_tooltip": "Hakemisto, johon ladattuja taideteoksia tallennetaan",
+      "thumbnailPath": "Ladattu Pikkukuvan Polku",
+      "thumbnailPath_tooltip": "Hakemisto, johon luodut pikkukuvat tallennetaan",
+      "splitter": "Esittäjän nimen jakolinja",
+      "splitter_tooltip": "Regex jaetun artistinimet. Jätä tyhjäksi poistaaksesi jakamisen käytöstä."
     },
     "themes": {
-      "songView": "Songs View",
-      "songView_tooltip": "Customize song list appearance",
-      "songView_classic": "Classic",
-      "songView_compact": "Compact",
-      "themes": "Themes",
-      "themes_tooltip": "Customize colors",
-      "themes_default": "Default",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "songView": "Kappaleiden Näkymä",
+      "songView_tooltip": "Muokkaa kappalelistan ulkoasua",
+      "songView_classic": "Klassinen",
+      "songView_compact": "Kompakti",
+      "themes": "Teemat",
+      "themes_tooltip": "Muokkaa värejä",
+      "themes_default": "Oletus",
+      "createTheme": "Uusi teema",
+      "importTheme": "Tuo teema",
       "newTheme": {
-        "name": "Theme Name",
-        "author": "Author",
-        "colors": "Colors",
-        "colors_tooltip": "Change the colors to customise UI"
+        "name": "Teeman Nimi",
+        "author": "Tekijä",
+        "colors": "Värit",
+        "colors_tooltip": "Muuta värejä muokkataksesi käyttöliittymää"
       },
-      "primary": "Primary",
-      "secondary": "Secondary",
-      "tertiary": "Tertiary",
-      "textPrimary": "Text Primary",
-      "textSecondary": "Text Secondary",
-      "textInverse": "Text Inverse",
-      "accent": "Accent",
-      "divider": "Divider",
-      "import_button": "Import"
+      "primary": "Ensisijainen",
+      "secondary": "Toissijainen",
+      "tertiary": "Korkea-aste",
+      "textPrimary": "Tekstin Ensisijainen",
+      "textSecondary": "Tekstin Toissijainen",
+      "textInverse": "Teksti Käänteinen",
+      "accent": "Korostus",
+      "divider": "Jakaja",
+      "import_button": "Tuo"
     },
     "extensions": {
-      "extensions": "Extensions",
-      "extensions_tooltip": "List of all installed extensions",
-      "discover": "Discover",
-      "install": "Install from file",
-      "remove": "Remove"
+      "extensions": "Laajennukset",
+      "extensions_tooltip": "Luettelo kaikista asennetuista laajennuksista",
+      "discover": "Löydä",
+      "install": "Asenna tiedostosta",
+      "remove": "Poista"
     },
     "system": {
       "systemSettings": {
-        "title": "System Settings",
-        "systemStartup": "Start app on system startup",
-        "minimizeTray": "Minimize to tray on close",
-        "hardwareAcceleration": "Use GPU hardware acceleration",
-        "watchFileChanges": "Watch music directories for changes",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "title": "Järjestelmän Asetukset",
+        "systemStartup": "Käynnistä sovellus järjestelmän käynnistyessä",
+        "minimizeTray": "Pienennä ilmoitusalueelle suljettaessa",
+        "hardwareAcceleration": "Käytä GPU-laitteistokiihdytystä",
+        "watchFileChanges": "Katso musiikin hakemistoja muutoksille",
+        "enableJukeboxMode": "Ota käyttöön valinta Jukebox-tilaan"
       },
-      "systemSettings_tooltip": "Settings which are related to your system",
+      "systemSettings_tooltip": "Asetukset, jotka liittyvät järjestelmääsi",
       "audioSettings": {
-        "title": "Audio Settings",
-        "gaplessPlayback": "Use gapless playback for wherever possible",
-        "sponsorBlock": "Use SponsorBlock to automatically skip to highlighted part of Youtube song"
+        "title": "Äänen Asetukset",
+        "gaplessPlayback": "Käytä aukkotonta toistoa aina kun se on mahdollista",
+        "sponsorBlock": "Käytä SponsorBlockia ohittaaksesi automaattisesti Youtube-kappaleen korostetun osan"
       },
-      "audioSettings_tooltip": "Settings which are related audio playback",
-      "invidiousUrlUnsupported": "This url does not support Invidious API",
-      "invidious_tooltip": "Invidious instance to use instead of youtube",
-      "restartApp": "Restart Moosync",
-      "zoom": "Zoom Factor (Beta)",
-      "zoom_tooltip": "Zoom of windows in percentage. This may break the UI.",
+      "audioSettings_tooltip": "Asetukset, jotka liittyvät äänen toistoon",
+      "invidiousUrlUnsupported": "Tämä url ei tue Invidious API",
+      "invidious_tooltip": "Invidious instanssi käyttää sijasta youtube",
+      "restartApp": "Käynnistä Moosync Uudelleen",
+      "zoom": "Zoomaustekijä (Beta)",
+      "zoom_tooltip": "Suurenna ikkunoita prosentteina. Tämä saattaa rikkoa käyttöliittymän.",
       "spotify": {
-        "client_id": "Spotify Client ID",
-        "client_id_tooltip": "Spotify client ID required to login to Spotify. Click to know more",
-        "client_secret": "Spotify Client Secret",
-        "client_secret_tooltip": "Spotify client Secret required to login to Spotify. Click to know more",
-        "autoFetchButton": "Get Spotify details automatically",
-        "autoFetchPreTitle": "Get",
-        "autoFetchTitle": "ClientID and Secret",
-        "autoFetchDisclaimer": "A window will now open where you will be asked to login to your Spotify account. After logging in please do not click anywhere as the whole process will be automated",
-        "openWindow": "Open Window",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "client_id": "Spotify Asiakkaan Tunnus",
+        "client_id_tooltip": "Spotify asiakastunnus, joka vaaditaan kirjautumaan Spotifyyn. Lue lisää napsauttamalla",
+        "client_secret": "Spotify Asiakkaan Salainen",
+        "client_secret_tooltip": "Spotify asiakkaan salaisuus, joka vaaditaan kirjautumaan Spotifyyn. Lue lisää napsauttamalla",
+        "autoFetchButton": "Spotifyn tiedot automaattisesti",
+        "autoFetchPreTitle": "Hanki",
+        "autoFetchTitle": "AsiakasID ja salainen",
+        "autoFetchDisclaimer": "Ikkuna avautuu nyt minne sinua pyydetään kirjautumaan Spotify-tilillesi. Kun olet kirjautunut sisään, älä klikkaa mitään koska koko prosessi automatisoidaan",
+        "openWindow": "Avaa Ikkuna",
+        "title": "Spotifyn Asetukset",
+        "tooltip": "Vaihtoehdot, joilla muutetaan spotify toiston käyttäytymistä",
+        "librespotEnable": "Käytä librespotia (Spotify Premium vaaditaan)",
+        "username": "Spotify käyttäjänimi",
+        "username_tooltip": "Sinun spotify käyttäjätunnus. Yleensä sähköpostiosoitteesi",
+        "password": "Spotify salasana",
+        "password_tooltip": "spotify salasana. Saatat joutua asettamaan yhden Spotifyn asetuksista",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Librespot asetukset",
+          "tooltip": "Valinnat librespotin käyttäytymisen muuttamiseksi",
+          "useSpotifyCanvas": "Näytä spotify canvas video taustalla",
+          "useLibrespotPlayback": "Käytä librespotia kappaleen soittoon"
         }
       },
       "youtube": {
-        "client_id": "Youtube Client ID",
-        "client_secret": "Youtube Client Secret",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id": "Youtube Asiakkaan Tunnus",
+        "client_secret": "Youtube Asiakkaan Salainen",
+        "client_id_tooltip": "Youtube asiakastunnus vaaditaan kirjautumaan Youtubeen. Klikkaa nähdäksesi lisää",
+        "client_secret_tooltip": "Youtube client Secret vaaditaan kirjautumaan Youtubeen. Klikkaa tietääksesi lisää"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Youtube Vaihtoehtoiset palvelut",
+        "tooltip": "Hanki tietoja Youtubesta kolmannen osapuolen palveluntarjoajan kautta",
+        "useYoutube": "Käytä Youtuben oletuspalveluita",
+        "useInvidious": "Käytä pahoja palveluita",
+        "usePiped": "Käytä putkien palveluita",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Putkitettu Paketti",
+          "url_tooltip": "Käytettävä Piped-ilmentymän URL",
+          "username": "Käyttäjätunnus",
+          "username_tooltip": "Ohjattu käyttäjänimesi valitussa instanssissa",
+          "password": "Salasana",
+          "password_tooltip": "Ohjattu salasanasi valitussa instanssissa"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "Loukkaava Ilmestys",
+          "url_tooltip": "Käytettävä Invidious instanssi URL",
+          "options": "Edistyneet uskomattomat asetukset",
+          "options_tooltip": "Valinnat hienoon ohjaukseen Invidious toisto",
+          "always_proxy": "Toista aina invidiaalisen välityspalvelimen ääntä Google-videon sijaan"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Youtuben lisäasetukset",
+          "options_tooltip": "Valinnat hienon hallinnan Youtube toisto",
+          "useEmbeds": "Käytä Youtuben upotuksia soittaaksesi ääntä Youtubesta"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Kieli",
+      "language_tooltip": "Vaihda käyttöliittymän kieli",
+      "clearPreferences": "Palauta oletukset",
+      "clear_preferences_title": "Palauta oletusarvo?",
+      "clear_preferences": "Oletko varma, että haluat palauttaa kaiken oletukseksi? Sovellus käynnistyy uudelleen nollauksen jälkeen.",
+      "clear_preferences_button": "Vahvista",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "Jukebox-tilan pinni",
+        "pin_tooltip": "Jukebox-tilasta poistuminen vaatii Tis pin -pinnin. Pitäisi olla numeerinen."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Sanoitusten tarjoajat",
+        "tooltip": "Valitse sanoitusten tarjoajat joita käytetään etsimään sanoituksia",
+        "az_lyrics": "Käytä AZLyrics",
+        "google_lyrics": "Käytä Googlen hakusanoituksia"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Jonon Asetukset",
+        "tooltip": "Valinnat kappaleen jonon käyttäytymisen muokkaamiseen",
+        "clearQueue": "Tyhjennä jono ennen soittolistan lisäämistä"
       },
       "scrobble": {
         "provider_toggle": {
           "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "tooltip": "Ota käyttöön palveluntarjoajat, joiden kappaleet haluat olla scrobble'd"
         }
       }
     },
     "logs": {
-      "logSettings": "Log Settings",
-      "level": "Level",
-      "process": "Process",
-      "filterMessage": "Filter Message"
+      "logSettings": "Lokin Asetukset",
+      "level": "Taso",
+      "process": "Prosessi",
+      "filterMessage": "Suodata Viesti"
     }
   }
 }
