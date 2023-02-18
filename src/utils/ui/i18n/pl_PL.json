@@ -1,252 +1,252 @@
 {
   "sidebar": {
     "tabs": {
-      "queue": "Queue",
-      "allSongs": "All Songs",
-      "playlists": "Playlists",
-      "albums": "Albums",
-      "artists": "Artists",
+      "queue": "Kolejka",
+      "allSongs": "Wszystkie utwory",
+      "playlists": "Listy odtwarzania",
+      "albums": "Albumy",
+      "artists": "Artyści",
       "genre": "Genres",
-      "explore": "Explore"
+      "explore": "Przeglądaj"
     }
   },
   "topbar": {
-    "searchPlaceholder": "Search...",
-    "noResultsFound": "No results found"
+    "searchPlaceholder": "Szukaj...",
+    "noResultsFound": "Nie znaleziono wyników"
   },
   "pages": {
-    "playlists": "Playlists",
-    "albums": "Albums",
-    "artists": "Artists",
+    "playlists": "Listy odtwarzania",
+    "albums": "Albumy",
+    "artists": "Artyści",
     "genres": "Genres",
-    "explore": "Explore"
+    "explore": "Przeglądaj"
   },
   "songView": {
     "details": {
-      "songCount": "{count} song | {count} songs"
+      "songCount": "{count} utwór | {count} utwór"
     },
     "songList": {
       "topbar": {
-        "searchPlaceholder": "Search..."
+        "searchPlaceholder": "Szukaj..."
       }
     }
   },
   "buttons": {
-    "playSingle": "Play {title}",
-    "addToQueue": "Add {title} to queue",
-    "addToLibrary": "Add {title} to library",
-    "playRandom": "Play 100 random songs"
+    "playSingle": "Zagraj {title}",
+    "addToQueue": "Dodaj {title} do kolejki",
+    "addToLibrary": "Dodaj {title} do biblioteki",
+    "playRandom": "Odtwórz 100 losowych utworów"
   },
-  "loading": "Loading...",
+  "loading": "Ładowanie...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
+      "title": "Rozporządzenie Rady (EWG) nr 2658/87 z dnia 23 lipca 1987 r. w sprawie nomenklatury taryfowej i statystycznej oraz w sprawie Wspólnej Taryfy Celnej (Dz.U. L 256 z 7.9.1987, s. 1).",
       "album": "Album",
-      "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
-      "provider": "Provider",
-      "playCount": "Play count"
+      "artist": "Artysta",
+      "genre": "Rodzaj",
+      "date_added": "Data dodania",
+      "provider": "Dostawca",
+      "playCount": "Liczba odtworzeń"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
-      "remove": "Remove playlist",
-      "export": "Export playlist",
-      "add": "Add To Playlist",
-      "save": "Add To Library"
+      "new": "Nowa playlista",
+      "addFromURL": "Importuj z URL",
+      "remove": "Usuń listę odtwarzania",
+      "export": "Eksportuj playlistę",
+      "add": "Dodaj do playlisty",
+      "save": "Dodaj do biblioteki"
     },
     "song": {
-      "addFromURL": "Add from URL",
-      "playNow": "Play Now",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
-      "addToQueue": "Add To Queue",
-      "moveToTop": "Move to top",
-      "moveToBottom": "Move to bottom",
-      "moveManually": "Move manually",
-      "manualIndex": "Set index of song",
-      "remove": "Remove from Library",
-      "add": "Add Song to Library | Add Songs to Library",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "addFromURL": "Dodaj z adresu URL",
+      "playNow": "Zagraj teraz",
+      "playNext": "Odtwórz następny",
+      "clearAndPlay": "Wyczyść kolejkę i zagraj",
+      "addToQueue": "Dodaj do kolejki",
+      "moveToTop": "Przenieś na górę",
+      "moveToBottom": "Przenieś na dół",
+      "moveManually": "Przenieś ręcznie",
+      "manualIndex": "Ustaw indeks utworu",
+      "remove": "Usuń z biblioteki",
+      "add": "Dodaj utwór do biblioteki | Dodaj utwór do biblioteki",
+      "removeFromPlaylist": "Usuń z listy odtwarzania",
+      "hideFromLibrary": "Ukryj z biblioteki",
+      "showInLibrary": "Pokaż w bibliotece",
+      "showHidden": "Pokaż ukryte utwory",
+      "hideHidden": "Ukryj ukryte utwory"
     },
-    "moreInfo": "More Info"
+    "moreInfo": "Więcej informacji"
   },
   "providers": {
-    "youtube": "Youtube",
+    "youtube": "YouTube",
     "spotify": "Spotify",
-    "invidious": "Invidious",
+    "invidious": "Inny",
     "lastfm": "LastFM"
   },
-  "save": "Save",
-  "cancel": "Cancel",
+  "save": "Zapisz",
+  "cancel": "Anuluj",
   "settings": {
     "paths": {
-      "songDirectories": "Song Directories",
-      "songDirectories_tooltip": "Directories where all your local music is stored",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
-      "addFolder": "Add Folder...",
-      "remove": "Remove",
-      "artworkPath": "Downloaded Artwork Path",
-      "artworkPath_tooltip": "Directory where downloaded artworks are stored",
-      "thumbnailPath": "Downloaded Thumbnail Path",
-      "thumbnailPath_tooltip": "Directory where generated thumbnails are stored",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "songDirectories": "Katalogi utworów",
+      "songDirectories_tooltip": "Katalogi, w których przechowywana jest cała twoja lokalna muzyka",
+      "songDirectories_exclude": "Katalogi na czarnej liście",
+      "songDirectories_exclude_tooltip": "Utwory w tych katalogach nie będą skanowane",
+      "addFolder": "Dodaj folder...",
+      "remove": "Usuń",
+      "artworkPath": "Ścieżka do pobranych prac",
+      "artworkPath_tooltip": "Katalog, w którym przechowywane są pobrane prace",
+      "thumbnailPath": "Ścieżka do pobranych miniatur",
+      "thumbnailPath_tooltip": "Katalog, w którym generowane miniatury są przechowywane",
+      "splitter": "Wzór podziału nazwy artysty",
+      "splitter_tooltip": "Regex, aby podzielić nazwy artysty. Pozostaw puste, aby wyłączyć dzielenie."
     },
     "themes": {
-      "songView": "Songs View",
-      "songView_tooltip": "Customize song list appearance",
-      "songView_classic": "Classic",
-      "songView_compact": "Compact",
-      "themes": "Themes",
-      "themes_tooltip": "Customize colors",
-      "themes_default": "Default",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "songView": "Widok utworów",
+      "songView_tooltip": "Dostosuj wygląd listy utworów",
+      "songView_classic": "Klasyczny",
+      "songView_compact": "Kompaktowy",
+      "themes": "Motywy",
+      "themes_tooltip": "Dostosuj kolory",
+      "themes_default": "Domyślny",
+      "createTheme": "Nowy motyw",
+      "importTheme": "Importuj motyw",
       "newTheme": {
-        "name": "Theme Name",
-        "author": "Author",
-        "colors": "Colors",
-        "colors_tooltip": "Change the colors to customise UI"
+        "name": "Nazwa motywu",
+        "author": "Autor",
+        "colors": "Kolory",
+        "colors_tooltip": "Zmień kolory, aby dostosować interfejs"
       },
-      "primary": "Primary",
-      "secondary": "Secondary",
-      "tertiary": "Tertiary",
-      "textPrimary": "Text Primary",
-      "textSecondary": "Text Secondary",
-      "textInverse": "Text Inverse",
-      "accent": "Accent",
-      "divider": "Divider",
-      "import_button": "Import"
+      "primary": "Podstawowy",
+      "secondary": "Drugorzędny",
+      "tertiary": "Wyżynne",
+      "textPrimary": "Tekst podstawowy",
+      "textSecondary": "Drugi tekst",
+      "textInverse": "Tekst odwrotny",
+      "accent": "Akcent",
+      "divider": "Dystrybucja",
+      "import_button": "Importuj"
     },
     "extensions": {
-      "extensions": "Extensions",
-      "extensions_tooltip": "List of all installed extensions",
-      "discover": "Discover",
-      "install": "Install from file",
-      "remove": "Remove"
+      "extensions": "Rozszerzenia",
+      "extensions_tooltip": "Lista wszystkich zainstalowanych rozszerzeń",
+      "discover": "Odkryj",
+      "install": "Instaluj z pliku",
+      "remove": "Usuń"
     },
     "system": {
       "systemSettings": {
-        "title": "System Settings",
-        "systemStartup": "Start app on system startup",
-        "minimizeTray": "Minimize to tray on close",
-        "hardwareAcceleration": "Use GPU hardware acceleration",
-        "watchFileChanges": "Watch music directories for changes",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "title": "Ustawienia systemowe",
+        "systemStartup": "Uruchom aplikację przy starcie systemu",
+        "minimizeTray": "Minimalizuj do zasobnika po zamknięciu",
+        "hardwareAcceleration": "Użyj akceleracji sprzętowej GPU",
+        "watchFileChanges": "Obejrzyj katalogi muzyczne dla zmian",
+        "enableJukeboxMode": "Włącz przełączanie w trybie Jukebox"
       },
-      "systemSettings_tooltip": "Settings which are related to your system",
+      "systemSettings_tooltip": "Ustawienia powiązane z Twoim systemem",
       "audioSettings": {
-        "title": "Audio Settings",
-        "gaplessPlayback": "Use gapless playback for wherever possible",
-        "sponsorBlock": "Use SponsorBlock to automatically skip to highlighted part of Youtube song"
+        "title": "Ustawienia audio",
+        "gaplessPlayback": "Użyj bez przerw odtwarzania, gdy tylko jest to możliwe",
+        "sponsorBlock": "Użyj SponsorBlock, aby automatycznie pominąć podświetloną część utworu YouTube"
       },
-      "audioSettings_tooltip": "Settings which are related audio playback",
-      "invidiousUrlUnsupported": "This url does not support Invidious API",
-      "invidious_tooltip": "Invidious instance to use instead of youtube",
-      "restartApp": "Restart Moosync",
-      "zoom": "Zoom Factor (Beta)",
-      "zoom_tooltip": "Zoom of windows in percentage. This may break the UI.",
+      "audioSettings_tooltip": "Ustawienia powiązane z odtwarzaniem dźwięku",
+      "invidiousUrlUnsupported": "Ten adres URL nie obsługuje Invidious API",
+      "invidious_tooltip": "Podejrzana instancja do użycia zamiast Youtube",
+      "restartApp": "Uruchom ponownie Moosync",
+      "zoom": "Współczynnik powiększenia (beta)",
+      "zoom_tooltip": "Powiększenie okien w procentach. Może to zniszczyć interfejs użytkownika.",
       "spotify": {
-        "client_id": "Spotify Client ID",
-        "client_id_tooltip": "Spotify client ID required to login to Spotify. Click to know more",
-        "client_secret": "Spotify Client Secret",
-        "client_secret_tooltip": "Spotify client Secret required to login to Spotify. Click to know more",
-        "autoFetchButton": "Get Spotify details automatically",
-        "autoFetchPreTitle": "Get",
-        "autoFetchTitle": "ClientID and Secret",
-        "autoFetchDisclaimer": "A window will now open where you will be asked to login to your Spotify account. After logging in please do not click anywhere as the whole process will be automated",
-        "openWindow": "Open Window",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "client_id": "Identyfikator klienta Spotify",
+        "client_id_tooltip": "Wymagany identyfikator klienta Spotify aby zalogować się do Spotify. Kliknij, aby dowiedzieć się więcej",
+        "client_secret": "Sekret klienta Spotify",
+        "client_secret_tooltip": "Wymagany sekret Spotify klienta aby zalogować się do Spotify. Kliknij, aby dowiedzieć się więcej",
+        "autoFetchButton": "Automatycznie pobierz szczegóły Spotify",
+        "autoFetchPreTitle": "Pobierz",
+        "autoFetchTitle": "Identyfikator klienta i sekret",
+        "autoFetchDisclaimer": "Okienko zostanie teraz otwarte, gdzie zostaniesz poproszony o zalogowanie się na swoje konto Spotify. Po zalogowaniu proszę nie klikaj nigdzie , ponieważ cały proces będzie zautomatyzowany",
+        "openWindow": "Otwórz okno",
+        "title": "Ustawienia Spotify",
+        "tooltip": "Opcje, aby zmienić zachowanie odtwarzacza spotify",
+        "librespotEnable": "Użyj librespot (Spotify Premium wymagane)",
+        "username": "Nazwa użytkownika Spotify",
+        "username_tooltip": "Twoja spotify nazwa użytkownika. Zwykle Twój e-mail",
+        "password": "Hasło Spotify",
+        "password_tooltip": "Twoje hasło spotify. Być może będziesz musiał ustawić je w ustawieniach w Spotify",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Opcje Librespot",
+          "tooltip": "Opcje zmiany zachowania librespot",
+          "useSpotifyCanvas": "Pokaż płótno spotify w tle",
+          "useLibrespotPlayback": "Użyj librespot do odtwarzania utworu"
         }
       },
       "youtube": {
-        "client_id": "Youtube Client ID",
-        "client_secret": "Youtube Client Secret",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id": "ID klienta YouTube",
+        "client_secret": "Sekret klienta YouTube",
+        "client_id_tooltip": "Wymagane ID klienta YouTube aby zalogować się do Youtube. Kliknij, aby dowiedzieć się więcej",
+        "client_secret_tooltip": "Klient YouTube musi się zalogować do Youtube. Kliknij, aby dowiedzieć się więcej"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Alternatywne usługi YouTube",
+        "tooltip": "Uzyskaj dane z YouTube za pośrednictwem zewnętrznego dostawcy",
+        "useYoutube": "Użyj domyślnych usług YouTube",
+        "useInvidious": "Korzystaj z bezużytecznych usług",
+        "usePiped": "Użyj usług Piped",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Instancja Piped",
+          "url_tooltip": "Adres URL instancji Piped do użycia",
+          "username": "Nazwa użytkownika",
+          "username_tooltip": "Twoja nazwa użytkownika w wybranej instancji",
+          "password": "Hasło",
+          "password_tooltip": "Twoje hasło w wybranej instancji"
         },
         "invidious": {
           "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url_tooltip": "Adres URL invidious instance do użycia",
+          "options": "Zaawansowane opcje owadów",
+          "options_tooltip": "Opcje do kontrolowania niesamowitego odtwarzania",
+          "always_proxy": "Zawsze odtwarzaj dźwięk z Invidious proxy zamiast filmu Google"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Zaawansowane opcje YouTube",
+          "options_tooltip": "Opcje sterowania odtwarzaniem YouTube",
+          "useEmbeds": "Użyj osadzeń z YouTube do odtwarzania dźwięku z YouTube"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Język",
+      "language_tooltip": "Zmień język interfejsu",
+      "clearPreferences": "Przywróć domyślne",
+      "clear_preferences_title": "Przywrócić domyślne?",
+      "clear_preferences": "Czy na pewno chcesz zresetować wszystko do domyślnych? Aplikacja zostanie zrestartowana po zresetowaniu.",
+      "clear_preferences_button": "Potwierdź",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "Przypinka trybu Jukebox",
+        "pin_tooltip": "Przypinek Tis będzie wymagany, aby wyjść z trybu Jukebox. Powinno być numeryczny."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Dostawcy tekstów",
+        "tooltip": "Wybierz dostawców tekstów piosenek do wyszukiwania tekstów",
+        "az_lyrics": "Użyj AZLyrics",
+        "google_lyrics": "Użyj tekstów wyszukiwania Google"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Ustawienia kolejki",
+        "tooltip": "Opcje dostosowania zachowania kolejki piosenek",
+        "clearQueue": "Wyczyść kolejkę przed dodaniem odtwarzania listy odtwarzania"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Scrobble Biała lista",
+          "tooltip": "Włącz dostawców, których utwory chcesz być scrobble'd"
         }
       }
     },
     "logs": {
-      "logSettings": "Log Settings",
-      "level": "Level",
-      "process": "Process",
-      "filterMessage": "Filter Message"
+      "logSettings": "Ustawienia dziennika",
+      "level": "Poziom",
+      "process": "Proces",
+      "filterMessage": "Filtruj wiadomość"
     }
   }
 }
