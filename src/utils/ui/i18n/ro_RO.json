@@ -35,32 +35,32 @@
     "playSingle": "Joacă {title}",
     "addToQueue": "Adaugă {title} la coadă",
     "addToLibrary": "Adaugă {title} la bibliotecă",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "Joacă 100 melodii aleatoare"
   },
   "loading": "Încărcare...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
+      "title": "Titlu",
       "album": "Album",
       "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
+      "genre": "Gen",
+      "date_added": "Data adăugării",
       "provider": "Furnizor",
-      "playCount": "Play count"
+      "playCount": "Număr de redări"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "Playlist nou",
+      "addFromURL": "Importă din URL",
       "remove": "Elimină playlist",
       "export": "Exportă playlist",
       "add": "Adaugă la Playlist",
-      "save": "Add To Library"
+      "save": "Adaugă la bibliotecă"
     },
     "song": {
       "addFromURL": "Adaugă din URL",
       "playNow": "Redă acum",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
+      "playNext": "Redă următorul",
+      "clearAndPlay": "Curăță coada de redare",
       "addToQueue": "Adaugă la coadă",
       "moveToTop": "Mută în sus",
       "moveToBottom": "Mută jos",
@@ -68,11 +68,11 @@
       "manualIndex": "Setează indexul melodiei",
       "remove": "Elimină din bibliotecă",
       "add": "Adaugă melodie la bibliotecă <unk> Adaugă melodii la bibliotecă",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "removeFromPlaylist": "Elimină din playlist",
+      "hideFromLibrary": "Ascunde din bibliotecă",
+      "showInLibrary": "Arată în bibliotecă",
+      "showHidden": "Arată melodiile ascunse",
+      "hideHidden": "Ascunde melodiile ascunse"
     },
     "moreInfo": "Mai multe informații"
   },
@@ -88,16 +88,16 @@
     "paths": {
       "songDirectories": "Directoare melodii",
       "songDirectories_tooltip": "Directoare unde toată muzica ta locală este stocată",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
+      "songDirectories_exclude": "Dosare blocate",
+      "songDirectories_exclude_tooltip": "Melodiile din aceste directoare nu ar fi scanate",
       "addFolder": "Adaugă Dosar...",
       "remove": "Elimină",
       "artworkPath": "Calea Artwork descărcată",
       "artworkPath_tooltip": "Director în care sunt stocate opere de artă descărcate",
       "thumbnailPath": "Calea de miniatură descărcată",
       "thumbnailPath_tooltip": "Directorul unde miniaturile generate sunt stocate",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter": "Sablon divizat pentru numele artistului",
+      "splitter_tooltip": "Regex pentru împărțirea numelor artiștilor. Lăsați gol pentru a dezactiva divizarea."
     },
     "themes": {
       "songView": "Vizualizare melodii",
@@ -107,8 +107,8 @@
       "themes": "Teme",
       "themes_tooltip": "Personalizare culori",
       "themes_default": "Implicit",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "Temă nouă",
+      "importTheme": "Importă tema",
       "newTheme": {
         "name": "Nume Temă",
         "author": "Autor",
@@ -123,7 +123,7 @@
       "textInverse": "Text inversat",
       "accent": "Accent",
       "divider": "Divider",
-      "import_button": "Import"
+      "import_button": "Importă"
     },
     "extensions": {
       "extensions": "Extensii",
@@ -139,7 +139,7 @@
         "minimizeTray": "Minimizează în tăviță la închidere",
         "hardwareAcceleration": "Folosește accelerarea hardware GPU",
         "watchFileChanges": "Urmărește directoarele de muzică pentru modificări",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "Activează comutator pentru modul Jukebox"
       },
       "systemSettings_tooltip": "Setări care sunt legate de sistemul dvs.",
       "audioSettings": {
@@ -163,82 +163,82 @@
         "autoFetchTitle": "ClientID și Secret",
         "autoFetchDisclaimer": "O fereastră se va deschide acum unde vi se va cere să vă autentificați în contul Spotify. După autentificare, nu faceţi clic nicăieri deoarece întregul proces va fi automat",
         "openWindow": "Deschide fereastra",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "title": "Setări Spotify",
+        "tooltip": "Opțiuni pentru a schimba comportamentul de redare spotify",
+        "librespotEnable": "Utilizaţi librespot (Spotify Premium necesar)",
+        "username": "Nume utilizator Spotify",
+        "username_tooltip": "Numele de utilizator spotify. De obicei, e-mailul dvs.",
+        "password": "Parola Spotify",
+        "password_tooltip": "Parola ta spotife. Poate fi necesar să o setezi în setările Spotify",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Opțiuni Librespot",
+          "tooltip": "Opțiuni de modificare a comportamentului librespot",
+          "useSpotifyCanvas": "Arată pânză spotify video în fundal",
+          "useLibrespotPlayback": "Folosește librespot pentru redarea piesei"
         }
       },
       "youtube": {
         "client_id": "ID Client YouTube",
         "client_secret": "Secret Client Youtube",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "ID client Youtube necesar pentru conectare pe Youtube. Click pentru a afla mai multe",
+        "client_secret_tooltip": "Secretul clientului Youtube este necesar pentru a te autentifica pe Youtube. Apasă pentru a afla mai multe"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Servicii alternative YouTube",
+        "tooltip": "Obține date de la Youtube printr-un furnizor terț",
+        "useYoutube": "Folosește serviciile Youtube implicite",
+        "useInvidious": "Folosește servicii invidioase",
+        "usePiped": "Utilizează servicii Piped",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Instanță conductă",
+          "url_tooltip": "URL-ul instanței conductelor de utilizat",
+          "username": "Nume",
+          "username_tooltip": "Numele de utilizator dirijat la instanța selectată",
+          "password": "Parolă",
+          "password_tooltip": "Parola conductată în instanța selectată"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "Instanță Invidioasă",
+          "url_tooltip": "URL-ul instanței invidioase de folosit",
+          "options": "Opțiuni Invidious avansate",
+          "options_tooltip": "Opțiuni pentru controlul redării invidioase",
+          "always_proxy": "Redă întotdeauna audio de la un proxy invidios în loc de video Google"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Opțiuni avansate YouTube",
+          "options_tooltip": "Opţiuni de a îmbunătăţi controlul redării YouTube",
+          "useEmbeds": "Folosește embeds Youtube pentru a reda audio de pe Youtube"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Limba",
+      "language_tooltip": "Schimbă limba interfeței",
+      "clearPreferences": "Resetare la valorile implicite",
+      "clear_preferences_title": "Resetați la valorile implicite?",
+      "clear_preferences": "Ești sigur că vrei să resetezi totul la valorile implicite? Aplicația va reporni după resetare.",
+      "clear_preferences_button": "Confirmare",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "Fixare mod Jukebox",
+        "pin_tooltip": "Pin-ul de cis va fi necesar pentru a ieși din Modul Jukebox. Ar trebui să fie numeric."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Furnizori de versuri",
+        "tooltip": "Selectează ce furnizori de versuri să folosească pentru a căuta versuri",
+        "az_lyrics": "Folosește AZLyrics",
+        "google_lyrics": "Utilizează versuri de căutare Google"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Setări coadă",
+        "tooltip": "Opțiuni de reglare a comportamentului listei de redare",
+        "clearQueue": "Șterge coada de așteptare înainte de a adăuga o listă de redare"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Lista albă scrubble",
+          "tooltip": "Activează furnizorii ale căror melodii vrei să fie scrobblew"
         }
       }
     },
