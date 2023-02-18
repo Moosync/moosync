@@ -35,32 +35,32 @@
     "playSingle": "Spiele {title}",
     "addToQueue": "{title} zur Warteschlange hinzufügen",
     "addToLibrary": "{title} zur Bibliothek hinzufügen",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "100 zufällige Titel abspielen"
   },
   "loading": "Wird geladen...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
+      "title": "Titel",
       "album": "Album",
-      "artist": "Artist",
+      "artist": "Künstler",
       "genre": "Genre",
-      "date_added": "Date added",
+      "date_added": "Hinzugefügt am",
       "provider": "Anbieter",
-      "playCount": "Play count"
+      "playCount": "Wiedergabezähler"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "Neue Playlist",
+      "addFromURL": "Von URL importieren",
       "remove": "Playlist entfernen",
       "export": "Playlist exportieren",
       "add": "Zur Playlist hinzufügen",
-      "save": "Add To Library"
+      "save": "Zur Bibliothek hinzufügen"
     },
     "song": {
       "addFromURL": "Von URL hinzufügen",
       "playNow": "Jetzt spielen",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
+      "playNext": "Nächste spielen",
+      "clearAndPlay": "Warteschlange leeren und abspielen",
       "addToQueue": "Zur Warteschlange hinzufügen",
       "moveToTop": "Nach oben",
       "moveToBottom": "Nach unten",
@@ -68,11 +68,11 @@
       "manualIndex": "Index des Liedes festlegen",
       "remove": "Aus der Bibliothek entfernen",
       "add": "Füge Song zur Bibliothek hinzu | Füge Titel zur Bibliothek hinzu",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
+      "hideFromLibrary": "In der Bibliothek ausblenden",
+      "showInLibrary": "In Bibliothek anzeigen",
+      "showHidden": "Versteckte Lieder anzeigen",
+      "hideHidden": "Versteckte Lieder ausblenden"
     },
     "moreInfo": "Mehr Info"
   },
@@ -88,16 +88,16 @@
     "paths": {
       "songDirectories": "Songverzeichnisse",
       "songDirectories_tooltip": "Verzeichnisse, in denen Ihre lokale Musik gespeichert ist",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
+      "songDirectories_exclude": "Gesperrte Verzeichnisse",
+      "songDirectories_exclude_tooltip": "Songs in diesen Verzeichnissen würden nicht gescannt werden",
       "addFolder": "Ordner hinzufügen...",
       "remove": "Entfernen",
       "artworkPath": "Heruntergeladener Kunstwerkpfad",
       "artworkPath_tooltip": "Verzeichnis, in dem heruntergeladene Vorlagen gespeichert werden",
       "thumbnailPath": "Heruntergeladener Miniaturbildpfad",
       "thumbnailPath_tooltip": "Verzeichnis in dem die erzeugten Thumbnails gespeichert werden",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter": "Interpretenname Split-Muster",
+      "splitter_tooltip": "Regex um Interpretennamen zu teilen. Leer lassen um die Aufteilung zu deaktivieren."
     },
     "themes": {
       "songView": "Titelansicht",
@@ -107,8 +107,8 @@
       "themes": "Themes",
       "themes_tooltip": "Farben anpassen",
       "themes_default": "Standard",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "Neues Theme",
+      "importTheme": "Theme importieren",
       "newTheme": {
         "name": "Theme-Name",
         "author": "Autor",
@@ -123,7 +123,7 @@
       "textInverse": "Text umkehren",
       "accent": "Akzent",
       "divider": "Trenner",
-      "import_button": "Import"
+      "import_button": "Importieren"
     },
     "extensions": {
       "extensions": "Erweiterungen",
@@ -139,7 +139,7 @@
         "minimizeTray": "Beim Schließen in den Tray minimieren",
         "hardwareAcceleration": "GPU-Hardware-Beschleunigung verwenden",
         "watchFileChanges": "Musikverzeichnisse für Änderungen ansehen",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "Schalter für Jukebox-Modus aktivieren"
       },
       "systemSettings_tooltip": "Einstellungen, die sich auf Ihr System beziehen",
       "audioSettings": {
@@ -163,82 +163,82 @@
         "autoFetchTitle": "ClientID und Geheimnis",
         "autoFetchDisclaimer": "Es öffnet sich nun ein Fenster, in dem Sie aufgefordert werden, sich bei Ihrem Spotify-Konto anzumelden. Nach dem Anmelden klicken Sie bitte nirgends an, da der gesamte Prozess automatisch wird",
         "openWindow": "Fenster öffnen",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "title": "Spotify-Einstellungen",
+        "tooltip": "Optionen um das Verhalten der Spotify-Wiedergabe zu ändern",
+        "librespotEnable": "librespot verwenden (Spotify Premium erforderlich)",
+        "username": "Spotify-Benutzername",
+        "username_tooltip": "Ihr Benutzername für Spotify. Normalerweise Ihre E-Mail",
+        "password": "Spotify-Passwort",
+        "password_tooltip": "Dein Spotify-Passwort. Möglicherweise musst du eines in den Einstellungen von Spotify setzen",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Librespot-Optionen",
+          "tooltip": "Optionen, um das Verhalten von librespot zu ändern",
+          "useSpotifyCanvas": "Spotify Leinen-Video im Hintergrund anzeigen",
+          "useLibrespotPlayback": "librespot für die Wiedergabe des Liedes verwenden"
         }
       },
       "youtube": {
         "client_id": "Youtube Client ID",
         "client_secret": "Youtube Client Geheimnis",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "Youtube Client-ID erforderlich, um sich bei Youtube anzumelden. Klicken Sie hier, um mehr zu erfahren",
+        "client_secret_tooltip": "Youtube Client Secret erforderlich, um sich bei Youtube anzumelden. Klicken Sie hier, um mehr zu erfahren"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Youtube Alternative Dienste",
+        "tooltip": "Daten von Youtube über einen Drittanbieter abrufen",
+        "useYoutube": "Standard-Youtube-Dienste verwenden",
+        "useInvidious": "Invidious Services nutzen",
+        "usePiped": "Rohrleitungen verwenden",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Rohre Instanz",
+          "url_tooltip": "URL der zu verwendenden Piped-Instanz",
+          "username": "Benutzername",
+          "username_tooltip": "Ihr Benutzername in der ausgewählten Instanz",
+          "password": "Passwort",
+          "password_tooltip": "Ihr Passwort bei der ausgewählten Instanz"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "Invidiöse Instanz",
+          "url_tooltip": "URL der Invidious Instanz",
+          "options": "Erweiterte Invidious Optionen",
+          "options_tooltip": "Optionen zur feinen Steuerung der invidiösen Wiedergabe",
+          "always_proxy": "Ton immer vom Invidious Proxy statt von Google Video abspielen"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Erweiterte YouTube-Optionen",
+          "options_tooltip": "Optionen zur feinen Steuerung der Youtube-Wiedergabe",
+          "useEmbeds": "Youtube-Einbettungen zum Abspielen von Audio von Youtube verwenden"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Sprache",
+      "language_tooltip": "Sprache der Schnittstelle ändern",
+      "clearPreferences": "Auf Standard zurücksetzen",
+      "clear_preferences_title": "Auf Standard zurücksetzen?",
+      "clear_preferences": "Sind Sie sicher, dass Sie alles auf den Standard zurücksetzen möchten? Die App wird nach dem Zurücksetzen neu gestartet.",
+      "clear_preferences_button": "Bestätigen",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "Jukebox Modus Pin",
+        "pin_tooltip": "Tis-Pin wird benötigt, um Jukebox Modus zu verlassen. Sollte numerisch sein."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Songtext-Anbieter",
+        "tooltip": "Wählen Sie aus, welche Songtexte für die Suche verwendet werden sollen",
+        "az_lyrics": "AZLyrics verwenden",
+        "google_lyrics": "Google-Suchtexte verwenden"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Warteschlangen-Einstellungen",
+        "tooltip": "Optionen zum Anpassen des Verhaltens der Song-Warteschlange",
+        "clearQueue": "Warteschlange vor dem Hinzufügen einer Wiedergabeliste leeren"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Whitelist scrobbeln",
+          "tooltip": "Anbieter aktivieren, deren Lieder gescrobbelt werden soll"
         }
       }
     },
