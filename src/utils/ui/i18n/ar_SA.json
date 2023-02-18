@@ -35,32 +35,32 @@
     "playSingle": "تشغيل {title}",
     "addToQueue": "إضافة {title} إلى قائمة الانتظار",
     "addToLibrary": "إضافة {title} إلى المكتبة",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "تشغيل 100 أغنية عشوائية"
   },
   "loading": "تحميل...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
-      "album": "Album",
-      "artist": "Artist",
-      "genre": "Genre",
-      "date_added": "Date added",
+      "title": "العنوان",
+      "album": "ألبوم",
+      "artist": "الفنان",
+      "genre": "النوع",
+      "date_added": "تاريخ الإضافة",
       "provider": "موفر",
-      "playCount": "Play count"
+      "playCount": "عدد اللعب"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "قائمة تشغيل جديدة",
+      "addFromURL": "استيراد من عنوان URL",
       "remove": "إزالة قائمة التشغيل",
       "export": "تصدير قائمة التشغيل",
       "add": "إضافة إلى قائمة التشغيل",
-      "save": "Add To Library"
+      "save": "إضافة إلى المكتبة"
     },
     "song": {
       "addFromURL": "إضافة من عنوان URL",
       "playNow": "تشغيل الآن",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
+      "playNext": "تشغيل التالي",
+      "clearAndPlay": "مسح قائمة الانتظار والتشغيل",
       "addToQueue": "إضافة إلى قائمة الانتظار",
       "moveToTop": "الانتقال إلى الأعلى",
       "moveToBottom": "الانتقال إلى الأسفل",
@@ -68,11 +68,11 @@
       "manualIndex": "تعيين فهرس الأغنية",
       "remove": "إزالة من المكتبة",
       "add": "إضافة أغنية إلى المكتبة <unk> إضافة أغاني إلى المكتبة",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "removeFromPlaylist": "إزالة من قائمة التشغيل",
+      "hideFromLibrary": "إخفاء من المكتبة",
+      "showInLibrary": "إظهار في المكتبة",
+      "showHidden": "إظهار الأغاني المخفية",
+      "hideHidden": "إخفاء الأغاني المخفية"
     },
     "moreInfo": "المزيد من المعلومات"
   },
@@ -88,16 +88,16 @@
     "paths": {
       "songDirectories": "أدلة الأغنية",
       "songDirectories_tooltip": "الدلائل حيث يتم تخزين جميع الموسيقى المحلية الخاصة بك",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
+      "songDirectories_exclude": "مجلدات القائمة السوداء",
+      "songDirectories_exclude_tooltip": "لن يتم مسح الأغاني في هذه الدلائل",
       "addFolder": "إضافة مجلد...",
       "remove": "إزالة",
       "artworkPath": "مسار الأعمال الفنية المحمّلة",
       "artworkPath_tooltip": "الدليل حيث يتم تخزين الأعمال الفنية التي تم تنزيلها",
       "thumbnailPath": "مسار الصورة المصغرة الذي تم تنزيله",
       "thumbnailPath_tooltip": "الدليل حيث يتم تخزين الصور المصغرة التي تم إنشاؤها",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter": "نمط تقسيم اسم الفنان",
+      "splitter_tooltip": "ريجكس لتقسيم أسماء الفنانين. اتركه فارغاً لتعطيل التقسيم."
     },
     "themes": {
       "songView": "عرض الأغاني",
@@ -107,8 +107,8 @@
       "themes": "السمات",
       "themes_tooltip": "تخصيص الألوان",
       "themes_default": "الافتراضي",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "موضوع جديد",
+      "importTheme": "استيراد السمة",
       "newTheme": {
         "name": "اسم السمة",
         "author": "المؤلف",
@@ -123,7 +123,7 @@
       "textInverse": "عكس النص",
       "accent": "اللكنة",
       "divider": "الفاصل",
-      "import_button": "Import"
+      "import_button": "استيراد"
     },
     "extensions": {
       "extensions": "ملحقات",
@@ -139,7 +139,7 @@
         "minimizeTray": "تصغير إلى غلق",
         "hardwareAcceleration": "استخدام تسارع أجهزة GPU",
         "watchFileChanges": "مشاهدة أدلة الموسيقى للتغييرات",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "تمكين التبديل لوضع Youkebox"
       },
       "systemSettings_tooltip": "الإعدادات المرتبطة بالنظام الخاص بك",
       "audioSettings": {
@@ -163,82 +163,82 @@
         "autoFetchTitle": "معرف العميل والسر",
         "autoFetchDisclaimer": "ستفتح نافذة الآن حيث سيُطلب منك تسجيل الدخول إلى حساب Spotify الخاص بك. بعد تسجيل الدخول الرجاء عدم النقر في أي مكان لأن العملية بأكملها ستكون تلقائية",
         "openWindow": "فتح النافذة",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "title": "إعدادات Spotify",
+        "tooltip": "خيارات لتغيير سلوك التشغيل المفقود",
+        "librespotEnable": "استخدام librespot (Spotify Premium مطلوب)",
+        "username": "اسم المستخدم سبوتيفاي",
+        "username_tooltip": "اسم المستخدم الخاص بك. عادة بريدك الإلكتروني",
+        "password": "كلمة مرور سبوتيفاي",
+        "password_tooltip": "كلمة المرور الخاصة بك. قد تحتاج إلى تعيين واحدة في الإعدادات على Spotify",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "خيارات Librespot",
+          "tooltip": "خيارات لتغيير سلوك الليبرسبورت",
+          "useSpotifyCanvas": "إظهار فيديو canvas في الخلفية",
+          "useLibrespotPlayback": "استخدام librespot لتشغيل الأغنية"
         }
       },
       "youtube": {
         "client_id": "معرف عميل اليوتيوب",
         "client_secret": "سر عميل اليوتيوب",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "معرف عميل Youtube مطلوب لتسجيل الدخول إلى اليوتيوب. انقر لمعرفة المزيد",
+        "client_secret_tooltip": "مطلوب سر عميل Youtube لتسجيل الدخول إلى اليوتيوب. انقر لمعرفة المزيد"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "خدمات اليوتيوب البديلة",
+        "tooltip": "الحصول على البيانات من يوتيوب من خلال موفر طرف ثالث",
+        "useYoutube": "استخدام خدمات اليوتيوب الافتراضية",
+        "useInvidious": "استخدام الخدمات المدعومة",
+        "usePiped": "استخدام خدمات الأنابيب",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "نموذج أنبوب",
+          "url_tooltip": "عنوان URL للمثيل المراد استخدامه",
+          "username": "اسم المستخدم",
+          "username_tooltip": "اسم المستخدم الخاص بك على الأنابيب في مثيل مثيل محدد",
+          "password": "كلمة المرور",
+          "password_tooltip": "كلمة مرور الأنابيب الخاصة بك في المثيل المحدد"
         },
         "invidious": {
-          "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url": "المثيل المشجّع",
+          "url_tooltip": "عنوان URL للمثيل المدعو لاستخدامه",
+          "options": "خيارات دعوة متقدمة",
+          "options_tooltip": "خيارات التحكم الجيد في التشغيل المدعو",
+          "always_proxy": "تشغيل الصوت دائما من وكيل الدعوة بدلا من فيديو جوجل"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "خيارات اليوتيوب المتقدمة",
+          "options_tooltip": "خيارات التحكم الجيد في تشغيل اليوتيوب",
+          "useEmbeds": "استخدام تضمين اليوتيوب لتشغيل الصوت من يوتيوب"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "اللغة",
+      "language_tooltip": "تغيير لغة الواجهة",
+      "clearPreferences": "إعادة التعيين إلى الافتراضي",
+      "clear_preferences_title": "إعادة التعيين إلى الافتراضي؟",
+      "clear_preferences": "هل أنت متأكد من أنك تريد إعادة تعيين كل شيء إلى الافتراضي؟ سيتم إعادة تشغيل التطبيق بعد إعادة تعيينه.",
+      "clear_preferences_button": "تأكيد",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "دبوس وضع يوكبوكس",
+        "pin_tooltip": "سيتم طلب دبوس للخروج من وضع يوكيبوك. يجب أن يكون رقميا."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "موفري الكلمات",
+        "tooltip": "حدد موفري كلمات الأغاني الذين يمكن استخدامهم للبحث عن كلمات الأغاني",
+        "az_lyrics": "استخدام كلمات الاغنية",
+        "google_lyrics": "استخدام كلمات البحث في جوجل"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "إعدادات قائمة الانتظار",
+        "tooltip": "خيارات لتعديل سلوك قائمة انتظار الأغنية",
+        "clearQueue": "مسح قائمة الانتظار قبل إضافة قائمة تشغيل"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "تمرير القائمة البيضاء",
+          "tooltip": "تمكين مقدمي الخدمات الذين تريد أن تكون أغانيهم سكروبوت"
         }
       }
     },
