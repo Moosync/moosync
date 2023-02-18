@@ -49,8 +49,8 @@
       "playCount": "По числу прослушивания"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "Новый плейлист",
+      "addFromURL": "Импортировать из URL",
       "remove": "Удалить список воспроизведения",
       "export": "Экспортировать список воспроизведения",
       "add": "Добавить в список воспроизведения",
@@ -107,8 +107,8 @@
       "themes": "Темы",
       "themes_tooltip": "Настройка цвета",
       "themes_default": "По умолчанию",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "Новая тема",
+      "importTheme": "Импорт шаблона",
       "newTheme": {
         "name": "Название темы",
         "author": "Автор",
@@ -123,7 +123,7 @@
       "textInverse": "Инвертировать текст",
       "accent": "Оттенок",
       "divider": "Разделитель",
-      "import_button": "Import"
+      "import_button": "Импорт"
     },
     "extensions": {
       "extensions": "Расширения",
@@ -210,43 +210,43 @@
         },
         "youtube": {
           "options": "Доп. настройки Youtube",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options_tooltip": "Параметры для управления воспроизведением Youtube",
+          "useEmbeds": "Использовать вставки YouTube для воспроизведения аудио с Youtube"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Язык",
+      "language_tooltip": "Изменить язык интерфейса",
+      "clearPreferences": "Сброс по умолчанию",
+      "clear_preferences_title": "Сбросить настройки по умолчанию?",
+      "clear_preferences": "Вы уверены, что хотите сбросить все настройки по умолчанию? Приложение будет перезапущено после сброса.",
+      "clear_preferences_button": "Подтвердить",
       "jukebox": {
-        "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin": "ПИН-код режима Jukebox",
+        "pin_tooltip": "Для выхода из режима проигрывания. Должно быть число."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Поставщики текстов песен",
+        "tooltip": "Выберите поставщики текстов для поиска текстов песен",
+        "az_lyrics": "Использовать AZ-стихи",
+        "google_lyrics": "Использовать Google поиск текстов песен"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Настройки очереди",
+        "tooltip": "Опции для настройки поведения очереди песен",
+        "clearQueue": "Очистить очередь перед добавлением плейлиста"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Белый список скробблинга",
+          "tooltip": "Включить провайдеров, чьи песни вы хотите быть scrobble'd"
         }
       }
     },
     "logs": {
-      "logSettings": "Log Settings",
-      "level": "Level",
-      "process": "Process",
-      "filterMessage": "Filter Message"
+      "logSettings": "Настройки журнала",
+      "level": "Уровень",
+      "process": "Обработка",
+      "filterMessage": "Фильтровать сообщение"
     }
   }
 }
