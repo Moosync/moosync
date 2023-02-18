@@ -35,32 +35,32 @@
     "playSingle": "Spil {title}",
     "addToQueue": "Tilføj {title} til kø",
     "addToLibrary": "Tilføj {title} til bibliotek",
-    "playRandom": "Play 100 random songs"
+    "playRandom": "Afspil 100 tilfældige sange"
   },
   "loading": "Indlæser...",
   "contextMenu": {
     "sort": {
-      "title": "Title",
+      "title": "Titel",
       "album": "Album",
-      "artist": "Artist",
+      "artist": "Kunstner",
       "genre": "Genre",
-      "date_added": "Date added",
+      "date_added": "Dato tilføjet",
       "provider": "Udbyder",
-      "playCount": "Play count"
+      "playCount": "Antal spil"
     },
     "playlist": {
-      "new": "New Playlist",
-      "addFromURL": "Import from URL",
+      "new": "Ny Spilleliste",
+      "addFromURL": "Importer fra URL",
       "remove": "Fjern afspilningsliste",
       "export": "Eksporter afspilningsliste",
       "add": "Føj Til Spilleliste",
-      "save": "Add To Library"
+      "save": "Føj Til Bibliotek"
     },
     "song": {
       "addFromURL": "Tilføj fra URL",
       "playNow": "Spil Nu",
-      "playNext": "Play Next",
-      "clearAndPlay": "Clear queue and play",
+      "playNext": "Afspil Næste",
+      "clearAndPlay": "Ryd kø og afspil",
       "addToQueue": "Føj Til Kø",
       "moveToTop": "Flyt til toppen",
       "moveToBottom": "Flyt til bunden",
@@ -68,11 +68,11 @@
       "manualIndex": "Sæt indeks for sang",
       "remove": "Fjern fra bibliotek",
       "add": "Tilføj sang til biblioteket - Tilføj sange til biblioteket",
-      "removeFromPlaylist": "Remove from playlist",
-      "hideFromLibrary": "Hide from library",
-      "showInLibrary": "Show in library",
-      "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "removeFromPlaylist": "Fjern fra afspilningsliste",
+      "hideFromLibrary": "Skjul fra bibliotek",
+      "showInLibrary": "Vis i bibliotek",
+      "showHidden": "Vis skjulte sange",
+      "hideHidden": "Skjul skjulte sange"
     },
     "moreInfo": "Mere Info"
   },
@@ -88,16 +88,16 @@
     "paths": {
       "songDirectories": "Sang Mapper",
       "songDirectories_tooltip": "Mapper hvor al din lokale musik er gemt",
-      "songDirectories_exclude": "Blacklisted Directories",
-      "songDirectories_exclude_tooltip": "Songs in these directories would not be scanned",
+      "songDirectories_exclude": "Sortlistede Mapper",
+      "songDirectories_exclude_tooltip": "Sange i disse mapper ville ikke blive scannet",
       "addFolder": "Tilføj Mappe...",
       "remove": "Fjern",
       "artworkPath": "Downloadet Artwork Sti",
       "artworkPath_tooltip": "Mappe, hvor downloadede kunstværker gemmes",
       "thumbnailPath": "Downloadet Miniaturesti",
       "thumbnailPath_tooltip": "Mappe, hvor genererede miniaturer er gemt",
-      "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter": "Kunstner navn split mønster",
+      "splitter_tooltip": "Regex for at opdele kunstnernavne. Efterlad blank for at deaktivere opdeling."
     },
     "themes": {
       "songView": "Sange Visning",
@@ -107,8 +107,8 @@
       "themes": "Temaer",
       "themes_tooltip": "Tilpas farver",
       "themes_default": "Standard",
-      "createTheme": "New theme",
-      "importTheme": "Import theme",
+      "createTheme": "Nyt tema",
+      "importTheme": "Importér tema",
       "newTheme": {
         "name": "Tema Navn",
         "author": "Forfatter",
@@ -123,7 +123,7 @@
       "textInverse": "Tekst Omvendt",
       "accent": "Accent",
       "divider": "Opdeler",
-      "import_button": "Import"
+      "import_button": "Importér"
     },
     "extensions": {
       "extensions": "Udvidelser",
@@ -139,7 +139,7 @@
         "minimizeTray": "Minimér til bakke ved lukning",
         "hardwareAcceleration": "Brug GPU hardware acceleration",
         "watchFileChanges": "Se musikmapper for ændringer",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "Aktivér skift for Jukebox-tilstand"
       },
       "systemSettings_tooltip": "Indstillinger, der er relateret til dit system",
       "audioSettings": {
@@ -163,82 +163,82 @@
         "autoFetchTitle": "KlientID og hemmelighed",
         "autoFetchDisclaimer": "Et vindue åbnes nu, hvor du vil blive bedt om at logge ind på din Spotify-konto. Når du er logget ind, skal du ikke klikke hvor som helst da hele processen vil blive automatiseret",
         "openWindow": "Åbn Vindue",
-        "title": "Spotify Settings",
-        "tooltip": "Options to change the behavior of spotify playback",
-        "librespotEnable": "Use librespot (Spotify Premium required)",
-        "username": "Spotify username",
-        "username_tooltip": "Your spotify username. Usually your email",
-        "password": "Spotify password",
-        "password_tooltip": "Your spotify password. You may need to set one in settings on Spotify",
+        "title": "Spotify Indstillinger",
+        "tooltip": "Indstillinger for at ændre spotifis opførsel",
+        "librespotEnable": "Brug librespot (Spotify Premium påkrævet)",
+        "username": "Spotify brugernavn",
+        "username_tooltip": "Dit spotify brugernavn. Normalt din e-mail",
+        "password": "Spotify adgangskode",
+        "password_tooltip": "Din spotify adgangskode. Du skal muligvis angive en i indstillingerne på Spotify",
         "librespot": {
-          "title": "Librespot options",
-          "tooltip": "Options to change the behavior of librespot",
-          "useSpotifyCanvas": "Show spotify canvas video in background",
-          "useLibrespotPlayback": "Use librespot for song playback"
+          "title": "Librespot indstillinger",
+          "tooltip": "Indstillinger for at ændre librespots opførsel",
+          "useSpotifyCanvas": "Vis spotify lærred video i baggrunden",
+          "useLibrespotPlayback": "Brug librespot til sangafspilning"
         }
       },
       "youtube": {
         "client_id": "Youtube Klient ID",
         "client_secret": "Youtube Klient Hemmelig",
-        "client_id_tooltip": "Youtube client ID required to login to Youtube. Click to know more",
-        "client_secret_tooltip": "Youtube client Secret required to login to Youtube. Click to know more"
+        "client_id_tooltip": "Youtube klient ID kræves for at logge ind på Youtube. Klik for at vide mere",
+        "client_secret_tooltip": "Youtube klient Hemmelighed kræves for at logge ind på Youtube. Klik for at vide mere"
       },
       "lastfm": {
         "client_id": "LastFM Api Key",
         "client_secret": "LastFM Client Secret"
       },
       "youtubeAlternative": {
-        "title": "Youtube Alternative services",
-        "tooltip": "Get data from Youtube through a 3rd party provider",
-        "useYoutube": "Use default Youtube services",
-        "useInvidious": "Use Invidious services",
-        "usePiped": "Use Piped services",
+        "title": "Youtube Alternative tjenester",
+        "tooltip": "Få data fra Youtube via en tredjeparts udbyder",
+        "useYoutube": "Brug standard Youtube-tjenester",
+        "useInvidious": "Brug Invidious tjenester",
+        "usePiped": "Brug rørte tjenester",
         "piped": {
-          "url": "Piped Instance",
-          "url_tooltip": "URL of Piped instance to use",
-          "username": "Username",
-          "username_tooltip": "Your piped username at the selected instance",
-          "password": "Password",
-          "password_tooltip": "Your piped password at the selected instance"
+          "url": "Rødt Instans",
+          "url_tooltip": "URL for Piped instans der skal bruges",
+          "username": "Brugernavn",
+          "username_tooltip": "Dit piped brugernavn på den valgte instans",
+          "password": "Adgangskode",
+          "password_tooltip": "Din piped adgangskode på den valgte instans"
         },
         "invidious": {
           "url": "Invidious Instance",
-          "url_tooltip": "URL of Invidious instance to use",
-          "options": "Advanced Invidious options",
-          "options_tooltip": "Options to fine control Invidious playback",
-          "always_proxy": "Always play audio from Invidious proxy instead of Google video"
+          "url_tooltip": "URL på Invidious instans til at bruge",
+          "options": "Avancerede Invidious muligheder",
+          "options_tooltip": "Muligheder for finstyring Invidiøs afspilning",
+          "always_proxy": "Afspil altid lyd fra Invidious proxy i stedet for Google-video"
         },
         "youtube": {
-          "options": "Advanced Youtube options",
-          "options_tooltip": "Options to fine control Youtube playback",
-          "useEmbeds": "Use Youtube embeds for playing audio from Youtube"
+          "options": "Avancerede Youtube-indstillinger",
+          "options_tooltip": "Indstillinger for finstyring Youtube-afspilning",
+          "useEmbeds": "Brug Youtube embeds til afspilning af lyd fra Youtube"
         }
       },
-      "language": "Language",
-      "language_tooltip": "Change the language of the interface",
-      "clearPreferences": "Reset to default",
-      "clear_preferences_title": "Reset to default?",
-      "clear_preferences": "Are you sure you want to reset everything to default? The app will restart after you reset.",
-      "clear_preferences_button": "Confirm",
+      "language": "Sprog",
+      "language_tooltip": "Ændr sproget på grænsefladen",
+      "clearPreferences": "Nulstil til standard",
+      "clear_preferences_title": "Nulstil til standard?",
+      "clear_preferences": "Er du sikker på, at du vil nulstille alt til standard? Appen genstarter, når du nulstiller.",
+      "clear_preferences_button": "Bekræft",
       "jukebox": {
         "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin_tooltip": "Tis pin vil være påkrævet for at afslutte Jukebox Tilstand. Bør være numerisk."
       },
       "lyrics": {
-        "title": "Lyrics providers",
-        "tooltip": "Select which lyrics providers to use to search for lyrics",
-        "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "title": "Sangtekst udbydere",
+        "tooltip": "Vælg hvilke sangtekstudbydere, der skal bruges til at søge efter sangtekster",
+        "az_lyrics": "Brug AZLyrics",
+        "google_lyrics": "Benyt Google søge sangtekster"
       },
       "queueSettings": {
-        "title": "Queue Settings",
-        "tooltip": "Options to tweak the behavior of song queue",
-        "clearQueue": "Clear queue before adding playing a playlist"
+        "title": "Kø Indstillinger",
+        "tooltip": "Indstillinger for at justere opførsel af sang kø",
+        "clearQueue": "Ryd kø før du tilføjer afspilning af en spilleliste"
       },
       "scrobble": {
         "provider_toggle": {
-          "title": "Scrobble whitelist",
-          "tooltip": "Enable providers whose songs you want to be scrobble'd"
+          "title": "Scrobble hvidliste",
+          "tooltip": "Aktiver udbydere, hvis sange du vil være scrobble'd"
         }
       }
     },
