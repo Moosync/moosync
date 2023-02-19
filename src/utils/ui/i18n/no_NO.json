@@ -7,7 +7,13 @@
       "albums": "Album",
       "artists": "Artister",
       "genre": "Genres",
-      "explore": "Utforsk"
+      "explore": "Utforsk",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Vis skjulte sanger",
       "hideHidden": "Skjul skjulte sanger"
     },
-    "moreInfo": "Mer informasjon"
+    "moreInfo": "Mer informasjon",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "YouTube",
