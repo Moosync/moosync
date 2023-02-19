@@ -7,7 +7,13 @@
       "albums": "ألبومات",
       "artists": "الفنانون",
       "genre": "Genres",
-      "explore": "استكشف"
+      "explore": "استكشف",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "إظهار الأغاني المخفية",
       "hideHidden": "إخفاء الأغاني المخفية"
     },
-    "moreInfo": "المزيد من المعلومات"
+    "moreInfo": "المزيد من المعلومات",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "يوتيوب",
