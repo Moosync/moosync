@@ -7,7 +7,13 @@
       "albums": "संग्रहिका",
       "artists": "कलाकार",
       "genre": "शैलियाँ",
-      "explore": "एक्सप्लोर करें"
+      "explore": "एक्सप्लोर करें",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Show hidden songs",
       "hideHidden": "Hide hidden songs"
     },
-    "moreInfo": "अन्य जानकारी"
+    "moreInfo": "अन्य जानकारी",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "यूट्यूब",
