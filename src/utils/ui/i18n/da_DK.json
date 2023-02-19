@@ -7,7 +7,13 @@
       "albums": "Albummer",
       "artists": "Kunstnere",
       "genre": "Genres",
-      "explore": "Udforsk"
+      "explore": "Udforsk",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Vis skjulte sange",
       "hideHidden": "Skjul skjulte sange"
     },
-    "moreInfo": "Mere Info"
+    "moreInfo": "Mere Info",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "YouTube",
