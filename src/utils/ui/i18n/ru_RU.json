@@ -7,7 +7,13 @@
       "albums": "Альбомы",
       "artists": "Исполнители",
       "genre": "Жанры",
-      "explore": "Обзор"
+      "explore": "Обзор",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Показать скрытые треки",
       "hideHidden": "Скрыть скрытые треки"
     },
-    "moreInfo": "Доп. сведения"
+    "moreInfo": "Доп. сведения",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
