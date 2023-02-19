@@ -7,7 +7,13 @@
       "albums": "Albums",
       "artists": "Artiesten",
       "genre": "Genres",
-      "explore": "Verken"
+      "explore": "Verken",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Verborgen nummers weergeven",
       "hideHidden": "Verborgen nummers verbergen"
     },
-    "moreInfo": "Meer informatie"
+    "moreInfo": "Meer informatie",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "YouTube",
