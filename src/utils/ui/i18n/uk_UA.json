@@ -7,7 +7,13 @@
       "albums": "Альбоми",
       "artists": "Виконавці",
       "genre": "Genres",
-      "explore": "Досліджуйте"
+      "explore": "Досліджуйте",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Показувати приховані пісні",
       "hideHidden": "Сховати приховані пісні"
     },
-    "moreInfo": "Більше інформації"
+    "moreInfo": "Більше інформації",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Ютубе",
