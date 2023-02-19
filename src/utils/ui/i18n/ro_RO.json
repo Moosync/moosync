@@ -7,7 +7,13 @@
       "albums": "Albume",
       "artists": "Artişti",
       "genre": "Genres",
-      "explore": "Explorați"
+      "explore": "Explorați",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Arată melodiile ascunse",
       "hideHidden": "Ascunde melodiile ascunse"
     },
-    "moreInfo": "Mai multe informații"
+    "moreInfo": "Mai multe informații",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
