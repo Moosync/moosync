@@ -7,7 +7,13 @@
       "albums": "Albumit",
       "artists": "Esittäjät",
       "genre": "Genres",
-      "explore": "Tutki"
+      "explore": "Tutki",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Näytä piilotetut kappaleet",
       "hideHidden": "Piilota piilotetut kappaleet"
     },
-    "moreInfo": "Lisää Tietoja"
+    "moreInfo": "Lisää Tietoja",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
