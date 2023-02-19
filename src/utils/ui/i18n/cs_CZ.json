@@ -7,7 +7,13 @@
       "albums": "Alba",
       "artists": "Umělci",
       "genre": "Žánry",
-      "explore": "Prozkoumat"
+      "explore": "Prozkoumat",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Zobrazit skryté skladby",
       "hideHidden": "Skrýt skryté skladby"
     },
-    "moreInfo": "Další informace"
+    "moreInfo": "Další informace",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "YouTube",
