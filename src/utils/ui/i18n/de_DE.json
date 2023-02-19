@@ -7,7 +7,13 @@
       "albums": "Alben",
       "artists": "Künstler",
       "genre": "Genres",
-      "explore": "Erforschen"
+      "explore": "Erforschen",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Versteckte Lieder anzeigen",
       "hideHidden": "Versteckte Lieder ausblenden"
     },
-    "moreInfo": "Mehr Info"
+    "moreInfo": "Mehr Info",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
