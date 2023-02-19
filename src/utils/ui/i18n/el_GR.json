@@ -7,7 +7,13 @@
       "albums": "Άλμπουμ",
       "artists": "Καλλιτέχνες",
       "genre": "Είδος",
-      "explore": "Εξερεύνηση"
+      "explore": "Εξερεύνηση",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Εμφάνιση κρυφών τραγουδιών",
       "hideHidden": "Απόκρυψη κρυφών τραγουδιών"
     },
-    "moreInfo": "Περισσότερες Πληροφορίες"
+    "moreInfo": "Περισσότερες Πληροφορίες",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "YouTube",
