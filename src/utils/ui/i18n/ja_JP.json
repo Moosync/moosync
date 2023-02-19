@@ -7,7 +7,13 @@
       "albums": "アルバム",
       "artists": "アーティスト",
       "genre": "Genres",
-      "explore": "探索"
+      "explore": "探索",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "非表示の曲を表示",
       "hideHidden": "非表示の曲を非表示"
     },
-    "moreInfo": "詳細情報"
+    "moreInfo": "詳細情報",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
