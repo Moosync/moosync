@@ -247,6 +247,13 @@
           "title": "Scrobbla vitlista",
           "tooltip": "Aktivera leverantörer vars låtar du vill vara scrobble'd"
         }
+      },
+      "volumePersistMode": {
+        "title": "Volume behavior",
+        "tooltip": "Change the way volume slider behaves",
+        "noPersist": "Normal behavior",
+        "persistSeparateVolumes": "Remember separate volume for each provider",
+        "persistClampVolume": "Manually adjust volume range for each provider"
       }
     },
     "logs": {
