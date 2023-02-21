@@ -247,6 +247,13 @@
           "title": "Liste blanche Scrobble",
           "tooltip": "Activer les fournisseurs pour les chansons que vous voulez être scrobbler"
         }
+      },
+      "volumePersistMode": {
+        "title": "Volume behavior",
+        "tooltip": "Change the way volume slider behaves",
+        "noPersist": "Normal behavior",
+        "persistSeparateVolumes": "Remember separate volume for each provider",
+        "persistClampVolume": "Manually adjust volume range for each provider"
       }
     },
     "logs": {
