@@ -247,6 +247,13 @@
           "title": "Lista de permissões do Scrobble",
           "tooltip": "Habilite provedores cujas músicas você deseja que sejam scrobbladas"
         }
+      },
+      "volumePersistMode": {
+        "title": "Volume behavior",
+        "tooltip": "Change the way volume slider behaves",
+        "noPersist": "Normal behavior",
+        "persistSeparateVolumes": "Remember separate volume for each provider",
+        "persistClampVolume": "Manually adjust volume range for each provider"
       }
     },
     "logs": {
