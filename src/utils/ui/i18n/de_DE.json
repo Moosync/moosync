@@ -7,7 +7,7 @@
       "albums": "Alben",
       "artists": "Künstler",
       "genre": "Genres",
-      "explore": "Erforschen",
+      "explore": "Erkunden",
       "paths": "Paths",
       "themes": "Themes",
       "extensions": "Extensions",
@@ -17,7 +17,7 @@
     }
   },
   "topbar": {
-    "searchPlaceholder": "Suche...",
+    "searchPlaceholder": "Suchen...",
     "noResultsFound": "Keine Ergebnisse gefunden"
   },
   "pages": {
@@ -25,7 +25,7 @@
     "albums": "Alben",
     "artists": "Künstler",
     "genres": "Genres",
-    "explore": "Erforschen"
+    "explore": "Erkunden"
   },
   "songView": {
     "details": {
@@ -33,12 +33,12 @@
     },
     "songList": {
       "topbar": {
-        "searchPlaceholder": "Suche..."
+        "searchPlaceholder": "Suchen..."
       }
     }
   },
   "buttons": {
-    "playSingle": "Spiele {title}",
+    "playSingle": "{title} abspielen",
     "addToQueue": "{title} zur Warteschlange hinzufügen",
     "addToLibrary": "{title} zur Bibliothek hinzufügen",
     "playRandom": "100 zufällige Titel abspielen"
@@ -65,13 +65,13 @@
     "song": {
       "addFromURL": "Von URL hinzufügen",
       "playNow": "Jetzt spielen",
-      "playNext": "Nächste spielen",
+      "playNext": "Als nächstes abspielen",
       "clearAndPlay": "Warteschlange leeren und abspielen",
       "addToQueue": "Zur Warteschlange hinzufügen",
       "moveToTop": "Nach oben",
       "moveToBottom": "Nach unten",
       "moveManually": "Manuell verschieben",
-      "manualIndex": "Index des Liedes festlegen",
+      "manualIndex": "Index des Titels festlegen",
       "remove": "Aus der Bibliothek entfernen",
       "add": "Füge Song zur Bibliothek hinzu | Füge Titel zur Bibliothek hinzu",
       "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
