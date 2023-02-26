@@ -229,7 +229,12 @@
       "clear_preferences_button": "确认",
       "jukebox": {
         "pin": "唱片机模式 Pin",
-        "pin_tooltip": "提示：退出光盘机模式需要使用 Pin。\n应该是数字。"
+        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "optionalFields": "Button visibility",
+        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
+        "optional_skip": "Track Skip buttons",
+        "optional_shuffle": "Shuffle button",
+        "optional_repeat": "Repeat button"
       },
       "lyrics": {
         "title": "歌词提供商",
