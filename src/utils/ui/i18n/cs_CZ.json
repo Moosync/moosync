@@ -229,7 +229,12 @@
       "clear_preferences_button": "Potvrdit",
       "jukebox": {
         "pin": "PIN kód pro Jukebox mód",
-        "pin_tooltip": "Tento PIN kód bude nutno zadat pro vypnutí Jukebox módu. Měl by obsahovat jen číselné hodnoty."
+        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "optionalFields": "Button visibility",
+        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
+        "optional_skip": "Track Skip buttons",
+        "optional_shuffle": "Shuffle button",
+        "optional_repeat": "Repeat button"
       },
       "lyrics": {
         "title": "Poskytovatel textů písní",
