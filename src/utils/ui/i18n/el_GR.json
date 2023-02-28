@@ -8,12 +8,12 @@
       "artists": "Καλλιτέχνες",
       "genre": "Είδος",
       "explore": "Εξερεύνηση",
-      "paths": "Paths",
-      "themes": "Themes",
-      "extensions": "Extensions",
-      "system": "System",
-      "logs": "Logs",
-      "keybinds": "Keybinds"
+      "paths": "Διαδρομές",
+      "themes": "Θέματα",
+      "extensions": "Επεκτάσεις",
+      "system": "Σύστημα",
+      "logs": "Αρχεία Καταγραφής",
+      "keybinds": "Συντομεύσεις"
     }
   },
   "topbar": {
@@ -81,7 +81,7 @@
       "hideHidden": "Απόκρυψη κρυφών τραγουδιών"
     },
     "moreInfo": "Περισσότερες Πληροφορίες",
-    "incorrectPlayback": "Incorrect playback?"
+    "incorrectPlayback": "Λανθασμένη αναπαραγωγή;"
   },
   "providers": {
     "youtube": "YouTube",
@@ -230,8 +230,8 @@
       "jukebox": {
         "pin": "Pin λειτουργίας Jukebox",
         "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
-        "optionalFields": "Button visibility",
-        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
+        "optionalFields": "Ορατότητα κουμπιού",
+        "optionalFields_tooltip": "Εναλλαγή προαιρετικών κουμπιών για εμφάνιση στη λειτουργία Jukebox",
         "optional_skip": "Track Skip buttons",
         "optional_shuffle": "Shuffle button",
         "optional_repeat": "Repeat button"
