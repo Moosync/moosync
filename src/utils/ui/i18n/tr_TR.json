@@ -1,8 +1,8 @@
 {
   "sidebar": {
     "tabs": {
-      "queue": "Queue",
-      "allSongs": "All Songs",
+      "queue": "Sıra",
+      "allSongs": "Tüm Şarkılar",
       "playlists": "Playlists",
       "albums": "Albums",
       "artists": "Artists",
