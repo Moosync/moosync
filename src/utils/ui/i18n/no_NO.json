@@ -229,7 +229,7 @@
       "clear_preferences_button": "Bekreft",
       "jukebox": {
         "pin": "Jukebox modus pinne",
-        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "pin_tooltip": "Det kreves spesialisering innen Tis pin for å avslutte platespiller. Bør være et tall.",
         "optionalFields": "Button visibility",
         "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
         "optional_skip": "Track Skip buttons",

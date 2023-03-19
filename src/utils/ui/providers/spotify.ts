@@ -501,9 +501,10 @@ export class SpotifyProvider extends GenericProvider {
     return
   }
 
-  public async validatePlaybackURL(playbackUrl: string): Promise<boolean> {
-    await this.getLoggedIn()
-    if (this.canPlayPremium && (await this.shouldPlayPremium())) {
+  public async validatePlaybackURL(playbackUrl: string, player: string): Promise<boolean> {
+    if (player === 'SPOTIFY') {
+      await this.getLoggedIn()
+
       if (playbackUrl.startsWith('spotify:track:')) {
         if (playbackUrl === 'spotify:track:undefined') return false
         return true
@@ -515,16 +516,18 @@ export class SpotifyProvider extends GenericProvider {
     }
   }
 
-  public async getPlaybackUrlAndDuration(song: Song) {
-    if (this.canPlayPremium && (await this.shouldPlayPremium())) {
-      return { url: `spotify:track:${song.url}`, duration: song.duration }
-    }
+  public async getPlaybackUrlAndDuration(song: Song, player: string) {
+    if (player === 'SPOTIFY') {
+      if (this.canPlayPremium && (await this.shouldPlayPremium())) {
+        return { url: `spotify:track:${song.url}`, duration: song.duration }
+      }
+    } else {
+      console.debug(`Searching for ${song.title} on youtube`)
 
-    console.debug(`Searching for ${song.title} on youtube`)
-
-    const ytItem = await this.spotifyToYoutube(song)
-    if (ytItem) {
-      return { url: ytItem.playbackUrl ?? ytItem.url, duration: ytItem.duration ?? 0 }
+      const ytItem = await this.spotifyToYoutube(song)
+      if (ytItem) {
+        return { url: ytItem.playbackUrl ?? ytItem.url, duration: ytItem.duration ?? 0 }
+      }
     }
   }
 

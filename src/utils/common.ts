@@ -184,25 +184,12 @@ export function getErrorMessage(...args: unknown[]) {
   return ret
 }
 
-export function sanitizeArtistName(name: string, capitalize = false) {
-  let sanitized = name
+export function sanitizeArtistName(name: string) {
+  return name
     .trim()
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .toLowerCase()
     .replaceAll('vevo', '')
-
-  if (capitalize) {
-    const toTitleCase = (str: string) => {
-      return str
-        .toLowerCase()
-        .split(' ')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ')
-    }
-    sanitized = toTitleCase(sanitized)
-  }
-
-  return sanitized
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

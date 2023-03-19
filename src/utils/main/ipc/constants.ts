@@ -248,8 +248,10 @@ export enum EventBus {
   SHOW_PIN_ENTRY_MODAL = 'show-pin-entry-modal',
   HIDE_OAUTH_MODAL = 'hide-oauth-modal',
   SHOW_FORM_MODAL = 'show-form-modal',
+  SHOW_INCORRECT_PLAYBACK_MODAL = 'show-incorrect-playback-modal',
   REFRESH_ACCOUNTS = 'refresh-accounts',
   REFRESH_PAGE = 'refresh-page',
   REFRESH_LYRICS = 'refresh-lyrics',
-  UPDATE_OPTIONAL_PROVIDER = 'update-optional-provider'
+  UPDATE_OPTIONAL_PROVIDER = 'update-optional-provider',
+  FORCE_LOAD_SONG = 'force-load-song'
 }

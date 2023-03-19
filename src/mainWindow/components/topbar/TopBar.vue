@@ -104,6 +104,13 @@ export default class TopBar extends mixins(JukeboxMixin) {
     window.PreferenceUtils.listenPreferenceChanged('system', true, (_, value: Checkbox[]) =>
       setJukeboxIconVisibility(value)
     )
+
+    const optionalJukeboxItems = await window.PreferenceUtils.loadSelective<Checkbox[]>('jukebox_optional_fields')
+    vxm.themes.jukeboxOptionalFields = optionalJukeboxItems ?? []
+
+    window.PreferenceUtils.listenPreferenceChanged<Checkbox[]>('jukebox_optional_fields', true, (_, value) => {
+      vxm.themes.jukeboxOptionalFields = value
+    })
   }
 
   created() {

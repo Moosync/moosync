@@ -145,3 +145,9 @@ export enum ProviderScopes {
 }
 
 export const FAVORITES_PLAYLIST_ID = 'favorites_playlist'
+
+export enum VolumePersistMode {
+  SINGLE = 'SINGLE',
+  SEPARATE_VOLUME_MAP = 'SEPARATE_VOLUME_MAP',
+  CLAMP_MAP = 'CLAMP_MAP'
+}

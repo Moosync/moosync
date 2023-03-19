@@ -113,10 +113,12 @@ export class HLSPlayer extends Player {
   }
 
   removeAllListeners(): void {
-    this.htmlElement.onended = null
-    this.htmlElement.ontimeupdate = null
-    for (const [key, value] of Object.entries(this.listeners)) {
-      this.htmlElement.removeEventListener(key as keyof HTMLMediaElementEventMap, value)
+    if (this.htmlElement) {
+      this.htmlElement.onended = null
+      this.htmlElement.ontimeupdate = null
+      for (const [key, value] of Object.entries(this.listeners)) {
+        this.htmlElement.removeEventListener(key as keyof HTMLMediaElementEventMap, value)
+      }
     }
   }
 

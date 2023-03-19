@@ -108,7 +108,8 @@ export abstract class GenericProvider {
    * @returns playback url and duration
    */
   public async getPlaybackUrlAndDuration(
-    song: Song
+    song: Song,
+    playerKey: string
   ): Promise<{ url: string | undefined; duration?: number } | undefined> {
     return
   }
@@ -172,7 +173,7 @@ export abstract class GenericProvider {
     return
   }
 
-  public async validatePlaybackURL(playbackUrl: string): Promise<boolean> {
+  public async validatePlaybackURL(playbackUrl: string, player: string): Promise<boolean> {
     return true
   }
 

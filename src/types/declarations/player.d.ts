@@ -11,8 +11,6 @@ type AudioType = 'STREAMING' | 'LOCAL'
 
 type PlayerState = 'PLAYING' | 'PAUSED' | 'STOPPED'
 
-type VolumePersistMode = 'SINGLE' | 'SEPARATE_VOLUMES'
-
 interface SongQueue {
   data: QueueData<Song>
   order: QueueOrder
@@ -37,6 +35,8 @@ interface CustomAudioInstance {
   srcObject: unknown
 
   isCustomAudio: boolean
+
+  listeners: Record<string, never>
 
   public pause(): void
   public play(): Promise<void>

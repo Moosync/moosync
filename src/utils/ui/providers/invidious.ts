@@ -286,8 +286,6 @@ export class InvidiousProvider extends GenericProvider {
         }
       })
 
-      console.log(resp)
-
       const songs = this.parsePlaylistItems(resp?.videos ?? [])
       yield { songs, nextPageToken: resp?.continuation }
     }

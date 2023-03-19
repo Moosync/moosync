@@ -10,7 +10,7 @@
 <template>
   <div class="h-100 d-flex align-items-center search-container">
     <div class="w-100 searchbar-container" :class="showSearchResults ? 'half-border' : 'full-border'">
-      <Search class="search-icon" />
+      <SearchIcon class="search-icon" />
       <b-form-input
         class="searchbar"
         :placeholder="$t('topbar.searchPlaceholder')"
@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import Search from '@/icons/SearchIcon.vue'
+import SearchIcon from '@/icons/SearchIcon.vue'
 import AltArrowIcon from '@/icons/AltArrowIcon.vue'
 
 import SingleSearchResult from '@/mainWindow/components/generic/SingleSearchResult.vue'
@@ -63,7 +63,7 @@ import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 
 @Component({
   components: {
-    Search,
+    SearchIcon,
     SingleSearchResult,
     AltArrowIcon
   }

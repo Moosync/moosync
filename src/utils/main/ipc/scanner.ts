@@ -29,7 +29,7 @@ import { ipcMain } from 'electron'
 import { WindowHandler } from '../windowManager'
 
 const loggerPath = app.getPath('logs')
-const audioPatterns = new RegExp('.flac|.mp3|.ogg|.m4a|.webm|.wav|.wv|.aac', 'i')
+const audioPatterns = new RegExp('.flac|.mp3|.ogg|.m4a|.webm|.wav|.wv|.aac|.opus', 'i')
 const playlistPatterns = new RegExp('.m3u|.m3u8|.wpl')
 
 enum ScanStatus {
@@ -203,6 +203,7 @@ export class ScannerChannel implements IpcChannelInterface {
     if (isDuplicate) {
       return
     }
+    console.debug('storing', song)
     songDb.store(song)
     scanEmitter.emit('song', song)
   }

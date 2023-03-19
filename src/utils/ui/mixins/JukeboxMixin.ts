@@ -15,4 +15,20 @@ export default class JukeboxMixin extends Vue {
   public get isJukeboxModeActive() {
     return vxm.themes.jukeboxMode
   }
+
+  private isJukeboxFieldActive(fieldName: string) {
+    return vxm.themes.jukeboxOptionalFields.find((val) => val.key === `jukebox_${fieldName}`)?.enabled ?? false
+  }
+
+  public get isSkipEnabled() {
+    return !this.isJukeboxModeActive || this.isJukeboxFieldActive('skip')
+  }
+
+  public get isShuffleEnabled() {
+    return !this.isJukeboxModeActive || this.isJukeboxFieldActive('shuffle')
+  }
+
+  public get isRepeatEnabled() {
+    return !this.isJukeboxModeActive || this.isJukeboxFieldActive('repeat')
+  }
 }

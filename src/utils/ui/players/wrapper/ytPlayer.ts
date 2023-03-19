@@ -5,7 +5,7 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   private supposedVolume
   private instance: YTPlayer
 
-  private listeners: Record<string, never> = {}
+  listeners: Record<string, never> = {}
   private elementIdentifier: string
 
   // stop() should not be called if player is going to be reused
@@ -37,6 +37,7 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   }
 
   async setSrc(src: string, autoPlay = true) {
+    this.shouldFireOnLoad = true
     this.instance.load(src, autoPlay)
   }
 
@@ -87,19 +88,21 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   }
 
   private removeListener(key: string) {
-    if (this.listeners[key]) {
-      this.removeEventListener(key, this.listeners[key])
-    }
+    this.removeEventListener(key)
   }
 
-  set onended(callback: never) {
+  set onended(callback: () => void) {
     if (!callback) {
       this.removeListener('ended')
       return
     }
 
-    this.instance.addListener('ended', callback)
-    this.listeners['ended'] = callback
+    const mod = () => {
+      this.shouldFireOnLoad = false
+      callback()
+    }
+
+    this.instance.addListener('ended', mod)
   }
 
   set ontimeupdate(callback: never) {
@@ -108,16 +111,24 @@ export class YTPlayerWrapper implements CustomAudioInstance {
       return
     }
     this.instance.addListener('timeupdate', callback)
-    this.listeners['timeupdate'] = callback
   }
 
-  set onload(callback: never) {
+  private shouldFireOnLoad = false
+
+  set onload(callback: () => void) {
     if (!callback) {
       this.removeListener('cued')
       return
     }
     this.instance.addListener('cued', callback)
-    this.listeners['cued'] = callback
+
+    const mod = () => {
+      if (this.shouldFireOnLoad) {
+        callback()
+        this.shouldFireOnLoad = false
+      }
+    }
+    this.instance.addListener('playing', mod)
   }
 
   set onloadeddata(callback: never) {
@@ -132,8 +143,6 @@ export class YTPlayerWrapper implements CustomAudioInstance {
     }
     this.instance.addListener('error', callback)
     this.instance.addListener('unplayable', callback)
-    this.listeners['error'] = callback
-    this.listeners['unplayable'] = callback
   }
 
   set onloadstart(callback: never) {
@@ -142,7 +151,6 @@ export class YTPlayerWrapper implements CustomAudioInstance {
       return
     }
     this.instance.addListener('buffering', callback)
-    this.listeners['buffering'] = callback
   }
 
   removeAttribute(): void {
@@ -150,25 +158,30 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   }
 
   addEventListener(ev: string, callback: (...args: unknown[]) => void) {
+    let modEv = ev
     if (ev === 'play') {
-      ev = 'playing'
+      modEv = 'playing'
     }
 
     if (ev === 'pause') {
-      ev = 'paused'
+      modEv = 'paused'
     }
 
-    this.instance.addListener(ev, (...args: unknown[]) => {
-      if (ev === 'paused' && this.pauseAsStop) {
+    const mod = (...args: unknown[]) => {
+      if (modEv === 'paused' && this.pauseAsStop) {
         this.pauseAsStop = false
         return
       }
       callback(...args)
-    })
+    }
+
+    this.listeners[ev] = mod as never
+    this.instance.addListener(modEv, mod)
   }
 
-  removeEventListener(ev: string, callback: (...args: unknown[]) => void) {
-    this.instance.removeListener(ev, callback)
+  removeEventListener(ev: string) {
+    console.log('Youtube Player: Removing listener', ev)
+    this.instance.removeAllListeners(ev)
   }
 
   setPlaybackQuality(quality: Parameters<typeof this.instance.setPlaybackQuality>[0]) {

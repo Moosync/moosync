@@ -229,7 +229,7 @@
       "clear_preferences_button": "Potwierdź",
       "jukebox": {
         "pin": "Przypinka trybu Jukebox",
-        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "pin_tooltip": "Przypinek Tis będzie wymagany, aby wyjść z trybu Jukebox. Powinno być numeryczny.",
         "optionalFields": "Button visibility",
         "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
         "optional_skip": "Track Skip buttons",

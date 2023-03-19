@@ -291,5 +291,13 @@ export const migrations = [
   ALTER TABLE analytics ADD play_time NUMBER DEFAULT 0;
   
   -- Down
+  `,
+
+  // 19-03-2023
+  `
+  -- Up
+  ALTER TABLE artists ADD sanitized_artist_name TEXT;
+  
+  -- Down
   `
 ]

@@ -379,6 +379,15 @@ export default class ContextMenuMixin extends mixins(PlayerControls, RemoteSong,
         }
       })
     }
+
+    if (item.type === 'YOUTUBE' || item.type === 'SPOTIFY') {
+      items.push({
+        label: this.$tc('contextMenu.incorrectPlayback'),
+        handler: () => {
+          bus.$emit(EventBus.SHOW_INCORRECT_PLAYBACK_MODAL, item)
+        }
+      })
+    }
     return items
   }
 

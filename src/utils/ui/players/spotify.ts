@@ -82,11 +82,7 @@ export class SpotifyPlayer extends Player {
   }
 
   private registerListener<T extends PlayerEventTypes>(event: T, listener: (e: PlayerEvent<T>) => void) {
-    const listenerMod: typeof listener = (e) => {
-      e.event !== 'TimeUpdated' && console.debug('Spotify player, got event: ', e)
-      listener(e)
-    }
-    const channel = window.SpotifyPlayer.on(event, listenerMod)
+    const channel = window.SpotifyPlayer.on(event, listener)
     this.listenerMap[event] = { listener: listener, channel }
   }
 
@@ -105,6 +101,7 @@ export class SpotifyPlayer extends Player {
   protected listenOnLoad(callback: () => void): void {
     this.registerListener('TrackChanged', async () => {
       callback()
+      console.debug('Spotify player emitting play for autoload', this.autoPlayQueued)
       if (this.autoPlayQueued) {
         this.autoPlayQueued = false
         await window.SpotifyPlayer.command('PLAY')
@@ -113,6 +110,7 @@ export class SpotifyPlayer extends Player {
   }
 
   protected listenOnError(callback: (err: Error) => void): void {
+    this.errorCallback = callback
     this.registerListener('Unavailable', (e) =>
       callback(new Error(`Failed to load track ${e.track_id}. Track unavailable`))
     )

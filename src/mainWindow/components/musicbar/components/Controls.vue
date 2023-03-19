@@ -9,29 +9,27 @@
 
 <template>
   <b-row align-v="center" align-h="center" no-gutters>
-    <template v-if="!isJukeboxModeActive">
-      <b-col class="col-button" @click="prevSongWrapper()">
-        <PrevTrack :disabled="!enableTrackControls" />
-      </b-col>
-      <b-col class="col-button" @click="toggleRepeat()">
-        <Repeat :filled="repeat" />
-      </b-col>
-      <b-col class="col-play-button" v-if="isLoading">
-        <b-spinner label="Loading..."></b-spinner>
-      </b-col>
-      <b-col class="col-play-button" v-else v-on:click="togglePlayerState()">
-        <Play :play="playerState === 'PLAYING'" />
-      </b-col>
-      <b-col class="col-button" @click="nextSongWrapper()">
-        <NextTrack :disabled="!enableTrackControls" />
-      </b-col>
-      <b-col class="col-button" @click="shuffle()">
-        <Shuffle :filled="true" />
-      </b-col>
-      <b-col class="col-button mr-1" @click="favoriteSong">
-        <FavIcon :filled="isFavorite" />
-      </b-col>
-    </template>
+    <b-col class="col-button" @click="prevSongWrapper()" v-if="isSkipEnabled">
+      <PrevTrack :disabled="!enableTrackControls" />
+    </b-col>
+    <b-col class="col-button" @click="toggleRepeat()" v-if="isRepeatEnabled">
+      <Repeat :filled="repeat" />
+    </b-col>
+    <b-col class="col-play-button" v-if="isLoading && !isJukeboxModeActive">
+      <b-spinner label="Loading..."></b-spinner>
+    </b-col>
+    <b-col class="col-play-button" v-else-if="!isJukeboxModeActive" v-on:click="togglePlayerState()">
+      <Play :play="playerState === 'PLAYING'" />
+    </b-col>
+    <b-col class="col-button" @click="nextSongWrapper()" v-if="isSkipEnabled">
+      <NextTrack :disabled="!enableTrackControls" />
+    </b-col>
+    <b-col class="col-button" @click="shuffle()" v-if="isShuffleEnabled">
+      <Shuffle :filled="true" />
+    </b-col>
+    <b-col class="col-button mr-1" @click="favoriteSong" v-if="!isJukeboxModeActive">
+      <FavIcon :filled="isFavorite" />
+    </b-col>
     <b-col cols="5" md="3" align-self="center" class="timestamp-container">
       <Timestamp class="timestamp" :duration="duration" :timestamp="timestamp" />
     </b-col>

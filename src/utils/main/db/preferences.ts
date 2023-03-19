@@ -92,10 +92,10 @@ export function saveSelectivePreference(key: string, value: unknown, isExtension
     store.delete(`prefs.${isExtension ? 'extension.' : ''}${key}` as unknown as 'prefs')
   }
 
-  const listenKeys = preferenceListenKeys.filter((val) => val.key === key)
+  const listenKeys = preferenceListenKeys.filter((val) => key.startsWith(val.key))
   for (const l of listenKeys)
     if (listenKeys) {
-      getPreferenceChannel().notifyWindow(l.key, value, l.isMainWindow, l.channel)
+      getPreferenceChannel().notifyWindow(l.key, loadSelectivePreference(l.key), l.isMainWindow, l.channel)
     }
 }
 

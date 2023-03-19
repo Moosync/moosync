@@ -229,7 +229,7 @@
       "clear_preferences_button": "Conferma",
       "jukebox": {
         "pin": "Perno modalità Jukebox",
-        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "pin_tooltip": "Il pin Tis sarà necessario per uscire dalla modalità Jukebox. Dovrebbe essere numerico.",
         "optionalFields": "Button visibility",
         "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
         "optional_skip": "Track Skip buttons",

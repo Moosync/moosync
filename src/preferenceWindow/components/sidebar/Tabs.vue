@@ -68,12 +68,12 @@ import Keybind from '@/icons/KeybindIcon.vue'
 })
 export default class Sidebar extends Vue {
   private componentNames = [
-    { component: 'Paths', title: 'Paths', link: '/paths' },
-    { component: 'Themes', title: 'Themes', link: '/themes' },
-    { component: 'Extensions', title: 'Extensions', link: '/extensions' },
-    { component: 'System', title: 'System', link: '/system' },
-    { component: 'Logs', title: 'Logs', link: '/logs' },
-    { component: 'Keybind', title: 'Keybinds', link: '/keybinds' }
+    { component: 'Paths', title: this.$t('sidebar.tabs.paths'), link: '/paths' },
+    { component: 'Themes', title: this.$t('sidebar.tabs.themes'), link: '/themes' },
+    { component: 'Extensions', title: this.$t('sidebar.tabs.extensions'), link: '/extensions' },
+    { component: 'System', title: this.$t('sidebar.tabs.system'), link: '/system' },
+    { component: 'Logs', title: this.$t('sidebar.tabs.logs'), link: '/logs' },
+    { component: 'Keybind', title: this.$t('sidebar.tabs.keybinds'), link: '/keybinds' }
   ]
 }
 </script>

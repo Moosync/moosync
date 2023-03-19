@@ -61,6 +61,8 @@ import ProviderMixin from '@/utils/ui/mixins/ProviderMixin'
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
 import { SpotifyPlayer } from '@/utils/ui/players/spotify'
 import { isEmpty } from '@/utils/common'
+import { bus } from '@/mainWindow/main'
+import { EventBus } from '@/utils/main/ipc/constants'
 
 @Component({})
 export default class AudioStream extends mixins(
@@ -100,26 +102,6 @@ export default class AudioStream extends mixins(
   private activePlayer?: Player
 
   /**
-   * Instance of youtube embed player
-   */
-  private ytPlayer!: YoutubePlayer | InvidiousPlayer | PipedPlayer
-
-  /**
-   * Instance of Local html audio tag player
-   */
-  private localPlayer!: LocalPlayer
-
-  /**
-   * Instance of Dash player
-   */
-  private dashPlayer!: DashPlayer
-
-  /**
-   * Instance of HLS player
-   */
-  private hlsPlayer!: HLSPlayer
-
-  /**
    * Holds type of player which is current active
    */
   private activePlayerTypes?: PlayerTypes
@@ -141,6 +123,8 @@ export default class AudioStream extends mixins(
   private ignoreStateChange = false
 
   private stateChangeQueued = false
+
+  private playerBlacklist: string[] = []
 
   private _bufferTrap: ReturnType<typeof setTimeout> | undefined
 
@@ -180,45 +164,55 @@ export default class AudioStream extends mixins(
    * This method is responsible of detaching old player
    * and setting new player as active
    */
-  private async onPlayerTypesChanged(newType: PlayerTypes, src?: string): Promise<string | undefined> {
-    const blacklist = []
+  private async onPlayerTypesChanged(newType: PlayerTypes, song: Song): Promise<string | undefined> {
     let player: Player | undefined = undefined
 
-    let tries = vxm.playerRepo.allPlayers.length
-    while (!player && tries > 0) {
-      player = this.findPlayer(newType, blacklist)
-      if (player && src) {
-        console.debug('Checking player', player.key, 'for', src)
-        if (!(await player.canPlay(src))) {
-          blacklist.push(player.key)
+    let tries = 0
+    while (!player && tries < vxm.playerRepo.allPlayers.length) {
+      player = this.findPlayer(newType, this.playerBlacklist)
+
+      console.debug('Found player', player?.key)
+      if (player && newType !== 'LOCAL') {
+        await this.setPlaybackURLAndDuration(song, player.key)
+      }
+
+      if (player && song.playbackUrl) {
+        console.debug('Checking player', player.key, 'for', song.playbackUrl)
+        if (!(await player.canPlay(song.playbackUrl))) {
+          this.playerBlacklist.push(player.key)
           player = undefined
+        } else {
+          console.debug('Found player', player?.key, 'and can play', song.playbackUrl)
         }
       }
-      tries -= 1
+      tries += 1
     }
 
-    if (player && this.activePlayer !== player) {
-      console.debug('Changing player type to', newType)
-      this.unloadAudio()
+    if (!player) {
+      console.error('No player found to play', song.playbackUrl)
+      if (vxm.player.queueOrder.length > 1) {
+        this.nextSong()
+        return
+      }
+    }
 
-      // Old active player may be null when window loads
-      this.activePlayer?.removeAllListeners()
-      this.activePlayer = player
+    if (this.activePlayer !== player) {
+      console.debug('Unloading players')
+      this.unloadAudio()
+      this.clearAllListeners()
 
       if (player) {
-        await this.initializePlayer(this.activePlayer)
+        console.debug('Initializing player', player.key)
+        await this.initializePlayer(player)
 
-        // Players might not have been initialized
-        if (this.activePlayer) {
-          this.activePlayer.volume = vxm.player.volume
-          this.registerPlayerListeners()
-          this.activePlayerTypes = newType
-        }
+        this.activePlayer = player
+
+        this.activePlayer.volume = vxm.player.volume
+        this.registerPlayerListeners()
+        this.activePlayerTypes = newType
 
         this.showYTPlayer =
-          this.useEmbed && vxm.providers.youtubeAlt === YoutubeAlts.YOUTUBE && this.activePlayer.key === 'YOUTUBE'
-            ? 2
-            : 0
+          this.useEmbed && vxm.providers.youtubeAlt === YoutubeAlts.YOUTUBE && player.key === 'YOUTUBE' ? 2 : 0
         this.analyserNode = undefined
 
         return player.key
@@ -298,9 +292,6 @@ export default class AudioStream extends mixins(
       vxm.providers.$watch(
         'youtubeAlt',
         async (val: YoutubeAlts) => {
-          this.ytPlayer?.stop()
-          this.ytPlayer?.removeAllListeners()
-
           switch (val) {
             case YoutubeAlts.YOUTUBE:
               players.push(new YoutubePlayer())
@@ -426,7 +417,18 @@ export default class AudioStream extends mixins(
       this.activePlayer.onError = async (err) => {
         console.error('Player error', err.message, 'while playing', this.currentSong?.playbackUrl)
         console.error(`${this.currentSong?._id}: ${this.currentSong?.title} unplayable, skipping.`)
-        await this.nextSong()
+
+        // Blacklist current player and try to find alternative
+        if (this.currentSong && this.activePlayer?.key) {
+          console.debug('Blacklisting player', this.activePlayer.key)
+          this.playerBlacklist.push(this.activePlayer.key)
+          vxm.player.playAfterLoad = true
+          this.loadAudio(this.currentSong, true, true)
+        } else {
+          if (vxm.player.queueOrder.length > 1) this.nextSong()
+        }
+
+        // await this.nextSong()
         // await this.removeFromQueue(vxm.player.queueIndex - 1)
         vxm.player.loading = false
       }
@@ -449,6 +451,9 @@ export default class AudioStream extends mixins(
       }
 
       this.activePlayer.onLoad = async () => {
+        console.debug('Clearing player blacklist')
+        this.playerBlacklist = []
+
         const preferences = await window.PreferenceUtils.loadSelective<Checkbox[]>('audio')
         if (preferences) {
           const gapless = preferences.find((val) => val.key === 'gapless_playback')
@@ -553,6 +558,12 @@ export default class AudioStream extends mixins(
     this.registerMediaControlListener()
 
     vxm.player.$watch('playerState', this.onPlayerStateChanged, { immediate: true, deep: false })
+
+    bus.$on(EventBus.FORCE_LOAD_SONG, () => {
+      if (this.currentSong) {
+        this.loadAudio(this.currentSong, true, true)
+      }
+    })
   }
 
   /**
@@ -569,10 +580,11 @@ export default class AudioStream extends mixins(
 
   private async getPlaybackUrlAndDuration(
     provider: GenericProvider | undefined,
-    song: Song
+    song: Song,
+    player: string
   ): Promise<{ url: string | undefined; duration?: number } | undefined> {
     if (provider) {
-      const res = await provider.getPlaybackUrlAndDuration(song)
+      const res = await provider.getPlaybackUrlAndDuration(song, player)
       if (res) return res
     }
 
@@ -662,13 +674,6 @@ export default class AudioStream extends mixins(
 
     const nextSong = vxm.player.queueData[vxm.player.queueOrder[vxm.player.queueIndex + 1]?.songID]
     if (nextSong && !nextSong.path) {
-      await this.setPlaybackURLAndDuration(nextSong)
-
-      if (!nextSong.playbackUrl || !nextSong.duration) {
-        // await this.removeFromQueue(vxm.player.queueIndex + 1)
-        return
-      }
-
       const blacklist = []
       let audioPlayer: Player | undefined = undefined
 
@@ -676,6 +681,17 @@ export default class AudioStream extends mixins(
 
       while (!audioPlayer && tries > 0) {
         audioPlayer = this.findPlayer(nextSong.type, blacklist)
+
+        if (audioPlayer) {
+          await this.setPlaybackURLAndDuration(nextSong, audioPlayer.key)
+
+          if (!nextSong.playbackUrl || !nextSong.duration) {
+            // await this.removeFromQueue(vxm.player.queueIndex + 1)
+            this.preloadStatus = undefined
+            return
+          }
+        }
+
         if (audioPlayer && nextSong.playbackUrl) {
           if (!(await audioPlayer.canPlay(nextSong.playbackUrl))) {
             blacklist.push(audioPlayer.key)
@@ -687,6 +703,12 @@ export default class AudioStream extends mixins(
 
       if (!audioPlayer) {
         console.error('Failed to find player for song', nextSong, 'not preloading')
+      }
+
+      if (!nextSong.playbackUrl) {
+        console.error('Failed to find playback URL for song', nextSong, 'not preloading')
+        this.preloadStatus = undefined
+        return
       }
       audioPlayer?.preload(nextSong.playbackUrl)
     }
@@ -708,7 +730,7 @@ export default class AudioStream extends mixins(
     }
   }
 
-  private async setPlaybackURLAndDuration(song: Song) {
+  private async setPlaybackURLAndDuration(song: Song, player: string) {
     let provider: GenericProvider | undefined
     if (song.providerExtension) {
       provider = this.getProviderByKey(song.providerExtension)
@@ -718,20 +740,20 @@ export default class AudioStream extends mixins(
 
     let res: { url?: string; duration?: number } | undefined = { url: song.playbackUrl, duration: song.duration }
 
-    if (song.playbackUrl && !isEmpty(song.duration)) {
+    if (!song.playbackUrl || isEmpty(song.duration)) {
       res = this.getItem(`url_duration:${song._id}`)
       console.debug('cache url and duration', res)
     }
 
     let shouldRefetch = true
-    if (res?.url && res?.duration && (await provider?.validatePlaybackURL(res.url))) {
+    if (res?.url && res?.duration && (await provider?.validatePlaybackURL(res.url, player))) {
       shouldRefetch = false
     }
 
     console.debug('Should refetch playback url and duration', shouldRefetch)
     if (shouldRefetch) {
       console.debug('playback url and duration not in cache or missing')
-      res = await this.getPlaybackUrlAndDuration(provider, song)
+      res = await this.getPlaybackUrlAndDuration(provider, song, player)
     }
 
     console.debug('Got playback url and duration', res)
@@ -753,7 +775,7 @@ export default class AudioStream extends mixins(
 
   private lastLoadedSong?: Song
 
-  private async loadAudio(song: Song, loadedState: boolean) {
+  private async loadAudio(song: Song, loadedState: boolean, force = false) {
     if (!this.playersInitialized) {
       return
     }
@@ -765,7 +787,7 @@ export default class AudioStream extends mixins(
       }
     }
 
-    if (song._id === this.lastLoadedSong?._id) {
+    if (!force && song._id === this.lastLoadedSong?._id) {
       console.debug('Got duplicate song', song)
       return
     }
@@ -780,10 +802,7 @@ export default class AudioStream extends mixins(
 
     vxm.player.loading = true
 
-    // Playback url and duration fetching needed only for non-local songs
-    if (PlayerTypes !== 'LOCAL') {
-      await this.setPlaybackURLAndDuration(song)
-    }
+    await this.onPlayerTypesChanged(PlayerTypes, song)
 
     // Don't proceed if song has changed while we were fetching playback url and duration
     if (song._id !== this.currentSong?._id) {
@@ -791,20 +810,9 @@ export default class AudioStream extends mixins(
       return
     }
 
-    console.debug('changing player', song.type, song.playbackUrl)
-    const switchedPlayer = await this.onPlayerTypesChanged(song.type, song.playbackUrl)
-    if (!switchedPlayer) {
-      console.error('Could not find player to play song', song)
-      await this.nextSong()
-      // await this.removeFromQueue(vxm.player.queueIndex - 1)
-      vxm.player.loading = false
-      return
-    } else {
-      console.debug('Found player', switchedPlayer)
-    }
-
     if (!song.path && (!song.playbackUrl || !song.duration)) {
-      await this.nextSong()
+      console.error('Failed to get playbackURL', song)
+      // await this.nextSong()
       // await this.removeFromQueue(vxm.player.queueIndex - 1)
       vxm.player.loading = false
       return
@@ -822,7 +830,15 @@ export default class AudioStream extends mixins(
       console.debug('PlaybackUrl for song', song._id, 'is', song.playbackUrl)
       console.debug('Loaded song at', song.playbackUrl)
 
-      this.activePlayer?.load(song.playbackUrl, this.volume, vxm.player.playAfterLoad || this.playerState !== 'PAUSED')
+      try {
+        await this.activePlayer?.load(
+          song.playbackUrl,
+          this.volume,
+          vxm.player.playAfterLoad || this.playerState !== 'PAUSED'
+        )
+      } catch (e) {
+        console.error('failed to load song', e)
+      }
     }
 
     vxm.player.playAfterLoad = false

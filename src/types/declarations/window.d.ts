@@ -200,10 +200,10 @@ interface preferenceUtils {
   loadSelective: <T>(key: string, isExtension?: boolean, defaultValue?: T) => Promise<T | undefined>
   loadSelectiveArrayItem: <T>(key: string, defaultValue?: T) => Promise<T | undefined>
   notifyPreferenceChanged: (key: string, value: unknown) => Promise<void>
-  listenPreferenceChanged: (
+  listenPreferenceChanged: <T>(
     key: string,
     isMainWindow: boolean,
-    callback: (key: string, value: never) => void
+    callback: (key: string, value: T) => void
   ) => Promise<void>
   resetToDefault: () => Promise<void>
 }

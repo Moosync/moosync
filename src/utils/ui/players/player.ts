@@ -40,7 +40,8 @@ export abstract class Player {
   protected abstract _stop(): void
 
   @checkInitialized
-  public load(src?: string, volume?: number, autoplay?: boolean) {
+  public load(src?: string, volume?: number, autoplay?: boolean): void | Promise<void> {
+    console.debug('Loading', src, 'volume', volume, 'autoplay', autoplay)
     return this._load(src, volume, autoplay)
   }
 
@@ -65,8 +66,15 @@ export abstract class Player {
   abstract get volume(): number
   abstract set volume(volume: number)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private listenerMod(eventName: string, callback: (e?: any) => void, e?: any) {
+    console.debug(this.key, 'player, got event', `${eventName}${e ? `: ${e}` : ''}`)
+    callback(e)
+  }
+
   set onEnded(callback: () => void) {
-    this.listenOnEnded(callback)
+    const mod = () => this.listenerMod('onEnded', callback)
+    this.listenOnEnded(mod)
     console.debug('Set onEnded callback')
   }
 
@@ -76,22 +84,26 @@ export abstract class Player {
   }
 
   set onLoad(callback: () => void) {
-    this.listenOnLoad(callback)
+    const mod = () => this.listenerMod('onLoad', callback)
+    this.listenOnLoad(mod)
     console.debug('Set onLoad callback')
   }
 
   set onError(callback: (err: Error) => void) {
-    this.listenOnError(callback)
+    const mod = (err: Error) => this.listenerMod('onError', callback, err)
+    this.listenOnError(mod)
     console.debug('Set onError callback')
   }
 
   set onStateChange(callback: (state: PlayerState) => void) {
-    this.listenOnStateChange(callback)
+    const mod = (state: PlayerState) => this.listenerMod('onStateChange', callback, state)
+    this.listenOnStateChange(mod)
     console.debug('Set onStateChange callback')
   }
 
   set onBuffer(callback: () => void) {
-    this.listenOnBuffer(callback)
+    const mod = () => this.listenerMod('onBuffer', callback)
+    this.listenOnBuffer(mod)
     console.debug('Set onBuffer callback')
   }
 

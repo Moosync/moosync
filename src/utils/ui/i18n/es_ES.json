@@ -229,7 +229,7 @@
       "clear_preferences_button": "Confirmar",
       "jukebox": {
         "pin": "Pin del modo tocadiscos",
-        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "pin_tooltip": "El pin Tis será necesario para salir del modo Jukebox. Debe ser numérico.",
         "optionalFields": "Button visibility",
         "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
         "optional_skip": "Track Skip buttons",

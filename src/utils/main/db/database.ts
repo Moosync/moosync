@@ -813,9 +813,11 @@ export class SongDBInstance extends DBUtils {
     const artistID: string[] = []
     for (const a of artists) {
       if (a.artist_name) {
-        const sanitizedName = sanitizeArtistName(a.artist_name, true)
+        const sanitizedName = sanitizeArtistName(a.artist_name)
+
         let id = this.db.queryFirstCell(
-          `SELECT artist_id FROM artists WHERE artist_name = ? COLLATE NOCASE`,
+          `SELECT artist_id FROM artists WHERE sanitized_artist_name = ? OR artist_name = ? COLLATE NOCASE`,
+          sanitizedName,
           sanitizedName
         )
         if (id) {
@@ -838,7 +840,7 @@ export class SongDBInstance extends DBUtils {
           }
         } else {
           id = v4()
-          this.db.insert('artists', { artist_id: id, artist_name: sanitizedName })
+          this.db.insert('artists', { artist_id: id, artist_name: a.artist_name, sanitized_artist_name: sanitizedName })
           artistID.push(id)
         }
 

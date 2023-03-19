@@ -106,8 +106,6 @@ export class LocalPlayer extends Player {
     }
   }
 
-  private listeners: { [key: string]: () => void } = {}
-
   protected listenOnStateChange(callback: (state: PlayerState) => void): void {
     const play = () => callback('PLAYING')
     const pause = () => callback('PAUSED')
@@ -116,10 +114,6 @@ export class LocalPlayer extends Player {
     this.playerInstance.addEventListener('play', play)
     this.playerInstance.addEventListener('pause', pause)
     this.playerInstance.addEventListener('ended', stop)
-
-    this.listeners['play'] = play
-    this.listeners['pause'] = pause
-    this.listeners['ended'] = stop
   }
 
   protected listenOnBuffer(callback: () => void): void {
@@ -127,10 +121,15 @@ export class LocalPlayer extends Player {
   }
 
   removeAllListeners(): void {
-    this.playerInstance.onended = null
-    this.playerInstance.ontimeupdate = null
-    for (const [key, value] of Object.entries(this.listeners)) {
-      this.playerInstance.removeEventListener(key as keyof HTMLMediaElementEventMap, value)
+    if (this.playerInstance) {
+      this.playerInstance.onended = null
+      this.playerInstance.ontimeupdate = null
+      this.playerInstance.onload = null
+      this.playerInstance.onloadeddata = null
+      this.playerInstance.onloadstart = null
+      for (const [key, value] of Object.entries(this.playerInstance.listeners ?? {})) {
+        this.playerInstance.removeEventListener(key as keyof HTMLMediaElementEventMap, value)
+      }
     }
   }
 

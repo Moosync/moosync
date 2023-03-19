@@ -7,7 +7,13 @@
       "albums": "Albums",
       "artists": "Artists",
       "genre": "Genres",
-      "explore": "Explore"
+      "explore": "Explore",
+      "paths": "Paths",
+      "themes": "Themes",
+      "extensions": "Extensions",
+      "system": "System",
+      "logs": "Logs",
+      "keybinds": "Keybinds"
     }
   },
   "topbar": {
@@ -74,7 +80,8 @@
       "showHidden": "Show hidden songs",
       "hideHidden": "Hide hidden songs"
     },
-    "moreInfo": "More Info"
+    "moreInfo": "More Info",
+    "incorrectPlayback": "Incorrect playback?"
   },
   "providers": {
     "youtube": "Youtube",
@@ -222,7 +229,12 @@
       "clear_preferences_button": "Confirm",
       "jukebox": {
         "pin": "Jukebox mode pin",
-        "pin_tooltip": "Tis pin will be required to exit Jukebox Mode. Should be numeric."
+        "pin_tooltip": "This pin will be required to exit Jukebox Mode. Should be numeric.",
+        "optionalFields": "Button visibility",
+        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
+        "optional_skip": "Track Skip buttons",
+        "optional_shuffle": "Shuffle button",
+        "optional_repeat": "Repeat button"
       },
       "lyrics": {
         "title": "Lyrics providers",
@@ -240,6 +252,13 @@
           "title": "Scrobble whitelist",
           "tooltip": "Enable providers whose songs you want to be scrobble'd"
         }
+      },
+      "volumePersistMode": {
+        "title": "Volume behavior",
+        "tooltip": "Change the way volume slider behaves",
+        "noPersist": "Normal behavior",
+        "persistSeparateVolumes": "Remember separate volume for each provider",
+        "persistClampVolume": "Manually adjust volume range for each provider"
       }
     },
     "logs": {

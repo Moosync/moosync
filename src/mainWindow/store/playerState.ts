@@ -12,6 +12,7 @@ import { action, mutation } from 'vuex-class-component'
 import { VuexModule } from './module'
 import { v4 } from 'uuid'
 import Vue from 'vue'
+import { VolumePersistMode } from '../../utils/commonConstants'
 
 class Queue implements GenericQueue<Song> {
   data: QueueData<Song> = {}
@@ -25,15 +26,15 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
   private songQueue = new Queue()
   private repeat = false
 
-  public volumeMode: VolumePersistMode = 'SINGLE'
+  public volumeMode: VolumePersistMode = VolumePersistMode.SINGLE
 
   private _volume = 50
   public get volume() {
-    if (this.currentSong && this.volumeMode === 'SEPARATE_VOLUMES') {
+    if (this.currentSong && this.volumeMode === VolumePersistMode.SEPARATE_VOLUME_MAP) {
       const type = this.currentSong.providerExtension ?? this.currentSong.type
       return this.volumeMap[type] ?? this._volume
     }
-    return this._volume
+    return Math.min(this._volume, 100)
   }
 
   public set volume(vol: number) {
@@ -45,6 +46,7 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
   }
 
   private volumeMap: Record<string, number> = {}
+  clampMap: Record<string, { clamp: number }> = {}
 
   public timestamp = 0
   public loading = false
@@ -93,6 +95,14 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
 
   set queueIndex(value: number) {
     this.songQueue.index = value
+  }
+
+  @mutation
+  setQueueDataSong(song: Song) {
+    this.songQueue.data[song._id] = song
+    if (this.currentSong?._id === song._id) {
+      this.currentSong = song
+    }
   }
 
   @mutation

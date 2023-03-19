@@ -20,7 +20,7 @@
       @error="handleCoverError"
     />
     <SongDefault :style="{ height, width }" v-else class="coverimg me-auto d-flex align-items-center" />
-    <div class="play-button d-flex justify-content-center">
+    <div class="play-button d-flex justify-content-center" v-if="showPlayHoverButton">
       <Play2 class="align-self-center" />
     </div>
 
@@ -60,6 +60,9 @@ export default class LowImageCol extends mixins(ImgLoader) {
 
   @Prop({ default: false })
   isSongPlaying!: boolean
+
+  @Prop({ default: true })
+  showPlayHoverButton!: boolean
 
   forceEmptyImg = false
 

@@ -91,6 +91,7 @@ export default class Dropdown extends Mixins<ExtensionPreferenceMixin<Checkbox[]
   max-height: 500px
   overflow-y: auto
   overflow-x: hidden
+  z-index: 9999
   &::-webkit-scrollbar-track
     background: var(--secondary)
   &::-webkit-scrollbar-thumb
@@ -111,4 +112,5 @@ export default class Dropdown extends Mixins<ExtensionPreferenceMixin<Checkbox[]
 .background
   background: var(--tertiary)
   height: 50px
+  overflow: visible !important
 </style>

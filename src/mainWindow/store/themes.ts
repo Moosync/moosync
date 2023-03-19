@@ -27,6 +27,8 @@ export class ThemeStore extends VuexModule.With({ namespaced: 'themes' }) {
 
   public showPlayer = 0
 
+  public jukeboxOptionalFields: Checkbox[] = []
+
   get isUpdateAvailable() {
     return this._updateAvailable
   }

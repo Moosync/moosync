@@ -8,7 +8,13 @@
     :class="{ selectedItem: selected.includes(index) }"
   >
     <b-row no-gutters align-content="center" class="w-100">
-      <LowImageCol @click.native="onPlayNowClicked(item)" height="56px" width="56px" :src="getValidImageLow(item)" />
+      <LowImageCol
+        @click.native="onPlayNowClicked(item)"
+        height="56px"
+        width="56px"
+        :src="getValidImageLow(item)"
+        :showPlayHoverButton="showPlayHoverButton"
+      />
       <b-col cols="5" class="ml-2" align-self="center">
         <b-row no-gutters align-v="center">
           <b-col cols="auto" class="d-flex">
@@ -34,11 +40,11 @@
       <b-col cols="auto" align-self="center" offset="1" class="ml-auto timestamp">
         {{ item._id === currentSong?._id && currentSong._id ? 'Now Playing' : formattedDuration(item.duration) }}
       </b-col>
-      <b-col cols="auto" align-self="center" class="button-icon ml-5">
+      <b-col cols="auto" align-self="center" class="button-icon ml-5" v-if="showAddToQueueButton">
         <AddToQueue title="Add song to queue" @click.native="onRowDoubleClicked(item)"
       /></b-col>
       <b-col
-        v-if="!isJukeboxModeActive"
+        v-if="!isJukeboxModeActive && showEllipsis"
         cols="auto"
         align-self="center"
         class="ml-5 mr-3 py-2 ellipsis-icon"
@@ -106,6 +112,15 @@ export default class SongListCompactItem extends mixins(ImgLoader, JukeboxMixin)
 
   @Prop({ default: 0 })
   index!: number
+
+  @Prop({ default: true })
+  showPlayHoverButton!: boolean
+
+  @Prop({ default: true })
+  showEllipsis!: boolean
+
+  @Prop({ default: true })
+  showAddToQueueButton!: boolean
 
   get currentSong() {
     return vxm.player.currentSong

@@ -106,8 +106,6 @@ export default class Paths extends Vue {
   private setProgress(progress: Progress) {
     this.currentValue = progress.current
     this.totalValue = progress.total
-
-    console.log(this.currentValue, this.totalValue)
   }
 
   private openWiki() {

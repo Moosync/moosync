@@ -23,6 +23,7 @@
     <FormModal />
     <EntityInfoModal />
     <PinEntryModal />
+    <IncorrectPlaybackModal />
   </div>
 </template>
 
@@ -49,11 +50,12 @@ import EntityInfoModal from './components/modals/EntityInfoModal.vue'
 import { i18n } from './plugins/i18n'
 import JukeboxMixin from '@/utils/ui/mixins/JukeboxMixin'
 import ProviderMixin from '@/utils/ui/mixins/ProviderMixin'
-import { ProviderScopes } from '@/utils/commonConstants'
+import { ProviderScopes, VolumePersistMode } from '@/utils/commonConstants'
 import { YoutubeAlts } from './store/providers'
 import PinEntryModal from './components/modals/PinEntryModal.vue'
 import { ExtensionProvider } from '@/utils/ui/providers/extensionWrapper'
 import { sortSongListFn } from '@/utils/common'
+import IncorrectPlaybackModal from './components/modals/IncorrectPlaybackModal.vue'
 
 @Component({
   components: {
@@ -67,7 +69,8 @@ import { sortSongListFn } from '@/utils/common'
     OAuthModal,
     FormModal,
     EntityInfoModal,
-    PinEntryModal
+    PinEntryModal,
+    IncorrectPlaybackModal
   }
 })
 export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandlerMixin, JukeboxMixin, ProviderMixin) {
@@ -460,12 +463,16 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
       })
     )
 
-    vxm.player.$watch('volume', (newVal: number) =>
-      window.ExtensionUtils.sendEvent({
-        type: 'volumeChanged',
-        data: [newVal]
-      })
-    )
+    let volumeDebounce: ReturnType<typeof setTimeout> | undefined = undefined
+    vxm.player.$watch('volume', (newVal: number) => {
+      if (volumeDebounce) clearTimeout(volumeDebounce)
+      volumeDebounce = setTimeout(() => {
+        window.ExtensionUtils.sendEvent({
+          type: 'volumeChanged',
+          data: [newVal]
+        })
+      }, 800)
+    })
 
     vxm.player.$watch('songQueue', (newVal: SongQueue) =>
       window.ExtensionUtils.sendEvent({
@@ -488,7 +495,7 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
       this.setColorsToRoot(theme)
     })
 
-    window.PreferenceUtils.listenPreferenceChanged('songView', true, (_, value) => {
+    window.PreferenceUtils.listenPreferenceChanged<songMenu>('songView', true, (_, value) => {
       vxm.themes.songView = value
     })
 
@@ -501,17 +508,26 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
         (value as Checkbox[]).find((val) => val.key === 'use_spotify_canvas')?.enabled ?? true
     })
 
+    this.listenVolumeModes()
+  }
+
+  private async listenVolumeModes() {
     vxm.player.volumeMode = this.mapVolumeMode(
-      (await window.PreferenceUtils.loadSelective<Checkbox[]>('volumePersist')) ?? []
+      (await window.PreferenceUtils.loadSelective<Checkbox[]>('volumePersistMode')) ?? []
     )
-    window.PreferenceUtils.listenPreferenceChanged('volumePersist', true, (_, value) => {
+    window.PreferenceUtils.listenPreferenceChanged<Checkbox[]>('volumePersistMode', true, (_, value) => {
       vxm.player.volumeMode = this.mapVolumeMode(value)
+    })
+
+    vxm.player.clampMap = (await window.PreferenceUtils.loadSelective('clampMap')) ?? {}
+    window.PreferenceUtils.listenPreferenceChanged<Record<string, { clamp: number }>>('clampMap', true, (_, value) => {
+      vxm.player.clampMap = value
     })
   }
 
-  private mapVolumeMode(value: Checkbox[]) {
+  private mapVolumeMode(value: Checkbox[]): VolumePersistMode {
     const active = (value as Checkbox[]).find((val) => val.enabled)
-    return active?.key === 'separate_volumes' ? 'SEPARATE_VOLUMES' : 'SINGLE'
+    return (active?.key ?? VolumePersistMode.SINGLE) as VolumePersistMode
   }
 
   private async handleInitialSetup() {
