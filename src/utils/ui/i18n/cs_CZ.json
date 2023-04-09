@@ -78,7 +78,8 @@
       "hideFromLibrary": "Skrýt z knihovny",
       "showInLibrary": "Zobrazit v knihovně",
       "showHidden": "Zobrazit skryté skladby",
-      "hideHidden": "Skrýt skryté skladby"
+      "hideHidden": "Skrýt skryté skladby",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Další informace",
     "incorrectPlayback": "Incorrect playback?"
