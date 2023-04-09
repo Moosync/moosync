@@ -78,7 +78,8 @@
       "hideFromLibrary": "从库中隐藏",
       "showInLibrary": "显示媒体库",
       "showHidden": "显示隐藏歌曲",
-      "hideHidden": "不显示隐藏的歌曲"
+      "hideHidden": "不显示隐藏的歌曲",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "更多信息",
     "incorrectPlayback": "Incorrect playback?"
