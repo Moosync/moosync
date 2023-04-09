@@ -78,7 +78,8 @@
       "hideFromLibrary": "Приховати з бібліотеки",
       "showInLibrary": "Показувати в бібліотеці",
       "showHidden": "Показувати приховані пісні",
-      "hideHidden": "Сховати приховані пісні"
+      "hideHidden": "Сховати приховані пісні",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Більше інформації",
     "incorrectPlayback": "Incorrect playback?"
