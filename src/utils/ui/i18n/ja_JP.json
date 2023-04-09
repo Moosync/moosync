@@ -78,7 +78,8 @@
       "hideFromLibrary": "ライブラリから隠す",
       "showInLibrary": "ライブラリに表示",
       "showHidden": "非表示の曲を表示",
-      "hideHidden": "非表示の曲を非表示"
+      "hideHidden": "非表示の曲を非表示",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "詳細情報",
     "incorrectPlayback": "再生がおかしいですか？"
