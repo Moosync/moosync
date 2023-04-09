@@ -78,7 +78,8 @@
       "hideFromLibrary": "Hide from library",
       "showInLibrary": "Show in library",
       "showHidden": "Show hidden songs",
-      "hideHidden": "Hide hidden songs"
+      "hideHidden": "Hide hidden songs",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "अन्य जानकारी",
     "incorrectPlayback": "Incorrect playback?"
