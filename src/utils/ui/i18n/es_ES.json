@@ -78,7 +78,8 @@
       "hideFromLibrary": "Ocultar de la biblioteca",
       "showInLibrary": "Mostrar en la biblioteca",
       "showHidden": "Mostrar canciones ocultas",
-      "hideHidden": "Ocultar canciones ocultas"
+      "hideHidden": "Ocultar canciones ocultas",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Más información",
     "incorrectPlayback": "Incorrect playback?"
