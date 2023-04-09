@@ -78,7 +78,8 @@
       "hideFromLibrary": "Ascunde din bibliotecă",
       "showInLibrary": "Arată în bibliotecă",
       "showHidden": "Arată melodiile ascunse",
-      "hideHidden": "Ascunde melodiile ascunse"
+      "hideHidden": "Ascunde melodiile ascunse",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Mai multe informații",
     "incorrectPlayback": "Incorrect playback?"
