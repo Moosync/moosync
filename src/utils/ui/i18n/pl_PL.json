@@ -78,7 +78,8 @@
       "hideFromLibrary": "Ukryj z biblioteki",
       "showInLibrary": "Pokaż w bibliotece",
       "showHidden": "Pokaż ukryte utwory",
-      "hideHidden": "Ukryj ukryte utwory"
+      "hideHidden": "Ukryj ukryte utwory",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Więcej informacji",
     "incorrectPlayback": "Incorrect playback?"
