@@ -78,7 +78,8 @@
       "hideFromLibrary": "Verbergen in bibliotheek",
       "showInLibrary": "In bibliotheek weergeven",
       "showHidden": "Verborgen nummers weergeven",
-      "hideHidden": "Verborgen nummers verbergen"
+      "hideHidden": "Verborgen nummers verbergen",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Meer informatie",
     "incorrectPlayback": "Incorrect playback?"
