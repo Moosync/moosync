@@ -78,7 +78,8 @@
       "hideFromLibrary": "إخفاء من المكتبة",
       "showInLibrary": "إظهار في المكتبة",
       "showHidden": "إظهار الأغاني المخفية",
-      "hideHidden": "إخفاء الأغاني المخفية"
+      "hideHidden": "إخفاء الأغاني المخفية",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "المزيد من المعلومات",
     "incorrectPlayback": "Incorrect playback?"
