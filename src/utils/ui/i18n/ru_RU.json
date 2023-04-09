@@ -78,7 +78,8 @@
       "hideFromLibrary": "Скрыть из библиотеки",
       "showInLibrary": "Показать в библиотеке",
       "showHidden": "Показать скрытые треки",
-      "hideHidden": "Скрыть скрытые треки"
+      "hideHidden": "Скрыть скрытые треки",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Доп. сведения",
     "incorrectPlayback": "Incorrect playback?"
