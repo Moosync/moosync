@@ -78,7 +78,8 @@
       "hideFromLibrary": "Piilota kirjastosta",
       "showInLibrary": "Näytä kirjastossa",
       "showHidden": "Näytä piilotetut kappaleet",
-      "hideHidden": "Piilota piilotetut kappaleet"
+      "hideHidden": "Piilota piilotetut kappaleet",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Lisää Tietoja",
     "incorrectPlayback": "Incorrect playback?"
