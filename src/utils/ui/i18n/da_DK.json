@@ -78,7 +78,8 @@
       "hideFromLibrary": "Skjul fra bibliotek",
       "showInLibrary": "Vis i bibliotek",
       "showHidden": "Vis skjulte sange",
-      "hideHidden": "Skjul skjulte sange"
+      "hideHidden": "Skjul skjulte sange",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Mere Info",
     "incorrectPlayback": "Incorrect playback?"
