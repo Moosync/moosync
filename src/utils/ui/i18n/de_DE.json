@@ -78,7 +78,8 @@
       "hideFromLibrary": "In der Bibliothek ausblenden",
       "showInLibrary": "In Bibliothek anzeigen",
       "showHidden": "Versteckte Lieder anzeigen",
-      "hideHidden": "Versteckte Lieder ausblenden"
+      "hideHidden": "Versteckte Lieder ausblenden",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Mehr Info",
     "incorrectPlayback": "Falsche Wiedergabe?"
