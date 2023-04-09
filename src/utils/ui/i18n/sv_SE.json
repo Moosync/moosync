@@ -78,7 +78,8 @@
       "hideFromLibrary": "Dölj från bibliotek",
       "showInLibrary": "Visa i bibliotek",
       "showHidden": "Visa dolda låtar",
-      "hideHidden": "Dölj dolda låtar"
+      "hideHidden": "Dölj dolda låtar",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Mer information",
     "incorrectPlayback": "Incorrect playback?"
