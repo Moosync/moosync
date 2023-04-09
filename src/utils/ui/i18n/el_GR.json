@@ -78,7 +78,8 @@
       "hideFromLibrary": "Απόκρυψη από τη βιβλιοθήκη",
       "showInLibrary": "Εμφάνιση στη βιβλιοθήκη",
       "showHidden": "Εμφάνιση κρυφών τραγουδιών",
-      "hideHidden": "Απόκρυψη κρυφών τραγουδιών"
+      "hideHidden": "Απόκρυψη κρυφών τραγουδιών",
+      "openInBrowser": "Open in browser"
     },
     "moreInfo": "Περισσότερες Πληροφορίες",
     "incorrectPlayback": "Λανθασμένη αναπαραγωγή;"
