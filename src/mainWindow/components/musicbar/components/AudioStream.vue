@@ -168,7 +168,7 @@ export default class AudioStream extends mixins(
     let player: Player | undefined = undefined
 
     let tries = 0
-    while (!player && tries < vxm.playerRepo.allPlayers.length) {
+    while (!(player && song.playbackUrl) && tries < vxm.playerRepo.allPlayers.length) {
       player = this.findPlayer(newType, this.playerBlacklist)
 
       console.debug('Found player', player?.key)
@@ -176,24 +176,30 @@ export default class AudioStream extends mixins(
         await this.setPlaybackURLAndDuration(song, player.key)
       }
 
-      if (player && song.playbackUrl) {
-        console.debug('Checking player', player.key, 'for', song.playbackUrl)
-        if (!(await player.canPlay(song.playbackUrl))) {
-          this.playerBlacklist.push(player.key)
-          player = undefined
-        } else {
-          console.debug('Found player', player?.key, 'and can play', song.playbackUrl)
+      if (!player) {
+        console.error('No player found to play', song.playbackUrl)
+        if (vxm.player.queueOrder.length > 1) {
+          this.nextSong()
         }
-      }
-      tries += 1
-    }
-
-    if (!player) {
-      console.error('No player found to play', song.playbackUrl)
-      if (vxm.player.queueOrder.length > 1) {
-        this.nextSong()
         return
       }
+
+      if (!song.playbackUrl) {
+        console.info('Blacklisting', player.key)
+        this.playerBlacklist.push(player.key)
+        player = undefined
+        continue
+      }
+
+      console.debug('Checking player', player.key, 'for', song.playbackUrl)
+      if (!(await player.canPlay(song.playbackUrl))) {
+        this.playerBlacklist.push(player.key)
+        player = undefined
+      } else {
+        console.debug('Found player', player?.key, 'and can play', song.playbackUrl)
+      }
+
+      tries += 1
     }
 
     if (this.activePlayer !== player) {
