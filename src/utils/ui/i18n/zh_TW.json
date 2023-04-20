@@ -105,7 +105,9 @@
       "thumbnailPath": "Downloaded Thumbnail Path",
       "thumbnailPath_tooltip": "Directory where generated thumbnails are stored",
       "splitter": "Artist name split pattern",
-      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting."
+      "splitter_tooltip": "Regex to split artist names. Leave empty to disable splitting.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Songs View",
