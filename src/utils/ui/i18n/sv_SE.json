@@ -105,7 +105,9 @@
       "thumbnailPath": "Nedladdad miniatyrsökväg",
       "thumbnailPath_tooltip": "Katalog där genererade miniatyrbilder lagras",
       "splitter": "Artistens namn delat mönster",
-      "splitter_tooltip": "Regex för att dela artistnamn. Lämna tomt för att inaktivera delning."
+      "splitter_tooltip": "Regex för att dela artistnamn. Lämna tomt för att inaktivera delning.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Visning av låtar",
