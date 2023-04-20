@@ -105,7 +105,9 @@
       "thumbnailPath": "مسار الصورة المصغرة الذي تم تنزيله",
       "thumbnailPath_tooltip": "الدليل حيث يتم تخزين الصور المصغرة التي تم إنشاؤها",
       "splitter": "نمط تقسيم اسم الفنان",
-      "splitter_tooltip": "ريجكس لتقسيم أسماء الفنانين. اتركه فارغاً لتعطيل التقسيم."
+      "splitter_tooltip": "ريجكس لتقسيم أسماء الفنانين. اتركه فارغاً لتعطيل التقسيم.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "عرض الأغاني",
