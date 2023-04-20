@@ -105,7 +105,9 @@
       "thumbnailPath": "Chemin de la miniature téléchargée",
       "thumbnailPath_tooltip": "Répertoire où les vignettes générées sont stockées",
       "splitter": "Modèle de séparation du nom de l'artiste",
-      "splitter_tooltip": "Regex pour découper le nom de l'artiste. Laisser vide pour désactiver le découpage."
+      "splitter_tooltip": "Regex pour découper le nom de l'artiste. Laisser vide pour désactiver le découpage.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Vue des chansons",
