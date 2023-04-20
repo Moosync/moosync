@@ -105,7 +105,9 @@
       "thumbnailPath": "Звантажений шлях до ескізу",
       "thumbnailPath_tooltip": "Каталог, де зберігаються створені мініатюри",
       "splitter": "Шаблон назви виконавця розділення",
-      "splitter_tooltip": "Регулярний вираз для розділення імен виконавців. Залиште порожнім, щоб вимкнути розділення."
+      "splitter_tooltip": "Регулярний вираз для розділення імен виконавців. Залиште порожнім, щоб вимкнути розділення.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Перегляд пісень",
