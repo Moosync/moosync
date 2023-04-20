@@ -105,7 +105,9 @@
       "thumbnailPath": "Downloadet Miniaturesti",
       "thumbnailPath_tooltip": "Mappe, hvor genererede miniaturer er gemt",
       "splitter": "Kunstner navn split mønster",
-      "splitter_tooltip": "Regex for at opdele kunstnernavne. Efterlad blank for at deaktivere opdeling."
+      "splitter_tooltip": "Regex for at opdele kunstnernavne. Efterlad blank for at deaktivere opdeling.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Sange Visning",
