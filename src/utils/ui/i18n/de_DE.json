@@ -105,7 +105,9 @@
       "thumbnailPath": "Heruntergeladener Miniaturbildpfad",
       "thumbnailPath_tooltip": "Verzeichnis in dem die erzeugten Thumbnails gespeichert werden",
       "splitter": "Interpretenname Split-Muster",
-      "splitter_tooltip": "Regex um Interpretennamen zu teilen. Leer lassen um die Aufteilung zu deaktivieren."
+      "splitter_tooltip": "Regex um Interpretennamen zu teilen. Leer lassen um die Aufteilung zu deaktivieren.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Titelansicht",
