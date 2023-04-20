@@ -105,7 +105,9 @@
       "thumbnailPath": "Λήφθηκε Διαδρομή Μικρογραφίας",
       "thumbnailPath_tooltip": "Κατάλογος όπου δημιουργούνται μικρογραφίες αποθηκεύονται",
       "splitter": "Μοτίβο διαίρεσης ονόματος καλλιτέχνη",
-      "splitter_tooltip": "Regex για διαχωρισμό ονομάτων καλλιτέχνη. Αφήστε κενό για να απενεργοποιήσετε τον διαχωρισμό."
+      "splitter_tooltip": "Regex για διαχωρισμό ονομάτων καλλιτέχνη. Αφήστε κενό για να απενεργοποιήσετε τον διαχωρισμό.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Προβολή Τραγουδιών",
