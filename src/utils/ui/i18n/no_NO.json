@@ -105,7 +105,9 @@
       "thumbnailPath": "Sti for miniatyrbilder",
       "thumbnailPath_tooltip": "Mappe hvor genererte miniatyrbilder lagres",
       "splitter": "Artistens navn splittringsmønster",
-      "splitter_tooltip": "Regex for å splitte artistnavn. La stå tomt for å deaktivere splitting."
+      "splitter_tooltip": "Regex for å splitte artistnavn. La stå tomt for å deaktivere splitting.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Visning av sanger",
