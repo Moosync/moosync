@@ -105,7 +105,9 @@
       "thumbnailPath": "Calea de miniatură descărcată",
       "thumbnailPath_tooltip": "Directorul unde miniaturile generate sunt stocate",
       "splitter": "Sablon divizat pentru numele artistului",
-      "splitter_tooltip": "Regex pentru împărțirea numelor artiștilor. Lăsați gol pentru a dezactiva divizarea."
+      "splitter_tooltip": "Regex pentru împărțirea numelor artiștilor. Lăsați gol pentru a dezactiva divizarea.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Vizualizare melodii",
