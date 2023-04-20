@@ -105,7 +105,9 @@
       "thumbnailPath": "Percorso delle copertine scaricate",
       "thumbnailPath_tooltip": "Percorso dove salvare le copertine generate",
       "splitter": "Modello di divisione nome artista",
-      "splitter_tooltip": "Regex per dividere i nomi dell'artista. Lasciare vuoto per disabilitare la divisione."
+      "splitter_tooltip": "Regex per dividere i nomi dell'artista. Lasciare vuoto per disabilitare la divisione.",
+      "scan_interval": "Scan interval",
+      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
     },
     "themes": {
       "songView": "Vista brani",
