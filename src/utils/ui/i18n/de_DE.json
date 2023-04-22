@@ -243,7 +243,8 @@
         "title": "Songtext-Anbieter",
         "tooltip": "Wählen Sie aus, welche Songtexte für die Suche verwendet werden sollen",
         "az_lyrics": "AZLyrics verwenden",
-        "google_lyrics": "Google-Suchtexte verwenden"
+        "google_lyrics": "Google-Suchtexte verwenden",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Warteschlangen-Einstellungen",
