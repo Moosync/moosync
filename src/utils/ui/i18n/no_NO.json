@@ -149,7 +149,8 @@
         "minimizeTray": "Minimer til verktøykassen ved lukking",
         "hardwareAcceleration": "Bruk GPU hardwareakselerasjon",
         "watchFileChanges": "Se musikkmapper for endringer",
-        "enableJukeboxMode": "Aktiver av/på hurtiginnfelte med Jukebox"
+        "enableJukeboxMode": "Aktiver av/på hurtiginnfelte med Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Innstillinger som er relatert til systemet ditt",
       "audioSettings": {
