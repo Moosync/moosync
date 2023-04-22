@@ -149,7 +149,8 @@
         "minimizeTray": "Minimér til bakke ved lukning",
         "hardwareAcceleration": "Brug GPU hardware acceleration",
         "watchFileChanges": "Se musikmapper for ændringer",
-        "enableJukeboxMode": "Aktivér skift for Jukebox-tilstand"
+        "enableJukeboxMode": "Aktivér skift for Jukebox-tilstand",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Indstillinger, der er relateret til dit system",
       "audioSettings": {
