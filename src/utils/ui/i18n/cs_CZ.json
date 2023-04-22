@@ -149,7 +149,8 @@
         "minimizeTray": "Minimalizovat do lišty při zavření",
         "hardwareAcceleration": "Použít hardwarovou akceleraci GPU",
         "watchFileChanges": "Sledujte hudební adresáře pro změny",
-        "enableJukeboxMode": "Zobrazit tlačítko pro Jukebox mód"
+        "enableJukeboxMode": "Zobrazit tlačítko pro Jukebox mód",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Nastavení vztahující se k vašemu systému",
       "audioSettings": {
