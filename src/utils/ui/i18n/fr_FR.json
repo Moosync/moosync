@@ -149,7 +149,8 @@
         "minimizeTray": "Réduire dans la barre d'état à la fermeture",
         "hardwareAcceleration": "Utiliser l'accélération matérielle GPU",
         "watchFileChanges": "Regarder les répertoires musicaux pour les modifications",
-        "enableJukeboxMode": "Activer le bouton basculant pour le mode Jukebox"
+        "enableJukeboxMode": "Activer le bouton basculant pour le mode Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Paramètres liés à votre système",
       "audioSettings": {
