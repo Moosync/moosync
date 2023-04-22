@@ -149,7 +149,8 @@
         "minimizeTray": "Minimizar para a bandeja ao fechar",
         "hardwareAcceleration": "Usar aceleração de hardware da GPU",
         "watchFileChanges": "Ver diretórios de músicas por mudanças",
-        "enableJukeboxMode": "Ativar alternância para o modo Jukebox"
+        "enableJukeboxMode": "Ativar alternância para o modo Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Configurações que estão relacionadas ao seu sistema",
       "audioSettings": {
