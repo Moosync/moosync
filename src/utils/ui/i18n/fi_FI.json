@@ -243,7 +243,8 @@
         "title": "Sanoitusten tarjoajat",
         "tooltip": "Valitse sanoitusten tarjoajat joita käytetään etsimään sanoituksia",
         "az_lyrics": "Käytä AZLyrics",
-        "google_lyrics": "Käytä Googlen hakusanoituksia"
+        "google_lyrics": "Käytä Googlen hakusanoituksia",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Jonon Asetukset",
