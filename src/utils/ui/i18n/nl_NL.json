@@ -149,7 +149,8 @@
         "minimizeTray": "Minimaliseer naar systeemvak bij sluiten",
         "hardwareAcceleration": "Gebruik GPU hardwareversnelling",
         "watchFileChanges": "Muziekmappen bekijken voor wijzigingen",
-        "enableJukeboxMode": "Schakelaar voor Jukebox-modus inschakelen"
+        "enableJukeboxMode": "Schakelaar voor Jukebox-modus inschakelen",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Instellingen die gerelateerd zijn aan uw systeem",
       "audioSettings": {
