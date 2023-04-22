@@ -243,7 +243,8 @@
         "title": "Fornitori di testi",
         "tooltip": "Seleziona quali fornitori di testi usare per cercare il testo",
         "az_lyrics": "Usa AZLyrics",
-        "google_lyrics": "Usa i testi di ricerca di Google"
+        "google_lyrics": "Usa i testi di ricerca di Google",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Impostazioni Coda",
