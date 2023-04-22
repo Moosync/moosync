@@ -243,7 +243,8 @@
         "title": "Songtekst leveranciers",
         "tooltip": "Selecteer welke songtekst providers ze moeten gebruiken om te zoeken naar songteksten",
         "az_lyrics": "Gebruik AZLyrics",
-        "google_lyrics": "Gebruik Google zoek songteksten"
+        "google_lyrics": "Gebruik Google zoek songteksten",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Wachtrij instellingen",
