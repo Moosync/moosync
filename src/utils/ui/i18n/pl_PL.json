@@ -243,7 +243,8 @@
         "title": "Dostawcy tekstów",
         "tooltip": "Wybierz dostawców tekstów piosenek do wyszukiwania tekstów",
         "az_lyrics": "Użyj AZLyrics",
-        "google_lyrics": "Użyj tekstów wyszukiwania Google"
+        "google_lyrics": "Użyj tekstów wyszukiwania Google",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Ustawienia kolejki",
