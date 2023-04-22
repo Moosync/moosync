@@ -149,7 +149,8 @@
         "minimizeTray": "تصغير إلى غلق",
         "hardwareAcceleration": "استخدام تسارع أجهزة GPU",
         "watchFileChanges": "مشاهدة أدلة الموسيقى للتغييرات",
-        "enableJukeboxMode": "تمكين التبديل لوضع Youkebox"
+        "enableJukeboxMode": "تمكين التبديل لوضع Youkebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "الإعدادات المرتبطة بالنظام الخاص بك",
       "audioSettings": {
