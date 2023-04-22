@@ -243,7 +243,8 @@
         "title": "Proveedores de letras",
         "tooltip": "Selecciona qué proveedores de letras usar para buscar letras",
         "az_lyrics": "Usar AZLyrics",
-        "google_lyrics": "Usar letras de búsqueda de Google"
+        "google_lyrics": "Usar letras de búsqueda de Google",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Ajustes de cola",
