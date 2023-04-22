@@ -243,7 +243,8 @@
         "title": "Provedores de letras",
         "tooltip": "Selecione quais provedores de letras serão usados para pesquisar letras",
         "az_lyrics": "Usar AZLyrics",
-        "google_lyrics": "Buscar letras no Google"
+        "google_lyrics": "Buscar letras no Google",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Configurações da fila",
