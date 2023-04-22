@@ -243,7 +243,8 @@
         "title": "Lyrics providers",
         "tooltip": "Select which lyrics providers to use to search for lyrics",
         "az_lyrics": "Use AZLyrics",
-        "google_lyrics": "Use Google search lyrics"
+        "google_lyrics": "Use Google search lyrics",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Queue Settings",
