@@ -243,7 +243,8 @@
         "title": "Sangtekst udbydere",
         "tooltip": "Vælg hvilke sangtekstudbydere, der skal bruges til at søge efter sangtekster",
         "az_lyrics": "Brug AZLyrics",
-        "google_lyrics": "Benyt Google søge sangtekster"
+        "google_lyrics": "Benyt Google søge sangtekster",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Kø Indstillinger",
