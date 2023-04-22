@@ -243,7 +243,8 @@
         "title": "Fournisseurs de lyriques",
         "tooltip": "Sélectionnez les fournisseurs de lyriques à utiliser pour rechercher des lyriques",
         "az_lyrics": "Utiliser AZLyrics",
-        "google_lyrics": "Utiliser une recherche Google pour les lyriques"
+        "google_lyrics": "Utiliser une recherche Google pour les lyriques",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Paramètre de la file d'attente",
