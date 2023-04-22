@@ -243,7 +243,8 @@
         "title": "歌詞の提供元",
         "tooltip": "歌詞の検索に使う歌詞の提供元を選択",
         "az_lyrics": "AZLyricsを使用",
-        "google_lyrics": "Google検索の歌詞を使用"
+        "google_lyrics": "Google検索の歌詞を使用",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "キュー設定",
