@@ -149,7 +149,8 @@
         "minimizeTray": "Сворачивать в область уведомлений при закрытии",
         "hardwareAcceleration": "Использовать аппаратное ускорение GPU",
         "watchFileChanges": "Смотреть папки с музыкой для изменения",
-        "enableJukeboxMode": "Включить переключение для режима Jukebox"
+        "enableJukeboxMode": "Включить переключение для режима Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Настройки, связанные с вашей системой",
       "audioSettings": {
