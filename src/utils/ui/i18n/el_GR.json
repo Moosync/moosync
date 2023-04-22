@@ -149,7 +149,8 @@
         "minimizeTray": "Ελαχιστοποίηση στο δίσκο κατά το κλείσιμο",
         "hardwareAcceleration": "Χρήση επιτάχυνσης υλικού GPU",
         "watchFileChanges": "Παρακολουθήστε τους καταλόγους μουσικής για αλλαγές",
-        "enableJukeboxMode": "Ενεργοποίηση εναλλαγής για τη λειτουργία Jukebox"
+        "enableJukeboxMode": "Ενεργοποίηση εναλλαγής για τη λειτουργία Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Ρυθμίσεις που σχετίζονται με το σύστημά σας",
       "audioSettings": {
