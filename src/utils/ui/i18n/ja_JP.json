@@ -149,7 +149,8 @@
         "minimizeTray": "閉じたらトレイに最小化",
         "hardwareAcceleration": "GPUハードウェアアクセラレーションを使用",
         "watchFileChanges": "更新がないか音楽ディレクトリを監視",
-        "enableJukeboxMode": "ジュークボックスモードへの切り替えを有効化"
+        "enableJukeboxMode": "ジュークボックスモードへの切り替えを有効化",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "システムに関連する設定",
       "audioSettings": {
