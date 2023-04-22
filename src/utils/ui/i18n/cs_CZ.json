@@ -243,7 +243,8 @@
         "title": "Poskytovatel textů písní",
         "tooltip": "Vyberte, kteří poskytovatelé textů písní budou aktivní",
         "az_lyrics": "Použít AZLyrics",
-        "google_lyrics": "Použít Google Search texty"
+        "google_lyrics": "Použít Google Search texty",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Nastavení fronty",
