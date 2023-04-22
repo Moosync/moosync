@@ -149,7 +149,8 @@
         "minimizeTray": "Pienennä ilmoitusalueelle suljettaessa",
         "hardwareAcceleration": "Käytä GPU-laitteistokiihdytystä",
         "watchFileChanges": "Katso musiikin hakemistoja muutoksille",
-        "enableJukeboxMode": "Ota käyttöön valinta Jukebox-tilaan"
+        "enableJukeboxMode": "Ota käyttöön valinta Jukebox-tilaan",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Asetukset, jotka liittyvät järjestelmääsi",
       "audioSettings": {
