@@ -149,7 +149,8 @@
         "minimizeTray": "Згортати в трей при закритті",
         "hardwareAcceleration": "Використовувати апаратне прискорення ГП",
         "watchFileChanges": "Дивитися музичні каталоги для змін",
-        "enableJukeboxMode": "Увімкнути перемикач для режиму музичних автоматів"
+        "enableJukeboxMode": "Увімкнути перемикач для режиму музичних автоматів",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Параметри, які пов'язані з вашою системою",
       "audioSettings": {
