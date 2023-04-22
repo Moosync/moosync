@@ -149,7 +149,8 @@
         "minimizeTray": "Minimize to tray on close",
         "hardwareAcceleration": "Use GPU hardware acceleration",
         "watchFileChanges": "Watch music directories for changes",
-        "enableJukeboxMode": "Enable toggle for Jukebox mode"
+        "enableJukeboxMode": "Enable toggle for Jukebox mode",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Settings which are related to your system",
       "audioSettings": {
