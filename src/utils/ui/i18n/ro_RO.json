@@ -149,7 +149,8 @@
         "minimizeTray": "Minimizează în tăviță la închidere",
         "hardwareAcceleration": "Folosește accelerarea hardware GPU",
         "watchFileChanges": "Urmărește directoarele de muzică pentru modificări",
-        "enableJukeboxMode": "Activează comutator pentru modul Jukebox"
+        "enableJukeboxMode": "Activează comutator pentru modul Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Setări care sunt legate de sistemul dvs.",
       "audioSettings": {
