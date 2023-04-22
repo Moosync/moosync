@@ -243,7 +243,8 @@
         "title": "Furnizori de versuri",
         "tooltip": "Selectează ce furnizori de versuri să folosească pentru a căuta versuri",
         "az_lyrics": "Folosește AZLyrics",
-        "google_lyrics": "Utilizează versuri de căutare Google"
+        "google_lyrics": "Utilizează versuri de căutare Google",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Setări coadă",
