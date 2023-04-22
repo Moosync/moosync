@@ -243,7 +243,8 @@
         "title": "Låttexter leverantörer",
         "tooltip": "Välj vilka textleverantörer som ska användas för att söka efter låttexter",
         "az_lyrics": "Använd AZLyrics",
-        "google_lyrics": "Använd Googles söktexter"
+        "google_lyrics": "Använd Googles söktexter",
+        "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
         "title": "Inställningar för kön",
