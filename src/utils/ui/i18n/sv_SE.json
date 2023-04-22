@@ -149,7 +149,8 @@
         "minimizeTray": "Minimera till fack vid stängning",
         "hardwareAcceleration": "Använd GPU hårdvaruacceleration",
         "watchFileChanges": "Titta på musikkataloger för ändringar",
-        "enableJukeboxMode": "Aktivera växling för Jukebox-läge"
+        "enableJukeboxMode": "Aktivera växling för Jukebox-läge",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Inställningar som är relaterade till ditt system",
       "audioSettings": {
