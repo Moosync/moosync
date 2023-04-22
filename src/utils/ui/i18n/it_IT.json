@@ -149,7 +149,8 @@
         "minimizeTray": "Riduci a icona invece di chiudere",
         "hardwareAcceleration": "Usa l'accelerazione hardware",
         "watchFileChanges": "Controlla i cambiamenti delle canzoni locali",
-        "enableJukeboxMode": "Attiva la modalità Jukebox"
+        "enableJukeboxMode": "Attiva la modalità Jukebox",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Impostazioni di sistema",
       "audioSettings": {
