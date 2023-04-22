@@ -149,7 +149,8 @@
         "minimizeTray": "关闭时最小化到托盘",
         "hardwareAcceleration": "使用 GPU 硬件加速",
         "watchFileChanges": "监视音乐目录的更改",
-        "enableJukeboxMode": "启用唱片机模式开关"
+        "enableJukeboxMode": "启用唱片机模式开关",
+        "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "与您的系统相关的设置",
       "audioSettings": {
