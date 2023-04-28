@@ -245,6 +245,7 @@
         "tooltip": "Selecteer welke songtekst providers ze moeten gebruiken om te zoeken naar songteksten",
         "az_lyrics": "Gebruik AZLyrics",
         "google_lyrics": "Gebruik Google zoek songteksten",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
