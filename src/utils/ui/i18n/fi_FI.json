@@ -245,6 +245,7 @@
         "tooltip": "Valitse sanoitusten tarjoajat joita käytetään etsimään sanoituksia",
         "az_lyrics": "Käytä AZLyrics",
         "google_lyrics": "Käytä Googlen hakusanoituksia",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
