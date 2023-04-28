@@ -245,6 +245,7 @@
         "tooltip": "Velg hvilke tekstleverandører som skal brukes for å søke etter tekster",
         "az_lyrics": "Bruk AZLyrics",
         "google_lyrics": "Bruk Googles søketekster",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
