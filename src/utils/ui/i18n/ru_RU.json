@@ -8,12 +8,12 @@
       "artists": "Исполнители",
       "genre": "Жанры",
       "explore": "Обзор",
-      "paths": "Paths",
-      "themes": "Themes",
-      "extensions": "Extensions",
-      "system": "System",
-      "logs": "Logs",
-      "keybinds": "Keybinds"
+      "paths": "Пути",
+      "themes": "Темы",
+      "extensions": "Расширения",
+      "system": "Система",
+      "logs": "Журналы",
+      "keybinds": "Привязки клавиш"
     }
   },
   "topbar": {
@@ -40,7 +40,7 @@
   "buttons": {
     "playSingle": "Воспроизвести {title}",
     "addToQueue": "Добавить {title} в очередь",
-    "addToLibrary": "Добавить {title} в библиотеку",
+    "addToLibrary": "Добавить {title} в фонотеку",
     "playRandom": "Воспроизвести 100 случайных песен"
   },
   "loading": "Загрузка...",
@@ -60,7 +60,7 @@
       "remove": "Удалить список воспроизведения",
       "export": "Экспортировать список воспроизведения",
       "add": "Добавить в список воспроизведения",
-      "save": "Добавить в библиотеку"
+      "save": "Добавить в фонотеку"
     },
     "song": {
       "addFromURL": "Добавить по ссылке",
@@ -72,17 +72,17 @@
       "moveToBottom": "Переместить в конец",
       "moveManually": "Переместить вручную",
       "manualIndex": "Установить индекс трека",
-      "remove": "Убрать из библиотеки",
-      "add": "Добавить трек в библиотеку | Добавить треки в библиотеку",
+      "remove": "Убрать из фонотеки",
+      "add": "Добавить песню в фонотеку | Добавить песни в фонотеку",
       "removeFromPlaylist": "Убрать из списка воспроизведения",
-      "hideFromLibrary": "Скрыть из библиотеки",
-      "showInLibrary": "Показать в библиотеке",
+      "hideFromLibrary": "Скрыть из фонотеки",
+      "showInLibrary": "Показать в фонотеке",
       "showHidden": "Показать скрытые треки",
       "hideHidden": "Скрыть скрытые треки",
-      "openInBrowser": "Open in browser"
+      "openInBrowser": "Открыть в браузере"
     },
     "moreInfo": "Доп. сведения",
-    "incorrectPlayback": "Incorrect playback?"
+    "incorrectPlayback": "Неправильное воспроизведение?"
   },
   "providers": {
     "youtube": "Youtube",
@@ -106,8 +106,8 @@
       "thumbnailPath_tooltip": "Папка хранения сгенерированных миниатюр",
       "splitter": "Шаблон разделения имени исполнителя",
       "splitter_tooltip": "Регулярное выражение для разделения имён исполнителей. Оставьте пустым, чтобы отключить разделение.",
-      "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
+      "scan_interval": "Интервал сканирования",
+      "scan_interval_tooltip": "Интервал в секундах для запуска задачи сканирования. Установите равным «-1» для отключения автоматического сканирования"
     },
     "themes": {
       "songView": "Вид треков",
@@ -150,7 +150,7 @@
         "hardwareAcceleration": "Использовать аппаратное ускорение GPU",
         "watchFileChanges": "Смотреть папки с музыкой для изменения",
         "enableJukeboxMode": "Включить переключение для режима Jukebox",
-        "lastLoadedPlaybackState": "Load last playback state on startup"
+        "lastLoadedPlaybackState": "Загрузить последнее состояние воспроизведения при запуске"
       },
       "systemSettings_tooltip": "Настройки, связанные с вашей системой",
       "audioSettings": {
@@ -234,18 +234,19 @@
       "jukebox": {
         "pin": "ПИН-код режима Jukebox",
         "pin_tooltip": "Для выхода из режима проигрывания. Должно быть число.",
-        "optionalFields": "Button visibility",
-        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
-        "optional_skip": "Track Skip buttons",
-        "optional_shuffle": "Shuffle button",
-        "optional_repeat": "Repeat button"
+        "optionalFields": "Видимость кнопки",
+        "optionalFields_tooltip": "Переключить видимость дополнительных кнопок в режиме Jukebox",
+        "optional_skip": "Кнопки пропуска дорожки",
+        "optional_shuffle": "Кнопка случайного проигрывания",
+        "optional_repeat": "Кнопка повтора"
       },
       "lyrics": {
         "title": "Поставщики текстов песен",
         "tooltip": "Выберите поставщики текстов для поиска текстов песен",
         "az_lyrics": "Использовать AZ-стихи",
         "google_lyrics": "Использовать Google поиск текстов песен",
-        "genius_lyrics": "Use Genius"
+        "spotify_lyrics": "Использовать Spotify для текстов песен (требуется librespot)",
+        "genius_lyrics": "Использовать Genius"
       },
       "queueSettings": {
         "title": "Настройки очереди",
@@ -259,18 +260,18 @@
         }
       },
       "volumePersistMode": {
-        "title": "Volume behavior",
-        "tooltip": "Change the way volume slider behaves",
-        "noPersist": "Normal behavior",
-        "persistSeparateVolumes": "Remember separate volume for each provider",
-        "persistClampVolume": "Manually adjust volume range for each provider"
+        "title": "Поведение громкости",
+        "tooltip": "Изменить поведение регулятора громкости",
+        "noPersist": "Обычное поведение",
+        "persistSeparateVolumes": "Запоминать собственную громкость для каждого поставщика",
+        "persistClampVolume": "Настройка диапазона громкости для каждого провайдера вручную"
       }
     },
     "logs": {
       "logSettings": "Настройки журнала",
       "level": "Уровень",
-      "process": "Обработка",
-      "filterMessage": "Фильтровать сообщение"
+      "process": "Процесс",
+      "filterMessage": "Фильтр сообщений"
     }
   }
 }
