@@ -245,6 +245,7 @@
         "tooltip": "Seleziona quali fornitori di testi usare per cercare il testo",
         "az_lyrics": "Usa AZLyrics",
         "google_lyrics": "Usa i testi di ricerca di Google",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
