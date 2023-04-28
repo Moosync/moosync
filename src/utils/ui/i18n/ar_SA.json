@@ -245,6 +245,7 @@
         "tooltip": "حدد موفري كلمات الأغاني الذين يمكن استخدامهم للبحث عن كلمات الأغاني",
         "az_lyrics": "استخدام كلمات الاغنية",
         "google_lyrics": "استخدام كلمات البحث في جوجل",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
