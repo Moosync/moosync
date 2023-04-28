@@ -245,6 +245,7 @@
         "tooltip": "Vyberte, kteří poskytovatelé textů písní budou aktivní",
         "az_lyrics": "Použít AZLyrics",
         "google_lyrics": "Použít Google Search texty",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
