@@ -245,6 +245,7 @@
         "tooltip": "选择用于搜索歌词的歌词提供商",
         "az_lyrics": "使用 AZLyrics",
         "google_lyrics": "使用谷歌搜索歌词",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
