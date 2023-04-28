@@ -245,6 +245,7 @@
         "tooltip": "Selectează ce furnizori de versuri să folosească pentru a căuta versuri",
         "az_lyrics": "Folosește AZLyrics",
         "google_lyrics": "Utilizează versuri de căutare Google",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
