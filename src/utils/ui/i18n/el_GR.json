@@ -245,6 +245,7 @@
         "tooltip": "Επιλέξτε ποιους παρόχους στίχων θα χρησιμοποιήσετε για την αναζήτηση στίχων",
         "az_lyrics": "Χρησιμοποιήστε το AZLyrics",
         "google_lyrics": "Χρησιμοποιήστε στίχους αναζήτησης Google",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
