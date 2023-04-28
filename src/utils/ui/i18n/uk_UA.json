@@ -245,6 +245,7 @@
         "tooltip": "Виберіть, які тексти пісень використовують для пошуку текстів пісень",
         "az_lyrics": "Використовувати AZLyrics",
         "google_lyrics": "Використовувати пошукові тексти в Google",
+        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
         "genius_lyrics": "Use Genius"
       },
       "queueSettings": {
