@@ -85,7 +85,7 @@
     "incorrectPlayback": "再生がおかしいですか？"
   },
   "providers": {
-    "youtube": "Youtube",
+    "youtube": "YouTube",
     "spotify": "Spotify",
     "invidious": "Invidious",
     "lastfm": "LastFM"
@@ -170,7 +170,7 @@
         "client_secret": "Spotifyクライアントシークレット",
         "client_secret_tooltip": "SpotifyクライアントシークレットはSpotifyにログインするのに必要。クリックで詳細",
         "autoFetchButton": "Spotifyの詳細を自動で取得",
-        "autoFetchPreTitle": "取得",
+        "autoFetchPreTitle": "取得ツール",
         "autoFetchTitle": "クライアントID とシークレット",
         "autoFetchDisclaimer": "Spotifyアカウントにログインするように求められるウィンドウが開きます。 ログイン後は、プロセス全体が自動化されるため、どこもクリックしないでください。",
         "openWindow": "ウィンドウを開く",
@@ -189,10 +189,10 @@
         }
       },
       "youtube": {
-        "client_id": "Youtube クライアントID",
-        "client_secret": "Youtube クライアントシークレット",
-        "client_id_tooltip": "Youtube クライアント ID は、Youtube にログインする必要があります。詳細を知るためにクリックしてください",
-        "client_secret_tooltip": "Youtube クライアントシークレットは、Youtube にログインするために必要です。クリックで詳細"
+        "client_id": "YouTube クライアントID",
+        "client_secret": "YouTube クライアントシークレット",
+        "client_id_tooltip": "YouTube クライアント ID は、YouTube にログインする必要があります。詳細を知るためにクリックしてください",
+        "client_secret_tooltip": "YouTube クライアントシークレットは、YouTube にログインするために必要です。クリックで詳細"
       },
       "lastfm": {
         "client_id": "LastFM API キー",
@@ -201,7 +201,7 @@
       "youtubeAlternative": {
         "title": "YouTube 代替サービス",
         "tooltip": "第三者の提供者を介してYouTubeのデータを取得します",
-        "useYoutube": "標準のYoutubeのサービスを使用",
+        "useYoutube": "標準のYouTubeのサービスを使用",
         "useInvidious": "Invidious サービスを使用",
         "usePiped": "Piped サービスを使用",
         "piped": {
@@ -221,7 +221,7 @@
         },
         "youtube": {
           "options": "YouTubeの詳細オプション",
-          "options_tooltip": "Youtube の再生を管理するオプション",
+          "options_tooltip": "YouTube の再生を管理するオプション",
           "useEmbeds": "YouTube からの音声再生に YouTube 埋め込みを使用"
         }
       },
@@ -269,9 +269,9 @@
     },
     "logs": {
       "logSettings": "ログの設定",
-      "level": "レベル",
+      "level": "対象",
       "process": "処理",
-      "filterMessage": "メッセージの絞り込み"
+      "filterMessage": "メッセージを絞り込み"
     }
   }
 }
