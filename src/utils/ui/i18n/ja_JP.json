@@ -79,7 +79,7 @@
       "showInLibrary": "ライブラリに表示",
       "showHidden": "非表示の曲を表示",
       "hideHidden": "非表示の曲を非表示",
-      "openInBrowser": "Open in browser"
+      "openInBrowser": "ブラウザで開く"
     },
     "moreInfo": "詳細情報",
     "incorrectPlayback": "再生がおかしいですか？"
@@ -106,8 +106,8 @@
       "thumbnailPath_tooltip": "生成されたサムネイルが保存されているディレクトリ",
       "splitter": "アーティスト名の分割パターン",
       "splitter_tooltip": "アーティスト名を分割するには正規表現を使用します。空白の場合は分割を無効にします。",
-      "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
+      "scan_interval": "スキャン間隔",
+      "scan_interval_tooltip": "スキャンのタスクを実行する間隔を秒単位で設定します。自動スキャンを無効にするには -1 にします。"
     },
     "themes": {
       "songView": "曲表示",
@@ -150,7 +150,7 @@
         "hardwareAcceleration": "GPUハードウェアアクセラレーションを使用",
         "watchFileChanges": "更新がないか音楽ディレクトリを監視",
         "enableJukeboxMode": "ジュークボックスモードへの切り替えを有効化",
-        "lastLoadedPlaybackState": "Load last playback state on startup"
+        "lastLoadedPlaybackState": "起動時に前回の再生状態を読み込む"
       },
       "systemSettings_tooltip": "システムに関連する設定",
       "audioSettings": {
@@ -233,7 +233,7 @@
       "clear_preferences_button": "確認",
       "jukebox": {
         "pin": "ジュークボックスモードのピン",
-        "pin_tooltip": "チスピンはジュークボックスモードを終了するために必要です。数値である必要があります。",
+        "pin_tooltip": "このピンはジュークボックスモードを終了するために必要です。数値である必要があります。",
         "optionalFields": "ボタンの表示",
         "optionalFields_tooltip": "ジュークボックスモードで表示するオプションのボタンを切り替え",
         "optional_skip": "曲スキップボタン",
@@ -245,8 +245,8 @@
         "tooltip": "歌詞の検索に使う歌詞の提供元を選択",
         "az_lyrics": "AZLyricsを使用",
         "google_lyrics": "Google検索の歌詞を使用",
-        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
-        "genius_lyrics": "Use Genius"
+        "spotify_lyrics": "Spotify を歌詞に使用 (要 librespot)",
+        "genius_lyrics": "Geniusを使用"
       },
       "queueSettings": {
         "title": "キュー設定",
