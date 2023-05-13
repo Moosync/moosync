@@ -10,10 +10,10 @@
       "explore": "Utforsk",
       "paths": "Paths",
       "themes": "Themes",
-      "extensions": "Extensions",
+      "extensions": "Utvidelser",
       "system": "System",
       "logs": "Logs",
-      "keybinds": "Keybinds"
+      "keybinds": "Hurtigtaster"
     }
   },
   "topbar": {
@@ -79,7 +79,7 @@
       "showInLibrary": "Vis i bibliotek",
       "showHidden": "Vis skjulte sanger",
       "hideHidden": "Skjul skjulte sanger",
-      "openInBrowser": "Open in browser"
+      "openInBrowser": "Åpne i nettleser"
     },
     "moreInfo": "Mer informasjon",
     "incorrectPlayback": "Incorrect playback?"
