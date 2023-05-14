@@ -9,10 +9,10 @@
       "genre": "Genres",
       "explore": "Utforsk",
       "paths": "Paths",
-      "themes": "Themes",
+      "themes": "Tema",
       "extensions": "Utvidelser",
       "system": "System",
-      "logs": "Logs",
+      "logs": "Logger",
       "keybinds": "Hurtigtaster"
     }
   },
@@ -82,7 +82,7 @@
       "openInBrowser": "Åpne i nettleser"
     },
     "moreInfo": "Mer informasjon",
-    "incorrectPlayback": "Incorrect playback?"
+    "incorrectPlayback": "Feil avspilling?"
   },
   "providers": {
     "youtube": "YouTube",
@@ -106,8 +106,8 @@
       "thumbnailPath_tooltip": "Mappe hvor genererte miniatyrbilder lagres",
       "splitter": "Artistens navn splittringsmønster",
       "splitter_tooltip": "Regex for å splitte artistnavn. La stå tomt for å deaktivere splitting.",
-      "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning"
+      "scan_interval": "Skann intervall",
+      "scan_interval_tooltip": "Intervall i sekunder for å utløse en skanneoppgave. Sett til -1 for å deaktivere automatisk skanning"
     },
     "themes": {
       "songView": "Visning av sanger",
@@ -150,7 +150,7 @@
         "hardwareAcceleration": "Bruk GPU hardwareakselerasjon",
         "watchFileChanges": "Se musikkmapper for endringer",
         "enableJukeboxMode": "Aktiver av/på hurtiginnfelte med Jukebox",
-        "lastLoadedPlaybackState": "Load last playback state on startup"
+        "lastLoadedPlaybackState": "Last inn status for siste avspilling ved oppstart"
       },
       "systemSettings_tooltip": "Innstillinger som er relatert til systemet ditt",
       "audioSettings": {
@@ -234,19 +234,19 @@
       "jukebox": {
         "pin": "Jukebox modus pinne",
         "pin_tooltip": "Det kreves spesialisering innen Tis pin for å avslutte platespiller. Bør være et tall.",
-        "optionalFields": "Button visibility",
-        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
+        "optionalFields": "Knapp synlighet",
+        "optionalFields_tooltip": "Aktiver valgfrie knapper for å vise i Jukebox modus",
         "optional_skip": "Track Skip buttons",
         "optional_shuffle": "Shuffle button",
-        "optional_repeat": "Repeat button"
+        "optional_repeat": "Gjenta knapp"
       },
       "lyrics": {
         "title": "Sangtekst leverandører",
         "tooltip": "Velg hvilke tekstleverandører som skal brukes for å søke etter tekster",
         "az_lyrics": "Bruk AZLyrics",
         "google_lyrics": "Bruk Googles søketekster",
-        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
-        "genius_lyrics": "Use Genius"
+        "spotify_lyrics": "Bruk Spotify for sangtekster (krever librespot)",
+        "genius_lyrics": "Bruk Genius"
       },
       "queueSettings": {
         "title": "Kø innstillinger",
@@ -260,11 +260,11 @@
         }
       },
       "volumePersistMode": {
-        "title": "Volume behavior",
-        "tooltip": "Change the way volume slider behaves",
-        "noPersist": "Normal behavior",
-        "persistSeparateVolumes": "Remember separate volume for each provider",
-        "persistClampVolume": "Manually adjust volume range for each provider"
+        "title": "Volum oppførsel",
+        "tooltip": "Endre måten volum skyveren oppfører seg på",
+        "noPersist": "Normal oppførsel",
+        "persistSeparateVolumes": "Husk volum separat for hver tjeneste",
+        "persistClampVolume": "Manuelt juster maks volum for hver tjeneste"
       }
     },
     "logs": {
