@@ -191,7 +191,7 @@
       "youtube": {
         "client_id": "YouTube クライアントID",
         "client_secret": "YouTube クライアントシークレット",
-        "client_id_tooltip": "YouTube クライアント ID は、YouTube にログインする必要があります。詳細を知るためにクリックしてください",
+        "client_id_tooltip": "YouTube クライアント ID は、YouTube にログインする必要があります。クリックで詳細",
         "client_secret_tooltip": "YouTube クライアントシークレットは、YouTube にログインするために必要です。クリックで詳細"
       },
       "lastfm": {
