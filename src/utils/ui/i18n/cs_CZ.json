@@ -107,10 +107,10 @@
       "thumbnailPath_tooltip": "Adresář, kde jsou uloženy generované miniatury",
       "splitter": "Vzor rozdělení jména interpreta",
       "splitter_tooltip": "Regex pro rozdělení jmen umělců. Ponechte prázdné pro vypnutí rozdělení.",
-      "scan_interval": "Scan interval",
+      "scan_interval": "Interval skenování",
       "scan_interval_tooltip": "Interval v sekundách pro spuštění skenování. Nastavte na -1 pro vypnutí automatického skenování",
       "scan_threads": "Vlákna procesoru pro skenování",
-      "scan_threads_tooltip": "Number of threads to use when scanning for local music"
+      "scan_threads_tooltip": "Počet vláken, které by měly být použity při skenování lokální hudby"
     },
     "themes": {
       "songView": "Zobrazení skladeb",
@@ -153,7 +153,7 @@
         "hardwareAcceleration": "Použít hardwarovou akceleraci GPU",
         "watchFileChanges": "Sledujte hudební adresáře pro změny",
         "enableJukeboxMode": "Zobrazit tlačítko pro Jukebox mód",
-        "lastLoadedPlaybackState": "Load last playback state on startup"
+        "lastLoadedPlaybackState": "Načíst poslední stav přehrávání při spuštění"
       },
       "systemSettings_tooltip": "Nastavení vztahující se k vašemu systému",
       "audioSettings": {
