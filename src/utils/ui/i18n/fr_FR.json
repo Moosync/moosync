@@ -9,7 +9,7 @@
       "genre": "Genres",
       "explore": "Explorer",
       "paths": "Paths",
-      "themes": "Themes",
+      "themes": "Thèmes",
       "extensions": "Extensions",
       "system": "System",
       "logs": "Logs",
@@ -83,7 +83,7 @@
       "openInBrowser": "Open in browser"
     },
     "moreInfo": "Plus d'info",
-    "incorrectPlayback": "Incorrect playback?"
+    "incorrectPlayback": "Lecture Incorrecte ?"
   },
   "providers": {
     "youtube": "YouTube",
@@ -152,7 +152,7 @@
         "minimizeTray": "Réduire dans la barre d'état à la fermeture",
         "hardwareAcceleration": "Utiliser l'accélération matérielle GPU",
         "watchFileChanges": "Regarder les répertoires musicaux pour les modifications",
-        "enableJukeboxMode": "Activer le bouton basculant pour le mode Jukebox",
+        "enableJukeboxMode": "Activer le bouton basculant en mode Jukebox",
         "lastLoadedPlaybackState": "Load last playback state on startup"
       },
       "systemSettings_tooltip": "Paramètres liés à votre système",
@@ -192,14 +192,14 @@
         }
       },
       "youtube": {
-        "client_id": "Identifiant client Youtube",
+        "client_id": "ID client Youtube",
         "client_secret": "Secret client Youtube",
         "client_id_tooltip": "L'identifiant YouTube est requis pour pouvoir se connecter à YouTube. Cliquer pour en savoir plus",
         "client_secret_tooltip": "Le Secret YouTube est requis pour pouvoir se connecter à YouTube. Cliquer pour en savoir plus"
       },
       "lastfm": {
         "client_id": "Clé d'Api LastFM",
-        "client_secret": "Éditer le secret du client LastFM"
+        "client_secret": "Secret client LastFM"
       },
       "youtubeAlternative": {
         "title": "Services Alternatifs Youtube",
@@ -218,7 +218,7 @@
         "invidious": {
           "url": "Instance Invidious",
           "url_tooltip": "URL de l'instance Invidious à utiliser",
-          "options": "Options Invidieuses avancées",
+          "options": "Options Invidious avancées",
           "options_tooltip": "Options pour contrôler la lecture instinctive",
           "always_proxy": "Toujours lire l'audio à partir du proxy Invidious au lieu de la vidéo Google"
         },
@@ -235,21 +235,21 @@
       "clear_preferences": "Êtes-vous sûr de vouloir tout réinitialiser par défaut ? L'application redémarrera après la réinitialisation.",
       "clear_preferences_button": "Valider",
       "jukebox": {
-        "pin": "Épinglette en mode Jukebox",
-        "pin_tooltip": "L'épinglette sera nécessaire pour quitter le mode Jukebox. Doit être numérique.",
-        "optionalFields": "Button visibility",
-        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
-        "optional_skip": "Track Skip buttons",
-        "optional_shuffle": "Shuffle button",
-        "optional_repeat": "Repeat button"
+        "pin": "Pin en mode Jukebox",
+        "pin_tooltip": "Le code pin sera nécessaire pour quitter le mode Jukebox. Doit être numérique.",
+        "optionalFields": "Visibilité des boutons",
+        "optionalFields_tooltip": "Pour choisir les boutons de contrôle visibles en mode Jukebox",
+        "optional_skip": "Boutons de changement de chanson",
+        "optional_shuffle": "Bouton mélanger",
+        "optional_repeat": "Bouton répeter"
       },
       "lyrics": {
-        "title": "Fournisseurs de lyriques",
-        "tooltip": "Sélectionnez les fournisseurs de lyriques à utiliser pour rechercher des lyriques",
+        "title": "Fournisseurs de paroles",
+        "tooltip": "Sélectionnez les fournisseurs de paroles à utiliser pour rechercher des paroles",
         "az_lyrics": "Utiliser AZLyrics",
-        "google_lyrics": "Utiliser une recherche Google pour les lyriques",
-        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
-        "genius_lyrics": "Use Genius"
+        "google_lyrics": "Utiliser une recherche Google pour les paroles",
+        "spotify_lyrics": "Utliser Spotify pour les paroles (Necessite librespot)",
+        "genius_lyrics": "Utiliser Genius"
       },
       "queueSettings": {
         "title": "Paramètre de la file d'attente",
@@ -263,11 +263,11 @@
         }
       },
       "volumePersistMode": {
-        "title": "Volume behavior",
-        "tooltip": "Change the way volume slider behaves",
-        "noPersist": "Normal behavior",
-        "persistSeparateVolumes": "Remember separate volume for each provider",
-        "persistClampVolume": "Manually adjust volume range for each provider"
+        "title": "Comportement du Volume",
+        "tooltip": "Configurer le comportement du bouton de volume",
+        "noPersist": "Comportement Normal",
+        "persistSeparateVolumes": "Mémorise séparement le volume de chaque fournisseur de chansons",
+        "persistClampVolume": "Ajuste manuellement le volume de chaque fournisseur de chansons"
       }
     },
     "logs": {
