@@ -108,7 +108,7 @@
       "splitter": "Шаблон назви виконавця розділення",
       "splitter_tooltip": "Регулярний вираз для розділення імен виконавців. Залиште порожнім, щоб вимкнути розділення.",
       "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
