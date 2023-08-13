@@ -159,7 +159,7 @@
       "audioSettings": {
         "title": "音声設定",
         "gaplessPlayback": "可能な限り間隔なく再生",
-        "sponsorBlock": "SponsorBlockをしYouTubeの曲の主な部分に自動でスキップ"
+        "sponsorBlock": "SponsorBlockでYouTubeの曲の主な部分に自動でスキップ"
       },
       "audioSettings_tooltip": "音声再生の設定",
       "invidiousUrlUnsupported": "このURLはInvidious APIに対応していません",
