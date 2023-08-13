@@ -108,7 +108,7 @@
       "splitter": "Шаблон разделения имени исполнителя",
       "splitter_tooltip": "Регулярное выражение для разделения имён исполнителей. Оставьте пустым, чтобы отключить разделение.",
       "scan_interval": "Интервал сканирования",
-      "scan_interval_tooltip": "Интервал в секундах для запуска задачи сканирования. Установите равным «-1» для отключения автоматического сканирования",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
