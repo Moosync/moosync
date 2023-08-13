@@ -108,7 +108,7 @@
       "splitter": "Μοτίβο διαίρεσης ονόματος καλλιτέχνη",
       "splitter_tooltip": "Regex για διαχωρισμό ονομάτων καλλιτέχνη. Αφήστε κενό για να απενεργοποιήσετε τον διαχωρισμό.",
       "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
