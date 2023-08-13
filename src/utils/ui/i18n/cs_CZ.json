@@ -108,7 +108,7 @@
       "splitter": "Vzor rozdělení jména interpreta",
       "splitter_tooltip": "Regex pro rozdělení jmen umělců. Ponechte prázdné pro vypnutí rozdělení.",
       "scan_interval": "Interval skenování",
-      "scan_interval_tooltip": "Interval v sekundách pro spuštění skenování. Nastavte na -1 pro vypnutí automatického skenování",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Vlákna procesoru pro skenování",
       "scan_threads_tooltip": "Počet vláken, které by měly být použity při skenování lokální hudby"
     },
