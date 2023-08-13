@@ -108,7 +108,7 @@
       "splitter": "Artistens navn splittringsmønster",
       "splitter_tooltip": "Regex for å splitte artistnavn. La stå tomt for å deaktivere splitting.",
       "scan_interval": "Skann intervall",
-      "scan_interval_tooltip": "Intervall i sekunder for å utløse en skanneoppgave. Sett til -1 for å deaktivere automatisk skanning",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
