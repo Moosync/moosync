@@ -108,7 +108,7 @@
       "splitter": "アーティスト名の分割パターン",
       "splitter_tooltip": "アーティスト名を分割するには正規表現を使用します。空白の場合は分割を無効にします。",
       "scan_interval": "スキャン間隔",
-      "scan_interval_tooltip": "スキャンのタスクを実行する間隔を秒単位で設定します。自動スキャンを無効にするには -1 にします。",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "スキャン時のCPU スレッド数",
       "scan_threads_tooltip": "端末内の音楽をスキャンする際に使うスレッド数"
     },
