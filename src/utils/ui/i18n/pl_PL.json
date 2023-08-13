@@ -108,7 +108,7 @@
       "splitter": "Wzór podziału nazwy artysty",
       "splitter_tooltip": "Regex, aby podzielić nazwy artysty. Pozostaw puste, aby wyłączyć dzielenie.",
       "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
