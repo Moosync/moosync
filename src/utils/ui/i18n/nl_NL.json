@@ -108,7 +108,7 @@
       "splitter": "Kunstenaar naam gesplitst patroon",
       "splitter_tooltip": "Regex om de naam van de artiest te splitsen. Laat leeg om splitsing uit te schakelen.",
       "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in seconds to trigger a scan task. Set to -1 to disable automatic scanning",
+      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
       "scan_threads": "Scan CPU threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
