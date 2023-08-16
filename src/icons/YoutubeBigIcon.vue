@@ -8,7 +8,14 @@
 -->
 
 <template>
-  <svg width="75" height="86" viewBox="0 0 75 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="75"
+    height="86"
+    viewBox="0 0 75 86"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       d="M73.4743 8.9617C73.0474 7.24259 72.2133 5.67482 71.0549 4.41442C69.8964 3.15403 68.4541 2.24496 66.8714 1.77772C61.0031 0.0285057 37.526 3.09021e-05 37.526 3.09021e-05C37.526 3.09021e-05 14.0526 -0.0284455 8.18047 1.64348C6.59881 2.13223 5.15944 3.05414 4.00055 4.32073C2.84166 5.58731 2.00216 7.15602 1.56265 8.87627C0.0149956 15.2467 5.49043e-06 28.4593 5.49043e-06 28.4593C5.49043e-06 28.4593 -0.0149838 41.7371 1.52143 48.0424C2.38332 51.5286 4.91278 54.2826 8.12801 55.2223C14.0563 56.9715 37.4697 57 37.4697 57C37.4697 57 60.9469 57.0284 66.8152 55.3606C68.3985 54.8942 69.8421 53.9872 71.0035 52.7294C72.1648 51.4715 73.0036 49.9064 73.4368 48.1888C74.9882 41.8225 74.9995 28.6139 74.9995 28.6139C74.9995 28.6139 75.0744 15.3321 73.4743 8.9617ZM30.0163 40.6997L30.035 16.2921L49.5475 28.5163L30.0163 40.6997Z"
       :fill="active ? '#E62017' : 'var(--textSecondary)'"
@@ -21,10 +28,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class YoutubeBig extends Vue {
   @Prop({ default: false })
   active!: string

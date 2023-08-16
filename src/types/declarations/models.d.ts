@@ -20,6 +20,7 @@ interface marshaledSong {
   album_coverPath_low?: string
   album_song_count?: number
   album_extra_info?: string
+  album_artist?: string
   lyrics?: string
   artists?: string
   artist_name?: string

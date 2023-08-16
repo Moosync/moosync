@@ -7,11 +7,11 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Vue } from 'vue-property-decorator'
-import { vxm } from '@/mainWindow/store'
 import { GenericProvider } from '../providers/generics/genericProvider'
-import { ProviderScopes } from '@/utils/commonConstants'
+import { vxm } from '@/mainWindow/store'
 import { isEmpty } from '@/utils/common'
+import { ProviderScopes } from '@/utils/commonConstants'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class ProviderMixin extends Vue {
@@ -20,7 +20,7 @@ export default class ProviderMixin extends Vue {
       vxm.providers.youtubeProvider,
       vxm.providers.spotifyProvider,
       vxm.providers.lastfmProvider,
-      ...vxm.providers.extensionProviders
+      ...vxm.providers.extensionProviders,
     ]
     const ret: GenericProvider[] = []
 
@@ -43,7 +43,7 @@ export default class ProviderMixin extends Vue {
       vxm.providers.youtubeProvider,
       vxm.providers.spotifyProvider,
       vxm.providers.lastfmProvider,
-      ...vxm.providers.extensionProviders
+      ...vxm.providers.extensionProviders,
     ]
 
     return allProviders.find((val) => val.key === key)
@@ -58,7 +58,7 @@ export default class ProviderMixin extends Vue {
       vxm.providers.youtubeProvider,
       vxm.providers.spotifyProvider,
       vxm.providers.lastfmProvider,
-      ...vxm.providers.extensionProviders
+      ...vxm.providers.extensionProviders,
     ]
   }
 

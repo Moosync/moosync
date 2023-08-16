@@ -31,28 +31,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['cancel', 'confirm']
+})
 export default class ConfirmationModal extends Vue {
   @Prop({ default: 'DeleteDialog' })
-  private id!: string
+  id!: string
 
   @Prop({ default: '' })
-  private itemName!: string
+  itemName!: string
 
   @Prop({ default: '' })
-  private description!: string
+  description!: string
 
   @Prop({ default: 'delete' })
-  private keyword!: string
+  keyword!: string
 
-  private onCancelPressed() {
+  onCancelPressed() {
     this.$emit('cancel')
     this.$bvModal.hide(this.id)
   }
 
-  private onConfirmPressed() {
+  onConfirmPressed() {
     this.$emit('confirm')
     this.$bvModal.hide(this.id)
   }

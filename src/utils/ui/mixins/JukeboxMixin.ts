@@ -8,7 +8,7 @@
  */
 
 import { vxm } from '@/mainWindow/store'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class JukeboxMixin extends Vue {

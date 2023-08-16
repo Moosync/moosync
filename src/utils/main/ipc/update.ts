@@ -7,10 +7,10 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { IpcEvents, UpdateEvents } from './constants'
-import { WindowHandler } from '../windowManager'
-import { autoUpdater } from 'electron-updater'
 import { logger } from '../logger/index'
+import { WindowHandler } from '../windowManager'
+import { IpcEvents, UpdateEvents } from './constants'
+import { autoUpdater } from 'electron-updater'
 
 export class UpdateChannel implements IpcChannelInterface {
   name = IpcEvents.UPDATE

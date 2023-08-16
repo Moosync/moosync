@@ -10,15 +10,16 @@
 import { AuthFlow, AuthStateEmitter } from '@/utils/ui/oauth/flow'
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
 
+import { FetchWrapper } from './generics/fetchWrapper'
+import { bus } from '@/mainWindow/main'
+import { parseISO8601Duration } from '@/utils/common'
+import { ProviderScopes } from '@/utils/commonConstants'
+import { EventBus } from '@/utils/main/ipc/constants'
 import { AuthorizationServiceConfiguration } from '@openid/appauth'
 import { once } from 'events'
 import qs from 'qs'
-import { vxm } from '../../../mainWindow/store/index'
-import { parseISO8601Duration } from '@/utils/common'
-import { bus } from '@/mainWindow/main'
-import { EventBus } from '@/utils/main/ipc/constants'
-import { ProviderScopes } from '@/utils/commonConstants'
-import { FetchWrapper } from './generics/fetchWrapper'
+import { toRaw } from 'vue'
+import { convertProxy } from '../common'
 
 const BASE_URL = 'https://youtube.googleapis.com/youtube/v3/'
 
@@ -27,12 +28,14 @@ enum ApiResources {
   PLAYLISTS = 'playlists',
   PLAYLIST_ITEMS = 'playlistItems',
   VIDEO_DETAILS = 'videos',
-  SEARCH = 'search'
+  SEARCH = 'search',
 }
 
 export class YoutubeProvider extends GenericProvider {
   private auth!: AuthFlow
   private _config!: ReturnType<YoutubeProvider['getConfig']>
+
+  loggedIn = false
 
   public get key() {
     return 'youtube'
@@ -46,7 +49,7 @@ export class YoutubeProvider extends GenericProvider {
       ProviderScopes.ARTIST_SONGS,
       ProviderScopes.RECOMMENDATIONS,
       ProviderScopes.PLAYLIST_FROM_URL,
-      ProviderScopes.SONG_FROM_URL
+      ProviderScopes.SONG_FROM_URL,
     ]
   }
 
@@ -58,7 +61,7 @@ export class YoutubeProvider extends GenericProvider {
       redirectUri: 'https://moosync.app/youtube',
       scope: 'https://www.googleapis.com/auth/youtube.readonly',
       keytarService: 'MoosyncYoutubeRefreshToken',
-      oAuthChannel: oauthChannel
+      oAuthChannel: oauthChannel,
     }
   }
 
@@ -69,7 +72,7 @@ export class YoutubeProvider extends GenericProvider {
   public async updateConfig(): Promise<boolean> {
     const conf = (await window.PreferenceUtils.loadSelective('youtube')) as { client_id: string; client_secret: string }
 
-    if ((conf && conf.client_id && conf.client_secret) || this.isEnvExists()) {
+    if ((conf?.client_id && conf.client_secret) || this.isEnvExists()) {
       const channel = await window.WindowUtils.registerOAuthCallback('ytoauth2callback')
 
       const secret = conf?.client_secret ?? process.env.YoutubeClientSecret
@@ -80,7 +83,7 @@ export class YoutubeProvider extends GenericProvider {
         authorization_endpoint: 'https://accounts.google.com/o/oauth2/v2/auth',
         revocation_endpoint: 'https://oauth2.googleapis.com/revoke',
         token_endpoint: 'https://oauth2.googleapis.com/token',
-        userinfo_endpoint: 'https://openidconnect.googleapis.com/v1/userinfo'
+        userinfo_endpoint: 'https://openidconnect.googleapis.com/v1/userinfo',
       })
 
       this.auth = new AuthFlow(this._config, serviceConfig)
@@ -99,12 +102,12 @@ export class YoutubeProvider extends GenericProvider {
     if (this.auth) {
       const validRefreshToken = await this.auth.hasValidRefreshToken()
       if ((await this.auth.loggedIn()) || validRefreshToken) {
-        vxm.providers.loggedInYoutube = true
+        this.loggedIn = true
       } else {
-        vxm.providers.loggedInYoutube = false
+        this.loggedIn = false
       }
 
-      return vxm.providers.loggedInYoutube
+      return this.loggedIn
     }
     return false
   }
@@ -119,17 +122,17 @@ export class YoutubeProvider extends GenericProvider {
         }
 
         const url = await this.auth.makeAuthorizationRequest()
-        bus.$emit(EventBus.SHOW_OAUTH_MODAL, {
+        bus.emit(EventBus.SHOW_OAUTH_MODAL, {
           providerName: 'Youtube',
           url,
           providerColor: '#E62017',
-          oauthPath: 'ytoauth2callback'
+          oauthPath: 'ytoauth2callback',
         } as LoginModalOptions)
         window.WindowUtils.openExternal(url)
 
         await once(this.auth.authStateEmitter, AuthStateEmitter.ON_TOKEN_RESPONSE)
 
-        bus.$emit(EventBus.HIDE_OAUTH_MODAL)
+        bus.emit(EventBus.HIDE_OAUTH_MODAL)
         return true
       }
       return false
@@ -145,7 +148,7 @@ export class YoutubeProvider extends GenericProvider {
   private async populateRequest<K extends ApiResources>(
     resource: K,
     search: YoutubeResponses.SearchObject<K>,
-    invalidateCache = false
+    invalidateCache = false,
   ): Promise<YoutubeResponses.ResponseType<K>> {
     const accessToken = await this.auth?.performWithFreshTokens()
     const resp = await this.api.request(resource, {
@@ -154,7 +157,7 @@ export class YoutubeProvider extends GenericProvider {
       search: search.params,
       method: 'GET',
       headers: { Authorization: `Bearer ${accessToken}` },
-      invalidateCache
+      invalidateCache,
     })
 
     return resp.json()
@@ -168,10 +171,10 @@ export class YoutubeProvider extends GenericProvider {
         {
           params: {
             part: ['id', 'snippet'],
-            mine: true
-          }
+            mine: true,
+          },
         },
-        invalidateCache
+        invalidateCache,
       )
 
       const username = resp?.items?.at(0)?.snippet?.title
@@ -201,7 +204,7 @@ export class YoutubeProvider extends GenericProvider {
               p.snippet.thumbnails.default
             ).url,
             playlist_song_count: p.contentDetails.itemCount,
-            isLocal: false
+            isLocal: false,
           })
       }
     }
@@ -221,10 +224,10 @@ export class YoutubeProvider extends GenericProvider {
               part: ['id', 'contentDetails', 'snippet'],
               mine: true,
               maxResults: 50,
-              pageToken: nextPageToken
-            }
+              pageToken: nextPageToken,
+            },
           },
-          invalidateCache
+          invalidateCache,
         )
         parsed.push(...resp.items)
       } while (nextPageToken)
@@ -235,7 +238,7 @@ export class YoutubeProvider extends GenericProvider {
 
   private async parsePlaylistItems(
     items: YoutubeResponses.PlaylistItems.Items[],
-    invalidateCache = false
+    invalidateCache = false,
   ): Promise<Song[]> {
     const songs: Song[] = []
     if (items.length > 0) {
@@ -248,7 +251,7 @@ export class YoutubeProvider extends GenericProvider {
 
   public matchPlaylist(str: string) {
     return !!str.match(
-      /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
+      /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/,
     )
   }
 
@@ -263,7 +266,7 @@ export class YoutubeProvider extends GenericProvider {
   public async *getPlaylistContent(
     url: string,
     invalidateCache = false,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const id: string | undefined = this.getIDFromURL(url)
 
@@ -276,10 +279,10 @@ export class YoutubeProvider extends GenericProvider {
               part: ['id', 'snippet'],
               playlistId: id,
               maxResults: 50,
-              pageToken: nextPageToken as string
-            }
+              pageToken: nextPageToken as string,
+            },
           },
-          invalidateCache
+          invalidateCache,
         )
         const parsed = await this.parsePlaylistItems(resp.items, invalidateCache)
         yield { songs: parsed, nextPageToken: resp.nextPageToken }
@@ -303,10 +306,10 @@ export class YoutubeProvider extends GenericProvider {
               artist_name: v.item.snippet.channelTitle.replace('-', '').replace('Topic', '').trim(),
               artist_extra_info: {
                 youtube: {
-                  channel_id: v.item.snippet.channelId
-                }
-              }
-            }
+                  channel_id: v.item.snippet.channelId,
+                },
+              },
+            },
           ],
           song_coverPath_high: (
             v.item.snippet.thumbnails.maxres ??
@@ -319,14 +322,14 @@ export class YoutubeProvider extends GenericProvider {
             v.item.snippet.thumbnails.default
           ).url,
           album: {
-            album_name: 'Misc'
+            album_name: 'Misc',
           },
           date: new Date(v.item.snippet.publishedAt).toISOString().slice(0, 10),
           date_added: Date.parse(v.date ?? ''),
           duration: parseISO8601Duration(v.item.contentDetails.duration) || -1, // -1 indicates live music
           url: v.item.id,
           playbackUrl: v.item.id,
-          type: 'YOUTUBE'
+          type: 'YOUTUBE',
         })
     }
     return songs
@@ -343,10 +346,10 @@ export class YoutubeProvider extends GenericProvider {
             params: {
               part: ['contentDetails', 'snippet'],
               id: filtered.map((val) => val.id) as string[],
-              maxResults: 50
-            }
+              maxResults: 50,
+            },
           },
-          invalidateCache
+          invalidateCache,
         )
 
         if (filtered.length !== resp.items.length) {
@@ -375,10 +378,10 @@ export class YoutubeProvider extends GenericProvider {
             params: {
               id,
               part: ['id', 'contentDetails', 'snippet'],
-              maxResults: 1
-            }
+              maxResults: 1,
+            },
           },
-          invalidateCache
+          invalidateCache,
         )
         return (await this.parsePlaylists(resp.items))[0]
       } else {
@@ -404,8 +407,8 @@ export class YoutubeProvider extends GenericProvider {
               maxResults: maxResults,
               order: 'relevance',
               safeSearch: 'moderate',
-              videoEmbeddable: true
-            }
+              videoEmbeddable: true,
+            },
           })
 
           const finalIDs: {
@@ -441,7 +444,7 @@ export class YoutubeProvider extends GenericProvider {
 
   public matchSongUrl(url: string): boolean {
     return !!url.match(
-      /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
+      /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/,
     )
   }
 
@@ -474,7 +477,7 @@ export class YoutubeProvider extends GenericProvider {
     for (const s of selected) {
       const song = (
         await this.searchSongs(
-          `${s.artists ? s.artists?.map((val) => val.artist_name).join(', ') + ' - ' : ''}${s.title}`
+          `${s.artists ? `${s.artists?.map((val) => val.artist_name).join(', ')} - ` : ''}${s.title}`,
         )
       )[0]
 
@@ -486,8 +489,8 @@ export class YoutubeProvider extends GenericProvider {
   public async *getRecommendations(): AsyncGenerator<Song[]> {
     const youtubeSongs = await window.SearchUtils.searchSongsByOptions({
       song: {
-        type: 'YOUTUBE'
-      }
+        type: 'YOUTUBE',
+      },
     })
 
     if (youtubeSongs.length === 0) {
@@ -505,6 +508,7 @@ export class YoutubeProvider extends GenericProvider {
 
     if (await this.getLoggedIn()) {
       if (count < 10) {
+        // rome-ignore lint/complexity/noExtraSemicolon: False-positive
         ;(
           await this.populateRequest(ApiResources.SEARCH, {
             params: {
@@ -514,8 +518,8 @@ export class YoutubeProvider extends GenericProvider {
               videoDuration: 'short',
               videoEmbeddable: true,
               order: 'date',
-              maxResults: 10 - resp.length
-            }
+              maxResults: 10 - resp.length,
+            },
           })
         ).items.forEach((val) => resp.push({ id: val.id.videoId, date: val.snippet.publishedAt }))
       }
@@ -526,7 +530,7 @@ export class YoutubeProvider extends GenericProvider {
 
   public async *getArtistSongs(
     artist: Artists,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const channelId = artist.artist_extra_info?.youtube?.channel_id
 
@@ -542,8 +546,8 @@ export class YoutubeProvider extends GenericProvider {
             order: 'relevance',
             videoEmbeddable: true,
             pageToken: nextPageToken as string,
-            channelId
-          }
+            channelId,
+          },
         })
 
         if (resp.items) {
@@ -553,7 +557,7 @@ export class YoutubeProvider extends GenericProvider {
         while (finalIDs.length > 0) {
           yield {
             songs: await this.getSongDetailsFromID(false, ...finalIDs.splice(0, 50)),
-            nextPageToken: resp.nextPageToken
+            nextPageToken: resp.nextPageToken,
           }
         }
       } else {
@@ -564,8 +568,8 @@ export class YoutubeProvider extends GenericProvider {
             maxResults: 50,
             order: 'relevance',
             videoEmbeddable: true,
-            q: `${artist.artist_name} music`
-          }
+            q: `${artist.artist_name} music`,
+          },
         })
 
         if (resp.items) {
@@ -575,7 +579,7 @@ export class YoutubeProvider extends GenericProvider {
       }
     } else {
       if (channelId) {
-        yield await window.SearchUtils.getYTPlaylistContent(channelId, nextPageToken as never)
+        yield await window.SearchUtils.getYTPlaylistContent(channelId, convertProxy(nextPageToken as never, true))
       } else {
         const resp = await window.SearchUtils.searchYT(`${artist.artist_name}`)
         if (resp.artists?.length > 0 && resp.artists[0].artist_extra_info?.youtube?.channel_id) {
@@ -595,10 +599,10 @@ export class YoutubeProvider extends GenericProvider {
           artist.items[0].snippet?.thumbnails?.default?.url,
         artist_extra_info: {
           youtube: {
-            channel_id: artist.items[0].id
-          }
+            channel_id: artist.items[0].id,
+          },
         },
-        artist_name: artist.items[0].snippet?.title
+        artist_name: artist.items[0].snippet?.title,
       }
     }
   }
@@ -609,8 +613,8 @@ export class YoutubeProvider extends GenericProvider {
         const artistDetails = await this.populateRequest(ApiResources.CHANNELS, {
           params: {
             id: artist.artist_extra_info?.youtube?.channel_id,
-            part: ['id', 'snippet']
-          }
+            part: ['id', 'snippet'],
+          },
         })
 
         return this.parseArtist(artistDetails)
@@ -629,9 +633,9 @@ export class YoutubeProvider extends GenericProvider {
           .url,
         artist_extra_info: {
           youtube: {
-            channel_id: i.snippet.channelId
-          }
-        }
+            channel_id: i.snippet.channelId,
+          },
+        },
       })
     }
 
@@ -648,8 +652,8 @@ export class YoutubeProvider extends GenericProvider {
           type: 'channel',
           maxResults: 50,
           order: 'relevance',
-          q: term
-        }
+          q: term,
+        },
       })
 
       artists.push(...this.parseSearchArtist(...resp.items))
@@ -672,7 +676,7 @@ export class YoutubeProvider extends GenericProvider {
         playlist_name: i.snippet.title,
         playlist_coverPath: (i.snippet.thumbnails.maxres ?? i.snippet.thumbnails.high ?? i.snippet.thumbnails.default)
           .url,
-        playlist_desc: i.snippet.description
+        playlist_desc: i.snippet.description,
       })
     }
 
@@ -696,8 +700,8 @@ export class YoutubeProvider extends GenericProvider {
           type: 'playlist',
           maxResults: 50,
           order: 'relevance',
-          q: term
-        }
+          q: term,
+        },
       })
 
       playlists.push(...this.parseSearchPlaylists(...resp.items))
@@ -762,7 +766,7 @@ export class YoutubeProvider extends GenericProvider {
   }
 
   public async getPlaybackUrlAndDuration(
-    song: Song
+    song: Song,
   ): Promise<{ url: string | undefined; duration?: number } | undefined> {
     if (!song.duration && song.url) {
       const fetchedSong = await this.getSongDetails(`https://youtube.com/watch?v=${song.url}`)

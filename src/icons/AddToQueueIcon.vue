@@ -8,7 +8,15 @@
 -->
 
 <template>
-  <svg class="button-grow" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="button-grow"
+    width="25"
+    height="25"
+    viewBox="0 0 25 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <title>{{ title }}</title>
     <path
       d="M22.1667 0.416672H7.66667C6.33387 0.416672 5.25 1.50055 5.25 2.83334V17.3333C5.25 18.6661 6.33387 19.75 7.66667 19.75H22.1667C23.4995 19.75 24.5833 18.6661 24.5833 17.3333V2.83334C24.5833 1.50055 23.4995 0.416672 22.1667 0.416672ZM7.66667 17.3333V2.83334H22.1667L22.1691 17.3333H7.66667Z"
@@ -22,10 +30,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class PlainPlay extends Vue {
   @Prop({ default: '' })
   title!: string

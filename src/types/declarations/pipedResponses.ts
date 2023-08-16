@@ -17,7 +17,7 @@ declare namespace PipedResponses {
     CHANNEL_DETAILS_NEXT = 'nextpage/channel/${channel_id}',
     STREAM_DETAILS = 'streams/${video_id}',
     LOGIN = 'login',
-    USER_PLAYLISTS = 'user/playlists'
+    USER_PLAYLISTS = 'user/playlists',
   }
 
   type SearchFilters = 'music_songs' | 'channels' | 'playlists' | 'music_albums'
@@ -142,8 +142,8 @@ declare namespace PipedResponses {
       uploaderAvatar: string
       thumbnailUrl: string
       hls: string
-      dash: any
-      lbryId: any
+      dash: unknown
+      lbryId: unknown
       uploaderVerified: boolean
       duration: number
       views: number
@@ -153,10 +153,10 @@ declare namespace PipedResponses {
       audioStreams: AudioStream[]
       videoStreams: VideoStream[]
       relatedStreams: VideoDetails[]
-      subtitles: any[]
+      subtitles: unknown[]
       livestream: boolean
       proxyUrl: string
-      chapters: any[]
+      chapters: unknown[]
     }
 
     interface AudioStream {

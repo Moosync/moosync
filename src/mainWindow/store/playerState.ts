@@ -9,10 +9,10 @@
 
 import { action, mutation } from 'vuex-class-component'
 
+import { VolumePersistMode } from '../../utils/commonConstants'
 import { VuexModule } from './module'
 import { v4 } from 'uuid'
-import Vue from 'vue'
-import { VolumePersistMode } from '../../utils/commonConstants'
+import { convertProxy } from '@/utils/ui/common'
 
 class Queue implements GenericQueue<Song> {
   data: QueueData<Song> = {}
@@ -41,7 +41,7 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
     this._volume = vol
     if (this.currentSong) {
       const type = this.currentSong.providerExtension ?? this.currentSong.type
-      Vue.set(this.volumeMap, type, vol)
+      this.volumeMap[type] = vol
     }
   }
 
@@ -112,7 +112,7 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
 
   @mutation
   private _setSongQueueOrder(order: QueueOrder) {
-    this.songQueue.order = order.filter((obj) => !!obj)
+    this.songQueue.order = convertProxy(order.filter((obj) => !!obj))
   }
 
   @action
@@ -188,7 +188,7 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
     this.songQueue.order.push(
       ...item.map((obj) => {
         return { id: v4(), songID: obj._id }
-      })
+      }),
     )
   }
 
@@ -217,7 +217,7 @@ export class PlayerStore extends VuexModule.With({ namespaced: 'player' }) {
       0,
       ...item.map((obj) => {
         return { id: v4(), songID: obj._id }
-      })
+      }),
     )
   }
 

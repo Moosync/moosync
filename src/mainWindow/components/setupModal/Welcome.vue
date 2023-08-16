@@ -36,14 +36,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component } from 'vue-facing-decorator'
 import Logo from '@/icons/LogoIcon.vue'
 
 @Component({
   components: {
     Logo
-  }
+  },
+  emits: ['next', 'prev']
 })
 export default class Welcome extends Vue {
   beginSetup() {

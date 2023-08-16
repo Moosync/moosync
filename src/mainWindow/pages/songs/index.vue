@@ -24,13 +24,14 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component } from 'vue-facing-decorator'
 import SongView from '@/mainWindow/components/songView/SongView.vue'
 
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
 import { vxm } from '@/mainWindow/store'
 import { getRandomFromArray } from '@/utils/common'
+import { convertProxy } from '@/utils/ui/common'
 
 @Component({
   components: {
@@ -57,7 +58,7 @@ export default class AllSongs extends mixins(ContextMenuMixin) {
 
   get defaultDetails(): SongDetailDefaults {
     return {
-      defaultTitle: this.$tc('songView.details.songCount', this.songList.length)
+      defaultTitle: this.$t('songView.details.songCount', this.songList.length)
     }
   }
 
@@ -67,7 +68,7 @@ export default class AllSongs extends mixins(ContextMenuMixin) {
 
   async requestSongs(showHidden = false) {
     this.songList = await window.SearchUtils.searchSongsByOptions({
-      sortBy: vxm.themes.songSortBy,
+      sortBy: convertProxy(vxm.themes.songSortBy),
       song: {
         showInLibrary: !showHidden
       }
@@ -83,7 +84,7 @@ export default class AllSongs extends mixins(ContextMenuMixin) {
 
   private showingHidden = false
 
-  getGeneralSongsMenu(event: Event) {
+  getGeneralSongsMenu(event: MouseEvent) {
     event.stopPropagation()
     event.preventDefault()
     this.getContextMenu(event, {

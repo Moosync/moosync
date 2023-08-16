@@ -388,5 +388,5 @@ export const migrations = [
 
   DROP TRIGGER IF EXISTS increment_playlist_count;
   DROP TRIGGER IF EXISTS decrement_playlist_count;
-  `
+  `,
 ]

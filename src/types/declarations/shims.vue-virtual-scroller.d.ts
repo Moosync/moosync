@@ -54,7 +54,7 @@ declare module 'vue-virtual-scroller' {
       >
     | undefined
 
-  export function IdState(options?: { idProp?: (vm: any) => any }): ComponentOptions<Vue> | typeof Vue
+  export function IdState(options?: { idProp?: (vm: unknown) => unknown }): ComponentOptions<Vue> | typeof Vue
 
   export default plugin
 }

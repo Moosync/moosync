@@ -15,19 +15,18 @@
         :buttonGroup="detailsButtonGroup"
         :currentSong="currentSong"
         :isLoading="isLoading"
-        v-on="$listeners"
+        v-bind="$attrs"
       />
     </b-col>
     <b-col cols="8" xl="9" class="h-100 song-list-compact">
-      <SongListCompact :optionalProviders="optionalProviders" :songList="songList" v-on="$listeners" />
+      <SongListCompact :optionalProviders="optionalProviders" :songList="songList" v-bind="$attrs" />
     </b-col>
   </b-row>
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import PlayerControls from '@/utils/ui/mixins/PlayerControls'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import RemoteSong from '@/utils/ui/mixins/remoteSongMixin'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import SongListCompact from './SongListCompact.vue'
@@ -37,9 +36,15 @@ import SongDetailsCompact from './SongDetailsCompact.vue'
   components: {
     SongListCompact,
     SongDetailsCompact
+  },
+  inheritAttrs: false,
+  options: {
+    compatConfig: {
+      INSTANCE_LISTENERS: false
+    }
   }
 })
-export default class SongViewCompact extends mixins(PlayerControls, RemoteSong, ImgLoader) {
+export default class SongViewCompact extends mixins(RemoteSong, ImgLoader) {
   @Prop({ default: () => [] })
   songList!: Song[]
 

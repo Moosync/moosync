@@ -67,13 +67,10 @@
               <PlainPlay
                 v-if="!isJukeboxModeActive"
                 :title="$t('buttons.playSingle', { title: p.Title })"
-                @click.native="playAll(p.key)"
+                @click="playAll(p.key)"
               />
-              <AddToQueue :title="$t('buttons.addToQueue', { title: p.Title })" @click.native="addToQueue(p.key)" />
-              <AddToLibrary
-                :title="$t('buttons.addToLibrary', { title: p.Title })"
-                @click.native="addToLibrary(p.key)"
-              />
+              <AddToQueue :title="$t('buttons.addToQueue', { title: p.Title })" @click="addToQueue(p.key)" />
+              <AddToLibrary :title="$t('buttons.addToLibrary', { title: p.Title })" @click="addToLibrary(p.key)" />
             </b-col>
             <b-col cols="auto" v-if="loadingMap[p.key]">
               <div class="loading-spinner d-flex justify-content-center">
@@ -93,8 +90,8 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+import { Component } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import RouterPushes from '@/utils/ui/mixins/RouterPushes'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
 import CardView from '../../components/generic/CardView.vue'
@@ -257,7 +254,7 @@ export default class Albums extends mixins(
   }
 
   private async getResults(key: string, gen: AsyncGenerator<Song[]>) {
-    this.$set(this.loadingMap, key, true)
+    this.loadingMap[key] = true
     for await (const s of gen) {
       if (!this.recommendationList[key]) {
         this.recommendationList[key] = []
@@ -265,7 +262,7 @@ export default class Albums extends mixins(
       this.recommendationList[key].push(...s)
       this.recommendationList = Object.assign({}, this.recommendationList)
     }
-    this.$set(this.loadingMap, key, false)
+    this.loadingMap[key] = false
   }
 }
 </script>

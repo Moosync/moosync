@@ -7,8 +7,8 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { FAVORITES_PLAYLIST_ID } from '@/utils/commonConstants'
 import { SongDBInstance } from './database'
+import { FAVORITES_PLAYLIST_ID } from '@/utils/commonConstants'
 
 let _songDB: SongDBInstance | undefined
 
@@ -24,8 +24,8 @@ export async function createFavoritesPlaylist() {
   const isExist = !!(
     await getSongDB().getEntityByOptions<Playlist>({
       playlist: {
-        playlist_id: FAVORITES_PLAYLIST_ID
-      }
+        playlist_id: FAVORITES_PLAYLIST_ID,
+      },
     })
   )?.[0]
 
@@ -33,7 +33,7 @@ export async function createFavoritesPlaylist() {
     await getSongDB().createPlaylist({
       playlist_id: FAVORITES_PLAYLIST_ID,
       playlist_name: 'Favorites',
-      playlist_desc: 'Playlist containing your favorite songs'
+      playlist_desc: 'Playlist containing your favorite songs',
     })
   }
 }

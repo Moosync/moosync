@@ -7,14 +7,14 @@
  *  See LICENSE in the project root for license information.
  */
 
-import * as ytMusic from 'node-youtube-music'
-import { app } from 'electron'
-import path from 'path'
 import { CacheHandler } from './cacheFile'
-import ytsr from 'ytsr'
+import { escapeRegExp } from '@/utils/common'
+import { app } from 'electron'
+import * as ytMusic from 'node-youtube-music'
+import path from 'path'
 import ytdl from 'ytdl-core'
 import ytpl from 'ytpl'
-import { escapeRegExp } from '@/utils/common'
+import ytsr from 'ytsr'
 
 interface YTMusicWMatchIndex extends Song {
   matchIndex: number
@@ -34,7 +34,7 @@ export class YTScraper extends CacheHandler {
         queryParts[1] = 'h800'
       }
 
-      return urlParts[0] + '=' + queryParts.join('-')
+      return `${urlParts[0]}=${queryParts.join('-')}`
     }
 
     return url.replace('w60', 'w800').replace('h60', 'h800').replace('w120', 'w800').replace('h120', 'h800')
@@ -45,11 +45,11 @@ export class YTScraper extends CacheHandler {
     artists?: string[],
     matchTitle = true,
     scrapeYTMusic = true,
-    scrapeYoutube = false
+    scrapeYoutube = false,
   ): Promise<SearchResult> {
-    const term = `${artists ? artists.join(', ') + ' - ' : ''}${title}`
+    const term = `${artists ? `${artists.join(', ')} - ` : ''}${title}`
 
-    const cached = this.getCache(term + '-search')
+    const cached = this.getCache(`${term}-search`)
     if (cached) {
       const data = JSON.parse(cached)
       if (data.songs && data.artists && data.playlists && data.albums && data.genres) {
@@ -63,7 +63,7 @@ export class YTScraper extends CacheHandler {
       artists: [],
       playlists: [],
       albums: [],
-      genres: []
+      genres: [],
     }
 
     const id = this.isYoutubeURL(title)
@@ -82,7 +82,7 @@ export class YTScraper extends CacheHandler {
               res.albums.push(...data.albums)
               res.genres.push(...data.genres)
             })
-            .catch((e) => console.error(e))
+            .catch((e) => console.error(e)),
         )
 
       scrapeYoutube &&
@@ -95,7 +95,7 @@ export class YTScraper extends CacheHandler {
               res.albums.push(...data.albums)
               res.genres.push(...data.genres)
             })
-            .catch((e) => console.error(e))
+            .catch((e) => console.error(e)),
         )
 
       await Promise.allSettled(promises)
@@ -107,7 +107,7 @@ export class YTScraper extends CacheHandler {
         res.albums.length > 0 ||
         res.genres.length > 0
       ) {
-        this.addToCache(term + '-search', JSON.stringify(res))
+        this.addToCache(`${term}-search`, JSON.stringify(res))
       }
       return res
     } catch (e) {
@@ -122,14 +122,14 @@ export class YTScraper extends CacheHandler {
     for (const s of item) {
       const highResThumbnail = s.thumbnailUrl && this.getHighResThumbnail(s.thumbnailUrl)
       songs.push({
-        _id: 'youtube:' + s.youtubeId,
+        _id: `youtube:${s.youtubeId}`,
         title: s.title ? s.title.trim() : '',
         song_coverPath_high: highResThumbnail,
         song_coverPath_low: s.thumbnailUrl,
         album: {
           album_name: s.album ? s.album.trim() : '',
           album_coverPath_high: highResThumbnail,
-          album_coverPath_low: s.thumbnailUrl
+          album_coverPath_low: s.thumbnailUrl,
         },
         artists:
           s.artists?.map((val) => ({
@@ -137,15 +137,15 @@ export class YTScraper extends CacheHandler {
             artist_name: val.name,
             artist_extra_info: {
               youtube: {
-                channel_id: val.id
-              }
-            }
+                channel_id: val.id,
+              },
+            },
           })) ?? [],
         duration: s.duration?.totalSeconds || -1,
         url: s.youtubeId,
         playbackUrl: s.youtubeId,
         date_added: Date.now(),
-        type: 'YOUTUBE'
+        type: 'YOUTUBE',
       })
     }
 
@@ -161,9 +161,9 @@ export class YTScraper extends CacheHandler {
         artist_coverPath: this.getHighResThumbnail((a as Record<string, string>).thumbnailUrl),
         artist_extra_info: {
           youtube: {
-            channel_id: a.artistId
-          }
-        }
+            channel_id: a.artistId,
+          },
+        },
       })
     }
 
@@ -176,7 +176,7 @@ export class YTScraper extends CacheHandler {
       playlists.push({
         playlist_id: `youtube-author:${a.playlistId}`,
         playlist_name: a.title ?? '',
-        playlist_coverPath: a.thumbnailUrl
+        playlist_coverPath: a.thumbnailUrl,
       })
     }
 
@@ -184,13 +184,13 @@ export class YTScraper extends CacheHandler {
   }
 
   private async scrapeYTMusic(title: string, artists?: string[], matchTitle = true) {
-    const term = `${artists ? artists.join(', ') + ' - ' : ''}${title}`
+    const term = `${artists ? `${artists.join(', ')} - ` : ''}${title}`
     const ret: SearchResult = {
       songs: [],
       artists: [],
       playlists: [],
       albums: [],
-      genres: []
+      genres: [],
     }
 
     ret.songs = this.parseYoutubeMusicSong(...(await ytMusic.searchMusics(term)))
@@ -216,7 +216,7 @@ export class YTScraper extends CacheHandler {
   private parseYoutubeVideo(vid: ytsr.Video): Song {
     const highResThumbnail = vid.bestThumbnail?.url && this.getHighResThumbnail(vid.bestThumbnail.url)
     return {
-      _id: 'youtube:' + vid.id,
+      _id: `youtube:${vid.id}`,
       title: vid.title ? vid.title.trim() : '',
       song_coverPath_high: highResThumbnail ?? undefined,
       song_coverPath_low: vid.bestThumbnail?.url ?? vid.thumbnails.find((val) => val.url)?.url ?? undefined,
@@ -228,17 +228,17 @@ export class YTScraper extends CacheHandler {
               artist_coverPath: vid.author.bestAvatar?.url ?? undefined,
               artist_extra_info: {
                 youtube: {
-                  channel_id: vid.author.channelID
-                }
-              }
-            }
+                  channel_id: vid.author.channelID,
+                },
+              },
+            },
           ]
         : undefined,
       duration: vid.duration ? this.parseYoutubeDuration(vid.duration ?? '') || -1 : -1,
       url: vid.url,
       playbackUrl: vid.url,
       date_added: Date.now(),
-      type: 'YOUTUBE'
+      type: 'YOUTUBE',
     }
   }
 
@@ -249,9 +249,9 @@ export class YTScraper extends CacheHandler {
       artist_coverPath: channel.bestAvatar?.url ?? undefined,
       artist_extra_info: {
         youtube: {
-          channel_id: channel.channelID
-        }
-      }
+          channel_id: channel.channelID,
+        },
+      },
     }
   }
 
@@ -261,12 +261,12 @@ export class YTScraper extends CacheHandler {
     return {
       playlist_id: `youtube-playlist:${playlist.playlistID}`,
       playlist_name: playlist.title,
-      playlist_coverPath: highResThumbnail ?? undefined
+      playlist_coverPath: highResThumbnail ?? undefined,
     }
   }
 
   private async scrapeYoutube(title: string, artists?: string[], matchTitle = true) {
-    const term = `${artists ? artists.join(', ') + ' - ' : ''}${title}`
+    const term = `${artists ? `${artists.join(', ')} - ` : ''}${title}`
 
     const resp = await ytsr(term)
     const ret: SearchResult = {
@@ -274,7 +274,7 @@ export class YTScraper extends CacheHandler {
       artists: [],
       playlists: [],
       albums: [],
-      genres: []
+      genres: [],
     }
     for (const vid of resp.items) {
       if (vid.type === 'video') {
@@ -326,14 +326,14 @@ export class YTScraper extends CacheHandler {
         if (s.title.match(new RegExp(escapeRegExp(searchTerm), 'i'))) {
           finalMatches.push({
             ...s,
-            matchIndex: 1
+            matchIndex: 1,
           })
         } else {
           const matchIndex = this.calculateLevenshteinDistance(searchTerm, s.title)
           if (matchIndex > 0.5) {
             finalMatches.push({
               ...s,
-              matchIndex
+              matchIndex,
             })
           }
         }
@@ -351,39 +351,40 @@ export class YTScraper extends CacheHandler {
       shorter = s1
     }
     const longerLength = longer.length
-    if (longerLength == 0) {
+    if (longerLength === 0) {
       return 1.0
     }
     return (longerLength - this.editDistance(longer, shorter)) / parseFloat(longerLength.toString())
   }
 
   private editDistance(s1: string, s2: string) {
-    s1 = s1.toLowerCase()
-    s2 = s2.toLowerCase()
+    const mutS1 = s1.toLowerCase()
+    const mutS2 = s2.toLowerCase()
 
     const costs = []
-    for (let i = 0; i <= s1.length; i++) {
+    for (let i = 0; i <= mutS1.length; i++) {
       let lastValue = i
-      for (let j = 0; j <= s2.length; j++) {
-        if (i == 0) costs[j] = j
+      for (let j = 0; j <= mutS2.length; j++) {
+        if (i === 0) costs[j] = j
         else {
           if (j > 0) {
             let newValue = costs[j - 1]
-            if (s1.charAt(i - 1) != s2.charAt(j - 1)) newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1
+            if (mutS1.charAt(i - 1) !== mutS2.charAt(j - 1))
+              newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1
             costs[j - 1] = lastValue
             lastValue = newValue
           }
         }
       }
-      if (i > 0) costs[s2.length] = lastValue
+      if (i > 0) costs[mutS2.length] = lastValue
     }
-    return costs[s2.length]
+    return costs[mutS2.length]
   }
 
   private isYoutubePlaylistURL(url: string) {
     if (
       url.match(
-        /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
+        /^((?:https?:)?\/\/)?((?:www|m|music)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/,
       )
     ) {
       return new URL(url)?.searchParams?.get('list')
@@ -417,16 +418,16 @@ export class YTScraper extends CacheHandler {
                 videoDetails.author.thumbnails?.map((val) => val.url).filter((val) => val)[0],
               artist_extra_info: {
                 youtube: {
-                  channel_id: videoDetails.author.id
-                }
-              }
-            }
+                  channel_id: videoDetails.author.id,
+                },
+              },
+            },
           ]
         : undefined,
       playbackUrl: videoDetails.video_url,
       url: videoDetails.video_url,
       date_added: Date.now(),
-      type: 'YOUTUBE'
+      type: 'YOUTUBE',
     }
   }
 
@@ -434,7 +435,7 @@ export class YTScraper extends CacheHandler {
     let format
     try {
       format = ytdl.chooseFormat(data.formats, {
-        quality: 'highestaudio'
+        quality: 'highestaudio',
       })
     } catch (e) {
       format = ytdl.chooseFormat(data.formats, {})
@@ -477,7 +478,7 @@ export class YTScraper extends CacheHandler {
         playlist_name: playlist.title,
         playlist_coverPath:
           playlist.bestThumbnail.url ?? playlist.thumbnails.filter((val) => val.url)[0].url ?? undefined,
-        playlist_desc: playlist.description ?? undefined
+        playlist_desc: playlist.description ?? undefined,
       }
 
       this.addToCache(`playlist:${id}`, JSON.stringify(parsed))
@@ -489,7 +490,7 @@ export class YTScraper extends CacheHandler {
 
   public async getPlaylistContent(
     id: string,
-    page?: ytpl.Continuation
+    page?: ytpl.Continuation,
   ): Promise<{ songs: Song[]; nextPageToken?: ytpl.Continuation }> {
     const cache = this.getCache(`playlistContent:${id}:page:${JSON.stringify((page as unknown[])?.at(1))}`)
     if (cache) {
@@ -497,10 +498,10 @@ export class YTScraper extends CacheHandler {
     }
 
     // JSON.stringify cannot set Infinity.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // rome-ignore lint/suspicious/noExplicitAny: Spare me from making these types :'')
     if (page && (page as any).length >= 3 && (page as any)[3]?.limit === null) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;(page as any)[3].limit = Infinity
+      // rome-ignore lint/complexity/noExtraSemicolon: False-positive
+      ;(page as [unknown, unknown, unknown, { limit: number }])[3].limit = Infinity
     }
 
     const songList: Song[] = []

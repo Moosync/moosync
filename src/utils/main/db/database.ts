@@ -78,7 +78,7 @@ export class SongDBInstance extends DBWorkerWrapper implements GenericDBInstance
           extensions?: Record<string, Record<string, string | undefined> | undefined> | undefined
         }
       | undefined,
-    extension?: string | undefined
+    extension?: string | undefined,
   ): Promise<void> {
     return this.execute('updateAlbumExtraInfo', [id, info, extension])
   }
@@ -96,7 +96,7 @@ export class SongDBInstance extends DBWorkerWrapper implements GenericDBInstance
           extensions?: Record<string, Record<string, string | undefined> | undefined> | undefined
         }
       | undefined,
-    extension?: string | undefined
+    extension?: string | undefined,
   ): Promise<void> {
     return this.execute('updateArtistExtraInfo', [id, info, extension])
   }
@@ -143,7 +143,7 @@ export class SongDBInstance extends DBWorkerWrapper implements GenericDBInstance
     if (songs.length > 0) {
       getExtensionHostChannel().sendExtraEvent({
         type: added ? 'songAdded' : 'songRemoved',
-        data: [songs]
+        data: [songs],
       })
     }
   }
@@ -152,7 +152,7 @@ export class SongDBInstance extends DBWorkerWrapper implements GenericDBInstance
     if (playlist.length > 0) {
       getExtensionHostChannel().sendExtraEvent({
         type: added ? 'playlistAdded' : 'playlistRemoved',
-        data: [playlist]
+        data: [playlist],
       })
     }
   }

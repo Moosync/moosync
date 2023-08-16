@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'vue-facing-decorator'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import PreferenceHeader from './PreferenceHeader.vue'
 @Component({
@@ -30,14 +30,17 @@ import PreferenceHeader from './PreferenceHeader.vue'
     PreferenceHeader
   }
 })
-export default class RadioCheckbox extends Mixins<ExtensionPreferenceMixin<Checkbox[]>>(ExtensionPreferenceMixin) {
+export default class RadioCheckbox extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private activeKey: string[] = []
+  activeKey: string[] = []
+
+  declare value: Checkbox[]
+  declare defaultValue: Checkbox[]
 
   mounted() {
     this.postFetch = () => {
@@ -58,7 +61,7 @@ export default class RadioCheckbox extends Mixins<ExtensionPreferenceMixin<Check
     }
   }
 
-  private toggleCheck(key: string) {
+  toggleCheck(key: string) {
     if (this.value) {
       this.value.forEach((val) => {
         val.enabled = val.key === key
@@ -66,7 +69,7 @@ export default class RadioCheckbox extends Mixins<ExtensionPreferenceMixin<Check
     }
 
     this.activeKey = [key]
-    this.onInputChange()
+    this.onInputChange(this.value)
   }
 
   private getCheckboxEnabled(key: string) {

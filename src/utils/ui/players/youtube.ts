@@ -7,12 +7,12 @@
  *  See LICENSE in the project root for license information.
  */
 
+import { LocalPlayer } from './local'
+import { YTPlayerWrapper } from './wrapper/ytPlayer'
+import { vxm } from '@/mainWindow/store'
+import localforage from 'localforage'
 import { Segment, SponsorBlock } from 'sponsorblock-api'
 import { v4 } from 'uuid'
-import { YTPlayerWrapper } from './wrapper/ytPlayer'
-import { LocalPlayer } from './local'
-import localforage from 'localforage'
-import { vxm } from '@/mainWindow/store'
 
 type YouTubePlayerQuality = 'small' | 'medium' | 'large' | 'hd720' | 'hd1080' | 'highres' | 'default'
 
@@ -32,14 +32,14 @@ export class YoutubePlayer extends LocalPlayer {
   private sponsorBlock = new SponsorBlock(v4())
   private cacheStore = localforage.createInstance({
     driver: [localforage.INDEXEDDB],
-    name: 'SponsorBlock'
+    name: 'SponsorBlock',
   })
 
   private currentSegments: Segment[] = []
 
   protected async _initialize({
     playerInstance,
-    useEmbed
+    useEmbed,
   }: {
     playerInstance: HTMLDivElement
     useEmbed: boolean
@@ -71,7 +71,7 @@ export class YoutubePlayer extends LocalPlayer {
     const preferences = await window.PreferenceUtils.loadSelective<Checkbox[]>('audio')
     if (preferences) {
       const sponsorblock = preferences.find((val) => val.key === 'sponsorblock')
-      if (sponsorblock && sponsorblock.enabled) {
+      if (sponsorblock?.enabled) {
         let segments = await this.getCache<Segment[]>(videoID)
         if (!segments) {
           try {
@@ -81,7 +81,7 @@ export class YoutubePlayer extends LocalPlayer {
               'music_offtopic',
               'selfpromo',
               'interaction',
-              'preview'
+              'preview',
             ])
 
             await this.storeCache(videoID, segments)
@@ -105,17 +105,18 @@ export class YoutubePlayer extends LocalPlayer {
   }
 
   protected async _load(src?: string, volume?: number, autoplay?: boolean) {
+    let videoId = src
     if (src) {
       console.debug('Loading src', src)
-      src = this.extractVideoID(src)
-      if (src) {
-        this.getSponsorblock(src)
-        if (this.playerInstance instanceof HTMLAudioElement) src = await window.SearchUtils.getYTAudioURL(src)
+      videoId = this.extractVideoID(src)
+      if (videoId) {
+        this.getSponsorblock(videoId)
+        if (this.playerInstance instanceof HTMLAudioElement) videoId = await window.SearchUtils.getYTAudioURL(videoId)
       }
     }
 
-    console.debug('Got final youtube video ID', src)
-    super._load(src, volume, autoplay)
+    console.debug('Got final youtube video ID', videoId)
+    super._load(videoId, volume, autoplay)
   }
 
   protected listenOnTimeUpdate(callback: (time: number) => void): void {

@@ -7,16 +7,15 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component } from 'vue-property-decorator'
-import { vxm } from '@/mainWindow/store'
-import { bus } from '@/mainWindow/main'
-import { EventBus } from '@/utils/main/ipc/constants'
-import { mixins } from 'vue-class-component'
 import ProviderMixin from './ProviderMixin'
+import { bus } from '@/mainWindow/main'
+import { vxm } from '@/mainWindow/store'
 import { ProviderScopes } from '@/utils/commonConstants'
+import { EventBus } from '@/utils/main/ipc/constants'
+import { Component } from 'vue-facing-decorator'
 
 @Component
-export default class AccountsMixin extends mixins(ProviderMixin) {
+export default class AccountsMixin extends ProviderMixin {
   private _signoutProvider?: (provider: Provider) => void
 
   set signoutMethod(signout: ((provider: Provider) => void) | undefined) {
@@ -30,19 +29,17 @@ export default class AccountsMixin extends mixins(ProviderMixin) {
   fetchProviders(): Provider[] {
     const p = this.getProvidersByScope()
     return p.map((val) => ({
-      username: '',
-      provider: val
+      username: undefined,
+      provider: val,
+      key: val.key,
     }))
   }
 
-  providers: Provider[] = this.fetchProviders()
+  providers: Provider[] = []
 
   async getUserDetails(provider: Provider) {
     const username = (await provider?.provider.getUserDetails()) ?? ''
-    this.$set(provider, 'username', username)
-    // if (!provider.username) {
-    //   provider.provider.signOut()
-    // }
+    provider['username'] = username
   }
 
   async handleClick(provider: Provider) {
@@ -54,7 +51,7 @@ export default class AccountsMixin extends mixins(ProviderMixin) {
       }
       return this.login(provider)
     }
-    this._signoutProvider && this._signoutProvider(provider)
+    this._signoutProvider?.(provider)
   }
 
   async login(provider: Provider) {
@@ -78,6 +75,10 @@ export default class AccountsMixin extends mixins(ProviderMixin) {
     }
   }
 
+  created() {
+    this.providers = this.fetchProviders()
+  }
+
   async mounted() {
     vxm.providers.$watch(
       'youtubeAlt',
@@ -86,10 +87,12 @@ export default class AccountsMixin extends mixins(ProviderMixin) {
           this.getUserDetails(val)
         })
       },
-      { immediate: true, deep: false }
+      { immediate: true, deep: false },
     )
 
-    bus.$on(EventBus.REFRESH_ACCOUNTS, (providerKey?: string) => {
+    bus.on(EventBus.REFRESH_ACCOUNTS, (providerKey?: string) => {
+      console.log('getting user details', providerKey)
+
       if (providerKey) {
         const provider = this.providers.find((val) => val?.provider.key === providerKey)
         if (provider) {

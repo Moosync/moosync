@@ -9,8 +9,8 @@
 
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from 'toad-scheduler'
 
-import { getScannerChannel, getUpdateChannel } from '@/utils/main/ipc'
 import { loadSelectivePreference } from '../db/preferences'
+import { getScannerChannel, getUpdateChannel } from '@/utils/main/ipc'
 
 const SCAN_TASK_ID = 'scan-task'
 const UPDATE_TASK_ID = 'update-task'
@@ -43,7 +43,7 @@ export function setupScanTask() {
     () => getScannerChannel().scanAll(),
     (err: Error) => {
       console.error(err)
-    }
+    },
   )
 
   console.info('Setting scan task for', minutes, 'minutes')
@@ -60,7 +60,7 @@ export function setupUpdateCheckTask() {
     () => getUpdateChannel().checkUpdates(),
     (err: Error) => {
       console.error(err)
-    }
+    },
   )
 
   console.info('Setting update check task for 3 hours')
@@ -77,7 +77,7 @@ export function setupScrapeTask() {
     () => getScannerChannel().runScraper(),
     (err: Error) => {
       console.error(err)
-    }
+    },
   )
 
   console.info('Setting scrape task for 30 minutes')

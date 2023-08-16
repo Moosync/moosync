@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <svg viewBox="0 0 401 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 401 230" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('click', $event)">
     <g filter="url(#filter0_d)">
       <rect
         x="4.00002"

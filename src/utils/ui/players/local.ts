@@ -45,7 +45,7 @@ export class LocalPlayer extends Player {
       console.debug('Loading src', src)
       this.playerInstance.setSrc(src, autoplay)
     }
-    volume && (this.volume = volume)
+    volume && this.volume === volume
   }
 
   protected async _play(): Promise<void> {
@@ -91,7 +91,7 @@ export class LocalPlayer extends Player {
 
   protected listenOnError(callback: (err: Error) => void): void {
     this.playerInstance.onerror = (event, source, line, col, err) => {
-      console.log('error', event, source, line, col, err)
+      console.error('error', event, source, line, col, err)
       if (callback) {
         if (err) {
           callback(err)

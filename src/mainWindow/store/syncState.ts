@@ -10,13 +10,13 @@
 import { action, mutation } from 'vuex-class-component'
 
 import { VuexModule } from './module'
-import { v1 } from 'uuid'
 import { stripSong, toRemoteSong } from '@/utils/common'
+import { v1 } from 'uuid'
 
 export enum PeerMode {
-  WATCHER,
-  BROADCASTER,
-  UNDEFINED
+  WATCHER = 0,
+  BROADCASTER = 1,
+  UNDEFINED = 2,
 }
 
 class Queue implements GenericQueue<RemoteSong> {
@@ -146,7 +146,7 @@ export class SyncStore extends VuexModule.With({ namespaced: 'sync' }) {
     this.songQueue.order.push(
       ...item.map((obj) => {
         return { id: v1(), songID: obj._id }
-      })
+      }),
     )
   }
 
@@ -175,7 +175,7 @@ export class SyncStore extends VuexModule.With({ namespaced: 'sync' }) {
       0,
       ...item.map((obj) => {
         return { id: v1(), songID: obj._id }
-      })
+      }),
     )
   }
 

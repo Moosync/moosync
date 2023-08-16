@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'vue-facing-decorator'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { BFormCheckbox } from 'bootstrap-vue'
@@ -36,12 +36,15 @@ import { BFormCheckbox } from 'bootstrap-vue'
     PreferenceHeader
   }
 })
-export default class CheckboxGroup extends Mixins<ExtensionPreferenceMixin<Checkbox[]>>(ExtensionPreferenceMixin) {
+export default class CheckboxGroup extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
+
+  declare defaultValue: Checkbox[]
+  declare value: Checkbox[]
 
   created() {
     this.postFetch = () => {
@@ -55,7 +58,7 @@ export default class CheckboxGroup extends Mixins<ExtensionPreferenceMixin<Check
     }
   }
 
-  private toggleCheck(key: string) {
+  toggleCheck(key: string) {
     const isChecked = (this.$refs[`checkbox-${this.packageName}-${key}`] as BFormCheckbox[])?.at(0)?.isChecked
     if (this.value) {
       const value = this.getValueByKey(key)
@@ -63,7 +66,7 @@ export default class CheckboxGroup extends Mixins<ExtensionPreferenceMixin<Check
         value.enabled = isChecked
       }
 
-      this.onInputChange()
+      this.onInputChange(this.value)
     }
 
     // ;(this.value as Checkbox[])[index].enabled = (
@@ -79,7 +82,7 @@ export default class CheckboxGroup extends Mixins<ExtensionPreferenceMixin<Check
     return this.value?.find((val) => val.key === key)
   }
 
-  private getCheckboxEnabled(key: string) {
+  getCheckboxEnabled(key: string) {
     return this.getValueByKey(key)?.enabled ?? false
   }
 }

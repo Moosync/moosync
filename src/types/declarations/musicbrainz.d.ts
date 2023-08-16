@@ -67,7 +67,7 @@ namespace MusicBrainz {
     end_area: string
     ipis: string[]
     country: string
-    gender: any
+    gender: unknown
     'life-span': LifeSpan
     name: string
     begin_area: BeginArea2

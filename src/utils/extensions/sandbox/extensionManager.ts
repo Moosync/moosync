@@ -7,14 +7,14 @@
  *  See LICENSE in the project root for license information.
  */
 
+import { prefixLogger } from '../../main/logger/utils'
 import { ExtensionRequestGenerator } from './api'
 import { InMemoryRegistry } from './extensionRegistry'
-import { NodeVM } from 'vm2'
+import { readFile } from 'fs/promises'
 import log from 'loglevel'
 import path from 'path'
-import { prefixLogger } from '../../main/logger/utils'
-import { readFile } from 'fs/promises'
 import { v4 } from 'uuid'
+import { NodeVM } from 'vm2'
 
 export abstract class AbstractExtensionManager {
   abstract instantiateAndRegister(extension: UnInitializedExtensionItem): Promise<void>
@@ -31,7 +31,7 @@ export class ExtensionManager extends AbstractExtensionManager {
   private extensionCommunicator: ExtensionCommunicator = {
     extensionRetriever: this.getExtensions.bind(this),
     addPreference: this.addPreference.bind(this),
-    removePreference: this.removePreference.bind(this)
+    removePreference: this.removePreference.bind(this),
   }
 
   constructor(logsPath: string, installPath: string) {
@@ -50,20 +50,20 @@ export class ExtensionManager extends AbstractExtensionManager {
 
   private getProcessEnv() {
     const env = JSON.parse(JSON.stringify(process.env)) as Partial<NodeJS.ProcessEnv>
-    delete env.FanartTVApiKey
-    delete env.LastFmApiKey
-    delete env.LastFmSecret
-    delete env.SpotifyClientID
-    delete env.SpotifyClientSecret
-    delete env.YoutubeClientID
-    delete env.YoutubeClientSecret
+    env.FanartTVApiKey = undefined
+    env.LastFmApiKey = undefined
+    env.LastFmSecret = undefined
+    env.SpotifyClientID = undefined
+    env.SpotifyClientSecret = undefined
+    env.YoutubeClientID = undefined
+    env.YoutubeClientSecret = undefined
 
-    delete env['YOUTUBECLIENTID']
-    delete env['YOUTUBECLIENTSECRET']
-    delete env['LASTFMAPIKEY']
-    delete env['LASTFMSECRET']
-    delete env['FANARTTVAPIKEY']
-    delete env['GH_TOKEN']
+    env['YOUTUBECLIENTID'] = undefined
+    env['YOUTUBECLIENTSECRET'] = undefined
+    env['LASTFMAPIKEY'] = undefined
+    env['LASTFMSECRET'] = undefined
+    env['FANARTTVAPIKEY'] = undefined
+    env['GH_TOKEN'] = undefined
 
     env['MOOSYNC_VERSION'] = process.env.MOOSYNC_VERSION
     env['installPath'] = this.installPath
@@ -78,7 +78,7 @@ export class ExtensionManager extends AbstractExtensionManager {
       console: 'redirect',
       sandbox: {
         URL,
-        URLSearchParams
+        URLSearchParams,
       },
       env: this.getProcessEnv(),
       nesting: true,
@@ -88,9 +88,9 @@ export class ExtensionManager extends AbstractExtensionManager {
         builtin: ['*'],
         root: [path.dirname(entryFilePath), extensionPath],
         mock: {
-          events
-        }
-      }
+          events,
+        },
+      },
     })
 
     return vm
@@ -104,7 +104,7 @@ export class ExtensionManager extends AbstractExtensionManager {
       __dirname: path.dirname(entryFilePath),
       __filename: entryFilePath,
       api: new ExtensionRequestGenerator(packageName, this.extensionCommunicator),
-      logger: child
+      logger: child,
     }
   }
 
@@ -114,7 +114,7 @@ export class ExtensionManager extends AbstractExtensionManager {
 
   private async checkExtValidityAndGetInstance(
     entryFilePath: string,
-    extensionPath: string
+    extensionPath: string,
   ): Promise<{ vm: NodeVM; factory: ExtensionFactory } | undefined> {
     try {
       const file = await this.readFileNoCache(entryFilePath)
@@ -186,7 +186,7 @@ export class ExtensionManager extends AbstractExtensionManager {
         extensionIcon: extension.extensionIcon,
         preferences,
         global,
-        instance
+        instance,
       })
     }
 
@@ -202,7 +202,7 @@ export class ExtensionManager extends AbstractExtensionManager {
       type: 'update-preferences',
       channel: v4(),
       data: undefined,
-      extensionName: packageName
+      extensionName: packageName,
     } as extensionUIRequestMessage)
   }
 

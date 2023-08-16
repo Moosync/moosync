@@ -7,9 +7,9 @@
  *  See LICENSE in the project root for license information.
  */
 
+import { WindowHandler } from '../windowManager'
 import { IpcEvents, MprisEvents } from './constants'
 import MediaController, { ButtonEnum, PlaybackStateEnum, PlayerButtons } from 'media-controller'
-import { WindowHandler } from '../windowManager'
 
 function checkStarted() {
   return function (target: unknown, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -68,7 +68,7 @@ export class MprisChannel implements IpcChannelInterface {
           artistName: '',
           thumbnail: '',
           genres: [],
-          albumArtist: ''
+          albumArtist: '',
         })
       } else {
         this.controller.updatePlayerDetails({ title, albumName, artistName, thumbnail, genres, albumArtist })
@@ -122,8 +122,13 @@ export class MprisChannel implements IpcChannelInterface {
 
   @checkStarted()
   private handlePlayPauseButtonState(isPlaying: boolean) {
-    this.buttonState['play'] = !isPlaying
-    this.buttonState['pause'] = isPlaying
+    if (process.platform !== 'linux') {
+      this.buttonState['play'] = !isPlaying
+      this.buttonState['pause'] = isPlaying
+    } else {
+      this.buttonState['play'] = true
+      this.buttonState['pause'] = true
+    }
 
     this.controller.setButtonStatus(this.buttonState)
   }

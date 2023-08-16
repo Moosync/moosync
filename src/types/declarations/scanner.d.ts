@@ -11,7 +11,7 @@ type ScanWorkerWorkerType = {
     basePath: string,
     id: string,
     onlyHigh: boolean,
-    loggerPath: string
+    loggerPath: string,
   ) => { high: string; low?: string } | undefined
 }
 

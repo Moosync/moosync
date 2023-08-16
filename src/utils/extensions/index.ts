@@ -7,25 +7,25 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { ChildProcess, fork, Serializable } from 'child_process'
-import { app, ipcMain, shell } from 'electron'
-import { extensionUIRequestsKeys, mainRequests, providerFetchRequests } from '@/utils/extensions/constants'
 import { loadSelectivePreference, saveSelectivePreference } from '../main/db/preferences'
+import { extensionUIRequestsKeys, mainRequests, providerFetchRequests } from '@/utils/extensions/constants'
+import { ChildProcess, Serializable, fork } from 'child_process'
+import { app, ipcMain, shell } from 'electron'
 
-import { ExtensionHostEvents } from '@/utils/main/ipc/constants'
-import { getSongDB } from '@/utils/main/db/index'
-import { WindowHandler } from '../main/windowManager'
-import { async } from 'node-stream-zip'
-import { promises as fsP } from 'fs'
-import { getVersion, sanitizeSong } from '@/utils/common'
-import path from 'path'
-import { playerControlRequests } from './constants'
-import { v4 } from 'uuid'
-import { oauthHandler } from '@/utils/main/oauth/handler'
 import { getStoreChannel } from '../main/ipc'
-import { LogLevelDesc } from 'loglevel'
+import { WindowHandler } from '../main/windowManager'
+import { playerControlRequests } from './constants'
+import { getVersion, sanitizeSong } from '@/utils/common'
 import { sanitizePlaylist } from '@/utils/common'
+import { getSongDB } from '@/utils/main/db/index'
+import { ExtensionHostEvents } from '@/utils/main/ipc/constants'
+import { oauthHandler } from '@/utils/main/oauth/handler'
 import { BrowserWindow } from 'electron'
+import { promises as fsP } from 'fs'
+import { LogLevelDesc } from 'loglevel'
+import { async } from 'node-stream-zip'
+import path from 'path'
+import { v4 } from 'uuid'
 
 export const defaultExtensionPath = path.join(app.getPath('appData'), app.getName(), 'extensions')
 const defaultLogPath = path.join(app.getPath('logs'))
@@ -70,17 +70,17 @@ export class MainHostIPCHandler {
     this.sandboxProcess.on('exit', () => {
       this.isAlive = false
     })
-    this.sandboxProcess.on('close', () => (this.isAlive = false))
+    this.sandboxProcess.on('close', () => this.isAlive === false)
   }
 
   private createExtensionHost() {
-    const process = fork(__dirname + '/sandbox.js', [
+    const process = fork(`${__dirname}/sandbox.js`, [
       'extensionPath',
       defaultExtensionPath,
       'logPath',
       defaultLogPath,
       'installPath',
-      app.getAppPath()
+      app.getAppPath(),
     ])
     this.isAlive = true
     return process
@@ -224,7 +224,7 @@ class MainRequestGenerator {
   public async sendContextMenuItemClicked(
     id: string,
     packageName: string,
-    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>
+    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>,
   ) {
     return this.sendAsync<void>('on-clicked-context-menu', { id, packageName, arg })
   }
@@ -233,16 +233,13 @@ class MainRequestGenerator {
     const channel = v4()
 
     return new Promise<T>((resolve) => {
-      let listener: (data: mainReplyMessage) => void
-      this.sandboxProcess.on(
-        'message',
-        (listener = (data: mainReplyMessage) => {
-          if (data.channel === channel) {
-            this.sandboxProcess.off('message', listener)
-            resolve(data.data)
-          }
-        })
-      )
+      const listener: (data: mainReplyMessage) => void = (data: mainReplyMessage) => {
+        if (data.channel === channel) {
+          this.sandboxProcess.off('message', listener)
+          resolve(data.data as T)
+        }
+      }
+      this.sandboxProcess.on('message', listener)
       this._sendSync({ type, channel, data } as mainRequestMessage)
     })
   }
@@ -253,24 +250,25 @@ class ExtensionRequestHandler {
 
   public mainWindowCreated() {
     for (const f of this.mainWindowCallsQueue) {
+      // rome-ignore lint/complexity/noExtraSemicolon: False-positive linting
       ;(f.func as (...args: Serializable[]) => void)(...f.args)
     }
   }
 
   private requestToRenderer(message: extensionRequestMessage) {
-    const fireAndForgetRequests: (typeof message)['type'][] = ['update-preferences', 'extension-updated']
+    const fireAndForgetRequests: typeof message['type'][] = ['update-preferences', 'extension-updated']
     return new Promise((resolve) => {
       if (!fireAndForgetRequests.includes(message.type)) {
-        let listener: (event: Electron.IpcMainEvent, data: extensionReplyMessage) => void
-        ipcMain.on(
-          ExtensionHostEvents.EXTENSION_REQUESTS,
-          (listener = (event, data: extensionReplyMessage) => {
-            if (data.channel === message.channel) {
-              ipcMain.off(ExtensionHostEvents.EXTENSION_REQUESTS, listener)
-              resolve(data.data)
-            }
-          })
-        )
+        const listener: (event: Electron.IpcMainEvent, data: extensionReplyMessage) => void = (
+          event,
+          data: extensionReplyMessage,
+        ) => {
+          if (data.channel === message.channel) {
+            ipcMain.off(ExtensionHostEvents.EXTENSION_REQUESTS, listener)
+            resolve(data.data)
+          }
+        }
+        ipcMain.on(ExtensionHostEvents.EXTENSION_REQUESTS, listener)
       }
 
       // Defer call till mainWindow is created
@@ -294,7 +292,7 @@ class ExtensionRequestHandler {
 
   private getPreferenceKey(packageName: string, key?: string) {
     let str = packageName
-    if (key) str += '.' + key
+    if (key) str += `.${key}`
     return str
   }
 
@@ -302,20 +300,25 @@ class ExtensionRequestHandler {
     message.type && console.debug('Received message from extension', message.extensionName, message.type)
     const resp: extensionReplyMessage = { ...message, data: undefined }
     if (message.type === 'get-songs') {
-      const songs = await getSongDB().getSongByOptions(message.data)
+      const songs = await getSongDB().getSongByOptions(message.data as SongAPIOptions)
       resp.data = songs
     }
 
     if (message.type === 'get-entity') {
-      const entity = await getSongDB().getEntityByOptions(message.data)
+      const entity = await getSongDB().getEntityByOptions(
+        message.data as EntityApiOptions<Artists | Album | Playlist | Genre>,
+      )
       resp.data = entity
     }
 
     if (message.type === 'add-songs') {
       resp.data = []
-      for (const s of message.data) {
-        if (s) {
-          resp.data.push(await getSongDB().store(...sanitizeSong(message.extensionName, s)))
+      if (Array.isArray(message.data)) {
+        for (const s of message.data) {
+          if (s) {
+            // rome-ignore lint/complexity/noExtraSemicolon: False-positive
+            ;(resp.data as Song[]).push(...(await getSongDB().store(...sanitizeSong(message.extensionName, s))))
+          }
         }
       }
     }
@@ -326,27 +329,31 @@ class ExtensionRequestHandler {
     }
 
     if (message.type === 'add-song-to-playlist') {
-      await getSongDB().addToPlaylist(
-        message.data.playlistID,
-        ...sanitizeSong(message.extensionName, ...message.data.songs)
-      )
+      const data = message.data as { playlistID: string; songs: Song[] }
+      await getSongDB().addToPlaylist(data.playlistID, ...sanitizeSong(message.extensionName, ...data.songs))
     }
 
     if (message.type === 'remove-song') {
       await getSongDB().removeSong(
-        ...(message.data as Song[]).filter((val) => val._id.startsWith(`${message.extensionName}:`))
+        ...(message.data as Song[]).filter((val) => val._id.startsWith(`${message.extensionName}:`)),
       )
     }
 
     if (message.type === 'get-preferences') {
-      const { packageName, key, defaultValue }: { packageName: string; key?: string; defaultValue?: unknown } =
-        message.data
+      const { packageName, key, defaultValue } = message.data as {
+        packageName: string
+        key?: string
+        defaultValue?: unknown
+      }
       resp.data = await loadSelectivePreference(this.getPreferenceKey(packageName, key), true, defaultValue)
     }
 
     if (message.type === 'get-secure-preferences') {
-      const { packageName, key, defaultValue }: { packageName: string; key?: string; defaultValue?: unknown } =
-        message.data
+      const { packageName, key, defaultValue } = message.data as {
+        packageName: string
+        key?: string
+        defaultValue?: unknown
+      }
       const secure = await getStoreChannel().getSecure(this.getPreferenceKey(packageName, key))
       if (secure) {
         try {
@@ -361,45 +368,47 @@ class ExtensionRequestHandler {
     }
 
     if (message.type === 'set-preferences') {
-      const { packageName, key, value }: { packageName: string; key: string; value: unknown } = message.data
+      const { packageName, key, value } = message.data as { packageName: string; key: string; value: unknown }
       resp.data = saveSelectivePreference(this.getPreferenceKey(packageName, key), value, true)
     }
 
     if (message.type === 'set-secure-preferences') {
-      const { packageName, key, value }: { packageName: string; key: string; value: unknown } = message.data
+      const { packageName, key, value } = message.data as { packageName: string; key: string; value: unknown }
       resp.data = await getStoreChannel().setSecure(this.getPreferenceKey(packageName, key), JSON.stringify(value))
     }
 
     if (message.type === 'register-oauth') {
-      oauthHandler.registerHandler(message.data, true, message.extensionName)
+      oauthHandler.registerHandler(message.data as string, true, message.extensionName)
     }
 
     if (message.type === 'open-external') {
-      await shell.openExternal(message.data)
+      await shell.openExternal(message.data as string)
     }
 
     if (message.type === 'register-account') {
       WindowHandler.getWindow(true)?.webContents.send(ExtensionHostEvents.ON_ACCOUNT_REGISTERED, {
         packageName: message.extensionName,
-        data: message.data
+        data: message.data,
       })
     }
 
     if (message.type === 'set-artist-editable-info') {
-      if (typeof message.data.artist_id === 'string' && message.data.object) {
-        getSongDB().updateArtistExtraInfo(message.data.artist_id, message.data.object, message.extensionName)
+      const data = message.data as { artist_id: string; object: Record<string, Record<string, string | undefined>> }
+      if (typeof data.artist_id === 'string' && data.object) {
+        getSongDB().updateArtistExtraInfo(data.artist_id, data.object, message.extensionName)
       }
     }
 
     if (message.type === 'set-album-editable-info') {
-      if (typeof message.data.album_id === 'string' && message.data.object) {
-        getSongDB().updateAlbumExtraInfo(message.data.album_id, message.data.object, message.extensionName)
+      const data = message.data as { album_id: string; object: Record<string, Record<string, string | undefined>> }
+      if (typeof data.album_id === 'string' && data.object) {
+        getSongDB().updateAlbumExtraInfo(data.album_id, data.object, message.extensionName)
       }
     }
 
     if (
-      extensionUIRequestsKeys.includes(message.type as (typeof extensionUIRequestsKeys)[number]) ||
-      playerControlRequests.includes(message.type as (typeof playerControlRequests)[number])
+      extensionUIRequestsKeys.includes(message.type as typeof extensionUIRequestsKeys[number]) ||
+      playerControlRequests.includes(message.type as typeof playerControlRequests[number])
     ) {
       const data = await this.requestToRenderer(message)
       resp.data = data
@@ -435,7 +444,7 @@ class ExtensionHandler {
 
   public async installExtension(
     zipPaths: string[],
-    uninstallMethod: (P: string) => Promise<void>
+    uninstallMethod: (P: string) => Promise<void>,
   ): Promise<installMessage> {
     for (const filePath of zipPaths) {
       const zip = new async({ file: filePath })
@@ -453,7 +462,7 @@ class ExtensionHandler {
           if (!(await this.checkVersion(existingVersion, manifest.version))) {
             return {
               success: false,
-              message: `Duplicate extension ${manifest.name}. Can not install`
+              message: `Duplicate extension ${manifest.name}. Can not install`,
             }
           }
           await uninstallMethod(manifest.name)
@@ -463,12 +472,12 @@ class ExtensionHandler {
         await zip.extract(null, installPath)
         return {
           success: true,
-          message: 'Extension installed successfully'
+          message: 'Extension installed successfully',
         }
       }
     }
     return {
-      success: false
+      success: false,
     }
   }
 

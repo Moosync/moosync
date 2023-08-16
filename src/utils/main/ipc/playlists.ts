@@ -10,12 +10,12 @@
 import { IpcEvents, PlaylistEvents } from './constants'
 import { loadPreferences } from '@/utils/main/db/preferences'
 
+import { _windowHandler } from '../windowManager'
 import { getSongDB } from '@/utils/main/db'
 import fs from 'fs'
+import { writeFile } from 'fs/promises'
 import path from 'path'
 import { v4 } from 'uuid'
-import { _windowHandler } from '../windowManager'
-import { writeFile } from 'fs/promises'
 
 export class PlaylistsChannel implements IpcChannelInterface {
   name = IpcEvents.PLAYLIST
@@ -68,7 +68,7 @@ export class PlaylistsChannel implements IpcChannelInterface {
   private async saveCoverToFile(event: Electron.IpcMainEvent, request: IpcRequest<PlaylistRequests.SaveCover>) {
     if (request.params.b64) {
       const cacheDir = loadPreferences().thumbnailPath
-      const filePath = path.join(cacheDir, v4() + '.png')
+      const filePath = path.join(cacheDir, `${v4()}.png`)
       if (fs.existsSync(cacheDir)) {
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath)
@@ -86,7 +86,7 @@ export class PlaylistsChannel implements IpcChannelInterface {
 
   private async removePlaylist(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<PlaylistRequests.RemoveExportPlaylist>
+    request: IpcRequest<PlaylistRequests.RemoveExportPlaylist>,
   ) {
     if (request.params.playlist) {
       await getSongDB().removePlaylist(request.params.playlist)
@@ -97,7 +97,7 @@ export class PlaylistsChannel implements IpcChannelInterface {
 
   private async exportPlaylist(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<PlaylistRequests.RemoveExportPlaylist>
+    request: IpcRequest<PlaylistRequests.RemoveExportPlaylist>,
   ) {
     if (request.params.playlist) {
       const playlist = request.params.playlist
@@ -110,9 +110,9 @@ export class PlaylistsChannel implements IpcChannelInterface {
           filters: [
             {
               name: 'm3u Playlist',
-              extensions: ['m3u']
-            }
-          ]
+              extensions: ['m3u'],
+            },
+          ],
         })
         if (!filePath?.canceled && filePath?.filePath) {
           let exportPath = filePath.filePath
@@ -122,7 +122,7 @@ export class PlaylistsChannel implements IpcChannelInterface {
 
           console.debug('Exporting playlist to', exportPath)
           writeFile(exportPath, m3u8, {
-            encoding: 'utf-8'
+            encoding: 'utf-8',
           })
         }
       }
@@ -146,11 +146,11 @@ export class PlaylistsChannel implements IpcChannelInterface {
     for (const s of playlistSongs) {
       if (s.path || s.url) {
         ret += `#EXTINF:${s.duration ?? 0},${this.getSongTitleParsed(s)}
-${s.album && '#EXTALB:' + s.album?.album_name}
-${s.genre && s.genre.length !== 0 ? '#EXTGENRE:' + s.genre.join(',') : ''}
-${(await this.getParsedCoverPath(s)) && '#EXTIMG:' + (await this.getParsedCoverPath(s))}
+${s.album && `#EXTALB:${s.album?.album_name}`}
+${s.genre && s.genre.length !== 0 ? `#EXTGENRE:${s.genre.join(',')}` : ''}
+${(await this.getParsedCoverPath(s)) && `#EXTIMG:${await this.getParsedCoverPath(s)}`}
 #MOOSINF:${s.type}
-${(s.path && 'file://' + s.path) ?? s.url}\n`
+${(s.path && `file://${s.path}`) ?? s.url}\n`
       }
     }
 

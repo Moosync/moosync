@@ -28,7 +28,11 @@
                   @error="handleImageError"
                   referrerPolicy="no-referrer"
                 />
-                <SongDefault class="albumart w-100" v-else />
+                <SongDefault
+                  class="albumart w-100"
+                  v-else-if="defaultDetails?.defaultCover !== FAVORITES_PLAYLIST_ID"
+                />
+                <FavPlaylistIcon class="albumart w-100" v-else />
               </transition>
               <div class="play-button d-flex justify-content-center" v-if="showPlayHoverButton">
                 <Play2 class="align-self-center" />
@@ -39,11 +43,7 @@
               </div>
 
               <div v-if="cardHoverText" :class="`hoverText ${pinHoverText ? 'visible-always' : ''}`">
-                <PinIcon
-                  :filled="pinHoverText"
-                  @click.native="pinHoverText = !pinHoverText"
-                  class="pin-icon button-grow"
-                />
+                <PinIcon :filled="pinHoverText" @click="pinHoverText = !pinHoverText" class="pin-icon button-grow" />
                 <div class="black-overlay"></div>
                 <div v-html="parsedCardHoverText"></div>
               </div>
@@ -77,15 +77,15 @@
     <b-row no-gutters class="flex-fill mt-2">
       <b-col>
         <div v-if="buttonGroup.enableContainer" class="button-group d-flex">
-          <PlainPlay v-if="!isJukeboxModeActive" :title="$t('buttons.playSingle', { title })" @click.native="playAll" />
-          <AddToQueue :title="$t('buttons.addToQueue', { title })" @click.native="addToQueue" />
+          <PlainPlay v-if="!isJukeboxModeActive" :title="$t('buttons.playSingle', { title })" @click="playAll" />
+          <AddToQueue :title="$t('buttons.addToQueue', { title })" @click="addToQueue" />
           <AddToLibrary
             :title="$t('buttons.addToLibrary', { title })"
-            @click.native="addToLibrary"
+            @click="addToLibrary"
             v-if="buttonGroup.enableLibraryStore"
           />
-          <RandomIcon v-if="buttonGroup.playRandom" :title="$t('buttons.playRandom')" @click.native="playRandom" />
-          <FetchAllIcon v-if="buttonGroup.fetchAll" :title="$t('buttons.fetchAll')" @click.native="fetchAll" />
+          <RandomIcon v-if="buttonGroup.playRandom" :title="$t('buttons.playRandom')" @click="playRandom" />
+          <FetchAllIcon v-if="buttonGroup.fetchAll" :title="$t('buttons.fetchAll')" @click="fetchAll" />
         </div>
       </b-col>
     </b-row>
@@ -96,8 +96,8 @@
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import FileMixin from '@/utils/ui/mixins/FileMixin'
 
-import Component, { mixins } from 'vue-class-component'
-import { Prop, Watch } from 'vue-property-decorator'
+import { mixins, Component } from 'vue-facing-decorator'
+import { Prop, Watch } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import { convertDuration } from '@/utils/common'
 import PlainPlay from '@/icons/PlainPlayIcon.vue'
@@ -108,6 +108,8 @@ import RandomIcon from '@/icons/RandomIcon.vue'
 import JukeboxMixin from '@/utils/ui/mixins/JukeboxMixin'
 import Play2 from '@/icons/PlayIcon2.vue'
 import FetchAllIcon from '@/icons/FetchAllIcon.vue'
+import { FAVORITES_PLAYLIST_ID } from '@/utils/commonConstants'
+import FavPlaylistIcon from '@/icons/FavPlaylistIcon.vue'
 
 @Component({
   components: {
@@ -118,8 +120,10 @@ import FetchAllIcon from '@/icons/FetchAllIcon.vue'
     PinIcon,
     RandomIcon,
     Play2,
-    FetchAllIcon
-  }
+    FetchAllIcon,
+    FavPlaylistIcon
+  },
+  emits: ['playAll', 'addToQueue', 'addToLibrary', 'playRandom', 'fetchAll', 'toggleLyrics', 'click']
 })
 export default class SongDetailsCompact extends mixins(ImgLoader, FileMixin, JukeboxMixin) {
   @Prop({ default: null })
@@ -127,8 +131,10 @@ export default class SongDetailsCompact extends mixins(ImgLoader, FileMixin, Juk
 
   subtitle: string = this.getConcatedSubtitle()
 
+  FAVORITES_PLAYLIST_ID = FAVORITES_PLAYLIST_ID
+
   @Prop({ default: () => null })
-  private defaultDetails!: SongDetailDefaults | null
+  defaultDetails!: SongDetailDefaults | null
 
   @Prop({ default: () => undefined })
   private forceCover!: string

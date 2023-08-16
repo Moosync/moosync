@@ -8,7 +8,14 @@
 -->
 
 <template>
-  <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="19"
+    height="17"
+    viewBox="0 0 19 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       d="M18.0666 7.29707H1.83862C1.32313 7.29707 0.905273 7.71493 0.905273 8.23042C0.905273 8.7459 1.32313 9.16376 1.83862 9.16376H18.0666C18.5821 9.16376 18.9999 8.7459 18.9999 8.23042C18.9999 7.71493 18.5821 7.29707 18.0666 7.29707Z"
       fill="var(--textPrimary)"

@@ -15,14 +15,34 @@
     <MiniPlayer class="mini-player" />
 
     <div class="main-content" :class="{ 'is-open': isSidebarOpen }">
-      <transition
+      <router-view
+        v-slot="{ Component }"
+        :enableRefresh="enableRefreshIcon"
+        :key="refreshPage.toString()"
+        class="animate_absolute"
+      >
+        <transition
+          appear
+          name="custom-slide-fade"
+          enter-active-class="animate__animated animate__slideInLeft animate__fast"
+          leave-active-class="animate__animated animate__slideOutRight animate__fast"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
+
+      <!-- <transition
         appear
         name="custom-slide-fade"
         enter-active-class="animate__animated animate__slideInLeft animate__fast"
         leave-active-class="animate__animated animate__slideOutRight animate__fast"
       >
-        <router-view :enableRefresh="enableRefreshIcon" :key="refreshPage" class="animate_absolute"></router-view>
-      </transition>
+        <router-view
+          :enableRefresh="enableRefreshIcon"
+          :key="refreshPage.toString()"
+          class="animate_absolute"
+        ></router-view>
+      </transition> -->
     </div>
   </div>
 </template>
@@ -31,9 +51,9 @@
 import MusicBar from '@/mainWindow/components/musicbar/Musicbar.vue'
 import Sidebar from '@/mainWindow/components/sidebar/Sidebar.vue'
 import TopBar from '@/mainWindow/components/topbar/TopBar.vue'
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-facing-decorator'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import { vxm } from '../store/index'
 import MiniPlayer from '@/mainWindow/components/miniplayer/MiniPlayer.vue'
 

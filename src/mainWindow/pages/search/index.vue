@@ -53,10 +53,10 @@
                     :item="item"
                     :index="index"
                     :selected="selected"
-                    @onRowDoubleClicked="queueSong([arguments[0]])"
+                    @onRowDoubleClicked="queueSong([$event])"
                     @onRowSelected="onRowSelected"
                     @onRowContext="onRowContext"
-                    @onPlayNowClicked="playTop([arguments[0]])"
+                    @onPlayNowClicked="playTop([$event])"
                     @onArtistClicked="gotoArtist"
                   />
                 </template>
@@ -64,13 +64,13 @@
             </b-col>
           </b-row>
 
-          <b-row class="scroller-row w-100" v-else :key="`${activeProvider}-${activeSubcategory}`">
+          <b-row class="scroller-row w-100" v-else :key="`${activeProvider}-${activeSubcategory}-else`">
             <b-col col xl="2" md="3" v-for="entity in currentEntityList" :key="entity[entityKeyField]">
               <CardView
-                @click.native="onCardClick(entity)"
+                @click="onCardClick(entity)"
                 :title="entity[entityTitleField]"
                 :imgSrc="entity[entityImageField]"
-                @CardContextMenu="onCardContextMenu(arguments[0], entity)"
+                @CardContextMenu="onCardContextMenu($event, entity)"
               >
                 <template #defaultCover> <component :is="defaultCoverComponent" /></template>
               </CardView>
@@ -88,7 +88,7 @@
 
 <script lang="ts">
 import { vxm } from '@/mainWindow/store'
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-facing-decorator'
 import TabCarousel from '@/mainWindow/components/generic/TabCarousel.vue'
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
 import SongListCompactItem from '@/mainWindow/components/songView/components/SongListCompactItem.vue'
@@ -97,7 +97,7 @@ import ArtistDefault from '@/icons/ArtistDefaultIcon.vue'
 import AlbumDefault from '@/icons/AlbumDefaultIcon.vue'
 import PlaylistDefault from '@/icons/PlaylistDefaultIcon.vue'
 import GenreDefault from '@/icons/SongDefaultIcon.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import PlayerControls from '@/utils/ui/mixins/PlayerControls'
 import SongListMixin from '@/utils/ui/mixins/SongListMixin'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
@@ -159,7 +159,7 @@ export default class SearchPage extends mixins(
           return 'Searching albums is currently not supported for Youtube'
         }
       }
-    } else if (this.activeProvider === vxm.providers.spotifyProvider.key && !vxm.providers.loggedInSpotify) {
+    } else if (this.activeProvider === vxm.providers.spotifyProvider.key && !vxm.providers.spotifyProvider.loggedIn) {
       return 'Login to Spotify to use this feature'
     } else if (this.activeProvider !== 'local') {
       return 'Nothing found'
@@ -168,7 +168,7 @@ export default class SearchPage extends mixins(
     return 'Nothing found'
   }
 
-  private get noResults() {
+  get noResults() {
     if (!this.isFetching) {
       if (this.activeSubcategory === 'songs') {
         return this.currentSongList.length === 0
@@ -319,38 +319,40 @@ export default class SearchPage extends mixins(
   }
 
   @Watch('searchTerm', { immediate: true })
-  private onSearchTermChanged() {
-    this.fetchLocalSongList()
+  private onSearchTermChanged(val: string) {
+    if (val) {
+      this.fetchLocalSongList()
 
-    for (const p of this.providers) {
-      const provider = this.getProviderByKey(p.key)
-      if (provider) {
-        this.fetchProviderSongList(provider)
+      for (const p of this.providers) {
+        const provider = this.getProviderByKey(p.key)
+        if (provider) {
+          this.fetchProviderSongList(provider)
+        }
       }
     }
   }
 
   private async fetchLocalSongList() {
-    Vue.set(this.fetchMap, 'local', true)
-    Vue.set(this.results, 'local', await window.SearchUtils.searchAll(`%${this.searchTerm}%`))
-    Vue.set(this.fetchMap, 'local', false)
+    this.fetchMap['local'] = true
+    this.results['local'] = await window.SearchUtils.searchAll(`%${this.searchTerm}%`)
+    this.fetchMap['local'] = false
   }
 
   private async fetchProviderSongList(provider: GenericProvider) {
-    Vue.set(this.fetchMap, provider.key, true)
+    this.fetchMap[provider.key] = true
 
     try {
-      Vue.set(this.results, provider.key, {
+      this.results[provider.key] = {
         songs: await provider.searchSongs(this.searchTerm),
         artists: await provider.searchArtists(this.searchTerm),
         playlists: await provider.searchPlaylists(this.searchTerm),
         albums: await provider.searchAlbum(this.searchTerm),
         genres: []
-      })
+      }
     } catch (e) {
       console.error(e)
     }
-    Vue.set(this.fetchMap, provider.key, false)
+    this.fetchMap[provider.key] = false
   }
 
   onProviderChanged({ key, checked }: { key: string; checked: boolean }) {
@@ -376,7 +378,7 @@ export default class SearchPage extends mixins(
     }
   }
 
-  private onRowContext(event: PointerEvent, item: Song) {
+  onRowContext(event: PointerEvent, item: Song) {
     this.getContextMenu(event, {
       type: 'SONGS',
       args: { songs: [item], isRemote: this.activeProvider !== 'local' }

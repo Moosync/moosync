@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'vue-facing-decorator'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import PreferenceHeader from './PreferenceHeader.vue'
 @Component({
@@ -31,20 +31,22 @@ import PreferenceHeader from './PreferenceHeader.vue'
     PreferenceHeader
   }
 })
-export default class Dropdown extends Mixins<ExtensionPreferenceMixin<Checkbox[]>>(ExtensionPreferenceMixin) {
+export default class Dropdown extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private activeItem: Checkbox[][0] | null = null
+  activeItem: Checkbox[][0] | null = null
 
-  private get activeTitle() {
+  declare value: Checkbox[]
+
+  get activeTitle() {
     return this.activeItem?.title ?? ''
   }
 
-  private get filteredDropdownList() {
+  get filteredDropdownList() {
     return (this.value ?? this.defaultValue).filter((val) => !val.enabled)
   }
 
@@ -54,7 +56,7 @@ export default class Dropdown extends Mixins<ExtensionPreferenceMixin<Checkbox[]
     }
   }
 
-  private setSelectedItem(item: Checkbox) {
+  setSelectedItem(item: Checkbox) {
     if (this.value) {
       for (const i of this.value) {
         if (i.key === item.key) {
@@ -64,7 +66,7 @@ export default class Dropdown extends Mixins<ExtensionPreferenceMixin<Checkbox[]
           i.enabled = false
         }
       }
-      this.onInputChange()
+      this.onInputChange(this.value)
     }
   }
 }

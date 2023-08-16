@@ -12,11 +12,10 @@
     <b-container fluid>
       <b-row no-gutters>
         <div ref="headers" class="wrapper w-100 headers">
-          <template v-for="(field, index) of extrafields">
+          <template v-for="(field, index) of extrafields" :key="`box-${field.key}`">
             <div
               :title="field.label ? field.label : field.key"
               :style="{ width: columnWidths[index] + '%' }"
-              :key="`box-${field.key}`"
               class="box text-truncate"
             >
               {{ field.label ? field.label : field.key }}
@@ -26,7 +25,7 @@
               :key="`handler-${field.key}`"
               :id="field.key"
               class="handler"
-              @mousedown="mouseDown(arguments[0], field.key)"
+              @mousedown="mouseDown($event, field.key)"
             ></div>
           </template>
         </div>
@@ -39,7 +38,7 @@
           key-field="_id"
           :direction="'vertical'"
           v-click-outside="clearSelection"
-          @scroll.native="onScroll"
+          @scroll-end="onScrollEnd"
         >
           <template v-slot="{ item, index }">
             <div class="wrapper w-100 field-content" :class="{ selectedItem: selected.includes(index) }">
@@ -51,7 +50,7 @@
                 :title="getFieldTitle(field.key, item, index)"
                 @dblclick="onRowDoubleClicked(item)"
                 @click="onRowSelected(index)"
-                @contextmenu="onRowContext(arguments[0], item)"
+                @contextmenu="onRowContext($event, item)"
               >
                 <div
                   :class="field.key === 'album_name' ? 'col-content' : ''"
@@ -82,10 +81,20 @@
 
 <script lang="ts">
 import SongListMixin from '@/utils/ui/mixins/SongListMixin'
-import { mixins } from 'vue-class-component'
-import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop, Ref } from 'vue-facing-decorator'
+import { convertProxy } from '@/utils/ui/common'
 
-@Component({})
+@Component({
+  emits: [
+    'onRowContext',
+    'onRowDoubleClicked',
+    'onRowPlayNowClicked',
+    'onArtistClicked',
+    'onAlbumClicked',
+    'onScrollEnd'
+  ]
+})
 export default class SongList extends mixins(SongListMixin) {
   private refreshKey = false
 
@@ -127,7 +136,7 @@ export default class SongList extends mixins(SongListMixin) {
     this.setupMouseEvents()
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.destroyMouseEvents()
   }
 
@@ -206,8 +215,8 @@ export default class SongList extends mixins(SongListMixin) {
     const rightI = this.getNextField(this.activeHandlerKey)
 
     if (rightI) {
-      Vue.set(this.columnWidths, rightI - 1, prevWidthP + 1)
-      Vue.set(this.columnWidths, rightI, nextWidthP + 1)
+      this.columnWidths[rightI - 1] = prevWidthP + 1
+      this.columnWidths[rightI] = nextWidthP + 1
     }
   }
 
@@ -227,7 +236,7 @@ export default class SongList extends mixins(SongListMixin) {
   }
 
   private saveWidths() {
-    return window.PreferenceUtils.saveSelective('UI.columnHeaders.widths', this.columnWidths, false)
+    return window.PreferenceUtils.saveSelective('UI.columnHeaders.widths', convertProxy(this.columnWidths), false)
   }
 
   private async loadWidths() {
@@ -248,12 +257,8 @@ export default class SongList extends mixins(SongListMixin) {
   }
 
   async onTextClick(key: TableFields, item: Song | Artists) {
-    console.log(key, item)
     if (key === 'artist_name') {
-      const data = await window.SearchUtils.searchEntityByOptions({
-        artist: { artist_id: (item as Artists).artist_id }
-      })
-      this.$emit('onArtistClicked', data[0])
+      this.$emit('onArtistClicked', item)
     } else if (key === 'album_name' && typeof item !== 'string') {
       this.$emit('onAlbumClicked', (item as Song).album)
     }
@@ -268,8 +273,8 @@ export default class SongList extends mixins(SongListMixin) {
     this.refreshKey = !this.refreshKey
   }
 
-  onScroll(e: Event) {
-    this.$emit('scroll', e)
+  onScrollEnd(e: Event) {
+    this.$emit('onScrollEnd', e)
   }
 }
 </script>

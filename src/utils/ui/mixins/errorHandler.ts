@@ -7,11 +7,11 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class ErrorHandler extends Vue {
   handlerImageError(err: ErrorEvent, callback?: (err: ErrorEvent) => void) {
-    callback && callback(err)
+    callback?.(err)
   }
 }

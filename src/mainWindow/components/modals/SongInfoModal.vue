@@ -120,12 +120,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import EditIcon from '@/icons/EditIcon.vue'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import { humanByteSize } from '@/utils/common'
 
@@ -361,7 +361,7 @@ export default class SongInfoModal extends mixins(ImgLoader) {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_SONG_INFO_MODAL, async (song: Song) => {
+    bus.on(EventBus.SHOW_SONG_INFO_MODAL, async (song: Song) => {
       song = (await this.fetchSongDetails(song._id)) ?? song
       this.fetchDatalist()
       this.forceEmptyImg = false

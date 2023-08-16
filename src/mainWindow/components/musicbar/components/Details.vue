@@ -17,7 +17,7 @@
         v-if="imgSrc && !forceEmptyImg"
         :src="imgSrc"
         alt="cover art"
-        @error="handlerImageError(arguments[0], handleError)"
+        @error="handlerImageError($event, handleError)"
         @dragstart="dragFile"
         referrerPolicy="no-referrer"
       />
@@ -88,8 +88,8 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop, Watch } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import ImageLoader from '@/utils/ui/mixins/ImageLoader'
 import ErrorHandler from '@/utils/ui/mixins/errorHandler'

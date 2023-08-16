@@ -34,53 +34,56 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { Mixins } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 
 @Component({
   components: {
     PreferenceHeader
-  }
+  },
+  emits: ['tooltipClick']
 })
-export default class EditText extends Mixins<ExtensionPreferenceMixin<string>>(ExtensionPreferenceMixin) {
+export default class EditText extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
   @Prop({ default: 500 })
-  private debounce!: number
+  debounce!: number
 
   @Prop({ default: null })
-  private maxValue!: number | null
+  maxValue!: number | null
 
   @Prop({ default: false })
-  private onlyNumber!: boolean
+  onlyNumber!: boolean
 
   @Prop({ default: false })
-  private showRangeText!: boolean
+  showRangeText!: boolean
 
-  private get computedGradient() {
+  declare value: string
+
+  get computedGradient() {
     return `linear-gradient(90deg, var(--accent) 0%, var(--accent) ${Math.min(
       100,
       Math.max(parseInt(this.value ?? '0'), 0)
     )}%, var(--textSecondary) 0%)`
   }
 
-  private emitTooltipClick() {
+  emitTooltipClick() {
     this.$emit('tooltipClick')
   }
 
   private debounceTimer: ReturnType<typeof setTimeout> | undefined = undefined
-  private formatAndUpdate() {
+  formatAndUpdate() {
     const formatted = this.formatVal(this.value ?? '')
     this.value = formatted
 
     clearTimeout(this.debounceTimer)
-    this.debounceTimer = setTimeout(() => this.onInputChange(), this.maxValue ? 0 : this.debounce)
+    this.debounceTimer = setTimeout(() => this.onInputChange(this.value), this.maxValue ? 0 : this.debounce)
   }
 
   private formatVal(input: string) {

@@ -1,8 +1,8 @@
 import { exec } from 'child_process'
-import { access, readFile } from 'fs/promises'
-import path from 'path'
-import ini from 'ini'
 import { app, nativeTheme } from 'electron'
+import { access, readFile } from 'fs/promises'
+import ini from 'ini'
+import path from 'path'
 
 enum DesktopEnvironments {
   PLASMA = 'plasma',
@@ -13,7 +13,7 @@ enum DesktopEnvironments {
   UNITY = 'Unity',
   BUDGIE = 'Budgie',
   MATE = 'Mate',
-  XFCE = 'Xfce'
+  XFCE = 'Xfce',
 }
 
 const defaultTheme = {
@@ -24,7 +24,7 @@ const defaultTheme = {
   textSecondary: '#565656',
   textInverse: '#000000',
   accent: '#65CB88',
-  divider: 'rgba(79, 79, 79, 0.67)'
+  divider: 'rgba(79, 79, 79, 0.67)',
 }
 
 interface KdeGlobals {
@@ -69,7 +69,7 @@ export class SystemThemeHandler {
         textSecondary: '#D4D4D4',
         textInverse: '#000000',
         accent,
-        divider: 'rgba(79, 79, 79, 0.67)'
+        divider: 'rgba(79, 79, 79, 0.67)',
       }
     } else {
       theme = {
@@ -80,7 +80,7 @@ export class SystemThemeHandler {
         textSecondary: '#636363',
         textInverse: '#000000',
         accent,
-        divider: 'rgba(79, 79, 79, 0.67)'
+        divider: 'rgba(79, 79, 79, 0.67)',
       }
     }
 
@@ -88,7 +88,7 @@ export class SystemThemeHandler {
       id: 'system_default',
       name: 'System Theme (Beta)',
       author: 'Moosync',
-      theme
+      theme,
     }
   }
 
@@ -100,13 +100,6 @@ export class SystemThemeHandler {
       case DesktopEnvironments.PLASMA:
       case DesktopEnvironments.PLASMA_WAYLAND:
         return this.getKDETheme()
-
-      case DesktopEnvironments.GNOME:
-      case DesktopEnvironments.UNITY:
-      case DesktopEnvironments.BUDGIE:
-      default:
-        return this.getGnomeTheme()
-
       case DesktopEnvironments.CINNAMON:
         return this.getCinnamonTheme()
 
@@ -116,6 +109,8 @@ export class SystemThemeHandler {
       // TODO: Parse GTK2.0 themes for xfce
       case DesktopEnvironments.XFCE:
         return
+      default:
+        return this.getGnomeTheme()
     }
   }
 
@@ -178,7 +173,7 @@ export class SystemThemeHandler {
   private async findColorSchemes(themeName: string) {
     const dirs = ['/usr/share/color-schemes', path.join(app.getPath('home'), '.local', 'share', 'color-schemes')]
     for (const dir of dirs) {
-      const themePath = path.join(dir, themeName + '.colors')
+      const themePath = path.join(dir, `${themeName}.colors`)
       try {
         await access(themePath)
         return themePath
@@ -192,7 +187,7 @@ export class SystemThemeHandler {
     const data = ini.parse(await readFile(file, 'utf-8')) as KdeGlobals
 
     let colorsData: KdeGlobals | undefined
-    if (data?.['General'] && data?.['General']?.['ColorScheme']) {
+    if (data?.['General']?.['ColorScheme']) {
       const themeName = data?.['General']?.['ColorScheme']
       const colorsFile = await this.findColorSchemes(themeName)
       if (colorsFile) {
@@ -217,14 +212,14 @@ export class SystemThemeHandler {
         textSecondary: rgbToHex(view?.['ForegroundInactive']) ?? defaultTheme.textSecondary,
         textInverse: rgbToHex(view?.['ForegroundNormal'], true) ?? defaultTheme.textInverse,
         accent: rgbToHex(selection?.['BackgroundNormal']) ?? defaultTheme.accent,
-        divider: rgbToHex(view?.['DecorationFocus']) ?? defaultTheme.divider
+        divider: rgbToHex(view?.['DecorationFocus']) ?? defaultTheme.divider,
       }
 
       return {
         id: 'system_default',
         name: 'System Theme (Plasma) (Beta)',
         author: 'Moosync',
-        theme
+        theme,
       }
     }
   }
@@ -252,7 +247,7 @@ export class SystemThemeHandler {
         textSecondary: light ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.8)',
         textInverse: light ? '#ffffff' : '#000000',
         accent: light ? '#1c71d8' : '#78aeed',
-        divider: 'rgba(79, 79, 79, 0.67)'
+        divider: 'rgba(79, 79, 79, 0.67)',
       }
     }
   }
@@ -287,14 +282,14 @@ export class SystemThemeHandler {
             textInverse:
               (await this.findVar('theme_unfocused_selected_fg_color', filename)) ?? defaultGTKColors.textInverse,
             accent: (await this.findVar('theme_selected_bg_color', filename)) ?? defaultGTKColors.accent,
-            divider: (await this.findVar('borders', filename)) ?? defaultGTKColors.divider
+            divider: (await this.findVar('borders', filename)) ?? defaultGTKColors.divider,
           }
 
           return {
             id: 'system_default',
             name: `System Theme (GTK ${version}.0) (Beta)`,
             author: 'Moosync',
-            theme: theme as ThemeItem
+            theme: theme as ThemeItem,
           }
         } catch (e) {
           console.warn('Using colors based on Adwaita')
@@ -302,7 +297,7 @@ export class SystemThemeHandler {
             id: 'system_default',
             name: `System Theme (GTK ${version}.0) (Beta)`,
             author: 'Moosync',
-            theme: defaultGTKColors
+            theme: defaultGTKColors,
           }
         }
       }
@@ -355,9 +350,9 @@ export class SystemThemeHandler {
 function rgbToHex(commaSeperated: string, inverse = false) {
   if (commaSeperated) {
     const split = commaSeperated.split(',')
-    let r = parseInt(split[0]),
-      g = parseInt(split[1]),
-      b = parseInt(split[2])
+    let r = parseInt(split[0])
+    let g = parseInt(split[1])
+    let b = parseInt(split[2])
 
     if (inverse) {
       r = 255 - r
@@ -365,12 +360,12 @@ function rgbToHex(commaSeperated: string, inverse = false) {
       b = 255 - b
     }
 
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
   }
 }
 
 function dwordToRgb(dword: string) {
-  return '#' + dword.substring(4)
+  return `#${dword.substring(4)}`
 }
 
 async function execAsync(command: string) {

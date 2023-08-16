@@ -9,7 +9,6 @@
 
 <template>
   <div id="app">
-    <ContextMenu />
     <Titlebar :isJukeboxModeActive="isJukeboxModeActive" />
     <div class="appContainer">
       <router-view></router-view>
@@ -28,11 +27,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-facing-decorator'
 import Titlebar from '@/commonComponents/Titlebar.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import ThemeHandler from '@/utils/ui/mixins/ThemeHandler'
-import ContextMenu from './components/generic/Context.vue'
 import NewPlaylistModal from '@/mainWindow/components/modals/NewPlaylistModal.vue'
 import SongFromUrlModal from './components/modals/SongFromURLModal.vue'
 import PlaylistFromUrlModal from './components/modals/PlaylistFromURLModal.vue'
@@ -47,7 +45,6 @@ import { EventBus } from '@/utils/main/ipc/constants'
 import OAuthModal from './components/modals/OAuthModal.vue'
 import FormModal from './components/modals/FormModal.vue'
 import EntityInfoModal from './components/modals/EntityInfoModal.vue'
-import { i18n } from './plugins/i18n'
 import JukeboxMixin from '@/utils/ui/mixins/JukeboxMixin'
 import ProviderMixin from '@/utils/ui/mixins/ProviderMixin'
 import { ProviderScopes, VolumePersistMode } from '@/utils/commonConstants'
@@ -56,11 +53,13 @@ import PinEntryModal from './components/modals/PinEntryModal.vue'
 import { ExtensionProvider } from '@/utils/ui/providers/extensionWrapper'
 import { sortSongListFn } from '@/utils/common'
 import IncorrectPlaybackModal from './components/modals/IncorrectPlaybackModal.vue'
+import { ToastType, toast } from 'vue3-toastify'
+import { useI18n } from 'vue-i18n'
+import { convertProxy } from '@/utils/ui/common'
 
 @Component({
   components: {
     Titlebar,
-    ContextMenu,
     NewPlaylistModal,
     SongFromUrlModal,
     PlaylistFromUrlModal,
@@ -71,6 +70,10 @@ import IncorrectPlaybackModal from './components/modals/IncorrectPlaybackModal.v
     EntityInfoModal,
     PinEntryModal,
     IncorrectPlaybackModal
+  },
+  setup: () => {
+    const { t, locale } = useI18n()
+    return { t, locale }
   }
 })
 export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandlerMixin, JukeboxMixin, ProviderMixin) {
@@ -97,6 +100,29 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
     this.checkUpdate()
     this.watchLibrespotUserChange()
     this.registerPlayTimeListeners()
+
+    window.ThemeUtils.listenGenerateIconRequest((val) => {
+      const canvas = document.createElement('canvas');
+      canvas.height = val.params.size
+      canvas.width = val.params.size
+
+      const ctx = canvas.getContext("2d");
+
+      if (ctx) {
+
+        ctx.fillStyle = "#1D1D1D"
+        ctx.arc(256, 256, 256, 0, 2 * Math.PI)
+        ctx.fill()
+
+        const path = new Path2D("M179.041 201.58V350.777C179.041 364.584 167.848 375.777 154.041 375.777C140.234 375.777 129.041 364.584 129.041 350.777V185.777C129.041 154.849 154.113 129.777 185.041 129.777H321.041C351.969 129.777 377.041 154.849 377.041 185.777V351.771C377.041 366.134 365.397 377.777 351.034 377.777C336.676 377.777 325.035 366.142 325.027 351.784L324.948 201.551C324.941 188.419 314.294 177.777 301.163 177.777C288.026 177.777 277.377 188.427 277.377 201.563V253.292C277.377 267.301 266.02 278.658 252.011 278.658C238.002 278.658 226.645 267.301 226.645 253.292V201.58C226.645 188.434 215.989 177.777 202.843 177.777C189.697 177.777 179.041 188.434 179.041 201.58Z")
+        ctx.fillStyle = val.params.colors.theme.accent
+        ctx.fill(path)
+      }
+
+      const buffer = canvas.toDataURL('image/png')
+
+      window.ThemeUtils.replyToGenerateIconRequest(buffer.substring(22), val.responseChannel)
+    })
   }
 
   private registerPlayTimeListeners() {
@@ -150,13 +176,13 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
   private watchLibrespotUserChange() {
     window.PreferenceUtils.listenPreferenceChanged('spotify.username', true, async () => {
       if (await vxm.providers.spotifyProvider.updateConfig()) {
-        bus.$emit(EventBus.REFRESH_ACCOUNTS, vxm.providers.spotifyProvider.key)
+        bus.emit(EventBus.REFRESH_ACCOUNTS, vxm.providers.spotifyProvider.key)
       }
     })
 
     window.PreferenceUtils.listenPreferenceChanged('secure.spotify.password', true, async () => {
       if (await vxm.providers.spotifyProvider.updateConfig()) {
-        bus.$emit(EventBus.REFRESH_ACCOUNTS, vxm.providers.spotifyProvider.key)
+        bus.emit(EventBus.REFRESH_ACCOUNTS, vxm.providers.spotifyProvider.key)
       }
     })
   }
@@ -198,13 +224,13 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
     const langs = await window.PreferenceUtils.loadSelective<Checkbox[]>('system_language')
     const active = (langs ?? []).find((val) => val.enabled)
     if (active) {
-      i18n.locale = active?.key
+      this.$i18n.locale = active?.key
     }
 
     window.PreferenceUtils.listenPreferenceChanged('system_language', true, (_, value: Checkbox[]) => {
       const activeLang = value.find((val) => val.enabled)?.key
       if (activeLang) {
-        i18n.locale = activeLang
+        this.$i18n.locale = activeLang
       }
     })
   }
@@ -264,8 +290,8 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
         if (obj.id === 'completed-scan') {
           vxm.themes.refreshPage = true
         }
-        this.$toasted.show(obj.message, {
-          className: obj.id === 'completed-scan' ? 'success-toast' : 'custom-toast'
+        toast(obj.message, {
+          type: obj.id === 'completed-scan' ? 'success' : 'default'
         })
       }
     })
@@ -388,12 +414,12 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
       }
 
       if (data.type === 'open-login-modal') {
-        bus.$emit(EventBus.SHOW_OAUTH_MODAL, data.data)
+        bus.emit(EventBus.SHOW_OAUTH_MODAL, data.data)
         window.ExtensionUtils.replyToRequest({ ...data, data: true })
       }
 
       if (data.type === 'close-login-modal') {
-        bus.$emit(EventBus.HIDE_OAUTH_MODAL)
+        bus.emit(EventBus.HIDE_OAUTH_MODAL)
         window.ExtensionUtils.replyToRequest({ ...data, data: true })
       }
 
@@ -402,9 +428,10 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
       }
 
       if (data.type === 'show-toast') {
-        this.$toasted.show(data.data.message, {
-          duration: Math.max(data.data.duration, 5000),
-          type: data.data.type
+        const parsedData = data.data as { message: string; duration: number; type: ToastType }
+        toast(parsedData.message, {
+          autoClose: Math.max(parsedData.duration, 5000),
+          type: parsedData.type
         })
         window.ExtensionUtils.replyToRequest({ ...data, data: true })
       }
@@ -439,7 +466,7 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
 
         window.ExtensionUtils.sendEvent({
           type: 'songChanged',
-          data: [newVal]
+          data: [convertProxy(newVal)]
         })
 
         const scrobbleableProviderList =
@@ -479,7 +506,7 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
     vxm.player.$watch('playerState', (newVal: PlayerState) =>
       window.ExtensionUtils.sendEvent({
         type: 'playerStateChanged',
-        data: [newVal]
+        data: [convertProxy(newVal)]
       })
     )
 
@@ -489,7 +516,7 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
       volumeDebounce = setTimeout(() => {
         window.ExtensionUtils.sendEvent({
           type: 'volumeChanged',
-          data: [newVal]
+          data: [convertProxy(newVal)]
         })
       }, 800)
     })
@@ -497,14 +524,14 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
     vxm.player.$watch('songQueue', (newVal: SongQueue) =>
       window.ExtensionUtils.sendEvent({
         type: 'songQueueChanged',
-        data: [newVal]
+        data: [convertProxy(newVal)]
       })
     )
 
-    bus.$on('forceSeek', (newVal: number) =>
+    bus.on('forceSeek', (newVal: number) =>
       window.ExtensionUtils.sendEvent({
         type: 'seeked',
-        data: [newVal]
+        data: [convertProxy(newVal)]
       })
     )
   }
@@ -553,7 +580,7 @@ export default class App extends mixins(ThemeHandler, PlayerControls, KeyHandler
   private async handleInitialSetup() {
     const isFirstLaunch = await window.PreferenceUtils.loadSelective<boolean>('isFirstLaunch', false, true)
     if (isFirstLaunch) {
-      bus.$emit(EventBus.SHOW_SETUP_MODAL)
+      bus.emit(EventBus.SHOW_SETUP_MODAL)
       await window.FileUtils.scan()
       await window.PreferenceUtils.saveSelective('isFirstLaunch', false, false)
     }

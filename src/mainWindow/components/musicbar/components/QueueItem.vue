@@ -12,7 +12,7 @@
     <b-row class="item-row">
       <b-col cols="auto" class="img-container h-100 d-flex justify-content-start">
         <LowImageCol
-          @click.native="playSong"
+          @imgClicked="playSong"
           height="56px"
           width="56px"
           :src="getValidImageLow(song)"
@@ -41,8 +41,8 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import { vxm } from '@/mainWindow/store'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
@@ -87,7 +87,7 @@ export default class QueueItem extends mixins(ImgLoader, PlayerControls, Context
   }
 
   removeSong() {
-    bus.$emit(EventBus.IGNORE_MUSIC_INFO_SCROLL)
+    bus.emit(EventBus.IGNORE_MUSIC_INFO_SCROLL)
     this.removeFromQueue(this.index)
   }
 
@@ -95,7 +95,7 @@ export default class QueueItem extends mixins(ImgLoader, PlayerControls, Context
     vxm.themes.queueSortBy = options
   }
 
-  getItemContextMenu(event: Event) {
+  getItemContextMenu(event: MouseEvent) {
     this.getContextMenu(event, {
       type: 'QUEUE_ITEM',
       args: {

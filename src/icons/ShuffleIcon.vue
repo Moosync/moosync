@@ -8,7 +8,15 @@
 -->
 
 <template>
-  <svg class="button-grow" width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="button-grow"
+    width="26"
+    height="23"
+    viewBox="0 0 26 23"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
@@ -31,10 +39,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class SpotifyIcon extends Vue {
   @Prop({ default: false })
   filled!: boolean

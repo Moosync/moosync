@@ -30,30 +30,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { Mixins } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 
 @Component({
   components: {
     PreferenceHeader
-  }
+  },
+  emits: ['tooltipClick']
 })
-export default class AutoFillEditText extends Mixins<ExtensionPreferenceMixin<string>>(ExtensionPreferenceMixin) {
+export default class AutoFillEditText extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
   @Prop()
-  private datalist!: string[]
+  datalist!: string[]
 
   @Prop({ default: 500 })
-  private debounce!: number
+  debounce!: number
 
-  private emitTooltipClick() {
+  emitTooltipClick() {
     this.$emit('tooltipClick')
   }
 }

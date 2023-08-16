@@ -84,7 +84,7 @@ function createFile(basePath: string) {
 
   if (filePath !== newPath) {
     filePath = newPath
-    fileStream && fileStream.end()
+    fileStream?.end()
 
     fileStream = createWriteStream(newPath, { flags: 'a' })
     fileConsole = new Console(fileStream, fileStream)
@@ -97,7 +97,7 @@ function getColor(level: string) {
     debug: '\u001b[36m',
     info: '\u001b[34m',
     warn: '\u001b[33m',
-    error: '\u001b[31m'
+    error: '\u001b[31m',
   }
 
   return outputColors[level]
@@ -109,7 +109,7 @@ export function prefixLogger(basePath: string, logger: log.Logger) {
   const stockConsole = new Console({
     stdout: process.stdout,
     stderr: process.stderr,
-    colorMode: false
+    colorMode: false,
   })
 
   logger.methodFactory = (methodName, logLevel, loggerName) => {
@@ -117,7 +117,7 @@ export function prefixLogger(basePath: string, logger: log.Logger) {
     return (...args) => {
       const prefix = generatePrefix(methodName, loggerName)
       stockConsole[methodName as logMethods](prefix, ...args)
-      fileConsole && fileConsole[methodName as logMethods](stripAnsi(prefix), ...args)
+      fileConsole?.[methodName as logMethods](stripAnsi(prefix), ...args)
     }
   }
   logger.setLevel(logLevel)

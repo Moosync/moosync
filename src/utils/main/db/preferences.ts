@@ -7,17 +7,17 @@
  *  See LICENSE in the project root for license information.
  */
 
-import Store from 'electron-store'
-import { app } from 'electron'
 import { enableStartup } from '../autoLaunch'
-import path from 'path'
 import { getExtensionHostChannel, getPreferenceChannel, getScannerChannel } from '../ipc'
-import { setMinimizeToTray } from '@/utils/main/windowManager'
-import { watch } from 'fs/promises'
 import { setLogLevel } from '../logger/utils'
-import log from 'loglevel'
 import { isEmpty } from '@/utils/common'
 import { defaultKeybinds } from '@/utils/commonConstants'
+import { setMinimizeToTray } from '@/utils/main/windowManager'
+import { app } from 'electron'
+import Store from 'electron-store'
+import { watch } from 'fs/promises'
+import log from 'loglevel'
+import path from 'path'
 
 const getDefaultPreferences = () => {
   const musicPath = getDefaultMusicPaths()
@@ -38,7 +38,7 @@ const getDefaultPreferences = () => {
     activeTheme: 'default',
     hotkeys: defaultKeybinds,
     logs: [],
-    lyrics_fetchers: []
+    lyrics_fetchers: [],
   } as Preferences
 }
 
@@ -46,7 +46,7 @@ let ac: AbortController
 
 export const store = new Store({
   defaults: { prefs: getDefaultPreferences() },
-  serialize: (value) => JSON.stringify(value)
+  serialize: (value) => JSON.stringify(value),
 })
 
 const preferenceListenKeys: { key: string; isMainWindow: boolean; channel: string }[] = []
@@ -147,7 +147,7 @@ export function setInitialPreferences() {
   saveSelectivePreference('logs.0', {
     key: 'debug_logging',
     title: 'Enable debug logging',
-    enabled: process.env.DEBUG_LOGGING
+    enabled: process.env.DEBUG_LOGGING,
   })
 }
 
@@ -157,8 +157,8 @@ export function setInitialPreferences() {
  * @param value
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function onPreferenceChanged(key: string, value: any) {
-  if (key === 'system' && value) {
+export async function onPreferenceChanged(key: string, value: unknown) {
+  if (key === 'system' && value && Array.isArray(value)) {
     for (const val of value) {
       if (val.key === 'startOnStartup') {
         val.enabled !== undefined && enableStartup(val.enabled)

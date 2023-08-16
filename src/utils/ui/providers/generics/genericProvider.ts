@@ -12,7 +12,7 @@
 import { ProviderScopes } from '@/utils/commonConstants'
 import 'reflect-metadata'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// rome-ignore lint/suspicious/noExplicitAny: Idk what to use otherwise
 function MethodMetadataDecorator(target: unknown, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
   return descriptor
 }
@@ -20,9 +20,13 @@ export abstract class GenericProvider {
   protected authInitialized: Promise<void>
   protected authInitializedResolver!: () => void
 
+  public abstract readonly loggedIn: boolean
+
   constructor() {
     this.updateConfig()
-    this.authInitialized = new Promise<void>((r) => (this.authInitializedResolver = r))
+    this.authInitialized = new Promise<void>((r) => {
+      this.authInitializedResolver = r
+    })
   }
 
   public get canLogin() {
@@ -84,7 +88,7 @@ export abstract class GenericProvider {
   public async *getPlaylistContent(
     id: string,
     invalidateCache?: boolean,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     yield { songs: [] }
   }
@@ -109,7 +113,7 @@ export abstract class GenericProvider {
    */
   public async getPlaybackUrlAndDuration(
     song: Song,
-    playerKey: string
+    playerKey: string,
   ): Promise<{ url: string | undefined; duration?: number } | undefined> {
     return
   }
@@ -137,14 +141,14 @@ export abstract class GenericProvider {
    */
   public async *getArtistSongs(
     artist: Artists,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     yield { songs: [] }
   }
 
   public async *getAlbumSongs(
     album: Album,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     yield { songs: [] }
   }

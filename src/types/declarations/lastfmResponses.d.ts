@@ -14,7 +14,7 @@ declare namespace LastFMResponses {
     UPDATE_NOW_PLAYING = 'track.updateNowPlaying',
     SCROBBLE = 'track.scrobble',
     GET_USER_INFO = 'user.getInfo',
-    GET_TRACK_INFO = 'track.getInfo'
+    GET_TRACK_INFO = 'track.getInfo',
   }
 
   interface SessionInfo {

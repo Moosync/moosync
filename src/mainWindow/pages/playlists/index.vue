@@ -31,8 +31,8 @@
             :imgSrc="playlist.playlist_coverPath"
             :id="playlist.playlist_id"
             :iconBgColor="getIconBgColor(playlist)"
-            @click.native="gotoPlaylist(playlist)"
-            @CardContextMenu="getPlaylistMenu(arguments[0], playlist)"
+            @click="gotoPlaylist(playlist)"
+            @CardContextMenu="getPlaylistMenu($event, playlist)"
           >
             <template #icon>
               <IconHandler class="h-100" :item="playlist" />
@@ -71,9 +71,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import CardView from '@/mainWindow/components/generic/CardView.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import RouterPushes from '@/utils/ui/mixins/RouterPushes'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
 import { vxm } from '@/mainWindow/store'
@@ -92,6 +92,7 @@ import IconHandler from '../../components/generic/IconHandler.vue'
 import TabCarousel from '../../components/generic/TabCarousel.vue'
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
 import MultiButtonModal from '@/commonComponents/MultiButtonModal.vue'
+import { convertProxy } from '@/utils/ui/common'
 
 @Component({
   components: {
@@ -144,7 +145,7 @@ export default class Playlists extends mixins(RouterPushes, ContextMenuMixin, Pr
   private activeProviders: Record<string, { key: string; checked: boolean }> = {}
 
   onTabProvidersChanged(data: { key: string; checked: boolean }) {
-    this.$set(this.activeProviders, data.key, data)
+    this.activeProviders[data.key] = data
   }
 
   FAVORITES_PLAYLIST_ID = FAVORITES_PLAYLIST_ID
@@ -287,7 +288,6 @@ export default class Playlists extends mixins(RouterPushes, ContextMenuMixin, Pr
   }
 
   sortMenuHandler(event: MouseEvent) {
-    console.log('clicked on sort')
     this.getContextMenu(event, {
       type: 'PLAYLIST_SORT',
       args: {
@@ -300,7 +300,7 @@ export default class Playlists extends mixins(RouterPushes, ContextMenuMixin, Pr
   }
 
   deletePlaylist() {
-    if (this.playlistInAction) window.DBUtils.removePlaylist(this.playlistInAction)
+    if (this.playlistInAction) window.DBUtils.removePlaylist(convertProxy(this.playlistInAction))
     this.refresh()
   }
 
@@ -309,11 +309,11 @@ export default class Playlists extends mixins(RouterPushes, ContextMenuMixin, Pr
   }
 
   showNewPlaylistModal() {
-    bus.$emit(EventBus.SHOW_NEW_PLAYLIST_MODAL, [], () => this.refresh())
+    bus.emit(EventBus.SHOW_NEW_PLAYLIST_MODAL, [], () => this.refresh())
   }
 
   showPlaylistFromURLModal() {
-    bus.$emit(EventBus.SHOW_PLAYLIST_FROM_URL_MODAL, [], () => this.refresh())
+    bus.emit(EventBus.SHOW_PLAYLIST_FROM_URL_MODAL, [], () => this.refresh())
   }
 
   mounted() {
@@ -329,12 +329,12 @@ export default class Playlists extends mixins(RouterPushes, ContextMenuMixin, Pr
   }
 
   private listenGlobalRefresh() {
-    bus.$on(EventBus.REFRESH_PAGE, () => {
+    bus.on(EventBus.REFRESH_PAGE, () => {
       this.refresh(true)
     })
   }
 
-  getPlaylistMenu(event: Event, playlist: ExtendedPlaylist) {
+  getPlaylistMenu(event: MouseEvent, playlist: ExtendedPlaylist) {
     this.playlistInAction = playlist
     this.getContextMenu(event, {
       type: 'PLAYLIST',

@@ -7,7 +7,7 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class PlayerControls extends Vue {
@@ -23,8 +23,8 @@ export default class PlayerControls extends Vue {
           artist: album.album_artist,
           year: (album.year ?? 0).toString(),
           extra_info: JSON.stringify(album.album_extra_info) ?? '',
-          defaultProviders
-        }
+          defaultProviders,
+        },
       })
     } catch (e) {
       console.debug(e)
@@ -36,8 +36,8 @@ export default class PlayerControls extends Vue {
       this.$router.push({
         name: 'genre-single',
         query: {
-          id: genre.genre_id
-        }
+          id: genre.genre_id,
+        },
       })
     } catch (e) {
       console.debug(e)
@@ -53,8 +53,8 @@ export default class PlayerControls extends Vue {
           name: artist.artist_name ?? '',
           cover: artist.artist_coverPath ?? '',
           extra_info: JSON.stringify(artist.artist_extra_info) ?? '',
-          defaultProviders
-        }
+          defaultProviders,
+        },
       })
     } catch (e) {
       console.debug(e)
@@ -72,8 +72,8 @@ export default class PlayerControls extends Vue {
           playlist_coverPath: playlist.playlist_coverPath ?? '',
           playlist_song_count: (playlist.playlist_song_count ?? 0).toString(),
           playlist_path: playlist.playlist_path ?? '',
-          extension: playlist.extension ?? ''
-        }
+          extension: playlist.extension ?? '',
+        },
       })
     } catch (e) {
       console.debug(e)

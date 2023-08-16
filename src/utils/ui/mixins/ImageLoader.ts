@@ -7,7 +7,7 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class ImgLoader extends Vue {
@@ -32,7 +32,7 @@ export default class ImgLoader extends Vue {
   getImgSrc(imgSrc: string | null | undefined) {
     if (imgSrc) {
       if (imgSrc.startsWith('http') || imgSrc.startsWith('media')) return imgSrc
-      else return 'media://' + imgSrc
+      else return `media://${imgSrc}`
     }
     return ''
   }

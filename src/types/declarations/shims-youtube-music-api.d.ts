@@ -44,8 +44,8 @@ declare module 'youtube-music-api' {
     search(query: string, categoryName: string, _pageLimit?: number): Promise<SearchResult>
 
     //TODO: Detailed definitions
-    getAlbum(browseId: string): any
-    getPlaylist(browseId: string, contentLimit?: number): any
+    getAlbum(browseId: string): unknown
+    getPlaylist(browseId: string, contentLimit?: number): unknown
     getArtist(browseId: string)
     getNext(videoId: string, playlistId: string, paramString: string)
   }

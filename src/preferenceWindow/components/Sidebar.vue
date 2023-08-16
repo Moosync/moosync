@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import Tabs from '@/preferenceWindow/components/sidebar/Tabs.vue'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component({
   components: {

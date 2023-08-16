@@ -7,9 +7,11 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 
-@Component
+@Component({
+  emits: ['onRowSelectionClear', 'onRowSelected'],
+})
 export default class SongListMixin extends Vue {
   private lastSelect = ''
   selected: number[] = []
@@ -68,7 +70,7 @@ export default class SongListMixin extends Vue {
     } else this.selected = [index]
     this.$emit(
       'onRowSelected',
-      this.selected.map((val) => this.songList[val])
+      this.selected.map((val) => this.songList[val]),
     )
   }
 
@@ -76,7 +78,7 @@ export default class SongListMixin extends Vue {
     this.setupKeyEvents()
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.destroyKeyEvents()
   }
 }

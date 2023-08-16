@@ -93,7 +93,7 @@ type ContextMenuArgs =
     }
 
 type SongSortOptions = {
-  type: 'title' | 'date_added' | 'playCount' | 'album' | 'artist' | 'genre' | 'track_no'
+  type: 'title' | 'date_added' | 'playCount' | 'album' | 'artist' | 'albumartist' | 'genre' | 'track_no'
   asc: boolean
 }
 type PlaylistSortOptions = { type: 'name' | 'provider'; asc: boolean }

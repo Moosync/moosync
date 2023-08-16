@@ -15,6 +15,7 @@
     viewBox="0 0 12 14"
     shape-rendering="geometricPrecision"
     text-rendering="geometricPrecision"
+    @click="$emit('click', $event)"
   >
     <g
       id="eF20KXoiB5d2_ts"
@@ -65,10 +66,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class AnimatedEqualizerIcon extends Vue {
   @Prop({ default: false })
   isRunning!: boolean

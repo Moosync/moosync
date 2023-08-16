@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <svg viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('click', $event)">
     <path
       d="M31.5002 59.1667V31.5M31.5002 31.5V3.83337M31.5002 31.5H59.1668M31.5002 31.5H3.8335"
       stroke="var(--textPrimary)"

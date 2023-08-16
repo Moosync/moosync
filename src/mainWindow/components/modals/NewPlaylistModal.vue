@@ -53,8 +53,8 @@
 
 <script lang="ts">
 import { EventBus } from '@/utils/main/ipc/constants'
-import { Component, Prop, Ref } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+import { Component, Prop, Ref } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 import { vxm } from '@/mainWindow/store'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
@@ -200,7 +200,7 @@ export default class NewPlaylistModal extends mixins(ImgLoader, RemoteSong) {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_NEW_PLAYLIST_MODAL, (songs: Song[], createCallback?: () => void) => {
+    bus.on(EventBus.SHOW_NEW_PLAYLIST_MODAL, (songs: Song[], createCallback?: () => void) => {
       if (!this.showing) {
         this.songs = songs
         this.songCount = songs.length

@@ -13,14 +13,6 @@
       <b-row no-gutters class="w-100">
         <div class="path-selector w-100">
           <b-container fluid>
-            <b-row v-if="!isLibvipsAvailable">
-              <b-col class="lib-missing"
-                >*Sharp was unable to load (Missing libvips-cpp.so or libffi.so.7 probably). Images will not be
-                optimised. Read more at
-                <span class="lib-missing-link" @click="openWiki">https://moosync.app/wiki/#known-bugs</span></b-col
-              >
-            </b-row>
-
             <b-row no-gutters v-if="totalValue != 0">
               <b-col>
                 <b-progress class="progress-container mb-4" :max="totalValue">
@@ -28,7 +20,7 @@
                 </b-progress>
               </b-col>
               <b-col cols="auto" class="ml-3">
-                {{ Math.min(((currentValue / totalValue) * 100).toPrecision(2), 100) }}%
+                {{ Math.min((currentValue / totalValue) * 100, 100).toPrecision(2) }}%
               </b-col>
             </b-row>
           </b-container>
@@ -99,8 +91,8 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import Vue from 'vue'
+import { Component } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 import FilePicker from '../FilePicker.vue'
 import DirectoryGroup from '../DirectoryGroup.vue'
 import EditText from '../EditText.vue'
@@ -113,17 +105,16 @@ import EditText from '../EditText.vue'
   }
 })
 export default class Paths extends Vue {
-  private currentValue = 0
-  private totalValue = 0
+  currentValue = 0
+  totalValue = 0
 
-  private isLibvipsAvailable = true
-  private cpuCount = 0
+  cpuCount = 0
 
-  private forceRescan() {
+  forceRescan() {
     window.FileUtils.scan(true)
   }
 
-  private setProgress(progress: Progress) {
+  setProgress(progress: Progress) {
     this.currentValue = progress.current
     this.totalValue = progress.total
   }
@@ -146,8 +137,6 @@ export default class Paths extends Vue {
     window.FileUtils.listenScanProgress(async (progress) => {
       this.setProgress(progress)
     })
-
-    this.isLibvipsAvailable = await window.NotifierUtils.isLibvipsAvailable()
   }
 
   async onScanIntervalChange() {

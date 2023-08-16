@@ -10,9 +10,9 @@
 import { app } from 'electron'
 import path from 'path'
 
+import { loadSelectivePreference } from './preferences'
 import { Worker, spawn } from 'threads'
 import { WorkerModule } from 'threads/dist/types/worker'
-import { loadSelectivePreference } from './preferences'
 
 export class DBWorkerWrapper {
   private worker: Unpromise<ReturnType<typeof spawn<WorkerModule<string>>>> | undefined
@@ -22,7 +22,7 @@ export class DBWorkerWrapper {
   }
 
   public async start(dbPath: string) {
-    this.worker = await spawn(new Worker(__dirname + '/sqlite3.worker.js'))
+    this.worker = await spawn(new Worker(`${__dirname}/sqlite3.worker.js`))
     await this.worker.start(app.getPath('logs'), dbPath, loadSelectivePreference('thumbnailPath'))
   }
 

@@ -3,13 +3,13 @@
     fluid
     @dblclick="onRowDoubleClicked(item)"
     @click="onRowSelected(index)"
-    @contextmenu="onRowContext(arguments[0], item)"
+    @contextmenu="onRowContext($event, item)"
     class="wrapper w-100"
     :class="{ selectedItem: selected.includes(index) }"
   >
     <b-row no-gutters align-content="center" class="w-100">
       <LowImageCol
-        @click.native="onPlayNowClicked(item)"
+        @imgClicked="onPlayNowClicked(item)"
         height="56px"
         width="56px"
         :src="getValidImageLow(item)"
@@ -33,7 +33,7 @@
             :class="index !== 0 ? 'ml-1' : ''"
             @click="onSubtitleClicked(artist)"
           >
-            <span> {{ artist.artist_name }}{{ index !== item.artists.length - 1 ? ',' : '' }}</span>
+            <span> {{ artist.artist_name }}{{ index !== (item.artists?.length ?? 0) - 1 ? ',' : '' }}</span>
           </div>
         </b-row>
       </b-col>
@@ -41,14 +41,14 @@
         {{ item._id === currentSong?._id && currentSong._id ? 'Now Playing' : formattedDuration(item.duration) }}
       </b-col>
       <b-col cols="auto" align-self="center" class="button-icon ml-5" v-if="showAddToQueueButton">
-        <AddToQueue title="Add song to queue" @click.native="onRowDoubleClicked(item)"
+        <AddToQueue title="Add song to queue" @click="onRowDoubleClicked(item)"
       /></b-col>
       <b-col
         v-if="!isJukeboxModeActive && showEllipsis"
         cols="auto"
         align-self="center"
         class="ml-5 mr-3 py-2 ellipsis-icon"
-        @click="onRowContext(arguments[0], item)"
+        @click="onRowContext($event, item)"
       >
         <Ellipsis
       /></b-col>
@@ -59,8 +59,8 @@
 <script lang="ts">
 import { convertDuration } from '@/utils/common'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import LowImageCol from '@/mainWindow/components/generic/LowImageCol.vue'
 import Ellipsis from '@/icons/EllipsisIcon.vue'
 
@@ -77,7 +77,8 @@ import IconHandler from '@/mainWindow/components/generic/IconHandler.vue'
     IconHandler,
     PlainPlay,
     AddToQueue
-  }
+  },
+  emits: ['onRowDoubleClicked', 'onRowContext', 'onRowSelected', 'onPlayNowClicked', 'onArtistClicked']
 })
 export default class SongListCompactItem extends mixins(ImgLoader, JukeboxMixin) {
   formattedDuration = convertDuration

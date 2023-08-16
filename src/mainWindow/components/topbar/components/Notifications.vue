@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 import { vxm } from '@/mainWindow/store'
 import NotificationIcon from '@/icons/NotificationIcon.vue'
 @Component({

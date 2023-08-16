@@ -7,17 +7,17 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { MainHostIPCHandler } from '@/utils/extensions'
-import { ExtensionHostEvents, IpcEvents } from './constants'
 import { getSongDB } from '../db/index'
-import { createWriteStream } from 'fs'
-import path from 'path'
-import { app } from 'electron'
-import https from 'https'
-import { v1 } from 'uuid'
 import { WindowHandler } from '../windowManager'
+import { ExtensionHostEvents, IpcEvents } from './constants'
+import { MainHostIPCHandler } from '@/utils/extensions'
+import { app } from 'electron'
+import { createWriteStream } from 'fs'
 import { IncomingMessage } from 'http'
+import https from 'https'
 import { LogLevelDesc } from 'loglevel'
+import path from 'path'
+import { v1 } from 'uuid'
 
 export class ExtensionHostChannel implements IpcChannelInterface {
   name = IpcEvents.EXTENSION_HOST
@@ -90,7 +90,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private toggleExtensionStatus(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ToggleExtensionStatus>
+    request: IpcRequest<ExtensionHostRequests.ToggleExtensionStatus>,
   ) {
     if (request.params.packageName && request.params.enabled !== undefined) {
       this.extensionHost.mainRequestGenerator
@@ -103,7 +103,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private async removeExtension(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.RemoveExtension>
+    request: IpcRequest<ExtensionHostRequests.RemoveExtension>,
   ) {
     if (request.params.packageName) {
       await this.extensionHost
@@ -117,8 +117,8 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
       const playlists = await getSongDB().getEntityByOptions<Playlist>({
         playlist: {
-          extension: request.params.packageName
-        }
+          extension: request.params.packageName,
+        },
       })
 
       await getSongDB().removePlaylist(...playlists)
@@ -136,9 +136,9 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   public async getExtensionIcon(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.RemoveExtension>
+    request: IpcRequest<ExtensionHostRequests.RemoveExtension>,
   ) {
-    if (request.params && request.params.packageName) {
+    if (request.params?.packageName) {
       const data = await this.extensionHost.mainRequestGenerator.getExtensionIcon(request.params.packageName)
       event.reply(request.responseChannel, data)
     }
@@ -152,7 +152,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private async handleMainWindowExtraEvent(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ExtraEvent>
+    request: IpcRequest<ExtensionHostRequests.ExtraEvent>,
   ) {
     if (request.params.event) {
       const data = await this.sendExtraEvent(request.params.event)
@@ -173,7 +173,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private async downloadExtension(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.DownloadExtension>
+    request: IpcRequest<ExtensionHostRequests.DownloadExtension>,
   ) {
     if (request.params.ext) {
       const ext = request.params.ext
@@ -222,7 +222,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private async getContextMenuItems(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ContextMenuItems>
+    request: IpcRequest<ExtensionHostRequests.ContextMenuItems>,
   ) {
     const data = await this.extensionHost.mainRequestGenerator.getContextMenuItems(request.params.type)
     event.reply(request.responseChannel, data)
@@ -230,12 +230,12 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   private async fireContextMenuHandler(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ContextMenuHandler>
+    request: IpcRequest<ExtensionHostRequests.ContextMenuHandler>,
   ) {
     await this.extensionHost.mainRequestGenerator.sendContextMenuItemClicked(
       request.params.id,
       request.params.packageName,
-      request.params.arg
+      request.params.arg,
     )
     event.reply(request.responseChannel)
   }
@@ -254,7 +254,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   public async getRegisteredAccounts(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ProviderScopes>
+    request: IpcRequest<ExtensionHostRequests.ProviderScopes>,
   ) {
     const items = await this.extensionHost.mainRequestGenerator.getAccounts(request.params.packageName)
     event.reply(request.responseChannel, items)
@@ -262,13 +262,13 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   public async performAccountLogin(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.AccountLogin>
+    request: IpcRequest<ExtensionHostRequests.AccountLogin>,
   ) {
     if (request.params.login !== undefined && request.params.packageName) {
       await this.extensionHost.mainRequestGenerator.performAccountLogin(
         request.params.packageName,
         request.params.accountId,
-        request.params.login
+        request.params.login,
       )
       event.reply(request.responseChannel)
     }
@@ -276,7 +276,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   public async getExtensionProviderScopes(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ProviderScopes>
+    request: IpcRequest<ExtensionHostRequests.ProviderScopes>,
   ) {
     const items = await this.extensionHost.mainRequestGenerator.getProviderScopes(request.params.packageName)
     event.reply(request.responseChannel, items)
@@ -284,7 +284,7 @@ export class ExtensionHostChannel implements IpcChannelInterface {
 
   public async getExtensionDisplayName(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<ExtensionHostRequests.ProviderScopes>
+    request: IpcRequest<ExtensionHostRequests.ProviderScopes>,
   ) {
     const items = await this.extensionHost.mainRequestGenerator.getDisplayName(request.params.packageName)
     event.reply(request.responseChannel, items)

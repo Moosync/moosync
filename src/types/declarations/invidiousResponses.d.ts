@@ -17,7 +17,7 @@ declare namespace InvidiousResponses {
     SEARCH = 'search',
     STATS = 'stats',
     CHANNELS = 'channels/{channel_id}',
-    CHANNEL_VIDEOS = 'channels/{channel_id}/videos'
+    CHANNEL_VIDEOS = 'channels/{channel_id}/videos',
   }
 
   type NoParamsRequest = {
@@ -97,7 +97,7 @@ declare namespace InvidiousResponses {
           url: string
           width: number
           height: number
-        }
+        },
       ]
 
       description: string
@@ -125,7 +125,7 @@ declare namespace InvidiousResponses {
           url: string
           width: number
           height: number
-        }
+        },
       ]
 
       subCountText?: string
@@ -135,7 +135,7 @@ declare namespace InvidiousResponses {
       isListed?: boolean
       liveNow?: boolean
       isUpcoming?: boolean
-      premiereTimestamp?: ?number
+      premiereTimestamp?: number
 
       hlsUrl?: string
       adaptiveFormats?: [
@@ -153,7 +153,7 @@ declare namespace InvidiousResponses {
           encoding: string
           qualityLabel?: string
           resolution?: string
-        }
+        },
       ]
       formatStreams?: [
         {
@@ -166,14 +166,14 @@ declare namespace InvidiousResponses {
           qualityLabel: string
           resolution: string
           size: string
-        }
+        },
       ]
       captions?: [
         {
           label: string
           languageCode: string
           url: string
-        }
+        },
       ]
       recommendedVideos?: [
         {
@@ -185,12 +185,12 @@ declare namespace InvidiousResponses {
               url: string
               width: number
               height: number
-            }
+            },
           ]
           author: string
           lengthSeconds: number
           viewCountText: string
-        }
+        },
       ]
     }
   }

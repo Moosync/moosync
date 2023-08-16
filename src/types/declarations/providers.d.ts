@@ -13,6 +13,7 @@ interface Recommendations {
 }
 
 interface Provider {
-  username: string
+  username: string | undefined
   provider: import('@/utils/ui/providers/generics/genericProvider').GenericProvider
+  key: string
 }

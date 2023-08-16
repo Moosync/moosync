@@ -17,11 +17,7 @@
         class="new-directories ml-auto justify-content-center"
         v-if="showRefreshIcon"
       >
-        <RefreshIcon
-          title="Rescan directories for music"
-          @click.native="emitRefresh"
-          class="refresh-icon button-grow"
-        />
+        <RefreshIcon title="Rescan directories for music" @click="emitRefresh" class="refresh-icon button-grow" />
       </b-col>
       <b-col cols="auto" :class="`new-directories ${showRefreshIcon ? 'ml-4' : 'ml-auto'}`">
         <div class="add-directories-button" v-if="!bottomButton" @click="openFileBrowser">
@@ -70,7 +66,7 @@ type DirectoryGroupValue = {
   enabled: boolean
 }[]
 
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'vue-facing-decorator'
 import Tooltip from '@/commonComponents/Tooltip.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import PreferenceHeader from './PreferenceHeader.vue'
@@ -80,60 +76,61 @@ import RefreshIcon from '@/icons/RefreshIcon.vue'
     Tooltip,
     PreferenceHeader,
     RefreshIcon
-  }
+  },
+  emits: ['refresh']
 })
-export default class DirectoryGroup extends Mixins<ExtensionPreferenceMixin<DirectoryGroupValue>>(
-  ExtensionPreferenceMixin
-) {
+export default class DirectoryGroup extends mixins(ExtensionPreferenceMixin) {
   @Prop({ default: 5 })
-  private height!: number
+  height!: number
 
   @Prop({ default: true })
-  private enableCheckbox!: boolean
+  enableCheckbox!: boolean
 
   @Prop({ default: false })
-  private bottomButton!: boolean
+  bottomButton!: boolean
 
   @Prop({ default: false })
-  private isMainWindow!: boolean
+  isMainWindow!: boolean
 
   @Prop({ default: false })
-  private showRefreshIcon!: boolean
+  showRefreshIcon!: boolean
 
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private togglePath(index: number) {
+  declare value: DirectoryGroupValue
+
+  togglePath(index: number) {
     if (this.value && index >= 0) {
       const path = this.value[index]
-      ;(this.value as DirectoryGroupValue)[index].enabled = (
+      this.value[index].enabled = (
         document.getElementById(`path-${this.packageName}-${path.path}`) as HTMLInputElement
       ).checked
-      this.onInputChange()
+      this.onInputChange(this.value)
     }
   }
 
-  private emitRefresh() {
+  emitRefresh() {
     this.$emit('refresh')
   }
 
-  private removePath(index: number) {
+  removePath(index: number) {
     if (this.value && index >= 0) {
       this.value.splice(index, 1)
-      this.onInputChange()
+      this.onInputChange(this.value)
     }
   }
 
-  private openFileBrowser() {
+  openFileBrowser() {
     window.WindowUtils.openFileBrowser(this.isMainWindow, false).then((data) => {
       if (!data.canceled && this.value) {
         for (const path of data.filePaths) {
           this.value.push({ path, enabled: true })
         }
-        this.onInputChange()
+        this.onInputChange(this.value)
       }
     })
   }

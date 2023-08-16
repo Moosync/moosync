@@ -14,18 +14,22 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   private pauseAsStop = false
 
   constructor(element: string | HTMLElement) {
-    this.instance = new YTPlayer(element, {
-      modestBranding: true,
-      related: false,
-      annotations: false,
-      keyboard: false,
-      controls: false
-    })
-    this.elementIdentifier = element instanceof HTMLElement ? element.id : element
-    this.supposedVolume = this.volume
-    this.instance.on('playing', () => {
-      this.volume = this.supposedVolume
-    })
+    if (element) {
+      this.instance = new YTPlayer(element, {
+        modestBranding: true,
+        related: false,
+        annotations: false,
+        keyboard: false,
+        controls: false,
+      })
+      this.elementIdentifier = element instanceof HTMLElement ? element?.id : element
+      this.supposedVolume = this.volume
+      this.instance.on('playing', () => {
+        this.volume = this.supposedVolume
+      })
+    } else {
+      throw new Error('Empty element passed to YTPlayer')
+    }
   }
 
   dispatchEvent(ev: Event) {
@@ -180,7 +184,7 @@ export class YTPlayerWrapper implements CustomAudioInstance {
   }
 
   removeEventListener(ev: string) {
-    console.log('Youtube Player: Removing listener', ev)
+    console.debug('Youtube Player: Removing listener', ev)
     this.instance.removeAllListeners(ev)
   }
 

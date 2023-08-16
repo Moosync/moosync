@@ -11,12 +11,12 @@ import {
   mainRequests,
   mainRequestsKeys,
   providerExtensionKeys,
-  providerFetchRequests
+  providerFetchRequests,
 } from '@/utils/extensions/constants'
 
 import { ExtensionHandler } from '@/utils/extensions/sandbox/extensionHandler'
 import { prefixLogger, setLogLevel } from '@/utils/main/logger/utils'
-import log from 'loglevel'
+import log, { LogLevelDesc } from 'loglevel'
 
 class ExtensionHostIPCHandler {
   private extensionHandler: ExtensionHandler
@@ -160,7 +160,7 @@ class MainRequestHandler {
     }
 
     if (message.type === 'toggle-extension-status') {
-      this.handler.toggleExtStatus(message.data.packageName, message.data.enabled).then(() => {
+      this.handler.toggleExtStatus(message.data.packageName, message.data.enabled as boolean).then(() => {
         this.sendToMain(message.channel)
       })
       return
@@ -177,26 +177,32 @@ class MainRequestHandler {
     }
 
     if (message.type === 'extra-extension-events') {
-      this.handler.sendExtraEventToExtensions(message.data).then((val) => {
-        this.sendToMain(message.channel, val)
-      })
+      this.handler
+        .sendExtraEventToExtensions(message.data as unknown as ExtraExtensionEvents<ExtraExtensionEventTypes>)
+        .then((val) => {
+          this.sendToMain(message.channel, val)
+        })
       return
     }
 
     if (message.type === 'get-extension-context-menu') {
-      const items = this.handler.getExtensionContextMenu(message.data.type)
+      const items = this.handler.getExtensionContextMenu(message.data.type as ContextMenuTypes)
       this.sendToMain(message.channel, items)
       return
     }
 
     if (message.type === 'on-clicked-context-menu') {
-      this.handler.fireContextMenuCallback(message.data.id, message.data.packageName, message.data.arg)
+      this.handler.fireContextMenuCallback(
+        message.data.id as string,
+        message.data.packageName,
+        message.data.arg as Song | Artists | Album | Song[] | Playlist | undefined,
+      )
       this.sendToMain(message.channel)
       return
     }
 
     if (message.type === 'set-log-level') {
-      setLogLevel(message.data.level)
+      setLogLevel(message.data.level as LogLevelDesc)
       this.sendToMain(message.channel)
       return
     }
@@ -209,7 +215,11 @@ class MainRequestHandler {
 
     if (message.type === 'perform-account-login') {
       this.handler
-        .performExtensionAccountLogin(message.data.packageName, message.data.accountId, message.data.loginStatus)
+        .performExtensionAccountLogin(
+          message.data.packageName,
+          message.data.accountId as string,
+          message.data.loginStatus as boolean,
+        )
         .then((val) => this.sendToMain(message.channel, val))
 
       return

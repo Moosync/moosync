@@ -7,20 +7,20 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { BrowserWindowChannel } from './window'
 import { ExtensionHostChannel } from './extensionHost'
 import { LoggerChannel } from './logger'
+import { MprisChannel } from './mpris'
+import { NotifierChannel } from './notifier'
 import { PlaylistsChannel } from './playlists'
 import { PreferenceChannel } from './preferences'
 import { ScannerChannel } from './scanner'
 import { SearchChannel } from './search'
 import { SongsChannel } from './songs'
-import { StoreChannel } from './store'
-import { ipcMain } from 'electron'
-import { UpdateChannel } from './update'
-import { NotifierChannel } from './notifier'
-import { MprisChannel } from './mpris'
 import { SpotifyPlayerChannel } from './spotifyPlayer'
+import { StoreChannel } from './store'
+import { UpdateChannel } from './update'
+import { BrowserWindowChannel } from './window'
+import { ipcMain } from 'electron'
 
 let scannerChannel: ScannerChannel | undefined = undefined
 let updateChannel: UpdateChannel | undefined = undefined
@@ -44,7 +44,7 @@ export function registerIpcChannels() {
     getUpdateChannel(),
     new NotifierChannel(),
     getMprisChannel(),
-    getSpotifyPlayerChannel()
+    getSpotifyPlayerChannel(),
   ]
   ipcChannels.forEach((channel) => ipcMain.on(channel.name, (event, request) => channel.handle(event, request)))
 }

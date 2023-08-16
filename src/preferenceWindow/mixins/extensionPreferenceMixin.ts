@@ -7,9 +7,11 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 
 import { v1 } from 'uuid'
+import { getCurrentInstance } from 'vue'
+import { convertProxy } from '@/utils/ui/common'
 
 @Component
 export class ExtensionPreferenceMixin<T> extends Vue {
@@ -31,7 +33,7 @@ export class ExtensionPreferenceMixin<T> extends Vue {
   private onValueChange!: (val: unknown) => void
 
   @Prop({ default: 'text' })
-  private type!: string
+  type!: string
 
   protected shouldMergeDefaultValues = true
 
@@ -42,7 +44,7 @@ export class ExtensionPreferenceMixin<T> extends Vue {
   protected postFetch: (() => void) | undefined
 
   created() {
-    this.prefKey = this.$vnode.key?.toString()
+    this.prefKey = getCurrentInstance()?.vnode.key?.toString()
   }
 
   mounted() {
@@ -66,19 +68,23 @@ export class ExtensionPreferenceMixin<T> extends Vue {
     if (this.prefKey) {
       this.loading = true
       ;(this.type === 'password'
-        ? window.Store.getSecure(this.prefKey)
-        : window.PreferenceUtils.loadSelective<T>(this.prefKey, this.isExtension)
+        ? window.Store.getSecure(convertProxy(this.prefKey))
+        : window.PreferenceUtils.loadSelective<T>(convertProxy(this.prefKey), convertProxy(this.isExtension))
       )
-        .then((val) => (this.value = (this.isValueEmpty(val) ? this.defaultValue : val) as T))
-        .then(() => (this.loading = false))
-        .then(() => this.postFetch && this.postFetch())
-        .then(() => this.onValueFetch && this.onValueFetch(this.value))
+        .then((val) => {
+          this.value = (this.isValueEmpty(val) ? this.defaultValue : val) as T
+        })
+        .then(() => {
+          this.loading = false
+        })
+        .then(() => this.postFetch?.())
+        .then(() => this.onValueFetch?.(this.value))
     }
   }
 
   private registerPreferenceListener() {
     if (this.prefKey) {
-      window.PreferenceUtils.listenPreferenceChanged(this.prefKey, false, (key) => {
+      window.PreferenceUtils.listenPreferenceChanged(convertProxy(this.prefKey), false, (key) => {
         if (typeof key === 'string') {
           if (this.prefKey === key) {
             this.fetch()
@@ -88,23 +94,29 @@ export class ExtensionPreferenceMixin<T> extends Vue {
     }
   }
 
-  public onInputChange() {
+  public onInputChange(value: typeof this.value) {
+    this.value = value
+
     if (this.prefKey) {
       if (this.type === 'password') {
-        window.Store.setSecure(this.prefKey, (this.value as string) ?? '')
+        window.Store.setSecure(convertProxy(this.prefKey), convertProxy(this.value as string) ?? '')
       } else {
-        window.PreferenceUtils.saveSelective(this.prefKey, this.value, this.isExtension)
+        window.PreferenceUtils.saveSelective(
+          convertProxy(this.prefKey),
+          convertProxy(this.value),
+          convertProxy(this.isExtension),
+        )
       }
 
       if (this.isExtension)
         window.ExtensionUtils.sendEvent({
-          data: [{ key: this.prefKey.replace(`${this.packageName}.`, ''), value: this.value }],
+          data: [{ key: this.prefKey.replace(`${this.packageName}.`, ''), value: convertProxy(this.value) }],
           type: 'preferenceChanged',
-          packageName: this.packageName
+          packageName: this.packageName,
         })
-      else window.PreferenceUtils.notifyPreferenceChanged(this.prefKey, this.value)
+      else window.PreferenceUtils.notifyPreferenceChanged(convertProxy(this.prefKey), convertProxy(this.value))
 
-      this.onValueChange && this.onValueChange(this.value)
+      this.onValueChange?.(this.value)
     }
   }
 }

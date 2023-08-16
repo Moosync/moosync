@@ -14,13 +14,13 @@
     </b-row>
     <b-row align-h="around">
       <b-col cols="auto">
-        <YoutubeBig @click.native="handleClick(providers[0])" class="button-grow" :active="loggedInYoutube" />
+        <YoutubeBig @click="handleClick(providers[0])" class="button-grow" :active="loggedInYoutube" />
       </b-col>
       <b-col cols="auto">
-        <SpotifyBig class="button-grow" @click.native="handleClick(providers[1])" :active="loggedInSpotify" />
+        <SpotifyBig class="button-grow" @click="handleClick(providers[1])" :active="loggedInSpotify" />
       </b-col>
       <b-col cols="auto">
-        <LastFMBig class="button-grow" @click.native="handleClick(providers[2])" :active="loggedInLastFM" />
+        <LastFMBig class="button-grow" @click="handleClick(providers[2])" :active="loggedInLastFM" />
       </b-col>
     </b-row>
     <b-row class="mt-4">
@@ -47,13 +47,13 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component } from 'vue-facing-decorator'
 import Logo from '@/icons/LogoIcon.vue'
 import DirectoryGroup from '@/preferenceWindow/components/DirectoryGroup.vue'
 import YoutubeBig from '@/icons/YoutubeBigIcon.vue'
 import SpotifyBig from '@/icons/SpotifyBigIcon.vue'
 import LastFMBig from '@/icons/LastFMBigIcon.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import AccountsMixin from '@/utils/ui/mixins/AccountsMixin'
 import ConfirmationModal from '../../../commonComponents/ConfirmationModal.vue'
 import { vxm } from '@/mainWindow/store'
@@ -66,7 +66,8 @@ import { vxm } from '@/mainWindow/store'
     SpotifyBig,
     LastFMBig,
     ConfirmationModal
-  }
+  },
+  emits: ['next', 'prev']
 })
 export default class AccountsSetup extends mixins(AccountsMixin) {
   activeSignout: Provider | null = null
@@ -84,15 +85,15 @@ export default class AccountsSetup extends mixins(AccountsMixin) {
   }
 
   get loggedInYoutube() {
-    return vxm.providers.loggedInYoutube
+    return vxm.providers.youtubeProvider.loggedIn
   }
 
   get loggedInSpotify() {
-    return vxm.providers.loggedInSpotify
+    return vxm.providers.spotifyProvider.loggedIn
   }
 
   get loggedInLastFM() {
-    return vxm.providers.loggedInLastFM
+    return vxm.providers.lastfmProvider.loggedIn
   }
 
   async signout() {
@@ -100,7 +101,7 @@ export default class AccountsSetup extends mixins(AccountsMixin) {
       if (this.activeSignout.provider) {
         await this.activeSignout.provider.signOut()
 
-        this.$set(this.activeSignout, 'username', (await this.activeSignout.provider.getUserDetails()) ?? '')
+        this.activeSignout['username'] = (await this.activeSignout.provider.getUserDetails()) ?? ''
         this.activeSignout = null
       }
     }

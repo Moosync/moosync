@@ -7,13 +7,12 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { vxm } from '@/mainWindow/store'
+import { FetchWrapper } from './generics/fetchWrapper'
 import { bus } from '@/mainWindow/main'
-import { md5 } from 'hash-wasm'
+import { ProviderScopes } from '@/utils/commonConstants'
 import { EventBus } from '@/utils/main/ipc/constants'
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
-import { ProviderScopes } from '@/utils/commonConstants'
-import { FetchWrapper } from './generics/fetchWrapper'
+import { md5 } from 'hash-wasm'
 
 const AUTH_BASE_URL = 'https://www.last.fm/api/'
 const API_BASE_URL = 'https://ws.audioscrobbler.com/2.0'
@@ -24,7 +23,7 @@ enum ApiResources {
   UPDATE_NOW_PLAYING = 'track.updateNowPlaying',
   SCROBBLE = 'track.scrobble',
   GET_USER_INFO = 'user.getInfo',
-  GET_TRACK_INFO = 'track.getInfo'
+  GET_TRACK_INFO = 'track.getInfo',
 }
 
 type authenticatedBody = {
@@ -44,6 +43,8 @@ export class LastFMProvider extends GenericProvider {
 
   private username = ''
 
+  public loggedIn = false
+
   private _config: { key: string; secret: string } | undefined
 
   public get key() {
@@ -55,7 +56,7 @@ export class LastFMProvider extends GenericProvider {
   }
 
   private setLoggedInStatus() {
-    vxm.providers.loggedInLastFM = !!this._session
+    this.loggedIn = !!this._session
   }
 
   public async getLoggedIn() {
@@ -64,7 +65,7 @@ export class LastFMProvider extends GenericProvider {
       this._session = (await this.fetchStoredToken()) ?? undefined
     }
     this.setLoggedInStatus()
-    return !!this._session
+    return this.loggedIn
   }
 
   public async updateConfig(): Promise<boolean> {
@@ -93,7 +94,7 @@ export class LastFMProvider extends GenericProvider {
       if (data) {
         allParams = {
           ...allParams,
-          ...data
+          ...data,
         }
       }
     }
@@ -111,12 +112,12 @@ export class LastFMProvider extends GenericProvider {
     fetchMethod: 'GET' | 'POST',
     lastFmMethod: T,
     data?: object,
-    token?: string
+    token?: string,
   ): Promise<LastFMResponses.ResponseType<T> | undefined> {
     if (this._config) {
       const defaultParams: authenticatedBody = {
         api_key: this._config.key,
-        method: lastFmMethod
+        method: lastFmMethod,
       }
 
       if (token) {
@@ -135,14 +136,14 @@ export class LastFMProvider extends GenericProvider {
         ...defaultParams,
         ...signatureParams,
         api_sig: await this.getMethodSignature(defaultParams, signatureParams ?? []),
-        format: 'json'
+        format: 'json',
       })
 
       const resp = await this.api.request('', {
         baseURL: API_BASE_URL,
         method: fetchMethod,
         search: fetchMethod === 'GET' ? parsedParams : {},
-        body: fetchMethod === 'POST' ? parsedParams : undefined
+        body: fetchMethod === 'POST' ? parsedParams : undefined,
       })
 
       return resp.json()
@@ -175,19 +176,19 @@ export class LastFMProvider extends GenericProvider {
           resolve(false)
         })
 
-        bus.$emit(EventBus.SHOW_OAUTH_MODAL, {
+        bus.emit(EventBus.SHOW_OAUTH_MODAL, {
           providerName: 'LastFM',
-          url: AUTH_BASE_URL + `auth/?api_key=${this._config?.key}&cb=https://moosync.app/lastfm`,
+          url: `${AUTH_BASE_URL}auth/?api_key=${this._config?.key}&cb=https://moosync.app/lastfm`,
           providerColor: '#BA0000',
-          oauthPath: 'lastfmcallback'
+          oauthPath: 'lastfmcallback',
         } as LoginModalOptions)
 
         window.WindowUtils.openExternal(
-          AUTH_BASE_URL + `auth/?api_key=${this._config?.key}&cb=https://moosync.app/lastfm`
+          `${AUTH_BASE_URL}auth/?api_key=${this._config?.key}&cb=https://moosync.app/lastfm`,
         )
       })
 
-      bus.$emit(EventBus.HIDE_OAUTH_MODAL)
+      bus.emit(EventBus.HIDE_OAUTH_MODAL)
       return resp
     } else {
       return true
@@ -200,10 +201,9 @@ export class LastFMProvider extends GenericProvider {
     this.username = ''
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private serializeBody(body: any) {
+  private serializeBody(body: Record<string, unknown>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const newBody: any = {}
+    const newBody: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(body)) {
       if (value) {
         if (Array.isArray(value)) {
@@ -223,13 +223,13 @@ export class LastFMProvider extends GenericProvider {
       const parsedSong = this.serializeBody({
         track: song.title,
         album: song.album?.album_name,
-        album_artist: song.album?.album_artist && song.album?.album_artist[0],
-        duration: song.duration
+        album_artist: song.album?.album_artist?.[0],
+        duration: song.duration,
       })
 
       this.populateRequest('POST', ApiResources.UPDATE_NOW_PLAYING, {
         ...parsedSong,
-        artist: song.artists && song.artists.length > 0 && song.artists[0].artist_name
+        artist: song.artists && song.artists.length > 0 && song.artists[0].artist_name,
       })
 
       if (this.scrobbleTimeout) {
@@ -239,8 +239,8 @@ export class LastFMProvider extends GenericProvider {
       this.scrobbleTimeout = setTimeout(async () => {
         await this.populateRequest('POST', ApiResources.SCROBBLE, {
           ...parsedSong,
-          artist: song.artists && song.artists[0].artist_name,
-          timestamp: (Date.now() / 1000).toFixed(0)
+          artist: song.artists?.[0].artist_name,
+          timestamp: (Date.now() / 1000).toFixed(0),
         })
       }, 20 * 1e3)
     }
@@ -249,7 +249,8 @@ export class LastFMProvider extends GenericProvider {
   public async getUserDetails() {
     try {
       const resp = await this.populateRequest('GET', ApiResources.GET_USER_INFO)
-      return (this.username = resp?.user?.name ?? '')
+      this.username = resp?.user?.name ?? ''
+      return this.username
     } catch (e) {
       console.error(e)
       return 'Failed to get username'
@@ -260,7 +261,7 @@ export class LastFMProvider extends GenericProvider {
     const resp = await this.populateRequest('GET', ApiResources.GET_TRACK_INFO, {
       track,
       artist,
-      autocorrect: 1
+      autocorrect: 1,
     })
     return resp
   }
@@ -276,7 +277,7 @@ export class LastFMProvider extends GenericProvider {
   public async *getRecommendations(): AsyncGenerator<Song[]> {
     if ((await this.getLoggedIn()) && (await this.getUserDetails()) && this.username) {
       const resp = await window.SearchUtils.scrapeLastFM(
-        `https://www.last.fm/player/station/user/${this.username}/recommended`
+        `https://www.last.fm/player/station/user/${this.username}/recommended`,
       )
 
       const parsedResponse: LastFMResponses.ScrapeResponse = JSON.parse(resp as string)
@@ -306,22 +307,22 @@ export class LastFMProvider extends GenericProvider {
                   {
                     artist_id: `lastfm:author-${parsed.artist?.mbid}`,
                     artist_name: parsed.artist?.name,
-                    artist_mbid: parsed.artist?.mbid
-                  }
+                    artist_mbid: parsed.artist?.mbid,
+                  },
                 ],
                 duration: song.duration,
                 date_added: Date.now(),
                 song_coverPath_high: this.getCoverImage(parsed, true),
                 song_coverPath_low: this.getCoverImage(parsed, false),
                 url,
-                type: typeOfLink
+                type: typeOfLink,
               }
               if (parsed.album) {
                 final.album = {
                   album_name: parsed.album.title,
                   album_artist: parsed.album.artist,
                   album_coverPath_high: this.getCoverImage(parsed, true),
-                  album_coverPath_low: this.getCoverImage(parsed, false)
+                  album_coverPath_low: this.getCoverImage(parsed, false),
                 }
               }
               yield [final]

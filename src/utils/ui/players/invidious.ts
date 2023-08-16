@@ -1,5 +1,5 @@
-import { LocalPlayer } from './local'
 import { vxm } from '../../../mainWindow/store/index'
+import { LocalPlayer } from './local'
 import EventEmitter from 'events'
 
 export class InvidiousPlayer extends LocalPlayer {
@@ -20,7 +20,7 @@ export class InvidiousPlayer extends LocalPlayer {
     return src.length === 11 || vxm.providers.youtubeProvider.matchSongUrl(src)
   }
 
-  protected async _load(src?: string, volume?: number, autoplay?: boolean, errorTries?: number) {
+  protected async _load(src?: string, volume?: number, autoplay?: boolean, errorTries = 0) {
     this.customLoadEventEmitter.emit('loading')
     let playbackURL = await this.fetchPlaybackURL(src)
     if (playbackURL) {
@@ -34,24 +34,21 @@ export class InvidiousPlayer extends LocalPlayer {
       this.customLoadEventEmitter.emit('loaded')
       this.lastAutoPlay = autoplay ?? this.lastAutoPlay
 
-      if (typeof errorTries === 'undefined') {
-        errorTries = 0
-      }
-
       super._load(playbackURL, volume, this.lastAutoPlay)
     }
   }
 
   private async fetchPlaybackURL(str: string | undefined) {
+    let videoId = str
     if (str) {
       if (str.startsWith('http')) {
-        str = vxm.providers._invidiousProvider.getVideoIdFromURL(str)
+        videoId = vxm.providers._invidiousProvider.getVideoIdFromURL(str)
       }
 
-      if (str) {
+      if (videoId) {
         // This won't make a request to youtube
-        const resp: InvidiousSong | undefined = await vxm.providers._invidiousProvider.getSongDetails(str)
-        if (resp && resp.invidiousPlaybackUrl) {
+        const resp: InvidiousSong | undefined = await vxm.providers._invidiousProvider.getSongDetails(videoId)
+        if (resp?.invidiousPlaybackUrl) {
           return resp.invidiousPlaybackUrl
         }
       } else {

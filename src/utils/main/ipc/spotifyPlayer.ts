@@ -7,16 +7,16 @@
  *  See LICENSE in the project root for license information.
  */
 
+import { loadSelectiveArrayPreference } from '../db/preferences'
+import { librespotLogger } from '../logger'
 import { IpcEvents, SpotifyEvents } from './constants'
-import { fork, ChildProcess } from 'child_process'
-import { ConstructorConfig, PlayerEvent } from 'librespot-node'
-import { v1 } from 'uuid'
+import { ChildProcess, fork } from 'child_process'
+import { app } from 'electron'
 import EventEmitter from 'events'
+import { ConstructorConfig, PlayerEvent } from 'librespot-node'
 import { PlayerEventTypes } from 'librespot-node'
 import path from 'path'
-import { app } from 'electron'
-import { librespotLogger } from '../logger'
-import { loadSelectiveArrayPreference } from '../db/preferences'
+import { v1 } from 'uuid'
 
 const defaultLogPath = path.join(app.getPath('logs'))
 
@@ -76,7 +76,7 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
 
   private async sendAsync<T extends SpotifyRequests.SpotifyCommands>(
     message: SpotifyMessage,
-    retries = 0
+    retries = 0,
   ): Promise<SpotifyRequests.ReturnType<T> | Error | undefined> {
     if (this.playerProcess && !this.playerProcess.killed && this.playerProcess.connected) {
       // Don't reject error instead resolve it. Makes it easier to pass it to renderer
@@ -90,7 +90,10 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
             resolveTimeout && clearTimeout(resolveTimeout)
 
             if (m.error) {
-              if (message.type === 'COMMAND' && ['GET_CANVAS', 'GET_LYRICS'].includes(message.args?.command)) {
+              if (
+                (message.type === 'COMMAND' && ['GET_CANVAS', 'GET_LYRICS'].includes(message.args?.command)) ||
+                message.type === 'CONNECT'
+              ) {
                 resolve(new Error(m.error))
                 return
               }
@@ -132,7 +135,7 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
           const logObject = JSON.parse(JSON.stringify({ data: message, channel: id }))
           if (logObject?.data?.args?.['auth']?.['password']) logObject.data.args['auth']['password'] = '***'
 
-          console.debug('sending message to spotify process', { data: message, channel: id })
+          console.debug('sending message to spotify process', JSON.stringify(logObject))
           this.playerProcess?.send({ data: message, channel: id })
         } catch (e) {
           console.error('Failed to send message to librespot process', e)
@@ -192,20 +195,20 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
           return
         }
 
-        logLevel('[' + parsedMessage)
+        logLevel(`[${parsedMessage}`)
       }
     }
   }
 
   public async spawnProcess(retries = 0) {
     if (retries > 2) {
-      throw new Error('Failed to spawn process. Retries: ' + retries)
+      throw new Error(`Failed to spawn process. Retries: ${retries}`)
     }
 
     console.debug('Spawning librespot process. Retry:', retries)
 
     this.closePlayer(undefined, undefined, true)
-    this.playerProcess = fork(__dirname + '/spotify.js', ['logPath', defaultLogPath], { silent: true })
+    this.playerProcess = fork(`${__dirname}/spotify.js`, ['logPath', defaultLogPath], { silent: true })
 
     this.playerProcess.stdout?.on('data', this.logLibrespotOutput.bind(this))
     this.playerProcess.stderr?.on('data', this.logLibrespotOutput.bind(this))
@@ -241,7 +244,7 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
   @spawn_child()
   public async command<T extends SpotifyRequests.SpotifyCommands>(
     event: Electron.IpcMainEvent | undefined,
-    request: IpcRequest<SpotifyRequests.Command<T>>
+    request: IpcRequest<SpotifyRequests.Command<T>>,
   ) {
     const resp = await this.sendAsync<T>({ type: 'COMMAND', args: request.params })
     event?.reply(request.responseChannel, resp)
@@ -268,7 +271,7 @@ export class SpotifyPlayerChannel implements IpcChannelInterface {
   private async connect(event: Electron.IpcMainEvent, request: IpcRequest<SpotifyRequests.Config>) {
     request.params.cache = {
       credentials_location: path.join(app.getPath('sessionData'), app.getName()),
-      audio_location: path.join(app.getPath('sessionData'), app.getName(), 'audio_cache')
+      audio_location: path.join(app.getPath('sessionData'), app.getName(), 'audio_cache'),
     }
 
     request.params.logLevel = loadSelectiveArrayPreference<SystemSettings>('logs.debug_logging')?.enabled

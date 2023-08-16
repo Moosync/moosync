@@ -77,7 +77,7 @@ export class FetchWrapper {
           body: cache.data.stream(),
           formData: async () => {
             return new FormData()
-          }
+          },
         }
 
         return resp
@@ -104,7 +104,7 @@ export class FetchWrapper {
         type: data.type,
         url: data.url,
         bodyUsed: data.bodyUsed,
-        data: blob
+        data: blob,
       })
     }
 

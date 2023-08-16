@@ -29,13 +29,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import Link from '@/icons/LinkIcon.vue'
 
 @Component({
   components: {
     Link
-  }
+  },
+  emits: ['update']
 })
 export default class InputGroup extends Vue {
   model = ''

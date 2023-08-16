@@ -13,26 +13,27 @@
       {{ title }}
     </b-col>
     <b-col cols="auto" class="ml-2">
-      <Tooltip v-if="tooltip" :text="tooltip" @click.native="emitTooltipClick" />
+      <Tooltip v-if="tooltip" :text="tooltip" @click="emitTooltipClick" />
     </b-col>
   </b-row>
 </template>
 
 <script lang="ts">
 import Tooltip from '@/commonComponents/Tooltip.vue'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 
 @Component({
-  components: { Tooltip }
+  components: { Tooltip },
+  emits: ['tooltipClick']
 })
 export default class PreferenceHeader extends Vue {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private emitTooltipClick() {
+  emitTooltipClick() {
     this.$emit('tooltipClick')
   }
 }

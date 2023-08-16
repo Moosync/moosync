@@ -14,7 +14,7 @@ declare namespace YoutubeResponses {
     PLAYLISTS = 'playlists',
     PLAYLIST_ITEMS = 'playlistItems',
     VIDEO_DETAILS = 'videos',
-    SEARCH = 'search'
+    SEARCH = 'search',
   }
 
   type SearchRequest = {

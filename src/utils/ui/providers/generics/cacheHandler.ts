@@ -10,13 +10,13 @@ export class FetchCacheHandler {
 
   private localForage = localforage.createInstance({
     driver: [localforage.INDEXEDDB],
-    name: 'fetch-cache'
+    name: 'fetch-cache',
   })
 
   async setItem<T>(url: string, data: T) {
     return this.localForage.setItem<CacheItem>(url, {
       expiry: Date.now() + this.maxAge,
-      value: data
+      value: data,
     })
   }
 

@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <svg viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('click', $event)">
     <title>Youtube</title>
     <g>
       <rect v-if="filled" x="9" y="5" width="5" height="6" fill="white" />
@@ -41,10 +41,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class YoutubeIcon extends Vue {
   @Prop({ default: 'white' })
   color!: string

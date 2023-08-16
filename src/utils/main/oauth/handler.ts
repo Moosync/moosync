@@ -8,8 +8,8 @@
  */
 
 import { WindowHandler } from '../windowManager'
-import { v1 } from 'uuid'
 import { getExtensionHostChannel } from '@/utils/main/ipc'
+import { v1 } from 'uuid'
 
 type callbackRegistryItem = { path: string } & (
   | {
@@ -41,18 +41,18 @@ export class OAuthHandler {
   }
 
   public registerHandler(path: string, isExtension = false, packageName?: string) {
-    path = path.toLowerCase()
+    const parsedPath = path.toLowerCase()
 
-    if (!this.callbackRegistry[path]) {
-      this.callbackRegistry[path] = []
+    if (!this.callbackRegistry[parsedPath]) {
+      this.callbackRegistry[parsedPath] = []
     }
 
     if (!isExtension) {
       const channelID = v1()
-      this.callbackRegistry[path].push({
+      this.callbackRegistry[parsedPath].push({
         isExtension: false,
         channelID,
-        path
+        path: parsedPath,
       })
       return channelID
     } else {
@@ -60,7 +60,7 @@ export class OAuthHandler {
         this.callbackRegistry[path].push({
           isExtension: true,
           packageName: packageName,
-          path
+          path: parsedPath,
         })
       }
     }
@@ -68,9 +68,7 @@ export class OAuthHandler {
 
   // TODO: Deregister only required callback
   public deregisterHandler(path: string) {
-    path = path.toLowerCase()
-
-    this.callbackRegistry[path] = []
+    this.callbackRegistry[path.toLowerCase()] = []
   }
 }
 

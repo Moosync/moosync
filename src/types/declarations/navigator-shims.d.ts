@@ -37,7 +37,7 @@ interface MediaSession {
     action: 'seekto',
     listener:
       | ((details: Required<Pick<MediaSessionActionDetails, 'seekTime'>> & MediaSessionActionDetails) => void)
-      | null
+      | null,
   ): void
   setActionHandler(action: MediaSessionAction, listener: ((details: MediaSessionActionDetails) => void) | null): void
 

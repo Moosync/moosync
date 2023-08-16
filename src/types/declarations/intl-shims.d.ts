@@ -105,7 +105,7 @@ namespace Intl {
      */
     supportedLocalesOf(
       locales: BCP47LanguageTag | BCP47LanguageTag[],
-      options: { localeMatcher: RelativeTimeFormatLocaleMatcher }
+      options: { localeMatcher: RelativeTimeFormatLocaleMatcher },
     ): BCP47LanguageTag[]
   }
 }

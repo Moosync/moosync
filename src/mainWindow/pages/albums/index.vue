@@ -29,8 +29,8 @@
 
 <script lang="ts">
 import CardRecycleScroller from '@/mainWindow/components/generic/CardRecycleScroller.vue'
-import { mixins } from 'vue-class-component'
-import { Component } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component } from 'vue-facing-decorator'
 import RouterPushes from '@/utils/ui/mixins/RouterPushes'
 import AlbumDefault from '@/icons/AlbumDefaultIcon.vue'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'

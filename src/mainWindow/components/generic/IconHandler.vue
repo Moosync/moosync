@@ -24,10 +24,10 @@
 
 <script lang="ts">
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
-import Component, { mixins } from 'vue-class-component'
+import { mixins, Component } from 'vue-facing-decorator'
 import YoutubeIcon from '@/icons/YoutubeIcon.vue'
 import SpotifyIcon from '@/icons/SpotifyIcon.vue'
-import { Prop } from 'vue-property-decorator'
+import { Prop } from 'vue-facing-decorator'
 import ProviderMixin from '@/utils/ui/mixins/ProviderMixin'
 import { vxm } from '@/mainWindow/store'
 

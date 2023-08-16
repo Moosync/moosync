@@ -1,7 +1,7 @@
-import { CacheHandler } from './cacheFile'
-import path from 'path'
-import { app } from 'electron'
 import { loadSelectivePreference } from '../db/preferences'
+import { CacheHandler } from './cacheFile'
+import { app } from 'electron'
+import path from 'path'
 
 export class InvidiousRequester extends CacheHandler {
   constructor() {
@@ -10,18 +10,18 @@ export class InvidiousRequester extends CacheHandler {
 
   public async makeInvidiousRequest<
     T extends InvidiousResponses.InvidiousApiResources,
-    K extends InvidiousResponses.SearchTypes
+    K extends InvidiousResponses.SearchTypes,
   >(
     resource: T,
     search: InvidiousResponses.SearchObject<T, K>,
     authorization?: string | undefined,
-    invalidateCache = false
+    invalidateCache = false,
   ): Promise<InvidiousResponses.ResponseType<T, K> | undefined> {
     let BASE_URL = loadSelectivePreference<string>('invidious_instance')
 
     if (BASE_URL) {
       if (!BASE_URL.startsWith('http')) {
-        BASE_URL = 'https://' + BASE_URL
+        BASE_URL = `https://${BASE_URL}`
       }
 
       let parsedResource: string = resource
@@ -34,7 +34,7 @@ export class InvidiousRequester extends CacheHandler {
         }
       }
 
-      const url = BASE_URL + '/api/v1/' + parsedResource
+      const url = `${BASE_URL}/api/v1/${parsedResource}`
       const parsed = new URL(url)
       if (search.params) {
         for (const [key, value] of Object.entries(search.params)) {

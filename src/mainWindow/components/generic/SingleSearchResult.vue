@@ -40,9 +40,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-facing-decorator'
 import Play2 from '@/icons/PlayIcon2.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import PlayerControls from '@/utils/ui/mixins/PlayerControls'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
@@ -51,7 +51,8 @@ import ImgLoader from '@/utils/ui/mixins/ImageLoader'
   components: {
     Play2,
     SongDefault
-  }
+  },
+  emits: ['imgClick', 'titleClick', 'onContextMenu']
 })
 export default class SingleSearchResult extends mixins(PlayerControls, ImgLoader) {
   @Prop({ default: '' })

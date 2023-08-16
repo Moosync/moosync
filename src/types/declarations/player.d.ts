@@ -38,9 +38,9 @@ interface CustomAudioInstance {
 
   listeners: Record<string, never>
 
-  public pause(): void
-  public play(): Promise<void>
-  public stop(): void
+  pause(): void
+  play(): Promise<void>
+  stop(): void
 
   setSrc(src: string, autoPlay?: boolean): void
 

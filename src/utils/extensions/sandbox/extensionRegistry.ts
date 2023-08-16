@@ -43,7 +43,7 @@ export class InMemoryRegistry extends AbstractExtensionRegistry {
 
   get(options?: getExtensionOptions): Iterable<ExtensionItem> {
     return this.extensionStore.filter((val) =>
-      options ? !!(this.checkPackageName(options.packageName, val) && this.checkStarted(options.started, val)) : true
+      options ? !!(this.checkPackageName(options.packageName, val) && this.checkStarted(options.started, val)) : true,
     )
   }
 

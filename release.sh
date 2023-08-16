@@ -43,8 +43,10 @@ wget ${FLATPAK_DOWNLOAD} -O flatpak_download_tmp
 CHECKSUM_FLATPAK=$(sha256sum flatpak_download_tmp | cut -d' ' -f1)
 rm -f flatpak_download_tmp
 echo $CHECKSUM_FLATPAK
-python flatpak-node-generator.py yarn --electron-node-headers ../yarn.lock
-python flatpak-cargo-generator.py ../node_modules/librespot-node/native/Cargo.lock -o generated-sources-cargo.json
+./venv/bin/python flatpak-node-generator.py yarn --electron-node-headers ../yarn.lock
+./venv/bin/python flatpak-cargo-generator.py ../node_modules/librespot-node/native/Cargo.lock -o generated-sources-cargo.json
+./venv/bin/python flatpak-cargo-generator.py ../node_modules/scanner-native/Cargo.lock -o generated-sources-cargo-scanner.json
+
 sed -i "\@${FLATPAK_PARTIAL_DOWNLOAD}.*@{n;s@.*@        sha256: ${CHECKSUM_FLATPAK}@}" app.moosync.moosync.yml
 git add -A
 git commit -m "Bump to $VERSION"

@@ -37,14 +37,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import PrevTrack from '@/icons/PrevTrackIcon.vue'
 import NextTrack from '@/icons/NextTrackIcon.vue'
 import Play from '@/icons/PlayIcon.vue'
 import Repeat from '@/icons/RepeatIcon.vue'
 import FavIcon from '@/icons/FavIcon.vue'
 import Shuffle from '@/icons/ShuffleIcon.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import PlayerControls from '@/utils/ui/mixins/PlayerControls'
 import { vxm } from '@/mainWindow/store'
 import Timestamp from '@/mainWindow/components/musicbar/components/Timestamp.vue'

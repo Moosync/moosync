@@ -13,7 +13,7 @@
     <b-row no-gutters class="background w-100 mt-2 d-flex">
       <b-row no-gutters class="mt-3 item w-100">
         <b-col cols="auto" align-self="center" class="ml-4 folder-icon">
-          <FolderIcon @click.native="openFileBrowser" />
+          <FolderIcon @click="openFileBrowser" />
         </b-col>
         <b-col
           :id="popoverTarget"
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, mixins, Prop } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import FolderIcon from '@/icons/FolderIcon.vue'
@@ -49,27 +49,29 @@ import { v4 } from 'uuid'
 @Component({
   components: { PreferenceHeader, FolderIcon }
 })
-export default class FilePicker extends Mixins<ExtensionPreferenceMixin<string>>(ExtensionPreferenceMixin) {
-  @Prop()
-  private title!: string
+export default class FilePicker extends mixins(ExtensionPreferenceMixin) {
+  declare value: string
 
   @Prop()
-  private tooltip!: string
+  title!: string
 
-  private popoverTarget = v4()
-  private showPopover = false
+  @Prop()
+  tooltip!: string
+
+  popoverTarget = v4()
+  showPopover = false
   private popoverTimeout: ReturnType<typeof setTimeout> | undefined
 
-  private openFileBrowser() {
+  openFileBrowser() {
     window.WindowUtils.openFileBrowser(false, false).then((data) => {
       if (!data.canceled && data.filePaths.length > 0) {
         this.value = data.filePaths[0]
-        this.onInputChange()
+        this.onInputChange(this.value)
       }
     })
   }
 
-  private copy() {
+  copy() {
     if (this.popoverTimeout) {
       clearTimeout(this.popoverTimeout)
       this.popoverTimeout = undefined

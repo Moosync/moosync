@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import Playlists from '@/icons/PlaylistsIcon.vue'
 import AllSongs from '@/icons/AllSongsIcon.vue'
 import Artists from '@/icons/ArtistsIcon.vue'
@@ -115,7 +115,7 @@ export default class Sidebar extends Vue {
   }
 
   private openQueue() {
-    bus.$emit('onToggleSlider', true)
+    bus.emit('onToggleSlider', true)
   }
 
   @Prop({ default: true })

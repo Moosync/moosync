@@ -42,7 +42,7 @@
                       :is="isEditable(key) ? 'b-input' : 'div'"
                       :value="getValue(key)"
                       placeholder="Enter value"
-                      @input="changeEntityField(key, arguments[0])"
+                      @input="changeEntityField(key, $event)"
                     >
                       <span class="text-truncate" v-if="!isEditable(key)">{{ getValue(key) }}</span>
                     </component>
@@ -62,12 +62,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import EditIcon from '@/icons/EditIcon.vue'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import { dotIndex } from '@/utils/common'
+import { convertProxy } from '../../../utils/ui/common'
 
 @Component({
   components: {
@@ -103,7 +104,7 @@ export default class EntityInfoModal extends Vue {
 
   getValue(key: string) {
     if (this.entity) {
-      return dotIndex(this.entity, key)
+      return dotIndex(this.entity as Record<string, unknown>, key)
     }
   }
 
@@ -174,15 +175,15 @@ export default class EntityInfoModal extends Vue {
   async save() {
     if (this.tmpEntity) {
       if ((this.tmpEntity as Artists).artist_id) {
-        window.DBUtils.updateArtist(this.tmpEntity as Artists)
+        window.DBUtils.updateArtist(convertProxy(this.tmpEntity as Artists))
       }
 
       if ((this.tmpEntity as Album).album_id) {
-        window.DBUtils.updateAlbum(this.tmpEntity as Album)
+        window.DBUtils.updateAlbum(convertProxy(this.tmpEntity as Album))
       }
 
       if ((this.tmpEntity as Playlist).playlist_id) {
-        window.DBUtils.updatePlaylist(this.tmpEntity as Playlist)
+        window.DBUtils.updatePlaylist(convertProxy(this.tmpEntity as Playlist))
       }
 
       this.mergeIntoOriginal()
@@ -225,9 +226,9 @@ export default class EntityInfoModal extends Vue {
     }
   }
 
-  changeEntityField(field: string, value: never) {
+  changeEntityField(field: string, value: Event) {
     if (this.tmpEntity) {
-      dotIndex(this.tmpEntity, field, value)
+      dotIndex(this.tmpEntity as Record<string, unknown>, field, value)
     }
   }
 
@@ -259,7 +260,7 @@ export default class EntityInfoModal extends Vue {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_ENTITY_INFO_MODAL, (entity: Artists | Album | Playlist) => {
+    bus.on(EventBus.SHOW_ENTITY_INFO_MODAL, (entity: Artists | Album | Playlist) => {
       this.forceEmptyImg = false
       this.entity = entity
       this.tmpEntity = JSON.parse(JSON.stringify(entity))

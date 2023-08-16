@@ -1,10 +1,10 @@
+import { GenericProvider } from './generics/genericProvider'
+import { bus } from '@/mainWindow/main'
+import { vxm } from '@/mainWindow/store'
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-rest-params */
 import { ProviderScopes } from '@/utils/commonConstants'
-import { GenericProvider } from './generics/genericProvider'
-import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
-import { vxm } from '@/mainWindow/store'
 import 'reflect-metadata'
 
 type KeysMatching<T, V> = { [K in keyof T]-?: T[K] extends V ? K : never }[keyof T]
@@ -23,7 +23,8 @@ function dummyDecorator(_target: unknown, _member: string) {
 export class ExtensionProvider extends GenericProvider {
   public key: string
 
-  private loggedInStatus = false
+  loggedIn = false
+
   private _title = ''
   private _icon = ''
   private _bgColor = 'var(--secondary)'
@@ -47,13 +48,13 @@ export class ExtensionProvider extends GenericProvider {
 
   public setAccountDetails(details: StrippedAccountDetails) {
     this._title = details.name
-    this.loggedInStatus = details.loggedIn
+    this.loggedIn = details.loggedIn
     this._icon = details.icon
     this._bgColor = details.bgColor
     this._username = details.username
     this._accountId = details.id
 
-    bus.$emit(EventBus.REFRESH_ACCOUNTS, this.key)
+    bus.emit(EventBus.REFRESH_ACCOUNTS, this.key)
   }
 
   public get canLogin() {
@@ -61,7 +62,7 @@ export class ExtensionProvider extends GenericProvider {
   }
 
   public async getLoggedIn(): Promise<boolean> {
-    return this.loggedInStatus
+    return this.loggedIn
   }
 
   public async login(): Promise<boolean> {
@@ -94,7 +95,7 @@ export class ExtensionProvider extends GenericProvider {
   }
 
   private isForwardRequest<T extends ExtraExtensionEventTypes>(
-    data: ExtraExtensionEventReturnType<T> | ForwardRequestReturnType<T>
+    data: ExtraExtensionEventReturnType<T> | ForwardRequestReturnType<T>,
   ): data is ForwardRequestReturnType<T> {
     return !!(data as ForwardRequestReturnType<T>)?.forwardTo
   }
@@ -104,13 +105,13 @@ export class ExtensionProvider extends GenericProvider {
     method: K,
     data: ForwardRequestReturnType<T>,
     originalData: ExtraExtensionEventData<T>,
-    execStack: ExecutionStack
+    execStack: ExecutionStack,
   ): ReturnType<GenericProvider[K]> | undefined {
     const allProviders = [
       vxm.providers.youtubeProvider,
       vxm.providers.spotifyProvider,
       vxm.providers.lastfmProvider,
-      ...vxm.providers.extensionProviders
+      ...vxm.providers.extensionProviders,
     ]
 
     if (!execStack.stack.includes(this.key)) {
@@ -138,7 +139,7 @@ export class ExtensionProvider extends GenericProvider {
           const ret = (m as (...args: unknown[]) => ReturnType<GenericProvider[K]>).call(
             forwardToProvider,
             ...args,
-            execStack
+            execStack,
           )
 
           return ret
@@ -151,15 +152,15 @@ export class ExtensionProvider extends GenericProvider {
 
   private async sendExtensionEventRequest<T extends ExtraExtensionEventTypes>(
     type: T,
-    data: ExtraExtensionEventData<T>
+    data: ExtraExtensionEventData<T>,
   ) {
     const resp = await window.ExtensionUtils.sendEvent({
       type,
       data,
-      packageName: this.key
+      packageName: this.key,
     })
 
-    if (resp && resp[this.key]) {
+    if (resp?.[this.key]) {
       const fetchedData = resp[this.key]
       return fetchedData
     }
@@ -173,7 +174,7 @@ export class ExtensionProvider extends GenericProvider {
 
     return {
       isExecStack: true,
-      stack: []
+      stack: [],
     }
   }
 
@@ -189,7 +190,7 @@ export class ExtensionProvider extends GenericProvider {
             'getUserPlaylists',
             resp,
             [invalidateCache ?? false],
-            this.getExecStack(...arguments)
+            this.getExecStack(...arguments),
           ) ?? [])
         ).map((val) => ({ ...val, isLocal: false }))
       }
@@ -197,9 +198,9 @@ export class ExtensionProvider extends GenericProvider {
       for (const p of resp.playlists) {
         playlists.push({
           ...p,
-          icon: (p.icon && 'media://' + p.icon) ?? (icon && 'media://' + icon),
+          icon: (p.icon && `media://${p.icon}`) ?? (icon && `media://${icon}`),
           extension: this.key,
-          isLocal: false
+          isLocal: false,
         })
       }
     }
@@ -211,12 +212,12 @@ export class ExtensionProvider extends GenericProvider {
   public async *getPlaylistContent(
     id: string,
     invalidateCache?: boolean | undefined,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const resp = await this.sendExtensionEventRequest('requestedPlaylistSongs', [
       id,
       invalidateCache ?? false,
-      nextPageToken
+      nextPageToken,
     ])
 
     if (resp) {
@@ -225,7 +226,7 @@ export class ExtensionProvider extends GenericProvider {
           'getPlaylistContent',
           resp,
           [id, invalidateCache ?? false, nextPageToken],
-          this.getExecStack(...arguments)
+          this.getExecStack(...arguments),
         )
         if (generator) {
           yield* generator
@@ -239,7 +240,7 @@ export class ExtensionProvider extends GenericProvider {
   @dummyDecorator
   public async *getArtistSongs(
     artist: Artists,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const resp = await this.sendExtensionEventRequest('requestedArtistSongs', [artist, nextPageToken])
     if (resp) {
@@ -248,7 +249,7 @@ export class ExtensionProvider extends GenericProvider {
           'getArtistSongs',
           resp,
           [artist, nextPageToken],
-          this.getExecStack(...arguments)
+          this.getExecStack(...arguments),
         )
       }
       yield resp
@@ -258,7 +259,7 @@ export class ExtensionProvider extends GenericProvider {
   @dummyDecorator
   public async *getAlbumSongs(
     album: Album,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const resp = await this.sendExtensionEventRequest('requestedAlbumSongs', [album, nextPageToken])
     if (resp) {
@@ -278,7 +279,7 @@ export class ExtensionProvider extends GenericProvider {
           'getPlaylistDetails',
           resp,
           [url, invalidateCache ?? false],
-          this.getExecStack(...arguments)
+          this.getExecStack(...arguments),
         )
       }
       return resp?.playlist
@@ -298,17 +299,18 @@ export class ExtensionProvider extends GenericProvider {
   private _lastSearchResult: Record<string, SearchReturnType> = {}
 
   private setLastSearchResult(term: string, data: SearchReturnType | undefined | void) {
-    if (!data) {
-      data = {
+    let parsedData = data
+    if (!parsedData) {
+      parsedData = {
         songs: [],
         albums: [],
         artists: [],
-        playlists: []
+        playlists: [],
       }
     }
 
     this._lastSearchResult = {
-      [term]: data
+      [term]: parsedData,
     }
   }
 
@@ -331,7 +333,7 @@ export class ExtensionProvider extends GenericProvider {
   }
 
   private getSearchProperty(
-    method: 'searchSongs' | 'searchArtists' | 'searchAlbum' | 'searchPlaylists'
+    method: 'searchSongs' | 'searchArtists' | 'searchAlbum' | 'searchPlaylists',
   ): keyof SearchReturnType {
     switch (method) {
       case 'searchSongs':
@@ -347,11 +349,11 @@ export class ExtensionProvider extends GenericProvider {
 
   @dummyDecorator
   private async handleSearchResultForwardRequest<
-    T extends 'searchSongs' | 'searchArtists' | 'searchAlbum' | 'searchPlaylists'
+    T extends 'searchSongs' | 'searchArtists' | 'searchAlbum' | 'searchPlaylists',
   >(
     resp: ExtraExtensionEventReturnType<'requestedSearchResult'>,
     method: T,
-    term: string
+    term: string,
   ): Promise<Awaited<ReturnType<GenericProvider[T]>>> {
     if (resp) {
       const property = this.getSearchProperty(method)
@@ -399,10 +401,10 @@ export class ExtensionProvider extends GenericProvider {
 
   @dummyDecorator
   public async getPlaybackUrlAndDuration(
-    song: Song
+    song: Song,
   ): Promise<{ url: string | undefined; duration?: number } | undefined> {
     const resp = await this.sendExtensionEventRequest('playbackDetailsRequested', [
-      { ...song, _id: this.sanitizeId(song._id) }
+      { ...song, _id: this.sanitizeId(song._id) },
     ])
     if (resp) {
       if (this.isForwardRequest(resp)) {

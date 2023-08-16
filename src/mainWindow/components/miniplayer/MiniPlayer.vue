@@ -99,8 +99,8 @@
 <script lang="ts">
 import { vxm } from '@/mainWindow/store'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
-import { mixins } from 'vue-class-component'
-import { Component, Ref, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Ref, Watch } from 'vue-facing-decorator'
 import SpotifyIcon from '@/icons/SpotifyIcon.vue'
 import YoutubeIcon from '@/icons/YoutubeIcon.vue'
 import { bus } from '@/mainWindow/main'
@@ -207,7 +207,7 @@ export default class App extends mixins(ImgLoader) {
 
   listenLyricsChanged() {
     this.lyricsRaw = this.currentSong?.lyrics
-    bus.$on(EventBus.REFRESH_LYRICS, (lyrics: string) => {
+    bus.on(EventBus.REFRESH_LYRICS, (lyrics: string) => {
       this.lyricsRaw = lyrics
     })
   }

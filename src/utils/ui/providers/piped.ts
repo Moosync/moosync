@@ -1,9 +1,9 @@
-import { ProviderScopes } from '@/utils/commonConstants'
-import { GenericProvider } from './generics/genericProvider'
-import qs from 'qs'
-import { vxm } from '@/mainWindow/store'
-import { FetchWrapper } from './generics/fetchWrapper'
 import { sleep } from '../../common'
+import { FetchWrapper } from './generics/fetchWrapper'
+import { GenericProvider } from './generics/genericProvider'
+import { vxm } from '@/mainWindow/store'
+import { ProviderScopes } from '@/utils/commonConstants'
+import qs from 'qs'
 
 const KeytarService = 'MoosyncPipedToken'
 
@@ -15,7 +15,7 @@ enum PipedResources {
   CHANNEL_DETAILS_NEXT = 'nextpage/channel/${channel_id}',
   STREAM_DETAILS = 'streams/${video_id}',
   LOGIN = 'login',
-  USER_PLAYLISTS = 'user/playlists'
+  USER_PLAYLISTS = 'user/playlists',
 }
 export class PipedProvider extends GenericProvider {
   key = 'youtube'
@@ -23,8 +23,10 @@ export class PipedProvider extends GenericProvider {
   private api = new FetchWrapper()
   private _token: string | undefined
 
+  public loggedIn = false
+
   public async getLoggedIn(): Promise<boolean> {
-    vxm.providers.loggedInYoutube = !!this._token
+    this.loggedIn = !!this._token
     return !!this._token
   }
 
@@ -44,9 +46,9 @@ export class PipedProvider extends GenericProvider {
           method: 'POST',
           body: JSON.stringify({
             username,
-            password
+            password,
           }),
-          invalidateCache: true
+          invalidateCache: true,
         })
       ).json()
 
@@ -84,8 +86,8 @@ export class PipedProvider extends GenericProvider {
         playlist_id: `youtube-playlist:${p.id}`,
         playlist_name: p.name,
         playlist_desc: p.shortDescription,
-        playlist_coverPath: p.thumbnail?.replace('hqdefault', 'maxresdefault'),
-        playlist_song_count: p.videos
+        playlist_coverPath: this.highResImage(p.thumbnail),
+        playlist_song_count: p.videos,
       })
     }
 
@@ -135,7 +137,7 @@ export class PipedProvider extends GenericProvider {
       ProviderScopes.ALBUM_SONGS,
       ProviderScopes.SEARCH_ALBUM,
       ProviderScopes.PLAYLISTS,
-      ProviderScopes.RECOMMENDATIONS
+      ProviderScopes.RECOMMENDATIONS,
     ]
   }
 
@@ -153,7 +155,7 @@ export class PipedProvider extends GenericProvider {
     search: PipedResponses.SearchObject<T, K>,
     authorization?: string,
     invalidateCache = false,
-    tries = 0
+    tries = 0,
   ): Promise<PipedResponses.ResponseType<T, K> | undefined> {
     const BASE_URL = await this.parseBaseURL()
 
@@ -183,7 +185,7 @@ export class PipedProvider extends GenericProvider {
         search,
         method: 'GET',
         headers,
-        invalidateCache
+        invalidateCache,
       })
 
       return resp.json()
@@ -229,13 +231,13 @@ export class PipedProvider extends GenericProvider {
   public async *getRecommendations(): AsyncGenerator<Song[]> {
     const resp = await window.SearchUtils.searchSongsByOptions({
       song: {
-        type: 'YOUTUBE'
-      }
+        type: 'YOUTUBE',
+      },
     })
 
     for (const s of resp) {
       const videoResp = await this.populateRequest(PipedResources.STREAM_DETAILS, {
-        videoId: this.sanitizeId(s._id, 'SONG')
+        videoId: this.sanitizeId(s._id, 'SONG'),
       })
 
       if (videoResp?.relatedStreams) {
@@ -248,19 +250,19 @@ export class PipedProvider extends GenericProvider {
     return {
       artist_id: `youtube-author:${artist.id}`,
       artist_name: artist.name,
-      artist_coverPath: artist.avatarUrl.replace('hqdefault', 'maxresdefault'),
+      artist_coverPath: this.highResImage(artist.avatarUrl),
       artist_extra_info: {
         youtube: {
-          channel_id: artist.id
-        }
-      }
+          channel_id: artist.id,
+        },
+      },
     }
   }
 
   public async getArtistDetails(artist: Artists): Promise<Artists | undefined> {
     if (artist.artist_extra_info?.youtube?.channel_id) {
       const resp = await this.populateRequest(PipedResources.CHANNEL_DETAILS, {
-        channelId: artist.artist_extra_info?.youtube?.channel_id
+        channelId: artist.artist_extra_info?.youtube?.channel_id,
       })
 
       if (resp) {
@@ -268,6 +270,10 @@ export class PipedProvider extends GenericProvider {
       }
     }
     return
+  }
+
+  private highResImage(url?: string) {
+    return url?.replaceAll(/w\d{3}/g, 'w800')?.replaceAll(/h\d{3}/g, 'h800')?.replaceAll('hqdefault', 'maxresdefault')
   }
 
   private parseSongs(...videos: PipedResponses.VideoDetails[]): Song[] {
@@ -283,22 +289,22 @@ export class PipedProvider extends GenericProvider {
                 {
                   artist_id: `youtube-author:${this.getChannelIdFromUploaderUrl(v.uploaderUrl)}`,
                   artist_name: v.uploaderName,
-                  artist_coverPath: v.uploaderAvatar?.replace('hqdefault', 'maxresdefault'),
+                  artist_coverPath: this.highResImage(v.uploaderAvatar),
                   artist_extra_info: {
                     youtube: {
-                      channel_id: this.getChannelIdFromUploaderUrl(v.uploaderUrl)
-                    }
-                  }
-                }
+                      channel_id: this.getChannelIdFromUploaderUrl(v.uploaderUrl),
+                    },
+                  },
+                },
               ]
             : [],
           song_coverPath_low: v.thumbnail,
-          song_coverPath_high: v.thumbnail?.replace('hqdefault', 'maxresdefault'),
+          song_coverPath_high: this.highResImage(v.thumbnail),
           duration: v.duration,
           url: this.getIdFromURL(v.url),
           playbackUrl: this.getIdFromURL(v.url),
           date_added: Date.now(),
-          type: 'YOUTUBE'
+          type: 'YOUTUBE',
         })
       }
     }
@@ -309,10 +315,10 @@ export class PipedProvider extends GenericProvider {
   public async searchSongs(term: string): Promise<Song[]> {
     const resp = await this.populateRequest(PipedResources.SEARCH, {
       q: term,
-      filter: 'music_songs'
+      filter: 'music_songs',
     })
 
-    if (resp && resp.items) {
+    if (resp?.items) {
       return this.parseSongs(...resp.items)
     }
     return []
@@ -325,12 +331,12 @@ export class PipedProvider extends GenericProvider {
       artistList.push({
         artist_id: `youtube-author:${this.getChannelIdFromUploaderUrl(a.url)}`,
         artist_name: a.name,
-        artist_coverPath: a.thumbnail?.replace('hqdefault', 'maxresdefault'),
+        artist_coverPath: this.highResImage(a.thumbnail),
         artist_extra_info: {
           youtube: {
-            channel_id: this.getChannelIdFromUploaderUrl(a.url)
-          }
-        }
+            channel_id: this.getChannelIdFromUploaderUrl(a.url),
+          },
+        },
       })
     }
 
@@ -340,10 +346,10 @@ export class PipedProvider extends GenericProvider {
   public async searchArtists(term: string): Promise<Artists[]> {
     const resp = await this.populateRequest(PipedResources.SEARCH, {
       q: term,
-      filter: 'channels'
+      filter: 'channels',
     })
 
-    if (resp && resp.items) {
+    if (resp?.items) {
       return this.parseArtist(...resp.items)
     }
     return []
@@ -356,7 +362,7 @@ export class PipedProvider extends GenericProvider {
       playlistList.push({
         playlist_id: `youtube-playlist:${this.getPlaylistIdFromUrl(p.url)}`,
         playlist_name: p.name,
-        playlist_coverPath: p.thumbnail?.replace('hqdefault', 'maxresdefault')
+        playlist_coverPath: this.highResImage(p.thumbnail),
       })
     }
 
@@ -366,10 +372,10 @@ export class PipedProvider extends GenericProvider {
   public async searchPlaylists(term: string): Promise<Playlist[]> {
     const resp = await this.populateRequest(PipedResources.SEARCH, {
       q: term,
-      filter: 'playlists'
+      filter: 'playlists',
     })
 
-    if (resp && resp.items) {
+    if (resp?.items) {
       return this.parsePlaylists(...resp.items)
     }
     return []
@@ -383,13 +389,13 @@ export class PipedProvider extends GenericProvider {
         album_id: `youtube-album:${this.getPlaylistIdFromUrl(a.url)}`,
         album_name: a.name,
         album_coverPath_low: a.thumbnail,
-        album_coverPath_high: a.thumbnail?.replace('hqdefault', 'maxresdefault'),
+        album_coverPath_high: this.highResImage(a.thumbnail),
         album_artist: a.uploaderName,
         album_extra_info: {
           youtube: {
-            album_id: this.getPlaylistIdFromUrl(a.url)
-          }
-        }
+            album_id: this.getPlaylistIdFromUrl(a.url),
+          },
+        },
       })
     }
 
@@ -399,10 +405,10 @@ export class PipedProvider extends GenericProvider {
   public async searchAlbum(term: string): Promise<Album[]> {
     const resp = await this.populateRequest(PipedResources.SEARCH, {
       q: term,
-      filter: 'music_albums'
+      filter: 'music_albums',
     })
 
-    if (resp && resp.items) {
+    if (resp?.items) {
       return this.parseAlbums(...resp.items)
     }
     return []
@@ -420,7 +426,7 @@ export class PipedProvider extends GenericProvider {
     return {
       playlist_id: `youtube-playlist:${playlistId}`,
       playlist_name: playlist.name,
-      playlist_coverPath: playlist.thumbnailUrl?.replace('hqdefault', 'maxresdefault')
+      playlist_coverPath: this.highResImage(playlist.thumbnailUrl),
     }
   }
 
@@ -431,10 +437,10 @@ export class PipedProvider extends GenericProvider {
       const resp = await this.populateRequest(
         PipedResources.PLAYLIST_DETAILS,
         {
-          playlistId: id
+          playlistId: id,
         },
         this._token,
-        invalidateCache
+        invalidateCache,
       )
 
       if (resp) {
@@ -447,16 +453,16 @@ export class PipedProvider extends GenericProvider {
   public async *getPlaylistContent(
     id: string,
     invalidateCache?: boolean | undefined,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     const resp = await this.populateRequest(
       nextPageToken ? PipedResources.PLAYLIST_DETAILS_NEXT : PipedResources.PLAYLIST_DETAILS,
       {
         playlistId: id,
-        nextpage: encodeURIComponent(nextPageToken as string)
+        nextpage: encodeURIComponent(nextPageToken as string),
       },
       this._token,
-      invalidateCache
+      invalidateCache,
     )
 
     if (resp) {
@@ -467,7 +473,7 @@ export class PipedProvider extends GenericProvider {
 
   public async *getArtistSongs(
     artist: Artists,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     let channelId = artist.artist_extra_info?.youtube?.channel_id
 
@@ -481,8 +487,8 @@ export class PipedProvider extends GenericProvider {
         nextPageToken ? PipedResources.CHANNEL_DETAILS_NEXT : PipedResources.CHANNEL_DETAILS,
         {
           channelId,
-          nextpage: encodeURIComponent(nextPageToken as string)
-        }
+          nextpage: encodeURIComponent(nextPageToken as string),
+        },
       )
 
       if (resp) {
@@ -494,7 +500,7 @@ export class PipedProvider extends GenericProvider {
 
   public async *getAlbumSongs(
     album: Album,
-    nextPageToken?: unknown
+    nextPageToken?: unknown,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: unknown }> {
     let albumId = album.album_extra_info?.youtube?.album_id
 
@@ -508,8 +514,8 @@ export class PipedProvider extends GenericProvider {
         nextPageToken ? PipedResources.PLAYLIST_DETAILS_NEXT : PipedResources.PLAYLIST_DETAILS,
         {
           playlistId: albumId,
-          nextpage: encodeURIComponent(nextPageToken as string)
-        }
+          nextpage: encodeURIComponent(nextPageToken as string),
+        },
       )
 
       if (resp) {
@@ -524,24 +530,25 @@ export class PipedProvider extends GenericProvider {
   }
 
   public async getPlaybackUrlAndDuration(
-    song: Song
+    song: Song,
   ): Promise<{ url: string | undefined; duration: number } | undefined> {
     return { url: song.url, duration: song.duration }
   }
 
-  public async getStreamUrl(videoId: string) {
-    if (videoId.startsWith('http')) {
-      videoId = this.getIdFromURL(videoId) ?? ''
+  public async getStreamUrl(src: string) {
+    let videoId = src
+    if (src.startsWith('http')) {
+      videoId = this.getIdFromURL(src) ?? ''
     }
 
     if (videoId) {
       const resp = await this.populateRequest(
         PipedResources.STREAM_DETAILS,
         {
-          videoId
+          videoId,
         },
         this._token,
-        true
+        true,
       )
 
       if (resp) {

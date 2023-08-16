@@ -361,6 +361,54 @@ img
 .colors > .item
   margin: 10px 0 0 5px !important
 
+.context-menu
+  background: var(--secondary)
+  border-radius: 16px
+  color: var(--textPrimary) !important
+  div
+    color: var(--textPrimary) !important
+
+.mx-context-menu-item.open
+  background-color: var(--accent) !important
+  div
+    color: var(--textInverse) !important
+  .mx-right-arrow
+    path
+      fill: var(--textInverse) !important
+
+.mx-context-menu-item
+  &:hover
+    background: var(--accent)
+    background-color: var(--accent)
+    div
+      color: var(--textInverse) !important
+    .mx-right-arrow
+      path
+        fill: var(--textInverse) !important
+
+.mx-context-menu-updown
+  background-color: var(--secondary) !important
+
+.mx-right-arrow
+  path
+    fill: var(--textPrimary)
+
+:root
+  --toastify-toast-width: 220px !important
+
+.Toastify__toast
+  border-radius: 12px !important
+
+.Toastify__close-button
+  color: var(--textPrimary) !important
+
+.Toastify__toast--default
+  background: var(--tertiary) !important
+  color: var(--textPrimary) !important
+
+.Toastify__progress-bar-theme--light
+  background: var(--accent) !important
+
 @import "./transitions"
 @import "./scrollbar"
 @import 'node_modules/bootstrap/scss/bootstrap.scss'

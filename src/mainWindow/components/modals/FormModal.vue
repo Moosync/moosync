@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { EventBus } from '@/utils/main/ipc/constants'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 
 @Component({})
@@ -45,7 +45,7 @@ export default class FormModal extends Vue {
   private showing = false
 
   mounted() {
-    bus.$on(EventBus.SHOW_FORM_MODAL, (title: string, callback: (val: number) => void) => {
+    bus.on(EventBus.SHOW_FORM_MODAL, (title: string, callback: (val: number) => void) => {
       if (!this.showing) {
         this.title = title
         this.callback = callback

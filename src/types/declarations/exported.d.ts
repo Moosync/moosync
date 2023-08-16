@@ -718,8 +718,8 @@ interface extensionAPI {
     callback: (
       playlistID: string,
       invalidateCache: boolean,
-      nextPageToken?: unknown
-    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedPlaylistSongs'> | void>
+      nextPageToken?: unknown,
+    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedPlaylistSongs'> | void>,
   ): void
 
   /**
@@ -767,8 +767,8 @@ interface extensionAPI {
   on(
     eventName: 'playbackDetailsRequested',
     callback: (
-      song: Song
-    ) => Promise<PlaybackDetailsReturnType | ForwardRequestReturnType<'playbackDetailsRequested'> | void>
+      song: Song,
+    ) => Promise<PlaybackDetailsReturnType | ForwardRequestReturnType<'playbackDetailsRequested'> | void>,
   ): void
 
   /**
@@ -794,7 +794,7 @@ interface extensionAPI {
    */
   on(
     eventName: 'requestedSongFromURL',
-    callback: (url: string) => Promise<SongReturnType | ForwardRequestReturnType<'requestedSongFromURL'> | void>
+    callback: (url: string) => Promise<SongReturnType | ForwardRequestReturnType<'requestedSongFromURL'> | void>,
   ): void
 
   /**
@@ -804,8 +804,8 @@ interface extensionAPI {
   on(
     eventName: 'requestedPlaylistFromURL',
     callback: (
-      url: string
-    ) => Promise<PlaylistAndSongsReturnType | ForwardRequestReturnType<'requestedPlaylistFromURL'> | void>
+      url: string,
+    ) => Promise<PlaylistAndSongsReturnType | ForwardRequestReturnType<'requestedPlaylistFromURL'> | void>,
   ): void
 
   /**
@@ -814,7 +814,7 @@ interface extensionAPI {
    */
   on(
     eventName: 'requestedSearchResult',
-    callback: (term: string) => Promise<SearchReturnType | ForwardRequestReturnType<'requestedSearchResult'> | void>
+    callback: (term: string) => Promise<SearchReturnType | ForwardRequestReturnType<'requestedSearchResult'> | void>,
   ): void
 
   /**
@@ -823,7 +823,7 @@ interface extensionAPI {
    */
   on(
     eventName: 'requestedRecommendations',
-    callback: () => Promise<RecommendationsReturnType | ForwardRequestReturnType<'requestedRecommendations'> | void>
+    callback: () => Promise<RecommendationsReturnType | ForwardRequestReturnType<'requestedRecommendations'> | void>,
   ): void
 
   /**
@@ -832,7 +832,7 @@ interface extensionAPI {
    */
   on(
     eventName: 'requestedLyrics',
-    callback: (song: Song) => Promise<string | ForwardRequestReturnType<'requestedLyrics'> | void>
+    callback: (song: Song) => Promise<string | ForwardRequestReturnType<'requestedLyrics'> | void>,
   ): void
 
   /**
@@ -843,8 +843,8 @@ interface extensionAPI {
     eventName: 'requestedArtistSongs',
     callback: (
       artist: Artists,
-      nextPageToken?: unknown
-    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedArtistSongs'> | void>
+      nextPageToken?: unknown,
+    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedArtistSongs'> | void>,
   ): void
 
   /**
@@ -855,8 +855,8 @@ interface extensionAPI {
     eventName: 'requestedAlbumSongs',
     callback: (
       album: Album,
-      nextPageToken?: unknown
-    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedAlbumSongs'> | void>
+      nextPageToken?: unknown,
+    ) => Promise<SongsWithPageTokenReturnType | ForwardRequestReturnType<'requestedAlbumSongs'> | void>,
   ): void
 
   /**
@@ -865,7 +865,7 @@ interface extensionAPI {
    */
   on(
     eventName: 'requestedSongFromId',
-    callback: (url: string) => Promise<SongReturnType | ForwardRequestReturnType<'requestedSongFromId'> | void>
+    callback: (url: string) => Promise<SongReturnType | ForwardRequestReturnType<'requestedSongFromId'> | void>,
   ): void
 
   /**
@@ -928,7 +928,7 @@ interface extensionAPI {
     bgColor: string,
     icon: string,
     signinCallback: AccountDetails['signinCallback'],
-    signoutCallback: AccountDetails['signoutCallback']
+    signoutCallback: AccountDetails['signoutCallback'],
   ): Promise<string>
 
   /**

@@ -1,4 +1,3 @@
-import en_US from './en_US.json'
 import af_ZA from './af_ZA.json'
 import ar_SA from './ar_SA.json'
 import ca_ES from './ca_ES.json'
@@ -6,6 +5,7 @@ import cs_CZ from './cs_CZ.json'
 import da_DK from './da_DK.json'
 import de_DE from './de_DE.json'
 import el_GR from './el_GR.json'
+import en_US from './en_US.json'
 import es_ES from './es_ES.json'
 import fi_FI from './fi_FI.json'
 import fr_FR from './fr_FR.json'
@@ -61,5 +61,5 @@ export const messages = {
   uk_UA,
   vi_VN,
   zh_CN,
-  zh_TW
+  zh_TW,
 }

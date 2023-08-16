@@ -8,19 +8,19 @@
  */
 
 import {
-  LayoutPlugin,
-  SidebarPlugin,
-  TooltipPlugin,
-  FormCheckboxPlugin,
-  DropdownPlugin,
-  ModalPlugin,
-  FormInputPlugin,
   ButtonPlugin,
-  ProgressPlugin,
-  TablePlugin,
-  PaginationPlugin,
+  DropdownPlugin,
+  FormCheckboxPlugin,
+  FormInputPlugin,
   InputGroupPlugin,
-  PopoverPlugin
+  LayoutPlugin,
+  ModalPlugin,
+  PaginationPlugin,
+  PopoverPlugin,
+  ProgressPlugin,
+  SidebarPlugin,
+  TablePlugin,
+  TooltipPlugin,
 } from 'bootstrap-vue'
 
 import Vue from 'vue'

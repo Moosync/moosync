@@ -1,13 +1,13 @@
 import { expose } from 'threads/worker'
 
+import { isAlbum, isArtist, isEmpty, sanitizeArtistName } from '@/utils/common'
 import { promises as fsP } from 'fs'
 import { v4 } from 'uuid'
-import { isArtist, sanitizeArtistName, isAlbum, isEmpty } from '@/utils/common'
 
-import path from 'path'
+import { DBUtils } from './utils'
 import { downloadFile } from '@/utils/main/mainUtils'
 import { access, mkdir } from 'fs/promises'
-import { DBUtils } from './utils'
+import path from 'path'
 
 let dbInstance: DBWrapper | undefined = undefined
 
@@ -23,7 +23,7 @@ expose({
       return await (dbInstance[method] as (...args: unknown[]) => unknown)(...args)
     }
     console.error('DB instance not created yet')
-  }
+  },
 })
 
 type KeysOfUnion<T> = T extends T ? keyof T : never
@@ -71,11 +71,14 @@ class DBWrapper extends DBUtils {
 
           const resp = this.db.run(
             `INSERT OR IGNORE INTO allsongs (${keys.join(',')}) VALUES (${'? ,'.repeat(keys.length).slice(0, -2)});`,
-            ...keys.map((val) => marshaledSong[val])
+            ...keys.map((val) => marshaledSong[val]),
           )
 
           // If no song is inserted then ignore
-          if (resp.changes === 0) continue
+          if (resp.changes === 0) {
+            newList.push(newDoc)
+            continue
+          }
 
           this.storeArtistBridge(artistID, marshaledSong._id)
           this.storeGenreBridge(genreID, marshaledSong._id)
@@ -106,7 +109,7 @@ class DBWrapper extends DBUtils {
     const counts = []
     for (const i of data) {
       counts.push(
-        ...this.db.query(`SELECT count(id) as count, ${column} FROM ${bridge} WHERE ${column} = ?`, i[column])
+        ...this.db.query(`SELECT count(id) as count, ${column} FROM ${bridge} WHERE ${column} = ?`, i[column]),
       )
     }
 
@@ -122,12 +125,12 @@ class DBWrapper extends DBUtils {
 
     for (const song_id of songs.map((val) => val._id)) {
       const songCoverPath_low = await this.db.queryFirstCell(
-        `SELECT song_coverPath_low from allsongs WHERE _id = ?`,
-        song_id
+        'SELECT song_coverPath_low from allsongs WHERE _id = ?',
+        song_id,
       )
       const songCoverPath_high = await this.db.queryFirstCell(
-        `SELECT song_coverPath_high from allsongs WHERE _id = ?`,
-        song_id
+        'SELECT song_coverPath_high from allsongs WHERE _id = ?',
+        song_id,
       )
 
       if (songCoverPath_low) pathsToRemove.push(songCoverPath_low)
@@ -156,7 +159,7 @@ class DBWrapper extends DBUtils {
         if (!newArtists.find((val) => val.artist_name === a.artist_name)) {
           const songCount = this.db.queryFirstCell<number>(
             'SELECT COUNT(id) FROM artist_bridge WHERE artist = ?',
-            a.artist_id
+            a.artist_id,
           )
           if (songCount === 0) {
             this.db.delete('artists', { artist_id: a.artist_id })
@@ -197,7 +200,7 @@ class DBWrapper extends DBUtils {
       if (oldAlbum?.album_id) {
         const songCount = this.db.queryFirstCell<number>(
           'SELECT COUNT(id) FROM album_bridge WHERE album = ?',
-          oldAlbum.album_id
+          oldAlbum.album_id,
         )
         if (songCount === 0) {
           this.db.delete('albums', { album_id: oldAlbum.album_id })
@@ -258,13 +261,13 @@ class DBWrapper extends DBUtils {
         if (!skipChecks) {
           const finalCoverPathHigh = await this.getCoverPath(
             oldSong.song_coverPath_high ?? '',
-            song.song_coverPath_high ?? ''
+            song.song_coverPath_high ?? '',
           )
 
           if (song.song_coverPath_low && song.song_coverPath_low !== song.song_coverPath_high) {
             const finalCoverPathLow = await this.getCoverPath(
               oldSong.song_coverPath_low ?? '',
-              song.song_coverPath_low ?? ''
+              song.song_coverPath_low ?? '',
             )
 
             marshalled.song_coverPath_high = finalCoverPathHigh
@@ -291,34 +294,34 @@ class DBWrapper extends DBUtils {
       {
         song: {
           title: term,
-          path: term
-        }
+          path: term,
+        },
       },
-      exclude
+      exclude,
     )
 
     const albums = this.getEntityByOptions<Album>({
       album: {
-        album_name: term
-      }
+        album_name: term,
+      },
     })
 
     const artists = this.getEntityByOptions<Artists>({
       artist: {
-        artist_name: term
-      }
+        artist_name: term,
+      },
     })
 
     const genres = this.getEntityByOptions<Genre>({
       genre: {
-        genre_name: term
-      }
+        genre_name: term,
+      },
     })
 
     const playlists = this.getEntityByOptions<Playlist>({
       playlist: {
-        playlist_name: term
-      }
+        playlist_name: term,
+      },
     })
 
     return { songs, albums, artists, genres, playlists }
@@ -356,7 +359,7 @@ class DBWrapper extends DBUtils {
               if (typeof innerValue === 'boolean') parsedValue = innerValue ? 1 : 0
 
               where += `${addANDorOR()} ${tableName}.${this.getInnerKey(
-                innerKey as keyof SearchableSong
+                innerKey as keyof SearchableSong,
               )} ${this.getLikeQuery(options.invert)} ?`
               args.push(`${parsedValue}`)
             }
@@ -439,9 +442,9 @@ class DBWrapper extends DBUtils {
         ${where}
         ${this.addExcludeWhereClause(args.length === 0, exclude)} GROUP BY allsongs._id ${this.addOrderClause(
         this.normalizeSortBy(options?.sortBy),
-        args.length > 0
+        args.length > 0,
       )}`,
-      ...args
+      ...args,
     )
 
     return this.batchUnmarshal(songs)
@@ -490,8 +493,8 @@ class DBWrapper extends DBUtils {
       return str
     }
 
-    let query = `SELECT * FROM `
-    let where = `WHERE `
+    let query = 'SELECT * FROM '
+    let where = 'WHERE '
     const args: string[] = []
     let orderBy
     for (const [key, value] of Object.entries(options)) {
@@ -522,14 +525,14 @@ class DBWrapper extends DBUtils {
     let ret =
       this.db.query<T>(
         `${query} ${args.length > 0 ? where : ''} ORDER BY ${orderBy} ASC`,
-        ...args.map((val) => val.replaceAll(' ', '%'))
+        ...args.map((val) => val.replaceAll(' ', '%')),
       ) ?? []
     if ('artist' in options) {
       ret = ret.map((val) => {
         if ('artist_extra_info' in val && typeof val.artist_extra_info === 'string') {
           return {
             ...val,
-            artist_extra_info: JSON.parse(val.artist_extra_info)
+            artist_extra_info: JSON.parse(val.artist_extra_info),
           }
         }
         return val
@@ -543,9 +546,9 @@ class DBWrapper extends DBUtils {
     this.db.update(
       'allsongs',
       {
-        lyrics
+        lyrics,
       },
-      ['_id = ?', id]
+      ['_id = ?', id],
     )
   }
 
@@ -555,6 +558,14 @@ class DBWrapper extends DBUtils {
 
   private storeAlbum(album: Album): string | undefined {
     if (album.album_name) {
+      let artistId = undefined
+      if (album.album_artist) {
+        artistId = this.storeArtists({
+          artist_id: '',
+          artist_name: album.album_artist,
+        })[0]
+      }
+
       const resp = this.db.query(
         `INSERT INTO albums (album_id, album_name, album_coverPath_low, album_coverPath_high, album_artist) VALUES (?, ?, ?, ?, ?) 
           ON CONFLICT (album_name) 
@@ -564,7 +575,7 @@ class DBWrapper extends DBUtils {
         album.album_name,
         album.album_coverPath_low,
         album.album_coverPath_high,
-        album.album_artist
+        artistId,
       )
 
       return resp?.[0].album_id
@@ -575,8 +586,8 @@ class DBWrapper extends DBUtils {
     if (album.album_id) {
       const oldAlbum = this.getEntityByOptions<Album>({
         album: {
-          album_id: album.album_id
-        }
+          album_id: album.album_id,
+        },
       })[0]
 
       const coverPath = await this.getCoverPath(oldAlbum?.album_coverPath_high ?? '', album.album_coverPath_high ?? '')
@@ -601,12 +612,12 @@ class DBWrapper extends DBUtils {
 
   public updateAlbumExtraInfo(id: string, info: Album['album_extra_info'], extension?: string) {
     let toUpdateInfo: Album['album_extra_info'] = JSON.parse(
-      this.db.queryFirstCell<string>('SELECT album_extra_info from albums WHERE album_id = ?', id) ?? '{}'
+      this.db.queryFirstCell<string>('SELECT album_extra_info from albums WHERE album_id = ?', id) ?? '{}',
     )
 
     if (!toUpdateInfo || Object.keys(toUpdateInfo).length === 0) {
       toUpdateInfo = {
-        extensions: {}
+        extensions: {},
       }
     }
 
@@ -623,7 +634,7 @@ class DBWrapper extends DBUtils {
 
   private storeAlbumBridge(albumID: string, songID: string) {
     if (albumID) {
-      this.db.run(`INSERT OR IGNORE INTO album_bridge (song, album) VALUES (?, ?)`, songID, albumID)
+      this.db.run('INSERT OR IGNORE INTO album_bridge (song, album) VALUES (?, ?)', songID, albumID)
     }
   }
 
@@ -642,7 +653,7 @@ class DBWrapper extends DBUtils {
           DO UPDATE SET genre_name = EXCLUDED.genre_name
           RETURNING genre_id;`,
             v4(),
-            a
+            a,
           )
 
           genreID.push(resp?.[0].genre_id)
@@ -654,7 +665,7 @@ class DBWrapper extends DBUtils {
 
   private storeGenreBridge(genreID: string[], songID: string) {
     for (const i of genreID) {
-      this.db.run(`INSERT OR IGNORE INTO genre_bridge (song, genre) VALUES (?, ?)`, songID, i)
+      this.db.run('INSERT OR IGNORE INTO genre_bridge (song, genre) VALUES (?, ?)', songID, i)
     }
   }
 
@@ -674,8 +685,8 @@ class DBWrapper extends DBUtils {
     if (artist) {
       const oldArtist = this.getEntityByOptions<Artists>({
         artist: {
-          artist_id: artist.artist_id
-        }
+          artist_id: artist.artist_id,
+        },
       })[0]
 
       if (oldArtist) {
@@ -686,7 +697,7 @@ class DBWrapper extends DBUtils {
           'artists',
           artist,
           ['artist_id = ?', artist.artist_id],
-          ['artist_id', 'artist_extra_info']
+          ['artist_id', 'artist_extra_info'],
         )
 
         if (oldArtist?.artist_coverPath) {
@@ -711,7 +722,7 @@ class DBWrapper extends DBUtils {
           RETURNING artist_id;`,
           v4(),
           a.artist_name,
-          sanitizedName
+          sanitizedName,
         )
 
         artistID.push(resp?.[0].artist_id)
@@ -724,18 +735,18 @@ class DBWrapper extends DBUtils {
 
   public updateArtistExtraInfo(id: string, info: Artists['artist_extra_info'], extension?: string) {
     let toUpdateInfo: Artists['artist_extra_info'] = JSON.parse(
-      this.db.queryFirstCell<string>('SELECT artist_extra_info from artists WHERE artist_id = ?', id) ?? '{}'
+      this.db.queryFirstCell<string>('SELECT artist_extra_info from artists WHERE artist_id = ?', id) ?? '{}',
     )
 
     if (!toUpdateInfo || Object.keys(toUpdateInfo).length === 0) {
       toUpdateInfo = {
         youtube: {
-          channel_id: ''
+          channel_id: '',
         },
         spotify: {
-          artist_id: ''
+          artist_id: '',
         },
-        extensions: {}
+        extensions: {},
       }
     }
 
@@ -752,7 +763,7 @@ class DBWrapper extends DBUtils {
 
   private storeArtistBridge(artistID: string[], songID: string) {
     for (const i of artistID) {
-      this.db.run(`INSERT OR IGNORE INTO artist_bridge (song, artist) VALUES (?, ?)`, songID, i)
+      this.db.run('INSERT OR IGNORE INTO artist_bridge (song, artist) VALUES (?, ?)', songID, i)
     }
   }
 
@@ -778,13 +789,13 @@ class DBWrapper extends DBUtils {
       playlist_path: playlist.playlist_path,
       playlist_coverPath: playlist.playlist_coverPath,
       extension: playlist.extension,
-      icon: playlist.icon
+      icon: playlist.icon,
     }
 
     if (playlist.playlist_path) {
       const id = this.db.queryFirstCell(
-        `SELECT playlist_id FROM playlists WHERE playlist_path = ?`,
-        playlist.playlist_path
+        'SELECT playlist_id FROM playlists WHERE playlist_path = ?',
+        playlist.playlist_path,
       )
       if (id) return id
     }
@@ -817,7 +828,7 @@ class DBWrapper extends DBUtils {
 
   private isPlaylistCoverExists(playlist_id: string) {
     return !!(
-      this.db.query(`SELECT playlist_coverPath FROM playlists WHERE playlist_id = ?`, playlist_id)[0] as Playlist
+      this.db.query('SELECT playlist_coverPath FROM playlists WHERE playlist_id = ?', playlist_id)[0] as Playlist
     )?.playlist_coverPath
   }
 
@@ -879,14 +890,14 @@ class DBWrapper extends DBUtils {
       { table: 'allsongs', columns: ['song_coverPath_high', 'song_coverPath_low'] },
       { table: 'artists', columns: ['artist_coverPath'] },
       { table: 'albums', columns: ['album_coverPath_high', 'album_coverPath_low'] },
-      { table: 'playlists', columns: ['playlist_coverPath'] }
+      { table: 'playlists', columns: ['playlist_coverPath'] },
     ]
 
     for (const val of tableMap) {
       const argMap: string[] = Array(val.columns.length).fill(coverPath)
       const c = this.db.queryFirstCell<number>(
         `SELECT count(*) FROM ${val.table} WHERE ${val.columns.map((val) => `${val} = ?`).join(' OR ')}`,
-        ...argMap
+        ...argMap,
       )
 
       if (c && c > 0) {
@@ -903,7 +914,7 @@ class DBWrapper extends DBUtils {
      ============================= */
 
   public incrementPlayCount(song_id: string) {
-    let playCount = this.db.queryFirstCell<number>(`SELECT play_count FROM analytics WHERE song_id = ?`, song_id)
+    let playCount = this.db.queryFirstCell<number>('SELECT play_count FROM analytics WHERE song_id = ?', song_id)
     if (isEmpty(playCount)) {
       this.db.insert('analytics', { id: v4(), song_id, play_count: 0, play_time: 0 })
       playCount = 0
@@ -919,16 +930,16 @@ class DBWrapper extends DBUtils {
       const where = song_id.map((val) => `'${val}'`).join(', ')
       res = this.db.query(`SELECT song_id, play_count, play_time FROM analytics WHERE song_id in (${where})`)
     } else {
-      res = this.db.query(`SELECT song_id, play_count, play_time FROM analytics`)
+      res = this.db.query('SELECT song_id, play_count, play_time FROM analytics')
     }
     return Object.assign(
       {},
-      ...res.map((val) => ({ [val.song_id]: { playCount: val.play_count, playTime: val.play_time } }))
+      ...res.map((val) => ({ [val.song_id]: { playCount: val.play_count, playTime: val.play_time } })),
     )
   }
 
   public incrementPlayTime(song_id: string, duration: number) {
-    let playTime = this.db.queryFirstCell<number>(`SELECT play_time FROM analytics WHERE song_id = ?`, song_id)
+    let playTime = this.db.queryFirstCell<number>('SELECT play_time FROM analytics WHERE song_id = ?', song_id)
     if (isEmpty(playTime)) {
       this.db.insert('analytics', { id: v4(), song_id, play_count: 0, play_time: duration })
       playTime = 0
@@ -947,7 +958,7 @@ class DBWrapper extends DBUtils {
 
     for (const table of tables) {
       const data: (Album | Artists | Genre)[] = this.db.query(
-        `SELECT * from ${table}s as t1 LEFT JOIN ${table}_bridge t2 ON t1.${table}_id = t2.${table} WHERE t2.${table} IS NULL`
+        `SELECT * from ${table}s as t1 LEFT JOIN ${table}_bridge t2 ON t1.${table}_id = t2.${table} WHERE t2.${table} IS NULL`,
       )
 
       for (const d of data) {
@@ -960,7 +971,7 @@ class DBWrapper extends DBUtils {
         }
 
         this.db.delete(`${table}s`, {
-          [`${table}_id`]: (d as Record<string, string>)[`${table}_id`]
+          [`${table}_id`]: (d as Record<string, string>)[`${table}_id`],
         })
       }
     }

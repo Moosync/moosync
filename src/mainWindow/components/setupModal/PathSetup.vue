@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component } from 'vue-facing-decorator'
 import Logo from '@/icons/LogoIcon.vue'
 import DirectoryGroup from '@/preferenceWindow/components/DirectoryGroup.vue'
 
@@ -45,7 +45,8 @@ import DirectoryGroup from '@/preferenceWindow/components/DirectoryGroup.vue'
   components: {
     Logo,
     DirectoryGroup
-  }
+  },
+  emits: ['next', 'prev']
 })
 export default class PathSetup extends Vue {
   next() {

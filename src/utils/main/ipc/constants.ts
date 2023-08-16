@@ -25,7 +25,7 @@ export enum IpcEvents {
   EXTENSION_HOST = 'extensionHost',
   UPDATE = 'update',
   MPRIS = 'mpris',
-  SPOTIFY = 'spotify'
+  SPOTIFY = 'spotify',
 }
 
 export enum StoreEvents {
@@ -33,7 +33,7 @@ export enum StoreEvents {
   GET_DATA = 'getData',
   SET_SECURE = 'setSecure',
   GET_SECURE = 'getSecure',
-  REMOVE_SECURE = 'removeSecure'
+  REMOVE_SECURE = 'removeSecure',
 }
 
 export enum SearchEvents {
@@ -48,7 +48,7 @@ export enum SearchEvents {
   REQUEST_INVIDIOUS = 'requestInvidious',
   GET_YT_PLAYLIST = 'getYTPlaylist',
   GET_YT_PLAYLIST_CONTENT = 'getYTPlaylistContent',
-  GET_PLAY_COUNT = 'getPlayCount'
+  GET_PLAY_COUNT = 'getPlayCount',
 }
 
 export enum PreferenceEvents {
@@ -72,7 +72,8 @@ export enum PreferenceEvents {
   RESET_TO_DEFAULT = 'resetToDefault',
   TRANSFORM_CSS = 'transformCSS',
   PACK_THEME = 'packTheme',
-  IMPORT_THEME = 'importTheme'
+  IMPORT_THEME = 'importTheme',
+  GENERATE_ICON = 'generateIcon',
 }
 
 export enum WindowEvents {
@@ -113,17 +114,17 @@ export enum WindowEvents {
   ENABLE_FULLSCREEN = 'enableFullscreen',
   DISABLE_FULLSCREEN = 'disableFullscreen',
 
-  HANDLE_RELOAD = 'handleReload'
+  HANDLE_RELOAD = 'handleReload',
 }
 
 export enum AlbumEvents {
   GET_ALL_ALBUMS = 'getAlbums',
-  GET_ALBUM = 'getAlbum'
+  GET_ALBUM = 'getAlbum',
 }
 
 export enum GenreEvents {
   GET_ALL_GENRE = 'getAllGenre',
-  GET_GENRE = 'getGenre'
+  GET_GENRE = 'getGenre',
 }
 
 export enum ScannerEvents {
@@ -134,7 +135,7 @@ export enum ScannerEvents {
   GET_PROGRESS = 'getProgress',
   GET_RECOMMENDED_CPUS = 'getRecommendedCpus',
 
-  PROGRESS_CHANNEL = 'progressChannel'
+  PROGRESS_CHANNEL = 'progressChannel',
 }
 
 export enum PlaylistEvents {
@@ -147,12 +148,12 @@ export enum PlaylistEvents {
   ADDED_PLAYLIST = 'addedPlaylist',
   REMOVE_PLAYLIST = 'removePlaylist',
   SAVE_COVER = 'saveCover',
-  EXPORT = 'export'
+  EXPORT = 'export',
 }
 
 export enum ArtistEvents {
   GET_ALL_ARTISTS = 'getArtists',
-  GET_ARTIST = 'getArtist'
+  GET_ARTIST = 'getArtist',
 }
 
 export enum SongEvents {
@@ -170,7 +171,7 @@ export enum SongEvents {
   GOT_FILE_PATH = 'gotSongPath',
 
   INCREMENT_PLAY_COUNT = 'incrementPlayCount',
-  INCREMENT_PLAY_TIME = 'incrementPlayTime'
+  INCREMENT_PLAY_TIME = 'incrementPlayTime',
 }
 
 export enum LoggerEvents {
@@ -181,7 +182,7 @@ export enum LoggerEvents {
   TRACE = 'trace',
   WATCH_LOGS = 'watchLogs',
   UNWATCH_LOGS = 'unwatchLogs',
-  TOGGLE_DEBUG = 'toggleDebug'
+  TOGGLE_DEBUG = 'toggleDebug',
 }
 
 export enum SpotifyEvents {
@@ -190,18 +191,18 @@ export enum SpotifyEvents {
   REMOVE_EVENT = 'removeEvent',
   COMMAND = 'command',
   CLOSE = 'close',
-  GET_TOKEN = 'getToken'
+  GET_TOKEN = 'getToken',
 }
 
 export enum NotifierEvents {
-  LIBVIPS_INSTALLED = 'isLibvipsInstalled'
+  LIBVIPS_INSTALLED = 'isLibvipsInstalled',
 }
 
 export enum MprisEvents {
   PLAYBACK_STATE_CHANGED = 'playbackStateChanged',
   SONG_INFO_CHANGED = 'songInfoChanged',
   BUTTON_STATUS_CHANGED = 'buttonStatusChanged',
-  ON_BUTTON_PRESSED = 'onButtonPressed'
+  ON_BUTTON_PRESSED = 'onButtonPressed',
 }
 
 export enum ExtensionHostEvents {
@@ -221,24 +222,23 @@ export enum ExtensionHostEvents {
   PERFORM_ACCOUNT_LOGIN = 'performAccountLogin',
   ON_EXTENSIONS_CHANGED = 'onExtensionsChanged',
   GET_EXTENSION_PROVIDER_SCOPES = 'getExtensionProviderScopes',
-  GET_DISPLAY_NAME = 'getDisplayName'
+  GET_DISPLAY_NAME = 'getDisplayName',
 }
 
 export enum ServiceProviderEvents {
-  LOGIN = 'login'
+  LOGIN = 'login',
 }
 
 export enum UpdateEvents {
   CHECK_UPDATES = 'checkUpdates',
   GOT_UPDATE = 'gotUpdate',
-  UPDATE_NOW = 'updateNow'
+  UPDATE_NOW = 'updateNow',
 }
 
 export enum EventBus {
   UPDATE_AUDIO_TIME = 'timestamp-update',
   SONG_SELECTED = 'song-select',
   COVER_SELECTED = 'cover-select',
-  SHOW_CONTEXT = 'show-context',
   SHOW_NEW_PLAYLIST_MODAL = 'show-new-playlist-modal',
   SHOW_DELETE_MODAL = 'show-delete-modal',
   SHOW_SONG_FROM_URL_MODAL = 'show-song-from-url',
@@ -256,5 +256,5 @@ export enum EventBus {
   REFRESH_LYRICS = 'refresh-lyrics',
   UPDATE_OPTIONAL_PROVIDER = 'update-optional-provider',
   FORCE_LOAD_SONG = 'force-load-song',
-  IGNORE_MUSIC_INFO_SCROLL = 'ignore-music-info-scroll'
+  IGNORE_MUSIC_INFO_SCROLL = 'ignore-music-info-scroll',
 }

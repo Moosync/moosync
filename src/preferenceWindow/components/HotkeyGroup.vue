@@ -27,7 +27,7 @@
           <b-row no-gutters>
             <b-dropdown block :text="getActiveTitle(index)" toggle-class="dropdown-button h-100" class="w-100">
               <b-dropdown-item
-                v-for="action in getFilteredDropdownList(index)"
+                v-for="action in getFilteredDropdownList()"
                 :key="action.val"
                 @click="setSelectedAction(index, action.key)"
                 >{{ action.title }}
@@ -48,8 +48,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { Mixins } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 import { HotkeyEvents, HotKeyEventsExtras } from '@/utils/commonConstants'
@@ -61,55 +61,55 @@ import CrossIcon from '@/icons/CrossIcon.vue'
     CrossIcon
   }
 })
-export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyPair[]>>(ExtensionPreferenceMixin) {
-  constructor() {
-    super()
-    this.shouldMergeDefaultValues = false
-  }
+export default class HotkeyGroup extends mixins(ExtensionPreferenceMixin) {
+  declare value: HotkeyPair[]
 
-  private get definedActions() {
+  shouldMergeDefaultValues = false
+
+  get definedActions() {
     return this.value
   }
 
-  private getActiveTitle(index: number) {
+  getActiveTitle(index: number) {
     if (this.value) {
-      return HotKeyEventsExtras[this.value[index]?.value ?? 0].title
+      this.value[index]?.value
+      return HotKeyEventsExtras[this.value[index]?.value ?? 0]?.title
     }
   }
 
-  private getHotkeyValue() {
+  getHotkeyValue() {
     return Object.values(HotkeyEvents).filter(
       (key) => typeof key === 'number' && this.value?.findIndex((val) => val.value === key) === -1
     ) as HotkeyEvents[]
   }
 
-  private getFilteredDropdownList() {
+  getFilteredDropdownList() {
     return this.getHotkeyValue().map((val: HotkeyEvents) => {
       return { title: HotKeyEventsExtras[val].title, key: val }
     })
   }
 
-  private getKeybind(index: number) {
+  getKeybind(index: number) {
     if (this.value) {
       const combo = this.value[index]?.key?.at(0) ?? []
       return combo.length > 0 ? combo.map((val) => this.sanitizeKeys(val)).join(' + ') : 'Unassigned'
     }
   }
 
-  private setSelectedAction(index: number, item: HotkeyEvents) {
+  setSelectedAction(index: number, item: HotkeyEvents) {
     this.value?.splice(index, 1, {
       key: this.value[index].key,
       value: item
     })
-    this.onInputChange()
+    this.onInputChange(this.value)
   }
 
-  private setSelectedKeybind(index: number, combo: HotkeyPair['key']) {
+  setSelectedKeybind(index: number, combo: HotkeyPair['key']) {
     this.value?.splice(index, 1, {
       key: combo,
       value: this.value[index].value
     })
-    this.onInputChange()
+    this.onInputChange(this.value)
   }
 
   private abortController: AbortController | null = null
@@ -138,7 +138,7 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
     return input
   }
 
-  private getKeybindColor(index: number) {
+  getKeybindColor(index: number) {
     if (index === this.listeningIndex) {
       return 'var(--accent)'
     }
@@ -146,7 +146,7 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
     return 'var(--textPrimary)'
   }
 
-  private toggleKeybindListener(index: number) {
+  toggleKeybindListener(index: number) {
     if (this.abortController) {
       this.stopListeningKeybind()
     } else {
@@ -156,7 +156,7 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
 
   private keyComboMap: Record<string, boolean> = {}
 
-  private stopListeningKeybind(e?: KeyboardEvent | MouseEvent) {
+  stopListeningKeybind(e?: KeyboardEvent | MouseEvent) {
     e?.preventDefault()
     this.abortController?.abort()
     this.abortController = null
@@ -164,7 +164,7 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
     this.keyComboMap = {}
   }
 
-  private startListeningKeybind(index: number) {
+  startListeningKeybind(index: number) {
     this.abortController = new AbortController()
     this.listeningIndex = index
 
@@ -192,12 +192,12 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
     document.addEventListener('keyup', this.stopListeningKeybind, { signal: this.abortController?.signal })
   }
 
-  private removeKeybind(index: number) {
+  removeKeybind(index: number) {
     this.value?.splice(index, 1)
-    this.onInputChange()
+    this.onInputChange(this.value)
   }
 
-  private addKeybind() {
+  addKeybind() {
     this.value?.push({
       key: [],
       value: 0
@@ -205,10 +205,10 @@ export default class HotkeyGroup extends Mixins<ExtensionPreferenceMixin<HotkeyP
   }
 
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 }
 </script>
 

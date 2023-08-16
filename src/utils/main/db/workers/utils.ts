@@ -1,9 +1,9 @@
+import { prefixLogger } from '../../logger/utils'
+import { migrations } from '../migrations'
 import { isEmpty } from '@/utils/common'
 import DB, { BetterSqlite3Helper } from 'better-sqlite3-helper'
-import { migrations } from '../migrations'
 import log, { getLogger, levels } from 'loglevel'
 import { v1 } from 'uuid'
-import { prefixLogger } from '../../logger/utils'
 
 export class DBUtils {
   protected db: BetterSqlite3Helper.DBInstance
@@ -22,8 +22,8 @@ export class DBUtils {
       fileMustExist: false,
       WAL: true,
       migrate: {
-        migrations: migrations
-      }
+        migrations: migrations,
+      },
     }
 
     if (process.env.DEBUG_LOGGING) {
@@ -65,7 +65,7 @@ export class DBUtils {
         artist_id: split[0],
         artist_name: Buffer.from(split[1], 'hex').toString('utf8'),
         artist_coverPath: Buffer.from(split[2], 'hex').toString('utf8'),
-        artist_extra_info: JSON.parse(Buffer.from(split[3], 'hex').toString('utf8') || '{}')
+        artist_extra_info: JSON.parse(Buffer.from(split[3], 'hex').toString('utf8') || '{}'),
       })
     }
 
@@ -87,7 +87,8 @@ export class DBUtils {
         album_coverPath_low: dbSong.album_coverPath_low,
         album_song_count: dbSong.album_song_count,
         album_extra_info: JSON.parse(dbSong.album_extra_info ?? '{}'),
-        year: dbSong.album_year
+        album_artist: dbSong.album_artist,
+        year: dbSong.album_year,
       },
       date: dbSong.date,
       year: dbSong.year,
@@ -111,7 +112,7 @@ export class DBUtils {
       providerExtension: dbSong.provider_extension,
       playCount: dbSong.play_count ?? 0,
       track_no: dbSong.track_no,
-      showInLibrary: !!dbSong.show_in_library
+      showInLibrary: !!dbSong.show_in_library,
     }
   }
 
@@ -145,7 +146,7 @@ export class DBUtils {
       icon: song.icon,
       track_no: song.track_no,
       provider_extension: song.providerExtension,
-      show_in_library: isEmpty(song.showInLibrary) || song.showInLibrary ? 1 : 0
+      show_in_library: isEmpty(song.showInLibrary) || song.showInLibrary ? 1 : 0,
     }
   }
 
@@ -173,35 +174,35 @@ export class DBUtils {
 
   private leftJoinAlbums(exclude_table?: string) {
     if (exclude_table !== 'album') {
-      return ` LEFT JOIN album_bridge ON allsongs._id = album_bridge.song`
+      return ' LEFT JOIN album_bridge ON allsongs._id = album_bridge.song'
     }
     return ''
   }
 
   private leftJoinArtists(exclude_table?: string) {
     if (exclude_table !== 'artists') {
-      return ` LEFT JOIN artist_bridge ON allsongs._id = artist_bridge.song`
+      return ' LEFT JOIN artist_bridge ON allsongs._id = artist_bridge.song'
     }
     return ''
   }
 
   private leftJoinGenre(exclude_table?: string) {
     if (exclude_table !== 'genres') {
-      return ` LEFT JOIN genre_bridge ON allsongs._id = genre_bridge.song`
+      return ' LEFT JOIN genre_bridge ON allsongs._id = genre_bridge.song'
     }
     return ''
   }
 
   private leftJoinPLaylists(exclude_table?: string) {
     if (exclude_table !== 'playlists') {
-      return ` LEFT JOIN playlist_bridge ON allsongs._id = playlist_bridge.song`
+      return ' LEFT JOIN playlist_bridge ON allsongs._id = playlist_bridge.song'
     }
     return ''
   }
 
   private leftJoinAnalytics(exclude_table?: string) {
     if (exclude_table !== 'analytics') {
-      return ` LEFT JOIN analytics ON allsongs._id = analytics.song_id`
+      return ' LEFT JOIN analytics ON allsongs._id = analytics.song_id'
     }
     return ''
   }
@@ -230,6 +231,6 @@ export class DBUtils {
   }
 
   protected getSelectClause() {
-    return `allsongs._id, allsongs.path, allsongs.size, allsongs.inode, allsongs.deviceno, allsongs.title, allsongs.song_coverPath_high, allsongs.song_coverPath_low, allsongs.date, allsongs.date_added, allsongs.year, allsongs.lyrics, allsongs.bitrate, allsongs.codec, allsongs.container, allsongs.duration, allsongs.sampleRate, allsongs.hash, allsongs.type, allsongs.url, allsongs.icon, allsongs.playbackUrl, allsongs.provider_extension, allsongs.show_in_library, allsongs.track_no, albums.album_id, albums.album_name, albums.album_coverPath_high, albums.album_coverPath_low, albums.album_song_count, albums.year as album_year, albums.album_extra_info, analytics.play_count`
+    return 'allsongs._id, allsongs.path, allsongs.size, allsongs.inode, allsongs.deviceno, allsongs.title, allsongs.song_coverPath_high, allsongs.song_coverPath_low, allsongs.date, allsongs.date_added, allsongs.year, allsongs.lyrics, allsongs.bitrate, allsongs.codec, allsongs.container, allsongs.duration, allsongs.sampleRate, allsongs.hash, allsongs.type, allsongs.url, allsongs.icon, allsongs.playbackUrl, allsongs.provider_extension, allsongs.show_in_library, allsongs.track_no, albums.album_id, albums.album_name, albums.album_coverPath_high, albums.album_coverPath_low, albums.album_song_count, albums.year as album_year, albums.album_extra_info, albums.album_artist, analytics.play_count'
   }
 }

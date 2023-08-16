@@ -10,7 +10,7 @@
 <template>
   <div class="d-flex h-100 w-100">
     <b-container fluid>
-      <TabCarousel class="tab-carousel" v-on="$listeners" :items="optionalProviders" :isSortAsc="isSortAsc" />
+      <TabCarousel class="tab-carousel" v-bind="$attrs" :items="optionalProviders" :isSortAsc="isSortAsc" />
       <b-row v-if="isLoading">
         <b-col class="mb-2">
           <b-spinner>{{ $t('loading') }}</b-spinner>
@@ -23,7 +23,7 @@
           :item-size="94"
           key-field="_id"
           :direction="'vertical'"
-          @scroll.native="onScroll"
+          @scroll-end="onScrollEnd"
           v-click-outside="clearSelection"
         >
           <template v-slot="{ item, index }">
@@ -47,8 +47,8 @@
 <script lang="ts">
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import SongListMixin from '@/utils/ui/mixins/SongListMixin'
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import SongListCompactItem from './SongListCompactItem.vue'
 import EllipsisIcon from '@/icons/EllipsisIcon.vue'
 import TabCarousel from '../../generic/TabCarousel.vue'
@@ -59,6 +59,12 @@ import { vxm } from '@/mainWindow/store'
     SongListCompactItem,
     EllipsisIcon,
     TabCarousel
+  },
+  emits: ['onRowContext', 'onRowDoubleClicked', 'onRowPlayNowClicked', 'onArtistClicked', 'onScrollEnd'],
+  options: {
+    compatConfig: {
+      INSTANCE_LISTENERS: false
+    }
   }
 })
 export default class SongListCompact extends mixins(ImgLoader, SongListMixin) {
@@ -88,8 +94,8 @@ export default class SongListCompact extends mixins(ImgLoader, SongListMixin) {
     this.$emit('onArtistClicked', item)
   }
 
-  onScroll(e: Event) {
-    this.$emit('scroll', e)
+  onScrollEnd(e: Event) {
+    this.$emit('onScrollEnd', e)
   }
 
   get isSortAsc() {

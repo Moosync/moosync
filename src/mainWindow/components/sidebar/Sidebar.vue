@@ -20,7 +20,7 @@
     >
       <template #header>
         <div class="d-flex w-100 mt-3 justify-content-between">
-          <Toggle class="toggle" @click.native="toggleOpen()" />
+          <Toggle class="toggle" @click="toggleOpen()" />
           <!-- <Rooms class="rooms-button" id="rooms" v-if="showRoomsButton" />
           <b-popover
             v-if="showRoomsButton"
@@ -67,15 +67,17 @@ import Rooms from '@/icons/RoomsIcon.vue'
 import Toggle from '@/icons/ToggleIcon.vue'
 import Tabs from '@/mainWindow/components/sidebar/components/Tabs.vue'
 import { PeerMode } from '@/mainWindow/store/syncState'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 import { vxm } from '@/mainWindow/store'
+import { bus } from '@/mainWindow/main'
 
 @Component({
   components: {
     Toggle,
     Rooms,
     Tabs
-  }
+  },
+  emits: ['toggleOpen']
 })
 export default class Sidebar extends Vue {
   private roomInput = ''
@@ -121,11 +123,11 @@ export default class Sidebar extends Vue {
   }
 
   private joinRoom() {
-    this.$root.$emit('join-room', this.roomInput)
+    bus.emit('join-room', this.roomInput)
   }
 
   private createRoom() {
-    this.$root.$emit('create-room')
+    bus.emit('create-room')
   }
 }
 </script>

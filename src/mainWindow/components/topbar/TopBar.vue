@@ -16,21 +16,21 @@
         <b-col cols="auto" class="pr-5 ml-auto my-auto icons-bar d-flex">
           <b-row class="flex-grow-1">
             <b-col cols="auto" v-if="showRefreshIcon">
-              <Refresh @click.native="refreshPage" class="refresh-icon button-grow" />
+              <Refresh @click="refreshPage" class="refresh-icon button-grow" />
             </b-col>
             <!-- <b-col cols="auto"> <Notifications /> </b-col> -->
             <b-col v-if="!isJukeboxModeActive" cols="auto">
               <Accounts />
             </b-col>
             <b-col v-if="!isJukeboxModeActive" cols="auto">
-              <Gear id="settings" class="gear-icon" @click.native="openSettings" />
+              <Gear id="settings" class="gear-icon" @click="openSettings" />
             </b-col>
             <b-col cols="auto">
               <JukeboxIcon
                 v-if="showJukeboxIcon"
                 :isActive="isJukeboxModeActive"
                 class="jukebox-icon button-grow"
-                @click.native="toggleJukeboxMode"
+                @click="toggleJukeboxMode"
               />
             </b-col>
             <b-col cols="auto" v-if="showUpdateIcon"> <Update class="update-icon button-grow" /></b-col>
@@ -44,7 +44,7 @@
 <script lang="ts">
 import Navigation from '@/mainWindow/components/topbar/components/Navigation.vue'
 import Search from '@/mainWindow/components/topbar/components/Search.vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import Accounts from '@/mainWindow/components/topbar/components/Accounts.vue'
 import Notifications from '@/mainWindow/components/topbar/components/Notifications.vue'
 import Refresh from '@/icons/RefreshIcon.vue'
@@ -56,7 +56,7 @@ import { bus } from '../../main'
 import JukeboxIcon from '@/icons/JukeboxIcon.vue'
 import { vxm } from '@/mainWindow/store'
 import JukeboxMixin from '@/utils/ui/mixins/JukeboxMixin'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 
 @Component({
   components: {
@@ -85,7 +85,7 @@ export default class TopBar extends mixins(JukeboxMixin) {
   }
 
   refreshPage() {
-    bus.$emit(EventBus.REFRESH_PAGE)
+    bus.emit(EventBus.REFRESH_PAGE)
   }
 
   private async handleJukeboxIcon() {
@@ -121,7 +121,7 @@ export default class TopBar extends mixins(JukeboxMixin) {
     if (vxm.themes.jukeboxMode) {
       const pin = await window.Store.getSecure('jukebox_pin')
       if (pin) {
-        bus.$emit(EventBus.SHOW_PIN_ENTRY_MODAL, pin.length, (input: string) => {
+        bus.emit(EventBus.SHOW_PIN_ENTRY_MODAL, pin.length, (input: string) => {
           if (pin === input) {
             vxm.themes.jukeboxMode = false
             return true

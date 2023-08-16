@@ -73,13 +73,13 @@
         </b-row>
       </div>
     </b-container>
-    <CrossIcon @click.native="close" class="close-icon button-grow" />
+    <CrossIcon @click="close" class="close-icon button-grow" />
   </b-modal>
 </template>
 
 <script lang="ts">
 import { EventBus } from '@/utils/main/ipc/constants'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import CrossIcon from '@/icons/CrossIcon.vue'
@@ -116,7 +116,7 @@ export default class OAuthModal extends Vue {
   }
 
   close() {
-    bus.$emit(EventBus.HIDE_OAUTH_MODAL)
+    bus.emit(EventBus.HIDE_OAUTH_MODAL)
   }
 
   copyToClipboard() {
@@ -137,7 +137,7 @@ export default class OAuthModal extends Vue {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_OAUTH_MODAL, (data: ExtendedLoginModalData) => {
+    bus.on(EventBus.SHOW_OAUTH_MODAL, (data: ExtendedLoginModalData) => {
       if (!this.showing) {
         this.alternative = false
         this.title = data.providerName
@@ -151,7 +151,7 @@ export default class OAuthModal extends Vue {
       }
     })
 
-    bus.$on(EventBus.HIDE_OAUTH_MODAL, () => {
+    bus.on(EventBus.HIDE_OAUTH_MODAL, () => {
       if (this.showing) {
         this.$bvModal.hide(this.id)
         this.title = ''

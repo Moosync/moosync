@@ -10,14 +10,14 @@
 import { Observable, SubscriptionObserver } from 'observable-fns'
 import { expose } from 'threads/worker'
 
+import { prefixLogger } from '../logger/utils'
+import { sanitizeArtistName } from '@/utils/common'
 import axios, { AxiosError } from 'axios'
+import rateLimit from 'axios-rate-limit'
 import axiosRetry from 'axios-retry'
 import { createHash } from 'crypto'
 import fs from 'fs'
-import rateLimit from 'axios-rate-limit'
 import { getLogger, levels } from 'loglevel'
-import { prefixLogger } from '../logger/utils'
-import { sanitizeArtistName } from '@/utils/common'
 
 const logger = getLogger('ScrapeWorker')
 logger.setLevel(process.env.DEBUG_LOGGING ? levels.DEBUG : levels.INFO)
@@ -35,7 +35,7 @@ expose({
       prefixLogger(loggerPath, logger)
       fetchArtworks(artists, observer)
     })
-  }
+  },
 })
 
 axios.defaults.timeout = 3000
@@ -44,20 +44,20 @@ axios.defaults.timeout = 3000
 const musicbrainz = rateLimit(
   axios.create({
     baseURL: 'https://musicbrainz.org/ws/2/artist/',
-    headers: { 'User-Agent': 'moosync/' + process.env.MOOSYNC_VERSION.toString() + ' (ovenoboyo@gmail.com)' },
-    timeout: 5000
+    headers: { 'User-Agent': `moosync/${process.env.MOOSYNC_VERSION.toString()} (ovenoboyo@gmail.com)` },
+    timeout: 5000,
   }),
   {
     maxRequests: 1,
-    perMilliseconds: 1250
-  }
+    perMilliseconds: 1250,
+  },
 )
 
 axiosRetry(axios, {
   retryDelay: (retryCount) => {
     return retryCount * 1000
   },
-  retries: 3
+  retries: 3,
 })
 
 async function queryMbid(name: string) {
@@ -106,9 +106,9 @@ async function fetchImagesRemote(a: Artists) {
   if (a.artist_mbid) {
     logger.debug('Fetching urls from MusicBrainz for', a.artist_name)
     const data = await queryArtistUrls(a.artist_mbid)
-    if (data && data.data.relations) {
+    if (data?.data.relations) {
       for (const r of data.data.relations) {
-        if (r.type == 'image') {
+        if (r.type === 'image') {
           logger.info('Found artwork for', a.artist_name, 'on MusicBrainz')
           return downloadImage(r.url.resource)
         }
@@ -140,9 +140,9 @@ async function fetchImagesRemote(a: Artists) {
 async function fetchTheAudioDB(artist_name: string) {
   try {
     const data = await axios.get(
-      encodeURI(`https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artist_name.replaceAll(' ', '%20')}`)
+      encodeURI(`https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artist_name.replaceAll(' ', '%20')}`),
     )
-    if (data.data && data.data.artists && data.data.artists.length > 0) {
+    if (data.data?.artists && data.data.artists.length > 0) {
       for (const art in data.data.artists[0]) {
         if (art.includes('strArtistThumb') || art.includes('strArtistFanart')) {
           if (data.data.artists[0][art]) {
@@ -159,7 +159,7 @@ async function fetchTheAudioDB(artist_name: string) {
 async function fetchFanartTv(mbid: string): Promise<string | undefined> {
   try {
     const data = await axios.get(
-      encodeURI(`http://webservice.fanart.tv/v3/music/${mbid}?api_key=68746a37e506c5fe70c80e13dc84d8b2`)
+      encodeURI(`http://webservice.fanart.tv/v3/music/${mbid}?api_key=68746a37e506c5fe70c80e13dc84d8b2`),
     )
     if (data.data) {
       return data.data.artistthumb ? data.data.artistthumb[0].url : undefined
@@ -228,7 +228,7 @@ async function checkCoverExists(coverPath: string | undefined): Promise<boolean>
 // Even then axios will handle rate limits
 export async function fetchArtworks(
   artists: Artists[],
-  observer: SubscriptionObserver<{ artist: Artists; cover: string | undefined }>
+  observer: SubscriptionObserver<{ artist: Artists; cover: string | undefined }>,
 ) {
   for (const a of artists) {
     const coverExists = await checkCoverExists(a.artist_coverPath)

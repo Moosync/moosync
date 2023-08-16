@@ -32,36 +32,37 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
-import Vue from 'vue'
+import { Component, Prop, Watch } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 import colorPicker from '@caohenghu/vue-colorpicker'
 
 @Component({
   components: {
     colorPicker
-  }
+  },
+  emits: ['colorChange']
 })
 export default class ColorPicker extends Vue {
   @Prop({ default: 'Primary' })
-  private title!: string
+  title!: string
 
-  private showColorPicker = false
-  private pickerPosition = [0, 0]
+  showColorPicker = false
+  pickerPosition = [0, 0]
 
   @Prop({ default: '#ffffff' })
-  private defColor!: string
+  defColor!: string
 
   @Watch('defColor') onDefaultChange() {
     this.color = this.defColor
   }
 
-  private color = ''
+  color = ''
 
-  private hideColorPicker() {
+  hideColorPicker() {
     this.showColorPicker = false
   }
 
-  public toggleColorPicker(mouseEvent?: PointerEvent) {
+  public toggleColorPicker(mouseEvent?: MouseEvent) {
     const parent = this.$refs['parent'] as HTMLDivElement
     this.pickerPosition = [parent.offsetLeft + 40, parent.offsetTop + 40]
     if (mouseEvent) {
@@ -78,7 +79,7 @@ export default class ColorPicker extends Vue {
     return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`
   }
 
-  private changeColor(color: ColorPickerOutput) {
+  changeColor(color: ColorPickerOutput) {
     this.color = this.RGBAToString(color.rgba)
     this.$emit('colorChange', this.color)
   }

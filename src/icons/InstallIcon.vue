@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('click', $event)">
     <path
       d="M20 17H4V5H12V3H4C2.9 3 2 3.9 2 5V17C2 17.5304 2.21071 18.0391 2.58579 18.4142C2.96086 18.7893 3.46957 19 4 19H8V20C8 20.55 8.45 21 9 21H15C15.55 21 16 20.55 16 20V19H20C21.1 19 22 18.1 22 17V14H20V17Z"
       fill="var(--textPrimary)"

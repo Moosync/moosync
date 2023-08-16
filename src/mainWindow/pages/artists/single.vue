@@ -33,10 +33,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-facing-decorator'
 import SongView from '@/mainWindow/components/songView/SongView.vue'
 
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
 import RemoteSong from '@/utils/ui/mixins/remoteSongMixin'
 import { emptyGen, getRandomFromArray } from '@/utils/common'
@@ -44,6 +44,7 @@ import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import ProviderFetchMixin from '../../../utils/ui/mixins/ProviderFetchMixin'
 import { ProviderScopes } from '@/utils/commonConstants'
+import { convertProxy } from '@/utils/ui/common'
 
 @Component({
   components: {
@@ -52,8 +53,6 @@ import { ProviderScopes } from '@/utils/commonConstants'
 })
 export default class SingleArtistView extends mixins(ContextMenuMixin, RemoteSong, ProviderFetchMixin) {
   private artist: Artists | null = null
-
-  private fetchArtistPromise: Promise<void> | undefined
 
   get artistSongProviders(): TabCarouselItem[] {
     return this.fetchProviders()
@@ -79,7 +78,7 @@ export default class SingleArtistView extends mixins(ContextMenuMixin, RemoteSon
   get defaultDetails(): SongDetailDefaults {
     return {
       defaultTitle: this.artist?.artist_name,
-      defaultSubSubtitle: this.$tc('songView.details.songCount', this.filteredSongList.length),
+      defaultSubSubtitle: this.$t('songView.details.songCount', this.filteredSongList.length),
       defaultCover: this.artist?.artist_coverPath
     }
   }
@@ -112,30 +111,26 @@ export default class SingleArtistView extends mixins(ContextMenuMixin, RemoteSon
         return emptyGen()
       }
     }
-
-    this.onArtistChange()
   }
 
   @Watch('$route.query.id')
   private async onArtistChange() {
-    const promises: Promise<void>[] = []
     if (typeof this.$route.query.id === 'string') {
       this.artist = null
       this.clearNextPageTokens()
       this.clearSongList()
-      promises.push(this.fetchArtists())
-      promises.push(this.fetchSongList())
+      await this.fetchArtists()
+      await this.fetchSongList()
     }
-    await Promise.all(promises)
   }
 
   async mounted() {
-    await this.fetchArtistPromise
+    await this.onArtistChange()
     if (this.$route.query.defaultProviders) {
       for (const p of this.$route.query.defaultProviders) {
         if (p) {
           this.onProviderChanged({ key: p, checked: true })
-          bus.$emit(EventBus.UPDATE_OPTIONAL_PROVIDER, p)
+          bus.emit(EventBus.UPDATE_OPTIONAL_PROVIDER, p)
         }
       }
     }
@@ -145,7 +140,7 @@ export default class SingleArtistView extends mixins(ContextMenuMixin, RemoteSon
     this.artist = (
       await window.SearchUtils.searchEntityByOptions<Artists>({
         artist: {
-          artist_id: this.$route.query.id as string
+          artist_id: convertProxy(this.$route.query.id as string)
         }
       })
     )[0]
@@ -166,7 +161,7 @@ export default class SingleArtistView extends mixins(ContextMenuMixin, RemoteSon
         artist_coverPath: fetchedArtist?.artist_coverPath
       }
 
-      await window.DBUtils.updateArtist(this.artist)
+      await window.DBUtils.updateArtist(convertProxy(this.artist, true))
     }
   }
 

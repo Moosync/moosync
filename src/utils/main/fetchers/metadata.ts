@@ -1,12 +1,12 @@
+import { getSongDB } from '../db'
+import { CacheHandler } from './cacheFile'
+import { createHash } from 'crypto'
 import { app } from 'electron'
 import path from 'path'
-import { CacheHandler } from './cacheFile'
-import { getSongDB } from '../db'
 import { setTimeout } from 'timers/promises'
-import { createHash } from 'crypto'
 
 const musicBrainzHeaders = {
-  'User-Agent': 'moosync/' + process.env.MOOSYNC_VERSION.toString() + ' (ovenoboyo@gmail.com)'
+  'User-Agent': `moosync/${process.env.MOOSYNC_VERSION.toString()} (ovenoboyo@gmail.com)`,
 }
 
 export class MetadataFetcher extends CacheHandler {
@@ -17,7 +17,7 @@ export class MetadataFetcher extends CacheHandler {
     headers?: Record<string, string>,
     referrer?: string,
     tryJson?: boolean,
-    invalidateCache?: boolean
+    invalidateCache?: boolean,
   ): Promise<T> {
     const isMusicbrainzRequest = url.startsWith('https://musicbrainz.org/')
     if (isMusicbrainzRequest) {
@@ -35,11 +35,7 @@ export class MetadataFetcher extends CacheHandler {
   }
 
   private sanitizeArtistName(name: string) {
-    return name
-      .trim()
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      .toLowerCase()
-      .replaceAll('vevo', '')
+    return name.trim().replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().replaceAll('vevo', '')
   }
 
   public async fetchMBID(artists: Artists[]) {
@@ -47,11 +43,11 @@ export class MetadataFetcher extends CacheHandler {
       if (!a.artist_mbid && a.artist_name) {
         const resp = await this.get<MusicBrainz.ArtistSearchResponse>(
           `https://musicbrainz.org/ws/2/artist/?limit=1&query=artist:${this.sanitizeArtistName(
-            a.artist_name
+            a.artist_name,
           )}&fmt=json`,
           musicBrainzHeaders,
           undefined,
-          true
+          true,
         )
 
         if (resp.artists?.[0]) {
@@ -80,7 +76,7 @@ export class MetadataFetcher extends CacheHandler {
         `http://webservice.fanart.tv/v3/music/${artist.artist_mbid}?api_key=68746a37e506c5fe70c80e13dc84d8b2`,
         undefined,
         undefined,
-        true
+        true,
       )
 
       return resp.artistthumb?.sort((a, b) => parseInt(b.likes) - parseInt(a.likes))?.[0].url
@@ -93,7 +89,7 @@ export class MetadataFetcher extends CacheHandler {
         `https://musicbrainz.org/ws/2/artist/${encodeURIComponent(artist.artist_mbid)}?inc=url-rels&fmt=json`,
         musicBrainzHeaders,
         undefined,
-        true
+        true,
       )
 
       const imageUrl = resp.relations?.find((val) => val.type === 'image')?.url?.resource
@@ -116,7 +112,7 @@ export class MetadataFetcher extends CacheHandler {
       `https://commons.wikimedia.org/w/api.php?action=query&redirects=1&titles=${fileName}&format=json`,
       undefined,
       undefined,
-      true
+      true,
     )
 
     const parsedFileName =

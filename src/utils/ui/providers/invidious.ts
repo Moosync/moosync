@@ -10,15 +10,17 @@
 import { GenericProvider } from '@/utils/ui/providers/generics/genericProvider'
 
 import { bus } from '@/mainWindow/main'
-import { EventBus } from '@/utils/main/ipc/constants'
-import { InvidiousApiResources, ProviderScopes } from '@/utils/commonConstants'
 import { vxm } from '@/mainWindow/store'
+import { InvidiousApiResources, ProviderScopes } from '@/utils/commonConstants'
+import { EventBus } from '@/utils/main/ipc/constants'
 
 const KeytarService = 'MoosyncInvidiousToken'
 
 export class InvidiousProvider extends GenericProvider {
   private _token: string | undefined
   private oAuthChannel: string | undefined
+
+  public loggedIn = false
 
   public get key() {
     return 'youtube'
@@ -32,7 +34,7 @@ export class InvidiousProvider extends GenericProvider {
       ProviderScopes.PLAYLIST_FROM_URL,
       ProviderScopes.SONG_FROM_URL,
       ProviderScopes.PLAYLIST_SONGS,
-      ProviderScopes.RECOMMENDATIONS
+      ProviderScopes.RECOMMENDATIONS,
     ]
   }
 
@@ -50,7 +52,7 @@ export class InvidiousProvider extends GenericProvider {
 
   private async populateRequest<
     T extends InvidiousResponses.InvidiousApiResources,
-    K extends InvidiousResponses.SearchTypes
+    K extends InvidiousResponses.SearchTypes,
   >(resource: T, search: InvidiousResponses.SearchObject<T, K>, invalidateCache = false) {
     await this.getLoggedIn()
     return window.SearchUtils.requestInvidious(resource, search, this._token, invalidateCache)
@@ -58,7 +60,7 @@ export class InvidiousProvider extends GenericProvider {
 
   public async getLoggedIn() {
     await this.authInitialized
-    vxm.providers.loggedInYoutube = !!this._token
+    this.loggedIn = !!this._token
     return !!this._token
   }
 
@@ -90,19 +92,19 @@ export class InvidiousProvider extends GenericProvider {
             }
           })
 
-          bus.$emit(EventBus.SHOW_OAUTH_MODAL, {
+          bus.emit(EventBus.SHOW_OAUTH_MODAL, {
             providerName: 'Invidious',
-            url: AUTH_BASE_URL + '/authorize_token?scopes=:*&callback_url=https://moosync.app/invidious&expire=360000',
+            url: `${AUTH_BASE_URL}/authorize_token?scopes=:*&callback_url=https://moosync.app/invidious&expire=360000`,
             providerColor: '#E62017',
-            oauthPath: 'invidiousCallback'
+            oauthPath: 'invidiousCallback',
           } as LoginModalOptions)
 
           window.WindowUtils.openExternal(
-            AUTH_BASE_URL + '/authorize_token?scopes=:*&callback_url=https://moosync.app/invidious'
+            `${AUTH_BASE_URL}/authorize_token?scopes=:*&callback_url=https://moosync.app/invidious`,
           )
         })
 
-        bus.$emit(EventBus.HIDE_OAUTH_MODAL)
+        bus.emit(EventBus.HIDE_OAUTH_MODAL)
         return resp
       }
       return false
@@ -128,7 +130,7 @@ export class InvidiousProvider extends GenericProvider {
         playlist_name: p.title,
         playlist_song_count: p.videoCount,
         playlist_coverPath: p.videos[0]?.videoThumbnails[0]?.url ?? '',
-        isLocal: false
+        isLocal: false,
       })
     }
     return playlists
@@ -156,10 +158,10 @@ export class InvidiousProvider extends GenericProvider {
             artist_name: s.author,
             artist_extra_info: {
               youtube: {
-                channel_id: s.authorId
-              }
-            }
-          }
+                channel_id: s.authorId,
+              },
+            },
+          },
         ],
         date_added: Date.now(),
         song_coverPath_high: s.videoThumbnails?.find((val) => val.quality.includes('maxres'))?.url,
@@ -167,7 +169,7 @@ export class InvidiousProvider extends GenericProvider {
         url: s.videoId,
         playbackUrl: s.videoId,
         invidiousPlaybackUrl: stream?.url ?? '',
-        type: 'YOUTUBE'
+        type: 'YOUTUBE',
       })
     }
     return songs
@@ -200,7 +202,7 @@ export class InvidiousProvider extends GenericProvider {
   public async *getPlaylistContent(
     str: string,
     invalidateCache = false,
-    nextPageToken?: number
+    nextPageToken?: number,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: number }> {
     const playlist_id = this.getPlaylistIDFromURL(str) ?? str
 
@@ -209,10 +211,10 @@ export class InvidiousProvider extends GenericProvider {
       {
         params: {
           playlist_id,
-          page: nextPageToken
-        }
+          page: nextPageToken,
+        },
       },
-      invalidateCache
+      invalidateCache,
     )
 
     yield { songs: this.parsePlaylistItems(resp?.videos ?? []), nextPageToken: (nextPageToken ?? 1) + 1 }
@@ -225,10 +227,10 @@ export class InvidiousProvider extends GenericProvider {
         InvidiousApiResources.PLAYLIST_ITEMS,
         {
           params: {
-            playlist_id
-          }
+            playlist_id,
+          },
         },
-        invalidateCache
+        invalidateCache,
       )
 
       if (resp) {
@@ -255,7 +257,7 @@ export class InvidiousProvider extends GenericProvider {
       const resp = await this.populateRequest(
         InvidiousApiResources.VIDEO_DETAILS,
         { params: { video_id: videoID } },
-        invalidateCache
+        invalidateCache,
       )
 
       if (resp) return this.parseSong(resp)
@@ -271,7 +273,7 @@ export class InvidiousProvider extends GenericProvider {
 
   public async *getArtistSongs(
     artist: Artists,
-    nextPageToken?: string
+    nextPageToken?: string,
   ): AsyncGenerator<{ songs: Song[]; nextPageToken?: string }> {
     let channelId = artist.artist_extra_info?.youtube?.channel_id
     if (!channelId && artist.artist_name) {
@@ -283,8 +285,8 @@ export class InvidiousProvider extends GenericProvider {
       const resp = await this.populateRequest(InvidiousApiResources.CHANNEL_VIDEOS, {
         params: {
           channel_id: channelId,
-          continuation: nextPageToken
-        }
+          continuation: nextPageToken,
+        },
       })
 
       const songs = this.parsePlaylistItems(resp?.videos ?? [])
@@ -297,8 +299,8 @@ export class InvidiousProvider extends GenericProvider {
       params: {
         q: term,
         type: 'video',
-        sort_by: 'relevance'
-      }
+        sort_by: 'relevance',
+      },
     })
 
     if (resp) return this.parsePlaylistItems(resp)
@@ -315,8 +317,8 @@ export class InvidiousProvider extends GenericProvider {
     if (channelId) {
       const resp = await this.populateRequest(InvidiousApiResources.CHANNELS, {
         params: {
-          channel_id: channelId
-        }
+          channel_id: channelId,
+        },
       })
 
       if (resp) {
@@ -332,12 +334,12 @@ export class InvidiousProvider extends GenericProvider {
       artistList.push({
         artist_id: a.authorId,
         artist_name: a.author,
-        artist_coverPath: 'https:' + a.authorThumbnails?.sort((a, b) => b.height - a.height)[0].url,
+        artist_coverPath: `https:${a.authorThumbnails?.sort((a, b) => b.height - a.height)[0].url}`,
         artist_extra_info: {
           youtube: {
-            channel_id: a.authorId
-          }
-        }
+            channel_id: a.authorId,
+          },
+        },
       })
     }
 
@@ -349,8 +351,8 @@ export class InvidiousProvider extends GenericProvider {
       params: {
         q: term,
         type: 'channel',
-        sort_by: 'relevance'
-      }
+        sort_by: 'relevance',
+      },
     })
 
     return this.parseArtists(resp ?? [])
@@ -361,8 +363,8 @@ export class InvidiousProvider extends GenericProvider {
       params: {
         q: term,
         type: 'playlist',
-        sort_by: 'relevance'
-      }
+        sort_by: 'relevance',
+      },
     })
 
     return this.parsePlaylists(resp ?? [])
@@ -404,7 +406,7 @@ export class InvidiousProvider extends GenericProvider {
   }
 
   public async getPlaybackUrlAndDuration(
-    song: Song
+    song: Song,
   ): Promise<{ url: string | undefined; duration: number } | undefined> {
     return { url: song.url, duration: song.duration }
   }

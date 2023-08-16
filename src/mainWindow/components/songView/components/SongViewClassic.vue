@@ -17,7 +17,7 @@
           :buttonGroup="detailsButtonGroup"
           :currentSong="currentSong"
           :optionalProviders="optionalProviders"
-          v-on="$listeners"
+          v-bind="$attrs"
         />
       </b-row>
       <b-row no-gutters class="list-container">
@@ -30,7 +30,7 @@
             { key: 'artist_name', label: 'Artists' }
           ]"
           :isLoading="isLoading"
-          v-on="$listeners"
+          v-bind="$attrs"
         />
       </b-row>
     </b-col>
@@ -38,8 +38,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import SongList from './SongList.vue'
 import SongDetails from './SongDetails.vue'
@@ -49,6 +49,11 @@ import ModelHelper from '@/utils/ui/mixins/ModelHelper'
   components: {
     SongList,
     SongDetails
+  },
+  options: {
+    compatConfig: {
+      INSTANCE_LISTENERS: false
+    }
   }
 })
 export default class SongViewClassic extends mixins(ImgLoader, ModelHelper) {

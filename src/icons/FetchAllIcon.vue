@@ -8,7 +8,14 @@
 -->
 
 <template>
-  <svg width="25" height="25" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="25"
+    height="25"
+    viewBox="0 0 37 37"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <title>{{ title }}</title>
     <g clip-path="url(#clip0_3204_3743)">
       <path
@@ -29,13 +36,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class FetchAllIcon extends Vue {
   @Prop({ default: '' })
-  private title!: string
+  title!: string
 }
 </script>
 

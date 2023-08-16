@@ -8,7 +8,14 @@
 -->
 
 <template>
-  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="18"
+    height="19"
+    viewBox="0 0 18 19"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
@@ -25,10 +32,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class Extensions extends Vue {
   @Prop({ default: false })
   active!: boolean

@@ -13,7 +13,7 @@
       <b-col class="song-header-options w-100">
         <b-row no-gutters align-v="center" class="h-100">
           <b-col cols="auto" class="mr-3 h-100 d-flex align-items-center" v-if="items.length > 0 && showPrevIcon">
-            <PrevIcon @click.native="onPrevClick" />
+            <PrevIcon @click="onPrevClick" />
           </b-col>
           <b-col class="provider-outer-container" v-if="items.length > 0">
             <div ref="gradientContainer" class="gradient-overlay" :style="{ background: computedGradient }"></div>
@@ -35,7 +35,7 @@
             </div>
           </b-col>
           <b-col cols="auto" class="ml-3 mr-3 h-100 d-flex align-items-center" v-if="items.length > 0">
-            <NextIcon @click.native="onNextClick" v-if="showNextIcon" />
+            <NextIcon @click="onNextClick" v-if="showNextIcon" />
           </b-col>
 
           <b-col cols="auto" class="ml-auto d-flex" ref="buttonGroupContainer" v-if="showExtraSongListActions">
@@ -49,9 +49,9 @@
                 @update="onSearchChange"
               />
             </div>
-            <SearchIcon @click.native="toggleSearch" :accent="false" class="mr-3 align-self-center" />
-            <SortIcon v-if="isSortAsc" @click.native="showSortMenu" class="align-self-center" />
-            <SortIconAlt v-else @click.native="showSortMenu" class="align-self-center" />
+            <SearchIcon @click="toggleSearch" :accent="false" class="mr-3 align-self-center" />
+            <SortIcon v-if="isSortAsc" @click="showSortMenu" class="align-self-center" />
+            <SortIconAlt v-else @click="showSortMenu" class="align-self-center" />
           </b-col>
         </b-row>
       </b-col>
@@ -60,8 +60,8 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component'
-import { Component, Prop, Ref, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop, Ref, Watch } from 'vue-facing-decorator'
 import ContextMenuMixin from '@/utils/ui/mixins/ContextMenuMixin'
 import SortIcon from '@/icons/SortIcon.vue'
 import SortIconAlt from '@/icons/SortIconAlt.vue'
@@ -79,7 +79,8 @@ import { EventBus } from '@/utils/main/ipc/constants'
     SearchIcon,
     NextIcon,
     PrevIcon
-  }
+  },
+  emits: ['onItemsChanged', 'onSortClicked', 'onSearchChange']
 })
 export default class TabCarousel extends mixins(ContextMenuMixin) {
   @Prop({ default: () => [] })
@@ -244,7 +245,7 @@ export default class TabCarousel extends mixins(ContextMenuMixin) {
 
     this.onItemsChanged(this.items)
 
-    bus.$on(EventBus.UPDATE_OPTIONAL_PROVIDER, (providerKey: string) => {
+    bus.on(EventBus.UPDATE_OPTIONAL_PROVIDER, (providerKey: string) => {
       this.selectedProviders.push(providerKey)
     })
   }

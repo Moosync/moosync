@@ -136,8 +136,8 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import Vue from 'vue'
+import { Component } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 import CheckboxGroup from '../CheckboxGroup.vue'
 import SearchIcon from '@/icons/SearchIcon.vue'
 import RefreshIcon from '../../../icons/RefreshIcon.vue'
@@ -152,19 +152,19 @@ type LogLevels = 'ALL' | 'DEBUG' | 'INFO' | 'WARN' | 'ERROR'
   }
 })
 export default class Logs extends Vue {
-  private logLines: LogLines[] = []
+  logLines: LogLines[] = []
 
-  private levelFilter: LogLevels = 'ALL'
-  private processFilter = 'All'
-  private possibleProcessFilters: Set<string> = new Set(['Main', 'Renderer', 'Extension Host'])
+  levelFilter: LogLevels = 'ALL'
+  processFilter = 'All'
+  possibleProcessFilters: Set<string> = new Set(['Main', 'Renderer', 'Extension Host'])
 
-  private searchFilter = ''
+  searchFilter = ''
 
-  private perPage = 50
-  private currentPage = 1
-  private totalRows = this.logLines.length
+  perPage = 50
+  currentPage = 1
+  totalRows = this.logLines.length
 
-  private get logSettings(): Checkbox[] {
+  get logSettings(): Checkbox[] {
     return [
       {
         key: 'debug_logging',
@@ -174,15 +174,15 @@ export default class Logs extends Vue {
     ]
   }
 
-  private get processFilters() {
+  get processFilters() {
     return Array.from(this.possibleProcessFilters)
   }
 
-  private filterCriteria = 'key'
+  filterCriteria = 'key'
 
-  private fields = [{ key: 'time', sortable: true }, 'level', 'process', 'message']
+  fields = [{ key: 'time', sortable: true }, 'level', 'process', 'message']
 
-  private handleFilter(val: LogLines) {
+  handleFilter(val: LogLines) {
     const currentLogLevel = this.getLogLevel(this.levelFilter)
     const itemLogLevel = this.getLogLevel(val.level)
 
@@ -201,7 +201,7 @@ export default class Logs extends Vue {
     return true
   }
 
-  private getLogLevel(level: LogLevels) {
+  getLogLevel(level: LogLevels) {
     switch (level) {
       case 'ERROR':
         return 5
@@ -216,15 +216,15 @@ export default class Logs extends Vue {
     }
   }
 
-  private processFilterChange(name: string) {
+  processFilterChange(name: string) {
     this.processFilter = name
   }
 
-  private logLevelChange(level: LogLevels) {
+  logLevelChange(level: LogLevels) {
     this.levelFilter = level
   }
 
-  private onFiltered(filteredItems: LogLines[]) {
+  onFiltered(filteredItems: LogLines[]) {
     this.totalRows = filteredItems.length
   }
 
@@ -232,7 +232,7 @@ export default class Logs extends Vue {
     this.refreshLogs()
   }
 
-  private refreshLogs() {
+  refreshLogs() {
     window.LoggerUtils.watchLogs((data) => {
       this.logLines = data
       const uniqueProcesses = new Set(data.map((item) => item.process))
@@ -241,11 +241,11 @@ export default class Logs extends Vue {
     })
   }
 
-  beforeDestroy() {
+  beforeUnmount() {
     window.LoggerUtils.unwatchLogs()
   }
 
-  private capitalizeFirstLetter(str: string) {
+  capitalizeFirstLetter(str: string) {
     return str.charAt(0).toUpperCase() + str.toLowerCase().slice(1)
   }
 }

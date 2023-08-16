@@ -11,6 +11,7 @@
   <div
     @mouseover="hover = true"
     @mouseleave="hover = false"
+    @click="$emit('click', $event)"
     class="button-bg d-flex ripple w-100"
     :style="{ backgroundColor: bgColor }"
   >
@@ -27,14 +28,15 @@
 
 <script lang="ts">
 import ImageLoader from '@/utils/ui/mixins/ImageLoader'
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import Youtube from '@/icons/YoutubeIcon.vue'
 
 @Component({
   components: {
     Youtube
-  }
+  },
+  emits: ['click']
 })
 export default class IconButton extends mixins(ImageLoader) {
   @Prop({ default: '' })

@@ -122,7 +122,7 @@ export class SongsChannel implements IpcChannelInterface {
   private saveBufferToFile(
     event: Electron.IpcMainEvent,
     request: IpcRequest<SongRequests.SaveBuffer>,
-    type: 'audio' | 'image'
+    type: 'audio' | 'image',
   ) {
     if (request.params.path && request.params.blob) {
       const filename = request.params.path
@@ -139,14 +139,14 @@ export class SongsChannel implements IpcChannelInterface {
   private fileExists(
     event: Electron.IpcMainEvent,
     request: IpcRequest<SongRequests.FileExists>,
-    type: 'audio' | 'image'
+    type: 'audio' | 'image',
   ) {
     if (request.params.path) {
       const filePath = path.join(
         app.getPath('sessionData'),
         app.getName(),
         type === 'audio' ? 'audioCache' : 'imageCache',
-        request.params.path
+        request.params.path,
       )
       event.reply(request.responseChannel, fs.existsSync(filePath) ? filePath : undefined)
     }
@@ -154,7 +154,7 @@ export class SongsChannel implements IpcChannelInterface {
   }
 
   private updateLyrics(event: Electron.IpcMainEvent, request: IpcRequest<SongRequests.Lyrics>) {
-    if (request.params && request.params.lyrics && request.params.id) {
+    if (request.params?.lyrics && request.params.id) {
       getSongDB().updateSongLyrics(request.params.id, request.params.lyrics)
     }
     event.reply(request.responseChannel)

@@ -338,7 +338,7 @@
           </b-col>
         </b-row>
       </b-container>
-      <CrossIcon @click.native="closeSpotifyAutomateModal" class="close-icon button-grow" />
+      <CrossIcon @click="closeSpotifyAutomateModal" class="close-icon button-grow" />
     </b-modal>
 
     <b-modal no-close-on-backdrop centered size="md" id="clear-preferences-modal" hide-footer hide-header>
@@ -360,7 +360,7 @@
           </b-col>
         </b-row>
       </b-container>
-      <CrossIcon @click.native="closeClearPreferencesModal" class="close-icon button-grow" />
+      <CrossIcon @click="closeClearPreferencesModal" class="close-icon button-grow" />
     </b-modal>
   </div>
 </template>
@@ -375,8 +375,8 @@ type InvidiousInstances = [
   }
 ][]
 
-import { Component } from 'vue-property-decorator'
-import Vue from 'vue'
+import { Component } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 import CheckboxGroup from '../CheckboxGroup.vue'
 import EditText from '../EditText.vue'
 import PreferenceHeader from '../PreferenceHeader.vue'
@@ -385,7 +385,6 @@ import AutoFillEditText from '../AutoFillEditText.vue'
 import { InvidiousApiResources } from '@/utils/commonConstants'
 import Dropdown from '../Dropdown.vue'
 import { messages } from '@/utils/ui/i18n'
-import { i18n } from '@/preferenceWindow/plugins/i18n'
 import RadioCheckbox from '../RadioCheckbox.vue'
 import { VolumePersistMode } from '../../../utils/commonConstants'
 
@@ -431,7 +430,7 @@ export default class System extends Vue {
         }\nUsers: ${resp.usage.users.total}\nSignup: ${resp.openRegistrations ? 'Open' : 'Closed'}`
       }
     } catch (e) {
-      this.invidiousDetails = this.$tc('settings.system.invidiousUrlUnsupported')
+      this.invidiousDetails = this.$t('settings.system.invidiousUrlUnsupported')
     }
   }
 
@@ -453,7 +452,7 @@ export default class System extends Vue {
   private onLanguageChanged(key: Checkbox[]) {
     const active = key.find((val) => val.enabled) ?? this.languageDropdown[0]
     console.debug('changing locale to', active.key)
-    i18n.locale = active.key
+    this.$i18n.locale = active.key
     window.ThemeUtils.setLanguage(active.key)
   }
 
@@ -493,7 +492,7 @@ export default class System extends Vue {
     return [
       {
         key: 'use_librespot',
-        title: this.$tc('settings.system.spotify.librespotEnable'),
+        title: this.$t('settings.system.spotify.librespotEnable'),
         enabled: false
       }
     ]
@@ -503,12 +502,12 @@ export default class System extends Vue {
     return [
       {
         key: 'use_spotify_canvas',
-        title: this.$tc('settings.system.spotify.librespot.useSpotifyCanvas'),
+        title: this.$t('settings.system.spotify.librespot.useSpotifyCanvas'),
         enabled: true
       },
       {
         key: 'use_librespot_playback',
-        title: this.$tc('settings.system.spotify.librespot.useLibrespotPlayback'),
+        title: this.$t('settings.system.spotify.librespot.useLibrespotPlayback'),
         enabled: true
       }
     ]
@@ -522,7 +521,7 @@ export default class System extends Vue {
     return [
       {
         key: 'always_proxy',
-        title: this.$tc('settings.system.youtubeAlternative.invidious.always_proxy'),
+        title: this.$t('settings.system.youtubeAlternative.invidious.always_proxy'),
         enabled: true
       }
     ]
@@ -541,17 +540,17 @@ export default class System extends Vue {
     return [
       {
         key: VolumePersistMode.SINGLE,
-        title: this.$tc('settings.system.volumePersistMode.noPersist'),
+        title: this.$t('settings.system.volumePersistMode.noPersist'),
         enabled: true
       },
       {
         key: VolumePersistMode.SEPARATE_VOLUME_MAP,
-        title: this.$tc('settings.system.volumePersistMode.persistSeparateVolumes'),
+        title: this.$t('settings.system.volumePersistMode.persistSeparateVolumes'),
         enabled: false
       },
       {
         key: VolumePersistMode.CLAMP_MAP,
-        title: this.$tc('settings.system.volumePersistMode.persistClampVolume'),
+        title: this.$t('settings.system.volumePersistMode.persistClampVolume'),
         enabled: false
       }
     ]
@@ -561,12 +560,12 @@ export default class System extends Vue {
     return [
       {
         key: 'gapless_playback',
-        title: this.$tc('settings.system.audioSettings.gaplessPlayback'),
+        title: this.$t('settings.system.audioSettings.gaplessPlayback'),
         enabled: false
       },
       {
         key: 'sponsorblock',
-        title: this.$tc('settings.system.audioSettings.sponsorBlock'),
+        title: this.$t('settings.system.audioSettings.sponsorBlock'),
         enabled: false
       }
     ]
@@ -576,7 +575,7 @@ export default class System extends Vue {
     return [
       {
         key: 'youtube_embeds',
-        title: this.$tc('settings.system.youtubeAlternative.youtube.useEmbeds'),
+        title: this.$t('settings.system.youtubeAlternative.youtube.useEmbeds'),
         enabled: true
       }
     ]
@@ -586,17 +585,17 @@ export default class System extends Vue {
     return [
       {
         key: 'use_youtube',
-        title: this.$tc('settings.system.youtubeAlternative.useYoutube'),
+        title: this.$t('settings.system.youtubeAlternative.useYoutube'),
         enabled: true
       },
       {
         key: 'use_invidious',
-        title: this.$tc('settings.system.youtubeAlternative.useInvidious'),
+        title: this.$t('settings.system.youtubeAlternative.useInvidious'),
         enabled: false
       },
       {
         key: 'use_piped',
-        title: this.$tc('settings.system.youtubeAlternative.usePiped'),
+        title: this.$t('settings.system.youtubeAlternative.usePiped'),
         enabled: false
       }
     ]
@@ -605,22 +604,22 @@ export default class System extends Vue {
   get lyricsCheckboxValues(): Checkbox[] {
     return [
       {
-        title: this.$tc('settings.system.lyrics.az_lyrics'),
+        title: this.$t('settings.system.lyrics.az_lyrics'),
         key: 'az_lyrics',
         enabled: true
       },
       {
-        title: this.$tc('settings.system.lyrics.google_lyrics'),
+        title: this.$t('settings.system.lyrics.google_lyrics'),
         key: 'google_lyrics',
         enabled: true
       },
       {
-        title: this.$tc('settings.system.lyrics.spotify_lyrics'),
+        title: this.$t('settings.system.lyrics.spotify_lyrics'),
         key: 'spotify_lyrics',
         enabled: true
       },
       {
-        title: this.$tc('settings.system.lyrics.genius_lyrics'),
+        title: this.$t('settings.system.lyrics.genius_lyrics'),
         key: 'genius_lyrics',
         enabled: true
       }
@@ -641,7 +640,7 @@ export default class System extends Vue {
   get lastLoadedPlaybackState(): SystemSettings {
     return {
       key: 'last_loaded_playback_state',
-      title: this.$tc('settings.system.systemSettings.lastLoadedPlaybackState'),
+      title: this.$t('settings.system.systemSettings.lastLoadedPlaybackState'),
       enabled: false
     }
   }
@@ -649,7 +648,7 @@ export default class System extends Vue {
   get enableJukeboxMode() {
     return {
       key: 'jukebox_mode_toggle',
-      title: this.$tc('settings.system.systemSettings.enableJukeboxMode'),
+      title: this.$t('settings.system.systemSettings.enableJukeboxMode'),
       enabled: false
     }
   }
@@ -658,17 +657,17 @@ export default class System extends Vue {
     return [
       {
         key: 'jukebox_skip',
-        title: this.$tc('settings.system.jukebox.optional_skip'),
+        title: this.$t('settings.system.jukebox.optional_skip'),
         enabled: false
       },
       {
         key: 'jukebox_shuffle',
-        title: this.$tc('settings.system.jukebox.optional_shuffle'),
+        title: this.$t('settings.system.jukebox.optional_shuffle'),
         enabled: false
       },
       {
         key: 'jukebox_repeat',
-        title: this.$tc('settings.system.jukebox.optional_repeat'),
+        title: this.$t('settings.system.jukebox.optional_repeat'),
         enabled: false
       }
     ]
@@ -685,7 +684,7 @@ export default class System extends Vue {
   get startupCheckbox(): SystemSettings {
     return {
       key: 'startOnStartup',
-      title: this.$tc('settings.system.systemSettings.systemStartup'),
+      title: this.$t('settings.system.systemSettings.systemStartup'),
       enabled: false
     }
   }
@@ -693,7 +692,7 @@ export default class System extends Vue {
   get minimizeToTrayCheckbox(): SystemSettings {
     return {
       key: 'minimizeToTray',
-      title: this.$tc('settings.system.systemSettings.minimizeTray'),
+      title: this.$t('settings.system.systemSettings.minimizeTray'),
       enabled: true
     }
   }
@@ -701,7 +700,7 @@ export default class System extends Vue {
   get hardwareAcceleration(): SystemSettings {
     return {
       key: 'hardwareAcceleration',
-      title: this.$tc('settings.system.systemSettings.hardwareAcceleration'),
+      title: this.$t('settings.system.systemSettings.hardwareAcceleration'),
       enabled: true
     }
   }
@@ -709,7 +708,7 @@ export default class System extends Vue {
   get watchFileChanges(): SystemSettings {
     return {
       key: 'watchFileChanges',
-      title: this.$tc('settings.system.systemSettings.watchFileChanges'),
+      title: this.$t('settings.system.systemSettings.watchFileChanges'),
       enabled: false
     }
   }
@@ -718,7 +717,7 @@ export default class System extends Vue {
     return [
       {
         key: 'clear_queue_playlist',
-        title: this.$tc('settings.system.queueSettings.clearQueue'),
+        title: this.$t('settings.system.queueSettings.clearQueue'),
         enabled: false
       }
     ]
@@ -792,7 +791,7 @@ export default class System extends Vue {
     window.WindowUtils.openExternal('https://moosync.app/wiki/integrations#enabling-youtube-integration')
   }
 
-  private closeSpotifyAutomateModal() {
+  closeSpotifyAutomateModal() {
     this.$bvModal.hide('spotify-automate-modal')
   }
 
@@ -880,7 +879,7 @@ export default class System extends Vue {
     this.$bvModal.show('clear-preferences-modal')
   }
 
-  private async clearPreferences() {
+  async clearPreferences() {
     await window.PreferenceUtils.resetToDefault()
     await this.restartApp()
   }

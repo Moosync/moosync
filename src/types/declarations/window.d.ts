@@ -100,7 +100,7 @@ interface searchUtils {
     artists?: string[],
     matchTitle = true,
     scrapeYTMusic = true,
-    scrapeYoutube = false
+    scrapeYoutube = false,
   ) => Promise<SearchResult>
 
   /**
@@ -112,7 +112,7 @@ interface searchUtils {
 
   getYTPlaylistContent: (
     id: string,
-    continuation?: import('ytpl').Continuation
+    continuation?: import('ytpl').Continuation,
   ) => Promise<{ songs: Song[]; nextPageToken?: import('ytpl').Continuation }>
 
   /**
@@ -131,7 +131,7 @@ interface searchUtils {
     resource: T,
     search: InvidiousResponses.SearchObject<T, K>,
     authorization: string | undefined,
-    invalidateCache = false
+    invalidateCache = false,
   ) => Promise<InvidiousResponses.ResponseType<T, K> | undefined>
 
   getPlayCount: (...songIds: string[]) => Promise<Record<string, { playCount: number; playTime: number }>>
@@ -206,7 +206,7 @@ interface preferenceUtils {
   listenPreferenceChanged: <T>(
     key: string,
     isMainWindow: boolean,
-    callback: (key: string, value: T) => void
+    callback: (key: string, value: T) => void,
   ) => Promise<void>
   resetToDefault: () => Promise<void>
 }
@@ -236,7 +236,7 @@ interface windowUtils {
   openFileBrowser: (
     isMainWindow: boolean,
     file: boolean,
-    filters?: Electron.FileFilter[]
+    filters?: Electron.FileFilter[],
   ) => Promise<Electron.OpenDialogReturnValue>
   toggleDevTools: (isMainWindow: boolean) => Promise<void>
   openExternal: (url: string) => Promise<void>
@@ -275,7 +275,6 @@ interface loggerUtils {
  */
 interface notifierUtils {
   registerMainProcessNotifier: (callback: (obj: NotificationObject) => void) => void
-  isLibvipsAvailable: () => Promise<boolean>
 }
 
 /**
@@ -285,7 +284,7 @@ interface extensionUtils {
   install: (...path: string[]) => Promise<installMessage>
   uninstall: (packageName: string) => Promise<void>
   sendEvent: <T extends ExtraExtensionEventTypes>(
-    event: ExtraExtensionEvents<T>
+    event: ExtraExtensionEvents<T>,
   ) => Promise<ExtraExtensionEventCombinedReturnType<T> | undefined>
   getAllExtensions: () => Promise<ExtensionDetails[]>
   getExtensionIcon: (packageName: string) => Promise<string>
@@ -298,17 +297,17 @@ interface extensionUtils {
   fireContextMenuHandler: (
     id: string,
     packageName: string,
-    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>
+    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>,
   ) => Promise<void>
   getRegisteredAccounts: (packageName: string) => Promise<{ [key: string]: StrippedAccountDetails[] }>
   listenAccountRegistered: (
     callback: (details: { packageName: string; data: StrippedAccountDetails }) => void,
-    packageName?: string
+    packageName?: string,
   ) => void
   performAccountLogin: (packageName: string, accountId: string, login: boolean) => Promise<void>
   listenExtensionsChanged: (callback: () => void) => void
   getExtensionProviderScopes: (
-    packageName: string
+    packageName: string,
   ) => Promise<Record<string, import('@/utils/commonConstants').ProviderScopes[]>>
   getExtensionDisplayName: (packageName: string) => Promise<string>
 }
@@ -329,6 +328,8 @@ interface themeUtils {
   setLanguage: (key: string) => Promise<void>
   packTheme: (id: string) => Promise<void>
   importTheme: (themeZipPath: string) => Promise<void>
+  listenGenerateIconRequest: (callback: (params: IpcRequest<PreferenceRequests.GenerateIcon>) => void) => void
+  replyToGenerateIconRequest: (buffer: string, channel: string) => Promise<void>
 }
 
 interface updateUtils {
@@ -350,12 +351,12 @@ interface spotifyPlayer {
   connect: (config: import('librespot-node').ConstructorConfig) => Promise<void>
   on: <T extends import('librespot-node').PlayerEventTypes>(
     event: T,
-    listener: (event: import('librespot-node').PlayerEvent<T>) => void
+    listener: (event: import('librespot-node').PlayerEvent<T>) => void,
   ) => string
   off: (channel: string, event: string, listener: unknown) => void
   command: <T extends SpotifyRequests.SpotifyCommands>(
     command: T,
-    args?: SpotifyRequests.Command['args']
+    args?: SpotifyRequests.Command['args'],
   ) => Promise<SpotifyRequests.ReturnType<T>>
   close: () => Promise<void>
   getToken: (scopes: TokenScope[]) => Promise<import('librespot-node').Token>

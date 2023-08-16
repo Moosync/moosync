@@ -157,8 +157,7 @@ declare namespace PreferenceRequests {
 
   interface PreferenceChange {
     key: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: any
+    value: unknown
   }
 
   interface ThemeID {
@@ -188,6 +187,11 @@ declare namespace PreferenceRequests {
   interface ListenKey {
     key: string
     isMainWindow: boolean
+  }
+
+  interface GenerateIcon {
+    colors: ThemeDetails
+    size: number
   }
 }
 

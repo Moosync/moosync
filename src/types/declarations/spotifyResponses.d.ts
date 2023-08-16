@@ -23,7 +23,7 @@ declare namespace SpotifyResponses {
     ARTIST_ALBUMS = 'artists/{artist_id}/albums',
     ARTIST = 'artists/{artist_id}',
     ALBUM = 'albums/{album_id}',
-    ALBUM_SONGS = 'albums/{album_id}/tracks'
+    ALBUM_SONGS = 'albums/{album_id}/tracks',
   }
 
   type RecommendationRequest = {

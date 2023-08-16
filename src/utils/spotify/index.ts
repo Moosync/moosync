@@ -1,6 +1,6 @@
-import { ConstructorConfig, PlayerEvent, PlayerEventTypes, SpotifyPlayerSpirc, Token, TokenScope } from 'librespot-node'
-import { Serializable } from 'child_process'
 import { sleep } from '../common'
+import { Serializable } from 'child_process'
+import { ConstructorConfig, PlayerEvent, PlayerEventTypes, SpotifyPlayerSpirc, Token, TokenScope } from 'librespot-node'
 
 class SpotifyPlayerProcess {
   private player: SpotifyPlayerSpirc | undefined
@@ -60,7 +60,7 @@ class SpotifyPlayerProcess {
 
   private sendEvent<T extends PlayerEventTypes>(event: PlayerEvent<T>) {
     event.event !== 'TimeUpdated' && console.debug('Emitting event', JSON.stringify(event))
-    process.send && process.send(event)
+    process.send?.(event)
   }
 
   private async waitForPlayerInitialize() {
@@ -126,8 +126,7 @@ class SpotifyPlayerProcess {
       if (tries < 3) {
         await sleep(500)
         console.warn('Failed to get token, retrying')
-        tries += 1
-        return await this.getToken(scopes, tries)
+        return await this.getToken(scopes, tries + 1)
       } else {
         console.error('Failed to get token')
       }
@@ -153,7 +152,7 @@ class SpotifyPlayerProcess {
             this.player = undefined
             ret.error = (e.error as Error).toString()
             console.debug('sending error', ret)
-            process.send && process.send(ret)
+            process.send?.(ret)
           }
           process.exit(1)
         }
@@ -176,7 +175,7 @@ class SpotifyPlayerProcess {
       }
 
       console.debug('sending reply', ret)
-      process.send && process.send(ret)
+      process.send?.(ret)
     }
   }
 

@@ -16,11 +16,11 @@ import {
   AuthorizationServiceConfiguration,
   BasicQueryStringUtils,
   Crypto,
-  QueryStringUtils
+  QueryStringUtils,
 } from '@openid/appauth'
 
-import EventEmitter from 'events'
 import { WebCrypto } from './crypto_utils'
+import EventEmitter from 'events'
 
 class ServerEventsEmitter extends EventEmitter {
   static ON_AUTHORIZATION_RESPONSE = 'authorization_response'
@@ -33,7 +33,7 @@ export class AuthFlowRequestHandler extends AuthorizationRequestHandler {
   constructor(
     channel: string,
     utils: QueryStringUtils = new BasicQueryStringUtils(),
-    crypto: Crypto = new WebCrypto()
+    crypto: Crypto = new WebCrypto(),
   ) {
     super(utils, crypto)
     this.channelID = channel
@@ -62,7 +62,7 @@ export class AuthFlowRequestHandler extends AuthorizationRequestHandler {
         error: error,
         error_description: errorDescription,
         error_uri: errorUri,
-        state: state
+        state: state,
       })
     } else {
       authorizationResponse = new AuthorizationResponse({ code: code as string, state: state as string })
@@ -71,7 +71,7 @@ export class AuthFlowRequestHandler extends AuthorizationRequestHandler {
     const completeResponse = {
       request,
       response: authorizationResponse,
-      error: authorizationError
+      error: authorizationError,
     } as AuthorizationRequestResponse
     emitter.emit(ServerEventsEmitter.ON_AUTHORIZATION_RESPONSE, completeResponse)
   }

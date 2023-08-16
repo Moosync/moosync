@@ -7,58 +7,60 @@
  *  See LICENSE in the project root for license information.
  */
 
-import Extensions from '@/preferenceWindow/components/pages/Extensions.vue'
-import NewTheme from '../components/pages/NewTheme.vue'
-import Paths from '@/preferenceWindow/components/pages/Paths.vue'
-import Router from 'vue-router'
-import System from '../components/pages/System.vue'
 import Keybinds from '../components/pages/Keybinds.vue'
-import Themes from '../components/pages/Themes.vue'
-import Vue from 'vue'
 import Logs from '../components/pages/Logs.vue'
+import NewTheme from '../components/pages/NewTheme.vue'
+import System from '../components/pages/System.vue'
+import Themes from '../components/pages/Themes.vue'
+import Extensions from '@/preferenceWindow/components/pages/Extensions.vue'
+import Paths from '@/preferenceWindow/components/pages/Paths.vue'
+import { RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
-Vue.use(Router)
-
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: { name: 'paths' }
+    redirect: { name: 'paths' },
   },
   {
     name: 'paths',
     path: '/paths',
-    component: Paths
+    component: Paths,
   },
   {
     name: 'extensions',
     path: '/extensions',
-    component: Extensions
+    component: Extensions,
   },
   {
     name: 'system',
     path: '/system',
-    component: System
+    component: System,
   },
   {
     name: 'keybinds',
     path: '/keybinds',
-    component: Keybinds
+    component: Keybinds,
   },
   {
     name: 'themes',
     path: '/themes',
-    component: Themes
+    component: Themes,
   },
   {
     name: 'new_theme',
     path: '/themes/new',
-    component: NewTheme
+    component: NewTheme,
   },
   {
     name: 'logs',
     path: '/logs',
-    component: Logs
-  }
+    component: Logs,
+  },
 ]
 
-export default new Router({ routes })
+export const router = createRouter({
+  history: process.env.IS_ELECTRON
+    ? createWebHashHistory(process.env.BASE_URL)
+    : createWebHistory(process.env.BASE_URL),
+  routes,
+})

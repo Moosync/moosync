@@ -33,30 +33,34 @@ type ButtonValue = {
   lastClicked: number
 }[]
 
-import { Component, Prop } from 'vue-property-decorator'
-import { Mixins } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 
 @Component({
   components: {
     PreferenceHeader
-  }
+  },
+  emits: ['tooltipClick']
 })
-export default class ButtonGroup extends Mixins(ExtensionPreferenceMixin) {
+export default class ButtonGroup extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private emitTooltipClick() {
+  declare value: ButtonValue
+
+  emitTooltipClick() {
     this.$emit('tooltipClick')
   }
 
-  private onClick(index: number) {
+  onClick(index: number) {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;(this.value as ButtonValue)[index].lastClicked = Date.now()
-    this.onInputChange()
+    this.onInputChange(this.value)
   }
 }
 </script>

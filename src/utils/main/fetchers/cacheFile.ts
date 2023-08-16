@@ -1,6 +1,6 @@
-import path from 'path'
 import { promises as fsP } from 'fs'
 import https from 'https'
+import path from 'path'
 
 type Cache = { [key: string]: { expiry: number; data: string } }
 
@@ -37,7 +37,7 @@ export class CacheHandler {
       console.warn(
         'Cache file',
         this.cacheFile,
-        'does not exists (This may happen if the app is run for the first time).'
+        'does not exists (This may happen if the app is run for the first time).',
       )
       await this.dumpCache()
     }
@@ -79,7 +79,7 @@ export class CacheHandler {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393',
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0',
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0',
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
     ]
 
     return agents[Math.floor(Math.random() * agents.length)]
@@ -90,7 +90,7 @@ export class CacheHandler {
     headers?: Record<string, string>,
     referrer?: string,
     tryJson = false,
-    invalidateCache = false
+    invalidateCache = false,
   ): Promise<T> {
     if (!invalidateCache) {
       const cached = this.getCache(url)
@@ -111,7 +111,7 @@ export class CacheHandler {
       const options: https.RequestOptions = {
         path: parsed.pathname + parsed.search,
         hostname: parsed.hostname,
-        headers: { 'User-Agent': this.randomUserAgent(), referer: referrer ?? '', ...headers }
+        headers: { 'User-Agent': this.randomUserAgent(), referer: referrer ?? '', ...headers },
       }
       const request = https.get(options, (res) => {
         let data = ''

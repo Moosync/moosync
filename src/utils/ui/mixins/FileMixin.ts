@@ -7,7 +7,7 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-facing-decorator'
 
 @Component
 export default class FileMixin extends Vue {

@@ -67,7 +67,7 @@ export abstract class Player {
   abstract set volume(volume: number)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private listenerMod(eventName: string, callback: (e?: any) => void, e?: any) {
+  private listenerMod(eventName: string, callback: (e?: unknown) => void, e?: unknown) {
     console.debug(this.key, 'player, got event', `${eventName}${e ? `: ${e}` : ''}`)
     callback(e)
   }
@@ -90,13 +90,14 @@ export abstract class Player {
   }
 
   set onError(callback: (err: Error) => void) {
-    const mod = (err: Error) => this.listenerMod('onError', callback, err)
+    const mod = (err: Error) => this.listenerMod('onError', callback as Parameters<typeof this.listenerMod>[1], err)
     this.listenOnError(mod)
     console.debug('Set onError callback')
   }
 
   set onStateChange(callback: (state: PlayerState) => void) {
-    const mod = (state: PlayerState) => this.listenerMod('onStateChange', callback, state)
+    const mod = (state: PlayerState) =>
+      this.listenerMod('onStateChange', callback as Parameters<typeof this.listenerMod>[1], state)
     this.listenOnStateChange(mod)
     console.debug('Set onStateChange callback')
   }

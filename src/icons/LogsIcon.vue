@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <svg width="20" viewBox="0 0 27 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="20" viewBox="0 0 27 25" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('click', $event)">
     <path
       d="M15 15H27V17H15V15ZM15 19H27V21H15V19ZM15 23H23V25H15V23Z"
       :fill="active ? 'var(--accent)' : 'var(--textPrimary)'"
@@ -21,10 +21,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class LogsIcon extends Vue {
   @Prop({ default: false })
   active!: boolean

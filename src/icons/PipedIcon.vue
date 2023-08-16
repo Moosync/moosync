@@ -1,5 +1,12 @@
 <template>
-  <svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="1080"
+    height="1080"
+    viewBox="0 0 1080 1080"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <g clip-path="url(#clip0_2802_3578)">
       <circle cx="540" cy="540" r="540" fill="white" />
       <path

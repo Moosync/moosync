@@ -1,10 +1,10 @@
-import { app } from 'electron'
-import path from 'path'
 import { loadSelectiveArrayPreference } from '../db/preferences'
 import { getSpotifyPlayerChannel } from '../ipc'
 import { CacheHandler } from './cacheFile'
 import { getSongDB } from '@/utils/main/db/index'
+import { app } from 'electron'
 import { access, readFile } from 'fs/promises'
+import path from 'path'
 
 interface AZSuggestions {
   term?: string
@@ -25,8 +25,8 @@ export class LyricsFetcher extends CacheHandler {
     const dbLyrics = (
       await getSongDB().getSongByOptions({
         song: {
-          _id: song._id
-        }
+          _id: song._id,
+        },
       })
     )[0]?.lyrics
 
@@ -124,20 +124,22 @@ export class LyricsFetcher extends CacheHandler {
   }
 
   private formulateUrl(baseURL: string, artists: string[], title: string, appendLyrics = false) {
+    let parsedTitle = title
+
     // If title contains - then it probably already has artists included in it
     if (appendLyrics) {
-      title = title.trim() + ' lyrics'
+      parsedTitle = `${title.trim()} lyrics`
     }
 
     if (title.split('-').length >= 2) {
-      return encodeURI(baseURL + title)
+      return encodeURI(baseURL + parsedTitle)
     }
 
-    title = title.toLowerCase()
+    parsedTitle = title.toLowerCase()
     for (const a of artists) {
-      title.replaceAll(a.toLowerCase(), '')
+      parsedTitle.replaceAll(a.toLowerCase(), '')
     }
-    return encodeURI(baseURL + artists.join(', ') + ' - ' + title)
+    return encodeURI(`${baseURL}${artists.join(', ')} - ${parsedTitle}`)
   }
 
   private sanitizeTitle(title: string) {
@@ -183,8 +185,8 @@ export class LyricsFetcher extends CacheHandler {
         responseChannel: '',
         params: {
           command: 'GET_LYRICS',
-          args: [`spotify:track:${trackId}`]
-        }
+          args: [`spotify:track:${trackId}`],
+        },
       })
 
       if (data) {

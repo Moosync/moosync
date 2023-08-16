@@ -23,7 +23,7 @@
         <b-col cols="5" xl="3" class="p-2">
           <div class="theme-component-container">
             <ThemeComponentClassic
-              @click.native="setSongView('classic')"
+              @click="setSongView('classic')"
               :selected="isSongView('classic')"
               :id="getRandomID()"
               :colors="currentTheme"
@@ -34,7 +34,7 @@
         <b-col cols="5" xl="3" class="p-2">
           <div class="theme-component-container">
             <ThemeComponentCompact
-              @click.native="setSongView('compact')"
+              @click="setSongView('compact')"
               :selected="isSongView('compact')"
               :id="getRandomID()"
               :colors="currentTheme"
@@ -56,8 +56,8 @@
           <div class="theme-component-container">
             <component
               :is="themesComponent"
-              @click.native="setTheme('default')"
-              @contextmenu.native="themeMenu(arguments[0], defaultTheme)"
+              @click="setTheme('default')"
+              @contextmenu="themeMenu($event, defaultTheme)"
               :selected="isThemeActive('default')"
               :id="getRandomID()"
               :colors="defaultTheme.theme"
@@ -70,10 +70,10 @@
           <div class="theme-component-container">
             <component
               :is="themesComponent"
-              @click.native="setTheme(value.id)"
+              @click="setTheme(value.id)"
               :selected="isThemeActive(value.id)"
               :id="value.id"
-              @contextmenu.native="themeMenu(arguments[0], value)"
+              @contextmenu="themeMenu($event, value)"
               :colors="value.theme"
             />
             <div class="title">{{ value.name }}</div>
@@ -84,7 +84,7 @@
         </b-col>
         <b-col cols="5" xl="3" class="p-2">
           <div class="theme-component-container">
-            <Add @click.native="openNewThemeModal" />
+            <Add @click="openNewThemeModal" />
             {{ $t('settings.themes.createTheme') }}
           </div>
         </b-col>
@@ -105,20 +105,19 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import Vue from 'vue'
+import { Component } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 import ThemeComponentClassic from '../ThemeComponentClassic.vue'
 import { v1 } from 'uuid'
 import PreferenceHeader from '../PreferenceHeader.vue'
 import ThemeComponentCompact from '../ThemeComponentCompact.vue'
 import Add from '@/icons/AddThemeIcon.vue'
-import { ContextMenuComponent, MenuItem } from 'vue-context-menu-popup'
 import DeleteModal from '@/commonComponents/ConfirmationModal.vue'
-import ContextMenu from 'vue-context-menu-popup'
-import 'vue-context-menu-popup/dist/vue-context-menu-popup.css'
 import MultiButtonModal from '../../../commonComponents/MultiButtonModal.vue'
 import CreatePlaylistIcon from '@/icons/CreatePlaylistIcon.vue'
 import ImportThemeIcon from '@/icons/ImportThemeIcon.vue'
+import { bus } from '@/preferenceWindow/main'
+import { MenuItem } from '../../../utils/ui/mixins/ContextMenuMixin'
 
 @Component({
   components: {
@@ -126,7 +125,6 @@ import ImportThemeIcon from '@/icons/ImportThemeIcon.vue'
     ThemeComponentCompact,
     PreferenceHeader,
     DeleteModal,
-    ContextMenu,
     Add,
     MultiButtonModal,
     CreatePlaylistIcon,
@@ -134,9 +132,9 @@ import ImportThemeIcon from '@/icons/ImportThemeIcon.vue'
   }
 })
 export default class Themes extends Vue {
-  private allThemes: { [key: string]: ThemeDetails } = {}
+  allThemes: { [key: string]: ThemeDetails } = {}
 
-  private showNewThemeModal = false
+  showNewThemeModal = false
 
   private async getAllThemes() {
     this.allThemes = (await window.ThemeUtils.getAllThemes()) ?? {}
@@ -145,19 +143,21 @@ export default class Themes extends Vue {
   private activeTheme = 'default'
   private activeView: songMenu = 'compact'
 
-  private get themesComponent() {
+  menu: MenuItem[] = []
+
+  get themesComponent() {
     return this.activeView === 'compact' ? 'ThemeComponentCompact' : 'ThemeComponentClassic'
   }
 
-  private get currentTheme() {
+  get currentTheme() {
     return this.allThemes[this.activeTheme]?.theme ?? this.defaultTheme.theme
   }
 
-  private isThemeActive(themeId: string) {
+  isThemeActive(themeId: string) {
     return themeId === this.activeTheme
   }
 
-  private isSongView(id: songMenu) {
+  isSongView(id: songMenu) {
     return id === this.activeView
   }
 
@@ -170,52 +170,47 @@ export default class Themes extends Vue {
     })
   }
 
-  private themeToRemove: ThemeDetails | null = null
-  private menu: MenuItem[] = []
+  themeToRemove: ThemeDetails | null = null
 
-  private themeMenu(event: Event, theme: ThemeDetails) {
+  themeMenu(event: Event, theme: ThemeDetails) {
     this.menu = []
     if (theme.id !== 'system_default' && theme.id !== 'default') {
       this.themeToRemove = theme
       this.menu.push({
         label: 'Delete',
-        handler: () => {
+        onClick: () => {
           this.$bvModal.show('themeDeleteModal')
         }
       })
-
       this.menu.push({
         label: 'Edit',
-        handler: () => {
+        onClick: () => {
           this.editTheme(theme)
         }
       })
     }
-
     this.menu.push({
       label: 'Copy to clipboard',
-      handler: () => {
+      onClick: () => {
         navigator.clipboard.writeText(JSON.stringify(theme))
       }
     })
-
     if (theme.id !== 'default') {
       this.menu.push({
         label: 'Export theme',
-        handler: () => {
+        onClick: () => {
           window.ThemeUtils.packTheme(theme.id)
         }
       })
     }
-
-    ;(this.$refs['contextMenu'] as ContextMenuComponent).open(event)
+    // ;(this.$refs['contextMenu']).open(event)
   }
 
-  private hideContextMenu() {
-    ;(this.$refs['contextMenu'] as ContextMenuComponent).close()
+  hideContextMenu() {
+    // ;(this.$refs['contextMenu'] as ContextMenuComponent).close()
   }
 
-  private async removeTheme() {
+  async removeTheme() {
     const currentTheme = await window.ThemeUtils.getActiveTheme()
     if (currentTheme.id === this.themeToRemove?.id) {
       await this.setTheme('default')
@@ -243,28 +238,28 @@ export default class Themes extends Vue {
     }
   }
 
-  private getRandomID() {
+  getRandomID() {
     return v1()
   }
 
-  private async setTheme(id: string) {
+  async setTheme(id: string) {
     await window.ThemeUtils.setActiveTheme(id)
     this.activeTheme = id
-    this.$root.$emit('themeChanged')
+    bus.emit('themeChanged')
   }
 
-  private async setSongView(id: songMenu) {
+  async setSongView(id: songMenu) {
     await window.ThemeUtils.setSongView(id)
     this.activeView = id
   }
 
-  private createTheme() {
+  createTheme() {
     this.$router.push({
       name: 'new_theme'
     })
   }
 
-  private async importTheme() {
+  async importTheme() {
     const resp = await window.WindowUtils.openFileBrowser(false, true, [
       {
         name: 'Moosync theme (.mstx)',
@@ -279,7 +274,7 @@ export default class Themes extends Vue {
     this.getAllThemes()
   }
 
-  private openNewThemeModal() {
+  openNewThemeModal() {
     this.showNewThemeModal = !this.showNewThemeModal
   }
 
@@ -298,6 +293,7 @@ export default class Themes extends Vue {
   ul li
     &:hover
       background: var(--accent)
+      color: var(--textInverse) !important
 </style>
 
 <style lang="sass" scoped>

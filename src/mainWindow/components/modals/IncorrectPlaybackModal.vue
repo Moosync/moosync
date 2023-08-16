@@ -23,7 +23,7 @@
               ref="inputfield"
               @keyup.enter="fetchSearchResults"
             />
-            <AltArrowIcon @click.native="fetchSearchResults" v-if="inputText !== ''" class="go-arrow button-grow" />
+            <AltArrowIcon @click="fetchSearchResults" v-if="inputText !== ''" class="go-arrow button-grow" />
           </div>
         </b-row>
         <b-row v-if="!isLoading">
@@ -53,14 +53,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import { vxm } from '@/mainWindow/store'
 import SongListCompactItem from '../songView/components/SongListCompactItem.vue'
 import SearchIcon from '@/icons/SearchIcon.vue'
 import AltArrowIcon from '@/icons/AltArrowIcon.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import CacheMixin from '@/utils/ui/mixins/CacheMixin'
 
 @Component({
@@ -99,7 +99,7 @@ export default class IncorrectPlaybackModal extends mixins(CacheMixin) {
 
       vxm.player.setQueueDataSong(this.parsedSong)
       if (vxm.player.currentSong?._id === this.parsedSong?._id) {
-        bus.$emit(EventBus.FORCE_LOAD_SONG)
+        bus.emit(EventBus.FORCE_LOAD_SONG)
       }
 
       this.close()
@@ -121,7 +121,7 @@ export default class IncorrectPlaybackModal extends mixins(CacheMixin) {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_INCORRECT_PLAYBACK_MODAL, (song: Song) => {
+    bus.on(EventBus.SHOW_INCORRECT_PLAYBACK_MODAL, (song: Song) => {
       this.parsedSong = song
       this.inputText = `${song.artists?.map((val) => val.artist_name)?.join(', ')} ${song.title}`
 

@@ -8,7 +8,13 @@
 -->
 
 <template>
-  <svg class="button-grow" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="button-grow"
+    viewBox="0 0 34 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"

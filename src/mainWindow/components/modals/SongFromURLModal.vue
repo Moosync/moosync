@@ -65,14 +65,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import InputGroup from '../generic/InputGroup.vue'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import { vxm } from '@/mainWindow/store'
 import { v4 } from 'uuid'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
 import RemoteSong from '@/utils/ui/mixins/remoteSongMixin'
 import ProviderMixin from '@/utils/ui/mixins/ProviderMixin'
@@ -206,11 +206,11 @@ export default class SongFromUrlModal extends mixins(ImgLoader, RemoteSong, Prov
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_SONG_FROM_URL_MODAL, (refreshCallback: () => void) => {
+    bus.on(EventBus.SHOW_SONG_FROM_URL_MODAL, (refreshCallback: () => void) => {
       this.refreshCallback = refreshCallback
       this.forceEmptyImg = false
       this.addButtonEnabled = false
-      this.isLoggedIn = vxm.providers.loggedInYoutube && vxm.providers.loggedInSpotify
+      this.isLoggedIn = vxm.providers.youtubeProvider.loggedIn && vxm.providers.spotifyProvider.loggedIn
       this.$bvModal.show(this.id)
     })
   }

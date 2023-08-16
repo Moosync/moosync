@@ -10,8 +10,8 @@
 import { AbstractExtensionFinder, ExtensionFinder } from './extensionFinder'
 import { AbstractExtensionManager, ExtensionManager } from '@/utils/extensions/sandbox/extensionManager'
 
-import { getVersion, sanitizeAlbums, sanitizeArtists, sanitizePlaylist, sanitizeSong } from '@/utils/common'
 import { providerFetchRequests } from '../constants'
+import { getVersion, sanitizeAlbums, sanitizeArtists, sanitizePlaylist, sanitizeSong } from '@/utils/common'
 import { ProviderScopes } from '@/utils/commonConstants'
 
 type CombinedSongsType = SongsReturnType | PlaylistAndSongsReturnType | RecommendationsReturnType
@@ -194,7 +194,7 @@ export class ExtensionHandler {
       entry: item.entry,
       preferences: item.preferences,
       extensionPath: item.extensionPath,
-      extensionIcon: item.extensionIcon
+      extensionIcon: item.extensionIcon,
     }
   }
 
@@ -210,11 +210,11 @@ export class ExtensionHandler {
   public async sendToExtensions(
     packageName: string | undefined,
     method: keyof MoosyncExtensionTemplate,
-    args?: unknown
+    args?: unknown,
   ) {
     for (const ext of this.extensionManager.getExtensions({
       started: method === 'onStarted' ? false : true,
-      packageName
+      packageName,
     })) {
       try {
         console.debug('Trying to send event:', method, 'to', ext.packageName)
@@ -244,62 +244,69 @@ export class ExtensionHandler {
       if (event.type === 'requestedPlaylistSongs') {
         event.data[0] = (event.data as ExtraExtensionEventData<'requestedPlaylistSongs'>)[0]?.replace(
           `${ext.packageName}:`,
-          ''
+          '',
         )
       }
 
       const resp = await ext.global.api._emit<T>({
         type: event.type,
-        data: event.data
+        data: event.data,
       })
 
       const packageName = ext.packageName
 
       if (resp && !this.isForwardRequest(resp)) {
         if (event.type === 'requestedPlaylists') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as PlaylistReturnType).playlists = sanitizePlaylist(
             packageName,
             false,
-            ...(resp as PlaylistReturnType).playlists
+            ...(resp as PlaylistReturnType).playlists,
           )
         }
 
         if (EventType === 'requestedPlaylistFromURL') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as PlaylistAndSongsReturnType).playlist = sanitizePlaylist(
             packageName,
             false,
-            (resp as PlaylistAndSongsReturnType).playlist
+            (resp as PlaylistAndSongsReturnType).playlist,
           )[0]
           ;(resp as PlaylistAndSongsReturnType).songs = sanitizeSong(
             packageName,
-            ...(resp as PlaylistAndSongsReturnType).songs
+            ...(resp as PlaylistAndSongsReturnType).songs,
           )
         }
 
         if (EventType === 'requestedPlaylistSongs' || EventType === 'requestedRecommendations') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as CombinedSongsType).songs = sanitizeSong(packageName, ...(resp as CombinedSongsType).songs)
         }
 
         if (EventType === 'requestedSongFromURL' || EventType === 'requestedSongFromId') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as SongReturnType).song = sanitizeSong(packageName, (resp as SongReturnType).song)[0]
         }
 
         if (EventType === 'requestedSearchResult') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as SearchReturnType).songs = sanitizeSong(packageName, ...(resp as SearchReturnType).songs)
           ;(resp as SearchReturnType).playlists = sanitizePlaylist(
             packageName,
             false,
-            ...(resp as SearchReturnType).playlists
+            ...(resp as SearchReturnType).playlists,
           )
           ;(resp as SearchReturnType).artists = sanitizeArtists(packageName, ...(resp as SearchReturnType).artists)
           ;(resp as SearchReturnType).albums = sanitizeAlbums(packageName, ...(resp as SearchReturnType).albums)
         }
 
         if (EventType === 'requestedArtistSongs') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as SongsReturnType).songs = sanitizeSong(packageName, ...(resp as SongsReturnType).songs)
         }
 
         if (EventType === 'requestedAlbumSongs') {
+          // rome-ignore lint/complexity/noExtraSemicolon: False-positive
           ;(resp as SongsReturnType).songs = sanitizeSong(packageName, ...(resp as SongsReturnType).songs)
         }
       }
@@ -322,14 +329,14 @@ export class ExtensionHandler {
   public fireContextMenuCallback(
     id: string,
     packageName: string,
-    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>
+    arg: ExtensionContextMenuHandlerArgs<ContextMenuTypes>,
   ) {
     for (const ext of this.extensionManager.getExtensions({ started: true, packageName })) {
       const item = (ext.global.api.getContextMenuItems() as ExtendedExtensionContextMenuItems<ContextMenuTypes>[]).find(
-        (val) => val.id === id
+        (val) => val.id === id,
       )
 
-      item?.handler && item.handler(arg)
+      item?.handler?.(arg)
     }
   }
 }

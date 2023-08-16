@@ -15,8 +15,8 @@
           <input
             class="pin-input"
             :ref="`pin-input-${i}`"
-            @input="validateInputAndPush(i, arguments[0])"
-            @click="onInputClick(i, arguments[0])"
+            @input="validateInputAndPush(i, $event)"
+            @click="onInputClick(i, $event)"
           />
         </b-col>
       </b-row>
@@ -55,11 +55,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import CrossIcon from '@/icons/CrossIcon.vue'
-import Vue from 'vue'
+import { Vue } from 'vue-facing-decorator'
 import TickIcon from '@/icons/TickIcon.vue'
 
 @Component({
@@ -95,7 +95,7 @@ export default class PinEntryModal extends Vue {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_PIN_ENTRY_MODAL, async (pinLength: number, confirmCallback: (pin: string) => boolean) => {
+    bus.on(EventBus.SHOW_PIN_ENTRY_MODAL, async (pinLength: number, confirmCallback: (pin: string) => boolean) => {
       this.confirmCallback = confirmCallback
       this.pinLength = pinLength ?? 0
       this.showError = false

@@ -20,16 +20,28 @@
   >
     <div class="modal-content-container">
       <transition name="fade" mode="out-in">
-        <Welcome key="welcome" v-if="state === SetupModalState.WELCOME" @next="nextState" @prev="close" />
+        <component
+          key="comp"
+          :is="
+            state === SetupModalState.WELCOME
+              ? 'Welcome'
+              : state === SetupModalState.PATHS
+              ? 'PathSetup'
+              : 'AccountsSetup'
+          "
+          @next="nextState"
+          @prev="prevState"
+        />
+        <!-- <Welcome key="welcome" v-if="state === SetupModalState.WELCOME" @next="nextState" @prev="close" />
         <PathSetup key="paths" v-if="state === SetupModalState.PATHS" @next="nextState" @prev="prevState" />
-        <AccountsSetup key="accounts" v-if="state === SetupModalState.ACCOUNTS" @next="close" @prev="prevState" />
+        <AccountsSetup key="accounts" v-if="state === SetupModalState.ACCOUNTS" @next="close" @prev="prevState" /> -->
       </transition>
     </div>
   </b-modal>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import { bus } from '@/mainWindow/main'
 import { EventBus } from '@/utils/main/ipc/constants'
 import Welcome from './Welcome.vue'
@@ -62,6 +74,7 @@ export default class SetupModal extends Vue {
 
   nextState() {
     if (this.state < SetupModalStates.ACCOUNTS) this.state += 1
+    else this.close()
   }
 
   prevState() {
@@ -80,7 +93,7 @@ export default class SetupModal extends Vue {
   }
 
   mounted() {
-    bus.$on(EventBus.SHOW_SETUP_MODAL, () => {
+    bus.on(EventBus.SHOW_SETUP_MODAL, () => {
       this.$bvModal.show(this.id)
     })
   }

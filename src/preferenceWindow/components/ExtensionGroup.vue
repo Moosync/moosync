@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-facing-decorator'
 import DeleteModal from '../../commonComponents/ConfirmationModal.vue'
 import PreferenceHeader from './PreferenceHeader.vue'
 import DiscoverExtensionsModal from './DiscoverExtensionModal.vue'
@@ -68,15 +68,16 @@ import DiscoverIcon from '@/icons/DiscoverIcon.vue'
     PreferenceHeader,
     DiscoverIcon,
     InstallIcon
-  }
+  },
+  emits: ['extensionsChanged']
 })
 export default class ExtensionGroup extends Vue {
   @Prop({ default: () => [] })
-  private extensions!: ExtensionDetails[]
+  extensions!: ExtensionDetails[]
 
-  private extensionInAction = 0
+  extensionInAction = 0
 
-  private togglePath(index: number) {
+  togglePath(index: number) {
     if (index >= 0) {
       const ext = this.extensions[index]
       const status = (document.getElementById(`ext-${index}`) as HTMLInputElement).checked
@@ -84,7 +85,7 @@ export default class ExtensionGroup extends Vue {
     }
   }
 
-  private removeExtension() {
+  removeExtension() {
     if (this.extensions[this.extensionInAction]) {
       window.ExtensionUtils.uninstall(this.extensions[this.extensionInAction].packageName).then(() =>
         this.emitExtensionsUpdated()
@@ -92,7 +93,7 @@ export default class ExtensionGroup extends Vue {
     }
   }
 
-  private removePath(index: number) {
+  removePath(index: number) {
     if (index >= 0) {
       this.extensionInAction = index
       this.$bvModal.show('extensionDeleteModal')
@@ -100,21 +101,21 @@ export default class ExtensionGroup extends Vue {
     }
   }
 
-  private openFileBrowser() {
+  openFileBrowser() {
     window.WindowUtils.openFileBrowser(false, true, [{ name: 'Moosync Extension File', extensions: ['msox'] }]).then(
       (data) => {
         if (!data.canceled) {
-          window.ExtensionUtils.install(...data.filePaths).then(() => this.$emit('extensionsChanged'))
+          window.ExtensionUtils.install(...data.filePaths).then(() => this.emitExtensionsUpdated())
         }
       }
     )
   }
 
-  private emitExtensionsUpdated() {
+  emitExtensionsUpdated() {
     this.$emit('extensionsChanged')
   }
 
-  private openDiscoverModal() {
+  openDiscoverModal() {
     this.$bvModal.show('discoverExtensions')
   }
 }

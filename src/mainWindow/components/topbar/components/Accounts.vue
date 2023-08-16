@@ -9,32 +9,45 @@
 
 <template>
   <div>
-    <Person id="account" class="accounts-icon" />
-    <b-popover :target="`account`" placement="bottom" triggers="click blur" custom-class="accounts-popover">
-      <div class="buttons">
-        <div v-for="p in providers" :key="`${p.provider.Title}-${p.username}`">
-          <IconButton
-            v-if="p && p.provider.canLogin"
-            :bgColor="p.provider.BgColor"
-            :hoverText="p.provider.loggedIn ? 'Sign out' : p.provider.Title"
-            :title="p.username ? p.username : 'Connect'"
-            @click.native="handleClick(p)"
-          >
-            <template slot="icon">
-              <component v-if="isIconComponent(p.provider.IconComponent)" :is="p.provider.IconComponent" />
-              <inline-svg
-                class="provider-icon"
-                v-else-if="p.provider.IconComponent.endsWith('svg')"
-                :src="`media://${p.provider.IconComponent}`"
-              />
-              <img v-else referrerPolicy="no-referrer" :src="a.icon" alt="provider icon" class="provider-icon" />
-            </template>
-          </IconButton>
+    <Person id="account" class="accounts-icon" @click="togglePopover" />
+    <Transition>
+      <div
+        v-if="showAccountsPopover"
+        triggers="click blur"
+        class="accounts-popover custom-popover"
+        v-click-outside="hidePopover"
+      >
+        <div class="buttons" :key="`${forceRefresh}`" :id="`${forceRefresh}`">
+          <div v-for="p in providers" :key="p.key">
+            <IconButton
+              v-if="p && p.provider.canLogin"
+              :bgColor="p.provider.BgColor"
+              :hoverText="p.provider.loggedIn ? 'Sign out' : p.provider.Title"
+              :title="p.username ? p.username : 'Connect'"
+              @click="handleClick(p)"
+            >
+              <template #icon>
+                <component v-if="isIconComponent(p.provider.IconComponent)" :is="p.provider.IconComponent" />
+                <inline-svg
+                  class="provider-icon"
+                  v-else-if="p.provider.IconComponent.endsWith('svg')"
+                  :src="`media://${p.provider.IconComponent}`"
+                />
+                <img
+                  v-else
+                  referrerPolicy="no-referrer"
+                  :src="p.provider.IconComponent"
+                  alt="provider icon"
+                  class="provider-icon"
+                />
+              </template>
+            </IconButton>
+          </div>
         </div>
       </div>
-    </b-popover>
+    </Transition>
     <ConfirmationModal
-      keyword="signout from"
+      keyword="log out from "
       :itemName="activeSignout ? activeSignout.provider.Title : ''"
       id="signoutModal"
       @confirm="signout"
@@ -47,9 +60,9 @@ import YoutubeIcon from '@/icons/YoutubeIcon.vue'
 import SpotifyIcon from '@/icons/SpotifyIcon.vue'
 import LastFMIcon from '@/icons/LastFMIcon.vue'
 import Person from '@/icons/PersonIcon.vue'
-import { Component } from 'vue-property-decorator'
+import { Component } from 'vue-facing-decorator'
 import ConfirmationModal from '@/commonComponents/ConfirmationModal.vue'
-import { mixins } from 'vue-class-component'
+import { mixins } from 'vue-facing-decorator'
 import AccountsMixin from '@/utils/ui/mixins/AccountsMixin'
 import InvidiousIcon from '@/icons/InvidiousIcon.vue'
 import PipedIcon from '@/icons/PipedIcon.vue'
@@ -69,6 +82,10 @@ import { vxm } from '@/mainWindow/store'
 })
 export default class TopBar extends mixins(AccountsMixin) {
   activeSignout: Provider | null = null
+
+  forceRefresh = 0
+
+  showAccountsPopover = false
 
   isIconComponent(src: string) {
     switch (src) {
@@ -90,7 +107,7 @@ export default class TopBar extends mixins(AccountsMixin) {
       if (this.activeSignout) {
         this.activeSignout.provider.signOut()
 
-        this.$set(this.activeSignout, 'username', (await this.activeSignout.provider.getUserDetails()) ?? '')
+        this.activeSignout['username'] = (await this.activeSignout.provider.getUserDetails()) ?? ''
         this.activeSignout = null
       }
     }
@@ -99,6 +116,14 @@ export default class TopBar extends mixins(AccountsMixin) {
   protected showSignoutModal(signout: Provider) {
     this.activeSignout = signout
     this.$bvModal.show('signoutModal')
+  }
+
+  togglePopover() {
+    this.showAccountsPopover = !this.showAccountsPopover
+  }
+
+  hidePopover() {
+    this.showAccountsPopover = false
   }
 }
 </script>
@@ -114,4 +139,17 @@ export default class TopBar extends mixins(AccountsMixin) {
     margin-bottom: 8px
     &:first-child
       margin-top: 15px
+
+.custom-popover
+  position: fixed
+  top: 60px
+  right: 45px
+  padding: 5px 15px 10px 15px
+
+.v-enter-active, .v-leave-active
+  transition: opacity 0.3s ease
+
+
+.v-enter-from, .v-leave-to
+  opacity: 0
 </style>

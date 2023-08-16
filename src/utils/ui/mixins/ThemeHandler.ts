@@ -7,9 +7,9 @@
  *  See LICENSE in the project root for license information.
  */
 
-import { Component } from 'vue-property-decorator'
-import Vue from 'vue'
 import { ThemeStore } from '@/mainWindow/store/themes'
+import { Component } from 'vue-facing-decorator'
+import { Vue } from 'vue-facing-decorator'
 
 type StyleElement = {
   sheet: CSSStyleSheet
@@ -35,16 +35,30 @@ export default class ThemeHandler extends Vue {
     this.setCheckboxValues()
     if (theme?.theme.customCSS) {
       this.loadCss(theme?.theme.customCSS)
+    } else {
+      this.unloadCss()
     }
   }
 
   private async loadCss(cssPath: string) {
-    const css = await this.transformCSS(cssPath)
+    let css = await this.transformCSS(cssPath)
+
+    // now substitute %themeDir% within css definition
+    let themeDir = cssPath.replaceAll('\\', '/')
+    themeDir = themeDir.substring(0, themeDir.lastIndexOf('/'))
+    css = css.replaceAll('%themeDir%', themeDir)
 
     const customStylesheet = (document.getElementById('custom-css') as HTMLStyleElement) ?? this.createStyleNode()
     customStylesheet.innerHTML = css
 
     document.head.append(customStylesheet)
+  }
+
+  private async unloadCss() {
+    const customStylesheet = document.getElementById('custom-css') as HTMLStyleElement
+    if (customStylesheet) {
+      document.head.removeChild(customStylesheet)
+    }
   }
 
   private transformCSS(cssPath: string) {
@@ -83,7 +97,7 @@ export default class ThemeHandler extends Vue {
         .getPropertyValue('--textPrimary')
         .replace('#', '')
         .trim()
-        .toLowerCase()}%27 d=%27M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z%27/%3e%3c/svg%3e") !important; }`
+        .toLowerCase()}%27 d=%27M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z%27/%3e%3c/svg%3e") !important; }`,
     )
   }
 
@@ -97,7 +111,7 @@ export default class ThemeHandler extends Vue {
       'textSecondary',
       'textInverse',
       'accent',
-      'divider'
+      'divider',
     ]
     for (const key of keys) {
       this.root.style.setProperty(`--${key}-rgb`, this.hexToRgb(docStyle.getPropertyValue(`--${key}`).trim()))
@@ -105,13 +119,14 @@ export default class ThemeHandler extends Vue {
   }
 
   private hexToRgb(hex: string) {
+    let parsedHex = hex
     if (hex.startsWith('#')) {
-      hex = hex.substring(1)
+      parsedHex = hex.substring(1)
     }
 
-    const r = parseInt(hex.substring(0, 2), 16)
-    const g = parseInt(hex.substring(2, 4), 16)
-    const b = parseInt(hex.substring(4, 6), 16)
+    const r = parseInt(parsedHex.substring(0, 2), 16)
+    const g = parseInt(parsedHex.substring(2, 4), 16)
+    const b = parseInt(parsedHex.substring(4, 6), 16)
 
     return [r, g, b].join(',')
   }
@@ -122,7 +137,7 @@ export default class ThemeHandler extends Vue {
 
   public fetchSongView() {
     window.ThemeUtils.getSongView().then(
-      (view) => this.themeStore && ((this._themeStore as ThemeStore).songView = view)
+      (view) => this.themeStore && (this._themeStore as ThemeStore).songView === view,
     )
   }
 

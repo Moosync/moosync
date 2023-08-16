@@ -1,6 +1,6 @@
-import EventEmitter from 'events'
 import { LocalPlayer } from './local'
 import { vxm } from '@/mainWindow/store'
+import EventEmitter from 'events'
 
 export class PipedPlayer extends LocalPlayer {
   private customLoadEventEmitter = new EventEmitter()
@@ -24,7 +24,7 @@ export class PipedPlayer extends LocalPlayer {
       if (playbackUrl) {
         super._load(playbackUrl, volume, autoplay)
       } else {
-        this.customLoadEventEmitter.emit('error', new Error('Invalid src: ' + src))
+        this.customLoadEventEmitter.emit('error', new Error(`Invalid src: ${src}`))
       }
     }
     this.customLoadEventEmitter.emit('loaded')

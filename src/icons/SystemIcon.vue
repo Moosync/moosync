@@ -8,7 +8,14 @@
 -->
 
 <template>
-  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="18"
+    height="17"
+    viewBox="0 0 18 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click', $event)"
+  >
     <path
       d="M13.5 15.9013H12.5212C12.2892 15.7413 12.0943 15.5357 11.9489 15.2977C11.8036 15.0596 11.7111 14.7945 11.6775 14.5195V13.7793H6.32247V14.5305C6.28733 14.8036 6.19415 15.0665 6.04887 15.3026C5.90359 15.5386 5.7094 15.7425 5.47872 15.9013H4.46622C4.31703 15.9013 4.17396 15.959 4.06847 16.0619C3.96298 16.1647 3.90372 16.3042 3.90372 16.4496C3.90372 16.595 3.96298 16.7345 4.06847 16.8373C4.17396 16.9401 4.31703 16.9979 4.46622 16.9979H13.5337C13.6093 17.0046 13.6855 16.9951 13.7569 16.9699C13.8283 16.9447 13.8931 16.9046 13.9468 16.8522C14.0005 16.7999 14.0417 16.7367 14.0675 16.6671C14.0933 16.5975 14.1031 16.5233 14.0962 16.4496C14.0964 16.3747 14.0808 16.3006 14.0504 16.2319C14.0201 16.1631 13.9756 16.1011 13.9197 16.0497C13.8639 15.9984 13.7978 15.9587 13.7256 15.9332C13.6534 15.9076 13.5766 15.8968 13.5 15.9013Z"
       :fill="active ? 'var(--accent)' : 'var(--textPrimary)'"
@@ -21,10 +28,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 
-@Component({})
+@Component({
+  emits: ['click']
+})
 export default class System extends Vue {
   @Prop({ default: false })
   active!: boolean

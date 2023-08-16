@@ -32,10 +32,10 @@
 
 <script lang="ts">
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
-import Component, { mixins } from 'vue-class-component'
+import { mixins, Component } from 'vue-facing-decorator'
 import Play2 from '@/icons/PlayIcon2.vue'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
-import { Prop, Watch } from 'vue-property-decorator'
+import { Prop, Watch } from 'vue-facing-decorator'
 import AnimatedEqualizer from '@/icons/AnimatedEqualizerIcon.vue'
 
 @Component({
@@ -43,7 +43,8 @@ import AnimatedEqualizer from '@/icons/AnimatedEqualizerIcon.vue'
     Play2,
     SongDefault,
     AnimatedEqualizer
-  }
+  },
+  emits: ['imgClicked']
 })
 export default class LowImageCol extends mixins(ImgLoader) {
   @Prop({ default: '' })
@@ -75,8 +76,8 @@ export default class LowImageCol extends mixins(ImgLoader) {
     this.forceEmptyImg = true
   }
 
-  emitClick() {
-    this.$emit('imgClicked')
+  emitClick(event: MouseEvent) {
+    this.$emit('imgClicked', event)
   }
 }
 </script>

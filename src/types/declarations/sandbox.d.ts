@@ -48,21 +48,21 @@ type ExtInstallStatus = {
 
 type extensionEventMessage = {
   type: keyof MoosyncExtensionTemplate
-  data: any
+  data: unknown
   packageName?: string
 }
 
 type extensionRequestMessage = {
   type: import('@/utils/extensions/constants').extensionRequests
   channel: string
-  data: any
+  data: unknown
   extensionName: string
 }
 
 type extensionUIRequestMessage = {
   type: import('@/utils/extensions/constants').extensionUIRequests
   channel: string
-  data: any
+  data: unknown
   extensionName: string
 }
 
@@ -73,25 +73,24 @@ type extensionHostMessage = extensionEventMessage | mainRequestMessage | provide
 type mainRequestMessage = {
   type: import('@/utils/extensions/constants').mainRequests
   channel: string
-  data: any
+  data: {
+    packageName: string
+  } & Record<string, unknown>
 }
 
 type providerFetchRequestMessage = {
   type: import('@/utils/extensions/constants').providerFetchRequests
   channel: string
-  data: any
+  data: {
+    packageName: string
+  } & Record<string, unknown>
 }
 
 type mainReplyMessage = mainRequestMessage
 
-type mainHostMessage = mainReplyMessage | extensionRequestMessage
-
-interface installMessage {
-  success: boolean
-  message?: string
-}
-
 type mainHostMessage =
+  | mainReplyMessage
+  | extensionRequestMessage
   | {
       type: 'get-all-songs'
       data: undefined
@@ -100,6 +99,11 @@ type mainHostMessage =
       type: 'get-installed-extensions'
       data: ExtensionDetails[]
     }
+
+interface installMessage {
+  success: boolean
+  message?: string
+}
 
 interface ExtensionDetails {
   name: string
@@ -126,7 +130,7 @@ interface ExtraExtensionEvents<T extends ExtraExtensionEventTypes> {
 
 interface ExtendedExtensionAPI extends extensionAPI {
   _emit: <T extends ExtraExtensionEventTypes>(
-    event: ExtraExtensionEvents<T>
+    event: ExtraExtensionEvents<T>,
   ) => Promise<ExtraExtensionEventReturnType<T> | undefined>
   _getContextMenuItems: () => ExtendedExtensionContextMenuItems<ContextMenuTypes>[]
   _getAccountDetails: () => AccountDetails[]
@@ -172,11 +176,11 @@ interface ExtensionCommunicator {
 }
 
 interface NodeRequire {
-  (dependencies: string[], callback: (...args: any[]) => any, errorback?: (err: any) => void): any
+  (dependencies: string[], callback: (...args: unknown[]) => unknown, errorback?: (err: unknown) => void): unknown
   config(data: unknown): unknown
   onError: (err: Error) => void
   __$__nodeRequire<T>(moduleName: string): T
   getStats(): ReadonlyArray<LoaderEvent>
   hasDependencyCycle(): boolean
-  define(amdModuleId: string, dependencies: string[], callback: (...args: any[]) => any): any
+  define(amdModuleId: string, dependencies: string[], callback: (...args: unknown[]) => unknown): unknown
 }

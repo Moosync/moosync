@@ -12,17 +12,18 @@
     <div class="background w-100">
       <div class="musicbar h-100">
         <VueSlider
+          class="timeline pl-2 pr-2"
           :min="0"
           :max="maxInterval"
-          class="timeline pl-2 pr-2"
           :interval="1"
           :dotSize="10"
-          :value="currentTimestamp"
+          :modelValue="currentTimestamp"
           :duration="0.1"
           :tooltip="'none'"
           :disabled="disableSeekbar"
           @change="updateTimestmp"
         />
+
         <b-container fluid class="d-flex bar-container h-100 pb-2">
           <b-row
             no-gutters
@@ -68,8 +69,8 @@ import Controls from '@/mainWindow/components/musicbar/components/Controls.vue'
 import Details from '@/mainWindow/components/musicbar/components/Details.vue'
 import ExtraControls from '@/mainWindow/components/musicbar/components/ExtraControls.vue'
 import MusicInfo from '@/mainWindow/components/musicbar/components/MusicInfo.vue'
-import { Component, Watch } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+import { Component, Watch } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import { vxm } from '@/mainWindow/store'
 import { bus } from '@/mainWindow/main'
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
@@ -148,7 +149,7 @@ export default class MusicBar extends mixins(ImgLoader, JukeboxMixin) {
   }
 
   updateTimestmp(value: number) {
-    bus.$emit('forceSeek', value / 1000)
+    bus.emit('forceSeek', value / 1000)
     this.forceSeek = value / 1000
   }
 
@@ -178,7 +179,7 @@ export default class MusicBar extends mixins(ImgLoader, JukeboxMixin) {
 
   async mounted() {
     this.hasFrame = await window.WindowUtils.hasFrame()
-    bus.$on('onToggleSliderWindow', this.toggleSlider)
+    bus.on('onToggleSliderWindow', this.toggleSlider)
     this.iconType = (await this.getIconType()) ?? ''
   }
 }

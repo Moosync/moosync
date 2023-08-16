@@ -8,18 +8,18 @@
  */
 
 import { LastFMProvider } from '../../utils/ui/providers/lastfm'
+import { PipedProvider } from '../../utils/ui/providers/piped'
 import { SpotifyProvider } from '../../utils/ui/providers/spotify'
 import { VuexModule } from './module'
-import { YoutubeProvider } from '@/utils/ui/providers/youtube'
-import { InvidiousProvider } from '@/utils/ui/providers/invidious'
-import { action, mutation } from 'vuex-class-component'
 import { ExtensionProvider } from '@/utils/ui/providers/extensionWrapper'
-import { PipedProvider } from '../../utils/ui/providers/piped'
+import { InvidiousProvider } from '@/utils/ui/providers/invidious'
+import { YoutubeProvider } from '@/utils/ui/providers/youtube'
+import { action, mutation } from 'vuex-class-component'
 
 export enum YoutubeAlts {
-  YOUTUBE,
-  INVIDIOUS,
-  PIPED
+  YOUTUBE = 0,
+  INVIDIOUS = 1,
+  PIPED = 2,
 }
 
 export class ProviderStore extends VuexModule.With({ namespaced: 'providers' }) {
@@ -29,10 +29,6 @@ export class ProviderStore extends VuexModule.With({ namespaced: 'providers' }) 
   public _invidiousProvider = new InvidiousProvider()
   public _pipedProvider = new PipedProvider()
   public _extensionProviders: ExtensionProvider[] = []
-
-  private _loggedInYoutube = false
-  private _loggedInSpotify = false
-  private _loggedInLastFM = false
 
   private _youtubeAlt = YoutubeAlts.YOUTUBE
 
@@ -53,30 +49,6 @@ export class ProviderStore extends VuexModule.With({ namespaced: 'providers' }) 
 
   set youtubeAlt(val: YoutubeAlts) {
     this._youtubeAlt = val
-  }
-
-  get loggedInYoutube() {
-    return this._loggedInYoutube
-  }
-
-  set loggedInYoutube(val: boolean) {
-    this._loggedInYoutube = val
-  }
-
-  get loggedInSpotify() {
-    return this._loggedInSpotify
-  }
-
-  set loggedInSpotify(val: boolean) {
-    this._loggedInSpotify = val
-  }
-
-  get loggedInLastFM() {
-    return this._loggedInLastFM
-  }
-
-  set loggedInLastFM(val: boolean) {
-    this._loggedInLastFM = val
   }
 
   get extensionProviders() {
@@ -105,8 +77,6 @@ export class ProviderStore extends VuexModule.With({ namespaced: 'providers' }) 
     if (scopes.length > 0) {
       this.addExtensionProvider(new ExtensionProvider(packageName, scopes))
     }
-
-    console.log(this._extensionProviders)
   }
 
   @action

@@ -7,35 +7,35 @@
  *  See LICENSE in the project root for license information.
  */
 
+import { getWindowSize, loadPreferences, setWindowSize } from './db/preferences'
+import { SongEvents, WindowEvents } from './ipc/constants'
 import {
   BrowserWindow,
   Menu,
+  ThumbarButton,
   Tray,
   app,
   dialog,
-  protocol,
-  webFrameMain,
-  ThumbarButton,
   nativeImage,
   net,
+  protocol,
+  session,
   shell,
-  session
+  webFrameMain,
 } from 'electron'
-import { SongEvents, WindowEvents } from './ipc/constants'
-import { getWindowSize, setWindowSize, loadPreferences } from './db/preferences'
 
-import path from 'path'
-import { access, readFile } from 'fs/promises'
-import { getActiveTheme } from './themes/preferences'
-import pie from 'puppeteer-in-electron'
-import puppeteer from 'puppeteer-core'
-import { getExtensionHostChannel } from './ipc'
 import { getSongDB } from './db/index'
-import { Readable } from 'stream'
+import { getExtensionHostChannel } from './ipc'
 import { getMprisChannel, getSpotifyPlayerChannel } from './ipc/index'
-import { ButtonEnum, PlayerButtons } from 'media-controller'
-import { nativeTheme } from 'electron'
 import { logger } from './logger'
+import { getActiveTheme } from './themes/preferences'
+import { nativeTheme } from 'electron'
+import { access, readFile } from 'fs/promises'
+import { ButtonEnum, PlayerButtons } from 'media-controller'
+import path from 'path'
+import puppeteer from 'puppeteer-core'
+import pie from 'puppeteer-in-electron'
+import { Readable } from 'stream'
 
 export class WindowHandler {
   private static mainWindow: number
@@ -81,8 +81,8 @@ export class WindowHandler {
         // Use pluginOptions.nodeIntegration, leave this alone
         // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
         nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-        preload: path.join(__dirname, 'preload.js')
-      }
+        preload: path.join(__dirname, 'preload.js'),
+      },
     }
   }
 
@@ -92,7 +92,7 @@ export class WindowHandler {
       ...getWindowSize('mainWindow', { width: 1016, height: 653 }),
       minHeight: 400,
       minWidth: 300,
-      ...(await this.getBaseWindowProps())
+      ...(await this.getBaseWindowProps()),
     }
   }
 
@@ -102,7 +102,7 @@ export class WindowHandler {
       ...getWindowSize('prefWindow', { width: 840, height: 653 }),
       minHeight: 672,
       minWidth: 840,
-      ...(await this.getBaseWindowProps())
+      ...(await this.getBaseWindowProps()),
     }
   }
 
@@ -153,7 +153,7 @@ export class WindowHandler {
     redirectUrl: string,
     requestHeaders: Record<string, string>,
     method: string,
-    callback: (response: Electron.ProtocolResponse | NodeJS.ReadableStream) => void
+    callback: (response: Electron.ProtocolResponse | NodeJS.ReadableStream) => void,
   ) {
     try {
       const req = net.request(redirectUrl)
@@ -166,7 +166,7 @@ export class WindowHandler {
           headers: res.headers,
           statusCode: res.statusCode,
           mimeType: res.headers['content-type'] as string,
-          data: res as unknown as NodeJS.ReadableStream
+          data: res as unknown as NodeJS.ReadableStream,
         })
       })
 
@@ -184,7 +184,7 @@ export class WindowHandler {
         const data = await extensionHost.sendExtraEvent({
           type: 'customRequest',
           data: [request.url],
-          packageName: extensionPackageName
+          packageName: extensionPackageName,
         })
 
         if (data[extensionPackageName]) {
@@ -201,9 +201,9 @@ export class WindowHandler {
             callback({
               statusCode: 200,
               headers: {
-                'content-type': mimeType
+                'content-type': mimeType,
               },
-              data: Readable.from(Buffer.from(respData))
+              data: Readable.from(Buffer.from(respData)),
             })
           }
         }
@@ -305,7 +305,6 @@ export class WindowHandler {
 
     if (isMainWindow) {
       if (!AppExitHandler._isQuitting && AppExitHandler._minimizeToTray) {
-        await this.trayHandler.createTray()
         event.preventDefault()
         window.hide()
       } else {
@@ -343,14 +342,14 @@ export class WindowHandler {
     window.webContents.setWindowOpenHandler((details) => {
       if (['new-window', 'foreground-tab', 'background-tab', 'default'].includes(details.disposition)) {
         shell.openExternal(details.url, {
-          activate: true
+          activate: true,
         })
         return {
-          action: 'deny'
+          action: 'deny',
         }
       } else {
         return {
-          action: 'allow'
+          action: 'allow',
         }
       }
     })
@@ -380,7 +379,7 @@ export class WindowHandler {
             return
           }
         }
-      }
+      },
     )
 
     // TODO: Hopefully expand the blocklist in future
@@ -388,7 +387,7 @@ export class WindowHandler {
       { urls: ['*://googleads.g.doubleclick.net/*', '*://*.youtube.com/api/stats/ads'] },
       (details, callback) => {
         callback({ cancel: true })
-      }
+      },
     )
 
     if (isMainWindow) {
@@ -406,7 +405,7 @@ export class WindowHandler {
     this.setFullscreen(isMainWindow, !window?.isFullScreen() ?? false)
   }
 
-  public setFullscreen(isMainWindow = true, value: boolean) {
+  public setFullscreen(isMainWindow: boolean, value: boolean) {
     const window = WindowHandler.getWindow(isMainWindow)
     if (window?.fullScreenable) {
       window.setFullScreen(value)
@@ -430,12 +429,12 @@ export class WindowHandler {
     window?.webContents.isDevToolsOpened() ? window.webContents.closeDevTools() : window?.webContents.openDevTools()
   }
 
-  public async openFileBrowser(isMainWindow = true, options: Electron.OpenDialogOptions) {
+  public async openFileBrowser(isMainWindow: boolean, options: Electron.OpenDialogOptions) {
     const window = WindowHandler.getWindow(isMainWindow)
     return window && dialog.showOpenDialog(window, options)
   }
 
-  public async openSaveDialog(isMainWindow = true, options: Electron.SaveDialogOptions) {
+  public async openSaveDialog(isMainWindow: boolean, options: Electron.SaveDialogOptions) {
     const window = WindowHandler.getWindow(isMainWindow)
     return window && dialog.showSaveDialog(window, options)
   }
@@ -547,7 +546,7 @@ class WindowToolbarButtonsHandler {
       buttons.push({
         icon: getThemeIcon('prev_track'),
         click: () => getMprisChannel().onButtonPressed(ButtonEnum.Previous),
-        tooltip: 'Previous track'
+        tooltip: 'Previous track',
       })
     }
 
@@ -555,7 +554,7 @@ class WindowToolbarButtonsHandler {
       buttons.push({
         icon: getThemeIcon('play'),
         click: () => getMprisChannel().onButtonPressed(ButtonEnum.Play),
-        tooltip: 'Play'
+        tooltip: 'Play',
       })
     }
 
@@ -563,7 +562,7 @@ class WindowToolbarButtonsHandler {
       buttons.push({
         icon: getThemeIcon('pause'),
         click: () => getMprisChannel().onButtonPressed(ButtonEnum.Pause),
-        tooltip: 'Pause'
+        tooltip: 'Pause',
       })
     }
 
@@ -571,7 +570,7 @@ class WindowToolbarButtonsHandler {
       buttons.push({
         icon: getThemeIcon('next_track'),
         click: () => getMprisChannel().onButtonPressed(ButtonEnum.Next),
-        tooltip: 'Next track'
+        tooltip: 'Next track',
       })
     }
 
@@ -620,7 +619,7 @@ class TrayHandler {
         icon: getThemeIcon('play'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Play)
-        }
+        },
       })
     }
 
@@ -630,7 +629,7 @@ class TrayHandler {
         icon: getThemeIcon('pause'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Pause)
-        }
+        },
       })
     }
 
@@ -640,7 +639,7 @@ class TrayHandler {
         icon: getThemeIcon('next_track'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Next)
-        }
+        },
       })
     }
 
@@ -650,7 +649,7 @@ class TrayHandler {
         icon: getThemeIcon('prev_track'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Previous)
-        }
+        },
       })
     }
 
@@ -660,7 +659,7 @@ class TrayHandler {
         icon: getThemeIcon('repeat'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Repeat)
-        }
+        },
       })
     } else {
       buttons.push({
@@ -668,7 +667,7 @@ class TrayHandler {
         icon: getThemeIcon('repeat'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Repeat)
-        }
+        },
       })
     }
 
@@ -678,7 +677,7 @@ class TrayHandler {
         icon: getThemeIcon('shuffle'),
         click: () => {
           getMprisChannel().onButtonPressed(ButtonEnum.Shuffle)
-        }
+        },
       })
     }
 
@@ -697,7 +696,7 @@ class TrayHandler {
               AppExitHandler._isQuitting = false
               WindowHandler.getWindow()?.show()
               WindowHandler.getWindow()?.focus()
-            }
+            },
           },
           ...this.extraButtons,
           {
@@ -706,9 +705,9 @@ class TrayHandler {
             click: function () {
               AppExitHandler._isQuitting = true
               app.quit()
-            }
-          }
-        ])
+            },
+          },
+        ]),
       )
     }
   }
@@ -725,7 +724,7 @@ class TrayHandler {
 
 function getThemeIcon(iconName: string) {
   return nativeImage.createFromPath(
-    path.join(__static, `${iconName}${nativeTheme.shouldUseDarkColors ? '' : '_light'}.png`)
+    path.join(__static, `${iconName}${nativeTheme.shouldUseDarkColors ? '' : '_light'}.png`),
   )
 }
 

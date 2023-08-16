@@ -1,9 +1,9 @@
-import { saveSelectivePreference, loadSelectivePreference, store } from '../db/preferences'
+import { isEmpty, isThemeDetails } from '../../common'
+import { loadSelectivePreference, saveSelectivePreference, store } from '../db/preferences'
 import { SystemThemeHandler } from './system'
+import { app } from 'electron'
 import { promises as fsP } from 'fs'
 import path from 'path'
-import { app } from 'electron'
-import { isEmpty, isThemeDetails } from '../../common'
 
 /**
  * Saves theme under key "themes"
@@ -66,8 +66,8 @@ function validateTheme(theme: unknown): ThemeDetails | undefined {
         textSecondary: tryTheme?.theme?.textSecondary,
         textInverse: tryTheme?.theme?.textInverse,
         divider: tryTheme?.theme?.divider,
-        customCSS: tryTheme?.theme?.customCSS
-      }
+        customCSS: tryTheme?.theme?.customCSS,
+      },
     }
   }
 }
@@ -85,15 +85,13 @@ export async function loadAllThemes() {
     if (d.isDirectory()) {
       try {
         const data = JSON.parse(
-          await fsP.readFile(path.join(themeDir, d.name, 'config.json'), { encoding: 'utf-8' })
+          await fsP.readFile(path.join(themeDir, d.name, 'config.json'), { encoding: 'utf-8' }),
         ) as ThemeDetails
         const theme = validateTheme(data)
         if (theme) {
           ret[data.id] = theme
         }
-      } catch {
-        continue
-      }
+      } catch {}
     }
   }
 
@@ -106,7 +104,7 @@ export async function loadAllThemes() {
  * @returns Dictionary of themes with their id's as keys
  */
 export function loadAllThemesLegacy(): { [key: string]: ThemeDetails } | undefined {
-  return store.get(`themes`) as { [key: string]: ThemeDetails } | undefined
+  return store.get('themes') as { [key: string]: ThemeDetails } | undefined
 }
 
 /**
@@ -145,8 +143,8 @@ const defaultTheme: ThemeDetails = {
     textSecondary: '#565656',
     textInverse: '#000000',
     accent: '#65CB88',
-    divider: 'rgba(79, 79, 79, 0.67)'
-  }
+    divider: 'rgba(79, 79, 79, 0.67)',
+  },
 }
 
 /**
@@ -198,9 +196,9 @@ export function setupDefaultThemes() {
         textSecondary: 'rgba(255, 255, 255, 0.32)',
         textInverse: '#000000',
         accent: '#72BBFF',
-        divider: 'rgba(79, 79, 79, 0.67)'
-      }
-    }
+        divider: 'rgba(79, 79, 79, 0.67)',
+      },
+    },
   }
 
   for (const key in themes) {
@@ -211,12 +209,13 @@ export function setupDefaultThemes() {
 }
 
 export async function transformCSS(cssPath: string, root?: string) {
+  let parsedPath = cssPath
   if (root) {
-    cssPath = path.resolve(root, cssPath)
+    parsedPath = path.resolve(root, cssPath)
   }
-  await fsP.access(cssPath)
+  await fsP.access(parsedPath)
 
-  let css = await fsP.readFile(cssPath, { encoding: 'utf-8' })
+  let css = await fsP.readFile(parsedPath, { encoding: 'utf-8' })
 
   const match = css.matchAll(new RegExp('@import', 'g'))
   for (const m of match) {
@@ -224,7 +223,7 @@ export async function transformCSS(cssPath: string, root?: string) {
     if (line) {
       const importPath = line?.match(/(["'])((\\{2})*|(.*?[^\\](\\{2})*))\1/)
       if (importPath) {
-        const imported = await transformCSS(importPath[2], path.dirname(cssPath))
+        const imported = await transformCSS(importPath[2], path.dirname(parsedPath))
         css = css.replaceAll(line, imported)
       }
     }
@@ -248,7 +247,6 @@ export async function migrateThemes() {
 
         const configPath = path.join(themeDir, 'config.json')
         await fsP.writeFile(configPath, JSON.stringify(value))
-        continue
       }
     }
   }

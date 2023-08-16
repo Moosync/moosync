@@ -8,20 +8,20 @@
  */
 
 import {
-  ModalPlugin,
-  LayoutPlugin,
   ButtonPlugin,
-  SidebarPlugin,
-  PopoverPlugin,
-  TabsPlugin,
-  ImagePlugin,
-  FormInputPlugin,
-  FormTextareaPlugin,
-  LinkPlugin,
-  SpinnerPlugin,
-  FormTagsPlugin,
+  DropdownPlugin,
   FormCheckboxPlugin,
-  DropdownPlugin
+  FormInputPlugin,
+  FormTagsPlugin,
+  FormTextareaPlugin,
+  ImagePlugin,
+  LayoutPlugin,
+  LinkPlugin,
+  ModalPlugin,
+  PopoverPlugin,
+  SidebarPlugin,
+  SpinnerPlugin,
+  TabsPlugin,
 } from 'bootstrap-vue'
 import Vue from 'vue'
 

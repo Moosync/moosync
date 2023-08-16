@@ -14,7 +14,7 @@
       height="56px"
       width="56px"
       :src="getValidImageLow(item)"
-      @click.native="playTop([item])"
+      @imgClicked="playTop([item])"
     />
     <b-col cols="5" class="ml-2 mr-2" align-self="center">
       <b-row no-gutters align-v="center">
@@ -53,8 +53,8 @@
 import { convertDuration } from '@/utils/common'
 import ImageLoader from '@/utils/ui/mixins/ImageLoader'
 import PlayerControls from '@/utils/ui/mixins/PlayerControls'
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import IconHandler from './IconHandler.vue'
 import LowImageCol from './LowImageCol.vue'
 

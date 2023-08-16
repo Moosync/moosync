@@ -19,7 +19,7 @@ declare namespace GeniusLyrics {
   }
 
   interface Hit {
-    highlights: any[]
+    highlights: unknown[]
     index: string
     type: string
     result: Result
@@ -52,7 +52,7 @@ declare namespace GeniusLyrics {
     title_with_featured: string
     updated_by_human_at: number
     url: string
-    featured_artists: any[]
+    featured_artists: unknown[]
     primary_artist: PrimaryArtist
   }
 

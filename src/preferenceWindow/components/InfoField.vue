@@ -21,24 +21,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { Mixins } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
+import { mixins } from 'vue-facing-decorator'
 import PreferenceHeader from './PreferenceHeader.vue'
 import { ExtensionPreferenceMixin } from '../mixins/extensionPreferenceMixin'
 
 @Component({
   components: {
     PreferenceHeader
-  }
+  },
+  emits: ['tooltipClick']
 })
-export default class InfoField extends Mixins<ExtensionPreferenceMixin<string>>(ExtensionPreferenceMixin) {
+export default class InfoField extends mixins(ExtensionPreferenceMixin) {
   @Prop()
-  private title!: string
+  title!: string
 
   @Prop()
-  private tooltip!: string
+  tooltip!: string
 
-  private emitTooltipClick() {
+  emitTooltipClick() {
     this.$emit('tooltipClick')
   }
 }

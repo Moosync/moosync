@@ -10,12 +10,12 @@
 import { IpcEvents, SearchEvents } from './constants'
 import { getDisabledPaths } from '@/utils/main/db/preferences'
 
-import { getSongDB } from '@/utils/main/db'
-import { YTScraper } from '../fetchers/searchYT'
-import { LyricsFetcher } from '../fetchers/lyrics'
-import { LastFMScraper } from '../fetchers/lastfm'
-import { InvidiousRequester } from '../fetchers/invidious'
 import { loadSelectivePreference } from '../db/preferences'
+import { InvidiousRequester } from '../fetchers/invidious'
+import { LastFMScraper } from '../fetchers/lastfm'
+import { LyricsFetcher } from '../fetchers/lyrics'
+import { YTScraper } from '../fetchers/searchYT'
+import { getSongDB } from '@/utils/main/db'
 
 export class SearchChannel implements IpcChannelInterface {
   name = IpcEvents.SEARCH
@@ -66,7 +66,7 @@ export class SearchChannel implements IpcChannelInterface {
   }
 
   private async searchAll(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.Search>) {
-    if (request.params && request.params.searchTerm) {
+    if (request.params?.searchTerm) {
       event.reply(request.responseChannel, await getSongDB().searchAll(request.params.searchTerm, getDisabledPaths()))
     }
     event.reply(request.responseChannel)
@@ -81,7 +81,7 @@ export class SearchChannel implements IpcChannelInterface {
   }
 
   private async searchYT(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.SearchYT>) {
-    if (request.params && request.params.title) {
+    if (request.params?.title) {
       try {
         const youtubeAlt =
           loadSelectivePreference<Checkbox[]>('youtubeAlt', false, [])?.find((val) => val.key === 'use_invidious')
@@ -92,7 +92,7 @@ export class SearchChannel implements IpcChannelInterface {
           artists: [],
           playlists: [],
           albums: [],
-          genres: []
+          genres: [],
         }
         if (!youtubeAlt) {
           data = await this.ytScraper.searchTerm(
@@ -100,7 +100,7 @@ export class SearchChannel implements IpcChannelInterface {
             request.params.artists,
             request.params.matchTitle,
             request.params.scrapeYTMusic,
-            request.params.scrapeYoutube
+            request.params.scrapeYoutube,
           )
         }
         event.reply(request.responseChannel, data)
@@ -129,7 +129,7 @@ export class SearchChannel implements IpcChannelInterface {
   }
 
   private async getYTPlaylist(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.YTPlaylist>) {
-    if (request.params && request.params.id) {
+    if (request.params?.id) {
       const data = await this.ytScraper.parsePlaylistFromID(request.params.id)
       event.reply(request.responseChannel, data)
     }
@@ -137,29 +137,29 @@ export class SearchChannel implements IpcChannelInterface {
 
   private async getYTPlaylistContent(
     event: Electron.IpcMainEvent,
-    request: IpcRequest<SearchRequests.YTPlaylistContent>
+    request: IpcRequest<SearchRequests.YTPlaylistContent>,
   ) {
-    if (request.params && request.params.id) {
+    if (request.params?.id) {
       const data = await this.ytScraper.getPlaylistContent(request.params.id, request.params.nextPageToken)
       event.reply(request.responseChannel, data)
     }
   }
 
   private async searchEntityByOptions(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.EntityOptions>) {
-    if (request.params && request.params.options) {
+    if (request.params?.options) {
       event.reply(request.responseChannel, await getSongDB().getEntityByOptions(request.params.options))
     }
   }
 
   private async scrapeLastFM(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.LastFMSuggestions>) {
-    if (request.params && request.params.url) {
+    if (request.params?.url) {
       const resp = await this.lastFmScraper.scrapeURL(request.params.url)
       event.reply(request.responseChannel, resp)
     }
   }
 
   private async scrapeLyrics(event: Electron.IpcMainEvent, request: IpcRequest<SearchRequests.LyricsScrape>) {
-    if (request.params && request.params.song) {
+    if (request.params?.song) {
       const resp = await this.azLyricsFetcher.getLyrics(request.params.song)
       event.reply(request.responseChannel, resp)
     }
@@ -171,7 +171,7 @@ export class SearchChannel implements IpcChannelInterface {
         request.params.resource,
         request.params.search,
         request.params.authorization,
-        request.params.invalidateCache
+        request.params.invalidateCache,
       )
       event.reply(request.responseChannel, resp)
     }

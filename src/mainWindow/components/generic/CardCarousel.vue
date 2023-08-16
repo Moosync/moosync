@@ -20,9 +20,9 @@
         <div :key="item._id" @click="playSong(item)" class="card-container">
           <CardView
             :title="item.title"
-            :subtitle="item.artists ? item.artists.map((val) => val.artist_name).join(', ') : ''"
+            :subtitle="item.artists ? item.artists.map((val: Artists) => val.artist_name).join(', ') : ''"
             :imgSrc="getValidImageHigh(item)"
-            @CardContextMenu="showContextMenu(arguments[0], item)"
+            @CardContextMenu="showContextMenu($event, item)"
           >
             <template #defaultCover> <SongDefault /></template>
             <template #overlay>
@@ -38,8 +38,8 @@
 
 <script lang="ts">
 import ImgLoader from '@/utils/ui/mixins/ImageLoader'
-import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop } from 'vue-facing-decorator'
 import CardView from '../../components/generic/CardView.vue'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import Play2 from '@/icons/PlayIcon2.vue'
@@ -61,7 +61,7 @@ export default class CardCarousel extends mixins(ImgLoader, PlayerControls, Cont
     this.playTop([song])
   }
 
-  showContextMenu(event: Event, song: Song) {
+  showContextMenu(event: MouseEvent, song: Song) {
     this.getContextMenu(event, {
       type: 'SONGS',
       args: {

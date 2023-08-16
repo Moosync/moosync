@@ -17,10 +17,11 @@
             v-if="computedImg"
             class="image h-100"
             :src="computedImg"
-            @error="handlerImageError(arguments[0], handleError)"
+            @error="handlerImageError($event, handleError)"
             referrerPolicy="no-referrer"
           />
-          <SongDefault v-else class="h-100 image" />
+          <SongDefault v-else-if="defaultDetails?.defaultCover !== FAVORITES_PLAYLIST_ID" class="h-100 image" />
+          <FavPlaylistIcon class="h-100 image" v-else />
         </div>
       </b-col>
       <b-col class="text-container text-truncate">
@@ -58,25 +59,21 @@
           <b-row no-gutters align-v="end" align-h="between" class="flex-fill mt-2 button-row">
             <b-col cols="auto">
               <div v-if="buttonGroup.enableContainer" class="button-group d-flex">
-                <PlainPlay :title="$t('buttons.playSingle', { title })" @click.native="playAll" />
-                <AddToQueue :title="$t('buttons.addToQueue', { title })" @click.native="addToQueue" />
+                <PlainPlay :title="$t('buttons.playSingle', { title })" @click="playAll" />
+                <AddToQueue :title="$t('buttons.addToQueue', { title })" @click="addToQueue" />
                 <AddToLibrary
                   :title="$t('buttons.addToLibrary', { title })"
-                  @click.native="addToLibrary"
+                  @click="addToLibrary"
                   v-if="buttonGroup.enableLibraryStore"
                 />
-                <RandomIcon
-                  v-if="buttonGroup.playRandom"
-                  :title="$t('buttons.playRandom')"
-                  @click.native="playRandom"
-                />
-                <FetchAllIcon v-if="buttonGroup.fetchAll" :title="$t('buttons.fetchAll')" @click.native="fetchAll" />
+                <RandomIcon v-if="buttonGroup.playRandom" :title="$t('buttons.playRandom')" @click="playRandom" />
+                <FetchAllIcon v-if="buttonGroup.fetchAll" :title="$t('buttons.fetchAll')" @click="fetchAll" />
               </div>
             </b-col>
             <b-col cols="auto">
               <TabCarousel
                 class="tab-carousel"
-                v-on="$listeners"
+                v-bind="$attrs"
                 :items="optionalProviders"
                 defaultBackgroundColor="var(--tertiary)"
                 :isSortAsc="isSortAsc"
@@ -90,8 +87,8 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mixins } from 'vue-facing-decorator'
+import { Component, Prop, Watch } from 'vue-facing-decorator'
 import SongDefault from '@/icons/SongDefaultIcon.vue'
 import PlainPlay from '@/icons/PlainPlayIcon.vue'
 import AddToLibrary from '@/icons/AddToLibraryIcon.vue'
@@ -106,6 +103,8 @@ import TabCarousel from '../../generic/TabCarousel.vue'
 import FetchAllIcon from '@/icons/FetchAllIcon.vue'
 import RandomIcon from '@/icons/RandomIcon.vue'
 import { vxm } from '@/mainWindow/store'
+import { FAVORITES_PLAYLIST_ID } from '@/utils/commonConstants'
+import FavPlaylistIcon from '@/icons/FavPlaylistIcon.vue'
 
 @Component({
   components: {
@@ -117,10 +116,19 @@ import { vxm } from '@/mainWindow/store'
     SpotifyIcon,
     TabCarousel,
     RandomIcon,
-    FetchAllIcon
+    FetchAllIcon,
+    FavPlaylistIcon
+  },
+  emits: ['playAll', 'addToQueue', 'addToLibrary', 'playRandom', 'fetchAll'],
+  options: {
+    compatConfig: {
+      INSTANCE_LISTENERS: false
+    }
   }
 })
 export default class SongDetails extends mixins(ImageLoader, ErrorHandler, FileMixin) {
+  FAVORITES_PLAYLIST_ID = FAVORITES_PLAYLIST_ID
+
   @Prop({ default: null })
   currentSong!: Song | null | undefined
 
@@ -135,6 +143,8 @@ export default class SongDetails extends mixins(ImageLoader, ErrorHandler, FileM
   @Prop({ default: () => [] })
   optionalProviders!: TabCarouselItem[]
 
+  private forceShowDefaultImage = false
+
   @Prop({
     default: () => {
       return {
@@ -146,9 +156,12 @@ export default class SongDetails extends mixins(ImageLoader, ErrorHandler, FileM
   buttonGroup!: SongDetailButtons
 
   get computedImg() {
-    return (
-      this.forceCover ?? this.getImgSrc(this.getValidImageHigh(this.currentSong) ?? this.defaultDetails?.defaultCover)
-    )
+    if (!this.forceShowDefaultImage) {
+      return (
+        this.forceCover ?? this.getImgSrc(this.getValidImageHigh(this.currentSong) ?? this.defaultDetails?.defaultCover)
+      )
+    }
+    return undefined
   }
 
   get isSortAsc() {
@@ -159,6 +172,7 @@ export default class SongDetails extends mixins(ImageLoader, ErrorHandler, FileM
   @Watch('currentSong')
   onSongchange() {
     this.subtitle = this.getConcatedSubtitle()
+    this.forceShowDefaultImage = false
   }
 
   get subSubTitle() {
@@ -214,7 +228,7 @@ export default class SongDetails extends mixins(ImageLoader, ErrorHandler, FileM
   }
 
   handleError(e: ErrorEvent) {
-    console.error(e)
+    this.forceShowDefaultImage = true
   }
 }
 </script>

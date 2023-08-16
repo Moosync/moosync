@@ -12,4 +12,9 @@ import 'vue-slider-component/theme/default.css'
 import Vue from 'vue'
 import VueSlider from 'vue-slider-component'
 
+VueSlider.compatConfig = {
+  ...VueSlider.compatConfig,
+  MODE: 3,
+}
+
 Vue.component('VueSlider', VueSlider)

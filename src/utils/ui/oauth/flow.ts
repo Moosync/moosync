@@ -28,18 +28,18 @@ import { AuthorizationNotifier } from '@openid/appauth/built/authorization_reque
 import {
   GRANT_TYPE_AUTHORIZATION_CODE,
   GRANT_TYPE_REFRESH_TOKEN,
-  TokenRequest
+  TokenRequest,
 } from '@openid/appauth/built/token_request'
 
 import { AuthFlowRequestHandler } from './AuthFlowRequestHandler'
+import { WebCrypto } from './crypto_utils'
+import { TokenRequestHandlerWClientSecret } from './tokenHandler'
 import { AuthorizationRequest } from '@openid/appauth/built/authorization_request'
 import { AuthorizationServiceConfiguration } from '@openid/appauth/built/authorization_service_configuration'
-import EventEmitter from 'events'
-import { StringMap } from '@openid/appauth/built/types'
 import { TokenRequestHandler } from '@openid/appauth/built/token_request_handler'
-import { TokenRequestHandlerWClientSecret } from './tokenHandler'
 import { TokenResponse, TokenResponseJson } from '@openid/appauth/built/token_response'
-import { WebCrypto } from './crypto_utils'
+import { StringMap } from '@openid/appauth/built/types'
+import EventEmitter from 'events'
 
 export class AuthStateEmitter extends EventEmitter {
   static ON_TOKEN_RESPONSE = 'on_token_response'
@@ -95,7 +95,7 @@ export class AuthFlow {
     this.notifier.setAuthorizationListener((request, response) => {
       if (response) {
         let codeVerifier: string | undefined
-        if (request.internal && request.internal.code_verifier) {
+        if (request.internal?.code_verifier) {
           codeVerifier = request.internal.code_verifier
         }
 
@@ -133,9 +133,9 @@ export class AuthFlow {
         redirect_uri: this.config.redirectUri,
         scope: this.config.scope,
         response_type: AuthorizationRequest.RESPONSE_TYPE_CODE,
-        extras: extras
+        extras: extras,
       },
-      new WebCrypto()
+      new WebCrypto(),
     )
 
     return this.authorizationHandler.performAuthorizationRequest(this.serviceConfig, request)
@@ -162,7 +162,7 @@ export class AuthFlow {
       redirect_uri: this.config.redirectUri,
       grant_type: GRANT_TYPE_AUTHORIZATION_CODE,
       code: code,
-      extras: extras
+      extras: extras,
     })
 
     try {
@@ -204,7 +204,7 @@ export class AuthFlow {
       return Promise.resolve('Missing refreshToken.')
     }
 
-    if (this.accessTokenResponse && this.accessTokenResponse.isValid()) {
+    if (this.accessTokenResponse?.isValid()) {
       return this.accessTokenResponse.accessToken
     }
 
@@ -212,7 +212,7 @@ export class AuthFlow {
       client_id: this.config.clientId,
       redirect_uri: this.config.redirectUri,
       grant_type: GRANT_TYPE_REFRESH_TOKEN,
-      refresh_token: this.refreshToken
+      refresh_token: this.refreshToken,
     })
 
     try {

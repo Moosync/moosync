@@ -1,6 +1,6 @@
 import { Player } from './player'
-import { PlayerEvent, PlayerEventTypes } from 'librespot-node'
 import { vxm } from '@/mainWindow/store'
+import { PlayerEvent, PlayerEventTypes } from 'librespot-node'
 
 export class SpotifyPlayer extends Player {
   private listenerMap: Partial<Record<PlayerEventTypes, { listener: unknown; channel: string }>> = {}
@@ -36,18 +36,18 @@ export class SpotifyPlayer extends Player {
   }
 
   async _load(src?: string | undefined, volume?: number | undefined, autoplay?: boolean | undefined): Promise<void> {
-    this.loadingCallback && this.loadingCallback()
+    this.loadingCallback?.()
     try {
       await window.SpotifyPlayer.command('LOAD', [src])
     } catch (e) {
-      this.errorCallback && this.errorCallback(e as Error)
+      this.errorCallback?.(e as Error)
       return
     }
-    volume && (this.volume = volume)
-    autoplay && (this.autoPlayQueued = true)
+    this.volume = volume || this.volume
+    this.autoPlayQueued = autoplay ?? false
 
     // Emit time as 0 after loading song
-    this.timeUpdateCallback && this.timeUpdateCallback(0)
+    this.timeUpdateCallback?.(0)
   }
 
   async _play(): Promise<void> {
@@ -112,7 +112,7 @@ export class SpotifyPlayer extends Player {
   protected listenOnError(callback: (err: Error) => void): void {
     this.errorCallback = callback
     this.registerListener('Unavailable', (e) =>
-      callback(new Error(`Failed to load track ${e.track_id}. Track unavailable`))
+      callback(new Error(`Failed to load track ${e.track_id}. Track unavailable`)),
     )
   }
 

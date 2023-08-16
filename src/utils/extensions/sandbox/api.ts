@@ -62,7 +62,7 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
     return sendAsync<T>(this.packageName, 'get-preferences', {
       packageName: this.packageName,
       key,
-      defaultValue
+      defaultValue,
     })
   }
 
@@ -70,7 +70,7 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
     return sendAsync<T>(this.packageName, 'get-secure-preferences', {
       packageName: this.packageName,
       key,
-      defaultValue
+      defaultValue,
     })
   }
 
@@ -91,8 +91,8 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
     if (typeof song === 'string') {
       const searchRes = await this.getSongs({
         song: {
-          _id: song
-        }
+          _id: song,
+        },
       })
 
       parsedSong = searchRes?.at(0)
@@ -130,7 +130,7 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
     bgColor: string,
     icon: string,
     signinCallback: AccountDetails['signinCallback'],
-    signoutCallback: AccountDetails['signoutCallback']
+    signoutCallback: AccountDetails['signoutCallback'],
   ): Promise<string> {
     const id = `account:${this.packageName}:${this.accountsMap.length}`
     const final: AccountDetails = {
@@ -141,7 +141,7 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
       icon,
       signinCallback,
       signoutCallback,
-      loggedIn: false
+      loggedIn: false,
     }
     this.accountsMap.push(final)
     await sendAsync<void>(this.packageName, 'register-account', final)
@@ -212,7 +212,7 @@ export class ExtensionRequestGenerator implements ExtendedExtensionAPI {
         ...m,
         id: crypto.randomUUID(),
         children,
-        packageName: this.packageName
+        packageName: this.packageName,
       })
     }
 
@@ -341,16 +341,13 @@ function sendAsync<T>(packageName: string, type: extensionRequests, data?: unkno
   const channel = crypto.randomUUID()
   return new Promise((resolve) => {
     if (process.send) {
-      let listener: (data: extensionReplyMessage) => void
-      process.on(
-        'message',
-        (listener = function (data: extensionReplyMessage) {
-          if (data.channel === channel) {
-            process.off('message', listener)
-            resolve(data.data)
-          }
-        })
-      )
+      const listener: (data: extensionReplyMessage) => void = function (data: extensionReplyMessage) {
+        if (data.channel === channel) {
+          process.off('message', listener)
+          resolve(data.data as T)
+        }
+      }
+      process.on('message', listener)
       process.send({ type, channel, data, extensionName: packageName } as extensionRequestMessage)
       return
     }

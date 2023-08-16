@@ -1,0 +1,13 @@
+diff --git a/node_modules/vue-cli-plugin-electron-builder/index.js b/node_modules/vue-cli-plugin-electron-builder/index.js
+index df1f8f5..8603928 100644
+--- a/node_modules/vue-cli-plugin-electron-builder/index.js
++++ b/node_modules/vue-cli-plugin-electron-builder/index.js
+@@ -603,7 +603,7 @@ function bundleMain ({
+       .test(/\.ts$/)
+       .use('ts-loader')
+       .loader('ts-loader')
+-      .options({ transpileOnly: !mainProcessTypeChecking })
++      .options({ transpileOnly: !mainProcessTypeChecking, onlyCompileBundledFiles: true })
+   }
+   mainProcessChain(config)
+ 
