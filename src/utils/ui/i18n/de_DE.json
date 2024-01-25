@@ -56,15 +56,15 @@
     "close": "Close",
     "add": "Add",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Abbrechen"
   },
   "loading": "Wird geladen...",
-  "now_playing": "Now playing",
+  "now_playing": "Jetzt spielt",
   "contextMenu": {
-    "sort_by": "Sort by",
+    "sort_by": "Sortieren nach",
     "sort": {
       "title": "Titel",
-      "album": "Album (Track No.)",
+      "album": "Album (Track Nr.)",
       "artist": "Künstler",
       "genre": "Genre",
       "date_added": "Hinzugefügt am",
@@ -96,24 +96,24 @@
       "showInLibrary": "In Bibliothek anzeigen",
       "showHidden": "Versteckte Lieder anzeigen",
       "hideHidden": "Versteckte Lieder ausblenden",
-      "openInBrowser": "Open in browser",
-      "gotoAlbum": "Goto album ({title})",
-      "gotoArtists": "Goto artists"
+      "openInBrowser": "Im Browser öffnen",
+      "gotoAlbum": "Gehe zu Album ({title})",
+      "gotoArtists": "Gehe zu Künstler"
     },
     "artist": {
-      "remove": "Remove artist"
+      "remove": "Künstler entfernen"
     },
     "album": {
-      "remove": "Remove album"
+      "remove": "Album entfernen"
     },
     "moreInfo": "Mehr Info",
     "incorrectPlayback": "Falsche Wiedergabe?"
   },
   "explore": {
-    "you_listened_to": "You've listened to",
-    "of_music": "of music",
-    "played_for": "Played for",
-    "hot_from": "Hot from"
+    "you_listened_to": "Du hast für",
+    "of_music": "Musik gehört",
+    "played_for": "Gespielt für",
+    "hot_from": "Heiß von"
   },
   "providers": {
     "youtube": "YouTube",
@@ -122,8 +122,8 @@
     "lastfm": "LastFM"
   },
   "accounts": {
-    "connect": "Connect",
-    "sign_out": "Sign out"
+    "connect": "Verbinden",
+    "sign_out": "Ausloggen"
   },
   "settings": {
     "paths": {
@@ -139,9 +139,9 @@
       "thumbnailPath_tooltip": "Verzeichnis in dem die erzeugten Thumbnails gespeichert werden",
       "splitter": "Interpretenname Split-Muster",
       "splitter_tooltip": "Regex um Interpretennamen zu teilen. Leer lassen um die Aufteilung zu deaktivieren.",
-      "scan_interval": "Scan interval",
-      "scan_interval_tooltip": "Interval in minutes to trigger a scan task. Set to -1 to disable automatic scanning",
-      "scan_threads": "Scan CPU threads",
+      "scan_interval": "Intervall zwischen Scans",
+      "scan_interval_tooltip": "Intervall in Minuten zwischen Scans. Setze auf -1 um automatisches Scannen zu untersagen",
+      "scan_threads": "Scan CPU-Threads",
       "scan_threads_tooltip": "Number of threads to use when scanning for local music"
     },
     "themes": {
