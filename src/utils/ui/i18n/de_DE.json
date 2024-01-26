@@ -9,10 +9,10 @@
       "genre": "Genres",
       "explore": "Erkunden",
       "paths": "Pfade",
-      "themes": "Designs",
+      "themes": "Design",
       "extensions": "Erweiterungen",
       "system": "System",
-      "logs": "Logs",
+      "logs": "Protokoll",
       "keybinds": "Tastaturkürzel"
     }
   },
@@ -28,13 +28,13 @@
     "explore": "Erkunden"
   },
   "playlists": {
-    "local": "Local",
+    "local": "Lokal",
     "new_playlist": {
-      "create": "Create",
-      "description_placeholder": "Description..."
+      "create": "Erstellen",
+      "description_placeholder": "Beschreibung..."
     },
     "url": {
-      "input_hint": "Enter URL Here.. (Youtube or Spotify)"
+      "input_hint": "URL hier eingeben (Youtube oder Spotify)"
     }
   },
   "songView": {
@@ -52,10 +52,10 @@
     "addToQueue": "{title} zur Warteschlange hinzufügen",
     "addToLibrary": "{title} zur Bibliothek hinzufügen",
     "playRandom": "100 zufällige Titel abspielen",
-    "fetchAll": "Fetch all songs",
-    "close": "Close",
-    "add": "Add",
-    "save": "Save",
+    "fetchAll": "Alle Titel abrufen",
+    "close": "Schließen",
+    "add": "Hinzufügen",
+    "save": "Speichern",
     "cancel": "Abbrechen"
   },
   "loading": "Wird geladen...",
@@ -94,8 +94,8 @@
       "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
       "hideFromLibrary": "In der Bibliothek ausblenden",
       "showInLibrary": "In Bibliothek anzeigen",
-      "showHidden": "Versteckte Lieder anzeigen",
-      "hideHidden": "Versteckte Lieder ausblenden",
+      "showHidden": "Versteckte Titel anzeigen",
+      "hideHidden": "Versteckte Titel ausblenden",
       "openInBrowser": "Im Browser öffnen",
       "gotoAlbum": "Gehe zu Album ({title})",
       "gotoArtists": "Gehe zu Künstler"
@@ -107,7 +107,7 @@
       "remove": "Album entfernen"
     },
     "moreInfo": "Mehr Info",
-    "incorrectPlayback": "Falsche Wiedergabe?"
+    "incorrectPlayback": "Falscher Titel?"
   },
   "explore": {
     "you_listened_to": "Du hast für",
@@ -118,7 +118,7 @@
   "providers": {
     "youtube": "YouTube",
     "spotify": "Spotify",
-    "invidious": "Invidiv",
+    "invidious": "Invidious",
     "lastfm": "LastFM"
   },
   "accounts": {
@@ -128,21 +128,21 @@
   "settings": {
     "paths": {
       "songDirectories": "Songverzeichnisse",
-      "songDirectories_tooltip": "Verzeichnisse, in denen Ihre lokale Musik gespeichert ist",
-      "songDirectories_exclude": "Gesperrte Verzeichnisse",
-      "songDirectories_exclude_tooltip": "Songs in diesen Verzeichnissen würden nicht gescannt werden",
+      "songDirectories_tooltip": "Verzeichnisse, in denen deine Musik gespeichert ist",
+      "songDirectories_exclude": "Ignorierte Verzeichnisse",
+      "songDirectories_exclude_tooltip": "Titel in diesen Verzeichnissen werden nicht gescannt",
       "addFolder": "Ordner hinzufügen...",
       "remove": "Entfernen",
       "artworkPath": "Pfad für heruntergeladene Albumcover",
       "artworkPath_tooltip": "Verzeichnis, in dem heruntergeladene Albumcover gespeichert werden",
-      "thumbnailPath": "Heruntergeladener Miniaturbildpfad",
-      "thumbnailPath_tooltip": "Verzeichnis in dem die erzeugten Thumbnails gespeichert werden",
-      "splitter": "Interpretenname Split-Muster",
-      "splitter_tooltip": "Regex um Interpretennamen zu teilen. Leer lassen um die Aufteilung zu deaktivieren.",
+      "thumbnailPath": "Verzeichnis, in dem heruntergeladene Vorschaubilder gespeichert werden",
+      "thumbnailPath_tooltip": "Verzeichnis in dem die erzeugten Vorschaubilder gespeichert werden",
+      "splitter": "Interpreten Teilungsmuster",
+      "splitter_tooltip": "Regex um Interpreten zu teilen. Leer lassen, um die Aufteilung zu deaktivieren.",
       "scan_interval": "Intervall zwischen Scans",
       "scan_interval_tooltip": "Intervall in Minuten zwischen Scans. Setze auf -1 um automatisches Scannen zu untersagen",
       "scan_threads": "Scan CPU-Threads",
-      "scan_threads_tooltip": "Number of threads to use when scanning for local music"
+      "scan_threads_tooltip": "Anzahl der CPU-Threads, die beim Scannen nach lokaler Musik verwendet werden sollen"
     },
     "themes": {
       "songView": "Titelansicht",
@@ -159,8 +159,8 @@
         "author": "Autor",
         "colors": "Farben",
         "colors_tooltip": "Ändern Sie die Farben, um die Benutzeroberfläche anzupassen",
-        "css": "Custom CSS",
-        "watch_css": "Watch CSS for file changes"
+        "css": "Benutzerdefiniertes CSS",
+        "watch_css": "CSS für Dateiänderungen beobachten"
       },
       "primary": "Primär",
       "secondary": "Sekundär",
@@ -187,16 +187,16 @@
         "hardwareAcceleration": "GPU-Hardware-Beschleunigung verwenden",
         "watchFileChanges": "Musikverzeichnisse für Änderungen ansehen",
         "enableJukeboxMode": "Schalter für Jukebox-Modus aktivieren",
-        "lastLoadedPlaybackState": "Load last playback state on startup"
+        "lastLoadedPlaybackState": "Letzten Wiedergabestatus beim Start laden"
       },
       "systemSettings_tooltip": "Einstellungen, die sich auf Ihr System beziehen",
       "audioSettings": {
         "title": "Audio-Einstellungen",
         "gaplessPlayback": "Nutze eine lückenlose Wiedergabe wo immer möglich",
-        "sponsorBlock": "SponsorBlock verwenden, um automatisch zum hervorgehobenen Teil des Youtube-Liedes zu springen"
+        "sponsorBlock": "SponsorBlock verwenden, um automatisch zum hervorgehobenen Teil des Youtube-Titels zu springen"
       },
       "audioSettings_tooltip": "Zugehörige Audio-Wiedergabe",
-      "gapless_skip": "Skip song before end (seconds)",
+      "gapless_skip": "Titel vor Ende überspringen (Sekunden)",
       "invidiousUrlUnsupported": "Diese URL unterstützt keine Invidious API",
       "invidious_tooltip": "Unheilvolle Instanz anstelle von youtube",
       "restartApp": "Moosync neu starten",
@@ -223,7 +223,7 @@
           "title": "Librespot-Optionen",
           "tooltip": "Optionen, um das Verhalten von librespot zu ändern",
           "useSpotifyCanvas": "Spotify Leinen-Video im Hintergrund anzeigen",
-          "useLibrespotPlayback": "librespot für die Wiedergabe des Liedes verwenden"
+          "useLibrespotPlayback": "librespot für die Wiedergabe des Titels verwenden"
         }
       },
       "youtube": {
@@ -272,19 +272,19 @@
       "jukebox": {
         "pin": "Jukebox Modus Pin",
         "pin_tooltip": "Tis-Pin wird benötigt, um Jukebox Modus zu verlassen. Sollte numerisch sein.",
-        "optionalFields": "Button visibility",
-        "optionalFields_tooltip": "Toggle optional buttons to show in Jukebox mode",
-        "optional_skip": "Track Skip buttons",
-        "optional_shuffle": "Shuffle button",
-        "optional_repeat": "Repeat button"
+        "optionalFields": "Sichtbarkeit der Schaltflächen",
+        "optionalFields_tooltip": "Anzeigen optionaler Schaltflächen im Jukebox-Modus",
+        "optional_skip": "Überspringen Schaltfläche",
+        "optional_shuffle": "Shuffle Schaltfläche",
+        "optional_repeat": "Wiederholen Schaltfläche"
       },
       "lyrics": {
         "title": "Songtext-Anbieter",
         "tooltip": "Wählen Sie aus, welche Songtexte für die Suche verwendet werden sollen",
         "az_lyrics": "AZLyrics verwenden",
         "google_lyrics": "Google-Suchtexte verwenden",
-        "spotify_lyrics": "Use Spotify for lyrics (Requires librespot)",
-        "genius_lyrics": "Use Genius"
+        "spotify_lyrics": "Spotify für Songtexte verwenden (Benötigt librespot)",
+        "genius_lyrics": "Genius verwenden"
       },
       "queueSettings": {
         "title": "Warteschlangen-Einstellungen",
@@ -294,7 +294,7 @@
       "scrobble": {
         "provider_toggle": {
           "title": "Whitelist scrobbeln",
-          "tooltip": "Anbieter aktivieren, deren Lieder gescrobbelt werden soll"
+          "tooltip": "Anbieter aktivieren, deren Titel gescrobbelt werden soll"
         }
       },
       "volumePersistMode": {
@@ -311,68 +311,68 @@
       "process": "Verarbeiten",
       "filterMessage": "Nachricht filtern",
       "levels": {
-        "all": "All",
+        "all": "Alles",
         "debug": "Debug",
         "info": "Info",
-        "warn": "Warn",
-        "error": "Error"
+        "warn": "Warnungen",
+        "error": "Fehler"
       },
-      "debug_logging": "Enable debug logging",
+      "debug_logging": "Debug-Protokollierung aktivieren",
       "table": {
-        "time": "Time",
-        "level": "Level",
-        "process": "Process",
-        "message": "Message"
+        "time": "Zeit",
+        "level": "Stufe",
+        "process": "Prozess",
+        "message": "Nachricht"
       }
     }
   },
   "hotkeys": {
-    "play": "Play Song",
-    "pause": "Pause song",
-    "play_toggle": "Toggle play",
-    "mute_active": "Mute",
-    "mute_inactive": "Unmute",
-    "mute_toggle": " Toggle mute",
-    "volume_inc": "Increase volume",
-    "volume_dec": "Decrease volume",
-    "repeat_active": "Repeat song",
-    "repeat_inactive": "Disable repeat",
-    "repeat_toggle": "Toggle repeat",
-    "queue_open": "Open song queue",
-    "queue_close": "Close song queue",
-    "queue_toggle": "Toggle song queue",
-    "reload_page": "Reload page",
-    "devtools": "Toggle dev-tools",
-    "help": "Open help",
-    "fullscreen": "Fullscreen",
-    "next_song": "Skip song",
-    "prev_song": "Prev song",
-    "seek_forward": "Seek 5s forward",
-    "seek_backwards": "Seek 5s backwards",
-    "seek_0": "Seek to 0%",
-    "seek_1": "Seek to 10%",
-    "seek_2": "Seek to 20%",
-    "seek_3": "Seek to 30%",
-    "seek_4": "Seek to 40%",
-    "seek_5": "Seek to 50%",
-    "seek_6": "Seek to 60%",
-    "seek_7": "Seek to 70%",
-    "seek_8": "Seek to 80%",
-    "seek_9": "Seek to 90%"
+    "play": "Titel spielen",
+    "pause": "Titel pausieren",
+    "play_toggle": "Wiedergabe umschalten",
+    "mute_active": "Stumm",
+    "mute_inactive": "Ton ein",
+    "mute_toggle": " Stummschaltung umschalten",
+    "volume_inc": "Lautstärke erhöhen",
+    "volume_dec": "Lautstärke reduzieren",
+    "repeat_active": "Titel wiederholen",
+    "repeat_inactive": "Wiederholung deaktivieren",
+    "repeat_toggle": "Wiederholung umschalten",
+    "queue_open": "Warteschlange öffnen",
+    "queue_close": "Warteschlange schließen",
+    "queue_toggle": "Warteschlange umschalten",
+    "reload_page": "Seite neu laden",
+    "devtools": "Dev-Tools umschalten",
+    "help": "Hilfe öffnen",
+    "fullscreen": "Vollbildmodus",
+    "next_song": "Titel überspringen",
+    "prev_song": "Vorheriger Titel",
+    "seek_forward": "5s vorwärts springen",
+    "seek_backwards": "5s rückwärts springen",
+    "seek_0": "Auf 0% springen",
+    "seek_1": "Auf 10% springen",
+    "seek_2": "Auf 20% springen",
+    "seek_3": "Auf 30% springen",
+    "seek_4": "Auf 40% springen",
+    "seek_5": "Auf 50% springen",
+    "seek_6": "Auf 60% springen",
+    "seek_7": "Auf 70% springen",
+    "seek_8": "Auf 80% springen",
+    "seek_9": "Auf 90% springen"
   },
   "tray": {
-    "play": "Play",
-    "pause": "Pause",
-    "next": "Next",
-    "prev": "Prev",
-    "repeat": "Repeat",
-    "no_repeat": "No repeat",
+    "play": "Wiedergeben",
+    "pause": "Pausieren",
+    "next": "Nächstes",
+    "prev": "Vorheriges",
+    "repeat": "Wiederholen",
+    "no_repeat": "Nicht wiederholen",
     "shuffle": "Shuffle",
-    "show_app": "Show app",
-    "quit": "Quit"
+    "show_app": "App anzeigen",
+    "quit": "Beenden"
   },
   "toasts": {
-    "queued": "Queued {count} song | Queued {count} songs",
-    "shuffled": "Shuffled"
+    "queued": "{count} Titel der Warteschlange hinzugefügt | {count} Titel der Warteschlange hinzugefügt",
+    "shuffled": "Shuffle erfolgreich"
   }
 }
